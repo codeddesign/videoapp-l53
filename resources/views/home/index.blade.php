@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta name="viewport" content="width=550, user-scalable=no">
     <title>Ad3Media</title>
+    <link rel='shortcut icon' href='/home/images/logo.png'>
     <link href="/home/style.css" rel="stylesheet" type="text/css">
     <link href="/home/responsive.css" rel="stylesheet" type="text/css">
     <link href="/home/css/slick-theme.css" rel="stylesheet" type="text/css">
