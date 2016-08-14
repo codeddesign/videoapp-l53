@@ -14,7 +14,7 @@ class HomeController extends Controller
     /**
      * Show the public homepage.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index() : View
     {

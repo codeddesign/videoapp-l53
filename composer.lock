@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "17305a6dd494a69fabd54bf6e8fffe9d",
+    "hash": "34333ac16471aab712cbc0354f52785f",
     "content-hash": "8590ceeb93631fa1815928de23258a58",
     "packages": [
         {
@@ -312,12 +312,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "48cc3cfb03ca64b5794854df88efb210bf5a7c03"
+                "reference": "5cce34bcec0859c4aae232c9fde15d3a44b16dfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/48cc3cfb03ca64b5794854df88efb210bf5a7c03",
-                "reference": "48cc3cfb03ca64b5794854df88efb210bf5a7c03",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/5cce34bcec0859c4aae232c9fde15d3a44b16dfe",
+                "reference": "5cce34bcec0859c4aae232c9fde15d3a44b16dfe",
                 "shasum": ""
             },
             "require": {
@@ -422,7 +422,7 @@
             "authors": [
                 {
                     "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
+                    "email": "taylor@laravel.com"
                 }
             ],
             "description": "The Laravel Framework.",
@@ -431,7 +431,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-08-11 10:05:11"
+            "time": "2016-08-13 16:24:21"
         },
         {
             "name": "league/flysystem",
