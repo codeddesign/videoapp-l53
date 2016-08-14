@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class HomePageTest extends TestCase
 {
     /**
-     * Test visting the home page.
+     * Test visiting the home page.
      *
      * @test
      */
