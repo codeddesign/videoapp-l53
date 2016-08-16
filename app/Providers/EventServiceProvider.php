@@ -13,8 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'VideoAd\Events\SomeEvent' => [
-            'VideoAd\Listeners\EventListener',
+        'VideoAd\Events\VerifyAccount' => [
+            'VideoAd\Listeners\VerifyEmail',
+            'VideoAd\Listeners\VerifyPhone',
         ],
     ];
 

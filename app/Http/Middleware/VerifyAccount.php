@@ -3,7 +3,6 @@
 namespace VideoAd\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class VerifyAccount
 {
@@ -16,12 +15,8 @@ class VerifyAccount
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::user()->verified_phone) {
+        if(! $request->user()->verified()) {
             return redirect()->route('verify.phone');
-        }
-
-        if (!Auth::user()->verified_email) {
-            return redirect()->route('verify.email');
         }
 
         return $next($request);

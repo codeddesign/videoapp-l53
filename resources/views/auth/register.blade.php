@@ -8,29 +8,36 @@
         <form action="/register" method="post">
             {{ csrf_field() }}
             @if (count($errors) > 0)
-                <div class="error">
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}
-                    @endforeach
+                <!-- Form Error List -->
+                    <div class="error">
+                        <ul style="list-style: none; padding-left:20px">
+                            @foreach ($errors->all() as $error)
+                                <li style="float: left">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <span class="loginemailicon"></span>
                 </div>
-            @endif
+                <div>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <span class="loginemailicon"></span>
+                </div>
 
-            <div>
-                <input type="email" name="email" placeholder="Email" required>
-                <span class="loginemailicon"></span>
-            </div>
+                <div>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <span class="loginpassicon"></span>
+                </div>
 
-            <div>
-                <input type="password" name="password" placeholder="Password" required>
-                <span class="loginpassicon"></span>
-            </div>
+                <div>
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    <span class="loginpassicon"></span>
+                </div>
 
-            <div>
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-                <span class="loginpassicon"></span>
-            </div>
-
-            <button id="login" type="submit">CONTINUE</button>
+                <button id="register" type="submit">CONTINUE</button>
         </form>
     </div>
 

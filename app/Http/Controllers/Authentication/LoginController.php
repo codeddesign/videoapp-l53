@@ -40,13 +40,14 @@ class LoginController extends Controller
             ]);
         }
 
-        // @todo refactor: move to middleware
         if (!Auth::user()->verified_phone) {
+            // @todo create an even to send a sms message and verify the user
             return redirect()->route('verify.phone');
         }
 
-        // @todo refactor: move to middleware
+
         if (!Auth::user()->verified_email) {
+            // @todo create an even to send an email message and verify the user
             return redirect()->route('verify.email');
         }
 

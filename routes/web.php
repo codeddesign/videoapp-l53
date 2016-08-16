@@ -25,4 +25,4 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 // Vue app.
-Route::get('/app', ['uses' => 'PagesController@index'])->name('app')->middleware('auth');
+Route::get('/app', ['uses' => 'PagesController@index'])->name('app')->middleware('auth', 'verifyaccount');
