@@ -55,26 +55,6 @@ class LoginController extends Controller
     }
 
     /**
-     * Show the verify phone page.
-     *
-     * @return View
-     */
-    public function verifyPhone() : View
-    {
-        return view('auth.verify.phone');
-    }
-
-    /**
-     * Show the verify email page.
-     *
-     * @return View
-     */
-    public function verifyEmail() : View
-    {
-        return view('auth.verify.email');
-    }
-
-    /**
      * Log the user out of the application.
      *
      * @param  Request $request

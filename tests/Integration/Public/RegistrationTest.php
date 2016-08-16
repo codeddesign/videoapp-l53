@@ -1,9 +1,9 @@
 <?php
 
+use VideoAd\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use VideoAd\User;
 
 class RegistrationTest extends TestCase
 {

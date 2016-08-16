@@ -3,26 +3,26 @@
 // Home Page.
 Route::get('/', ['uses' => 'HomeController@index']);
 
-// login
+// Login.
 Route::get('login', 'Authentication\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Authentication\LoginController@login');
 Route::get('logout', 'Authentication\LoginController@logout');
 
-//verification
-Route::get('verify/phone', 'Authentication\LoginController@verifyPhone')->name('verify.phone');
-Route::get('verify/email', 'Authentication\LoginController@verifyEmail')->name('verify.email');
+// Verification.
+// @todo implementation.
+Route::get('verify/phone', 'Authentication\VerificationsController@verifyPhone')->name('verify.phone');
+Route::get('verify/email', 'Authentication\VerificationsController@verifyEmail')->name('verify.email');
 
-//registration
+// Registration.
 Route::get('register', 'Authentication\RegistrationController@showRegistrationForm');
 Route::post('register', 'Authentication\RegistrationController@register');
 
-//// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-
+// Password Reset Routes.
+// @todo fix this.
+Route::get('password/reset', 'Authentication\ForgotPasswordController@showLinkRequestForm');
+Route::post('password/email', 'Authentication\ForgotPasswordController@sendResetLinkEmail');
+Route::get('password/reset/{token}', 'Authentication\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Authentication\ResetPasswordController@reset');
 
 // Vue app.
 Route::get('/app', ['uses' => 'PagesController@index'])->name('app')->middleware('auth', 'verifyaccount');

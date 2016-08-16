@@ -9,13 +9,27 @@
 <h2>Verify Your Email Address</h2>
 
 <div>
-    <p>Hi. &nbsp; Please follow the link below to verify your email address:</p>
+    <form method="POST" action="{{ url('/password/reset') }}">
+        {{ csrf_field() }}
 
-    <p>
-        <a href="{{ URL::to('app/verify-email/' . $token->token) }}">
-            {{ URL::to('app/verify-email/' . $token->token) }}
-        </a>
-    </p>
+        <input type="hidden" name="token" value="{{ $token }}">
+
+        <div>
+            <input type="email" name="email" placeholder="E-Mail Address" value="{{ $email or old('email') }}">
+            <span class="loginemailicon"></span>
+        </div>
+
+        <div>
+            <input type="password" name="password" placeholder="Password">
+            <span class="loginemailicon"></span>
+        </div>
+        <div>
+            <input id="password-confirm" type="password" name="password_confirmation" placeholder="Password">
+            <span class="loginemailicon"></span>
+        </div>
+
+        <button type="submit">RESET</button>
+    </form>
 </div>
 
 </body>
