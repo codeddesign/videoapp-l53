@@ -1,0 +1,92 @@
+<?php
+
+namespace VideoAd\Http\Controllers\Authentication;
+
+use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use VideoAd\Http\Requests\LoginRequest;
+use VideoAd\Http\Controllers\Controller;
+
+/**
+ * @author Adib Hanna <adibhanna@gmail.com>
+ * Class LoginController
+ * @package VideoAd\Http\Controllers\Authentication
+ */
+class LoginController extends Controller
+{
+    /**
+     * Show the login page.
+     *
+     * @return View
+     */
+    public function showLoginForm() : View
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Login the user.
+     *
+     * @param LoginRequest $request
+     * @return RedirectResponse
+     */
+    public function login(LoginRequest $request) : RedirectResponse
+    {
+        if (!Auth::attempt($request->only(['email', 'password']))) {
+            return redirect()->back()->withInput()->withErrors([
+                $request->get('email') => 'Credentials do not match our records'
+            ]);
+        }
+
+        // @todo refactor: move to middleware
+        if (!Auth::user()->verified_phone) {
+            return redirect()->route('verify.phone');
+        }
+
+        // @todo refactor: move to middleware
+        if (!Auth::user()->verified_email) {
+            return redirect()->route('verify.email');
+        }
+
+        return redirect()->route('app');
+    }
+
+    /**
+     * Show the verify phone page.
+     *
+     * @return View
+     */
+    public function verifyPhone() : View
+    {
+        return view('auth.verify.phone');
+    }
+
+    /**
+     * Show the verify email page.
+     *
+     * @return View
+     */
+    public function verifyEmail() : View
+    {
+        return view('auth.verify.email');
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  Request $request
+     * @return RedirectResponse
+     */
+    public function logout(Request $request) : RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect('/');
+    }
+}

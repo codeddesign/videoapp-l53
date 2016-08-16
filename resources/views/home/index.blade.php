@@ -99,7 +99,7 @@
                 <a href="#betasignup">
                     <li>PUBLISHERS</li>
                 </a>
-                <a href="#betasignup">
+                <a href="/login" id="login">
                     <li>LOGIN</li>
                 </a>
                 <li>
@@ -328,10 +328,10 @@
         </div>
 
         <form action="//aptone.us3.list-manage.com/subscribe/post?u=c4f47191c48fc179e46e77975&amp;id=d8c704b2db" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="startearningmore validate" target="_blank" novalidate>
-            <input name="FNAME" id="mce-FNAME" placeholder="full name">
-            <input name="EMAIL" id="mce-EMAIL" placeholder="email address">
-            <input name="LNAME" id="mce-WEBSITE" placeholder="website">
-            <input name="LNAME" id="mce-PHONE" placeholder="phone number">
+            <input name="full_name" id="mce-FNAME" placeholder="full name">
+            <input name="email" id="mce-EMAIL" placeholder="email address">
+            <input name="website" id="mce-WEBSITE" placeholder="website">
+            <input name="phone" id="mce-PHONE" placeholder="phone number">
 
             <div id="mce-responses" class="clear">
                 <div class="response" id="mce-error-response" style="display:none"></div>
@@ -339,7 +339,7 @@
             </div>
 
             <!--<submit type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">Sign Up for Beta</submit>-->
-            <input type="submit" value="Sign Up for Beta" name="subscribe" id="mc-embedded-subscribe" class="button">
+            <input type="submit" value="Sign Up for Beta" value="register" name="subscribe" id="mc-embedded-subscribe" class="button">
         </form>
     </div>
 </div>
