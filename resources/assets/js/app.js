@@ -11,10 +11,18 @@ import CreateCampaign from './views/campaigns/CreateCampaign.vue'
 import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 
+/**
+ * if we want to remove hashbang from URL,
+ * switch it to false, and history to true.
+ * make sure you configure the the server
+ * to handle it.
+ */
 const router = new VueRouter({
-    hashbang: false,
-    history: true,
-    root: '/app'
+    hashbang: true,
+    history: false,
+    root: '/app',
+    linkActiveClass: 'active', // this is used to set the active links
+    mode: 'html5'
 });
 
 router.map({
