@@ -21,6 +21,7 @@ window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker');
 
 window.Vue = require('vue');
 require('vue-resource');
+window.VueRouter = require('vue-router');
 
 /**
  * We'll register a HTTP interceptor to attach the "XSRF" header to each of
