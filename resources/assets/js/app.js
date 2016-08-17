@@ -1,15 +1,15 @@
 require('./bootstrap');
 
-Vue.component('app-modal', require('./components/AppModal.vue'));
+Vue.component('app-modal', require('./views/components/AppModal.vue'));
 
 // app components
-import App from './App.vue'
-import Dashboard from './components/Dashboard.vue'
-import Analytics from './components/Analytics.vue'
-import Campaigns from './components/Campaigns.vue'
-import CreateCampaign from './components/CreateCampaign.vue'
-import WebConfig from './components/WebConfig.vue'
-import Support from './components/Support.vue'
+import App from './views/Layout.vue'
+import Dashboard from './views/dashboard/Dashboard.vue'
+import Analytics from './views/analytics/Analytics.vue'
+import Campaigns from './views/campaigns/Campaigns.vue'
+import CreateCampaign from './views/campaigns/CreateCampaign.vue'
+import WebConfig from './views/webconfig/WebConfig.vue'
+import Support from './views/support/Support.vue'
 
 const router = new VueRouter()
 
