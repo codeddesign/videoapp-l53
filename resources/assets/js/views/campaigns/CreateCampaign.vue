@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>this is a create campaign</p>
+        <h1>campaign</h1>
     </div>
 </template>
 <script>

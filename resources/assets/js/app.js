@@ -11,7 +11,11 @@ import CreateCampaign from './views/campaigns/CreateCampaign.vue'
 import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 
-const router = new VueRouter()
+const router = new VueRouter({
+    hashbang: false,
+    history: true,
+    root: '/app'
+});
 
 router.map({
     '/dashboard': {

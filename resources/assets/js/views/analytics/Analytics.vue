@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>this is a analytics</p>
+        <h1>analytics</h1>
     </div>
 </template>
 <script>

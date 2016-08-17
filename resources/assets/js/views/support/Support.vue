@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>this is support</p>
+        <h1>support</h1>
     </div>
 </template>
 <script>

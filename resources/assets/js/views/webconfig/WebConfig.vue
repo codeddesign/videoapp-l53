@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>this is web config</p>
+        <h1>config</h1>
     </div>
 </template>
 <script>
