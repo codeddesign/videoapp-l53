@@ -14,16 +14,7 @@ require('laravel-elixir-vue');
  */
 
 elixir(function(mix) {
-    mix.scripts(
-        [
-            './node_modules/vue/dist/vue.min.js',
-            './node_modules/vue-resource/dist/vue-resource.min.js',
-            'auth.js'
-        ],
-
-        'public/assets/js/vuepack.js'
-    );
-
     mix.sass('app.scss')
-       .webpack('app.js');
+        .copy('node_modules/font-awesome/fonts', 'public/fonts')
+        .webpack('app.js');
 });

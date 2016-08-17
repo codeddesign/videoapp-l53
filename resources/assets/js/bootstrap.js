@@ -11,6 +11,8 @@ window.Cookies = require('js-cookie');
 window.$ = window.jQuery = require('jquery');
 require('bootstrap-sass/assets/javascripts/bootstrap');
 
+window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker');
+
 /**
  * Vue is a modern JavaScript for building interactive web interfaces using
  * reacting data binding and reusable components. Vue's API is clean and

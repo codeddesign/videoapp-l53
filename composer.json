@@ -21,7 +21,10 @@
         ],
         "psr-4": {
             "VideoAd\\": "app/"
-        }
+        },
+        "files": [
+            "app/Utils/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
