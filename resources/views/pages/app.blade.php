@@ -25,33 +25,33 @@
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript">
-//        $(document).ready(function() {
-//            // WEBSITE LIST DROPDOWN
-//            $('#availablesites, #availablesites-navdroparea').mouseover(function() {
-//                $('#availablesites-navdroparea').show();
-//                $('#availablesites').css('background', '#303749');
-//                //$('#availablesites').css('border-right', '1px solid #303749');
-//            });
-//
-//            $('#availablesites, #availablesites-navdroparea').mouseout(function() {
-//                $('#availablesites-navdroparea').hide();
-//                $('#availablesites').css('background', 'transparent');
-//                //$('#availablesites').css('border-right', '1px solid #5C5882');
-//            });
-//
-//            // ACCOUNT DETAILS DROPDOWN
-//            $('#accountdetails, #accountdetails-navdroparea').mouseover(function() {
-//                $('#accountdetails-navdroparea').show();
-//                $('#accountdetails').css('background', '#303749');
-//                $('#accountdetails').css('border-left', '1px solid #303749');
-//            });
-//
-//            $('#accountdetails, #accountdetails-navdroparea').mouseout(function() {
-//                $('#accountdetails-navdroparea').hide();
-//                $('#accountdetails').css('background', 'transparent');
-//                $('#accountdetails').css('border-left', '1px solid #5C5882');
-//            });
-//        });
+        $(document).ready(function() {
+            // WEBSITE LIST DROPDOWN
+            $('#availablesites, #availablesites-navdroparea').mouseover(function() {
+                $('#availablesites-navdroparea').show();
+                $('#availablesites').css('background', '#303749');
+                //$('#availablesites').css('border-right', '1px solid #303749');
+            });
+
+            $('#availablesites, #availablesites-navdroparea').mouseout(function() {
+                $('#availablesites-navdroparea').hide();
+                $('#availablesites').css('background', 'transparent');
+                //$('#availablesites').css('border-right', '1px solid #5C5882');
+            });
+
+            // ACCOUNT DETAILS DROPDOWN
+            $('#accountdetails, #accountdetails-navdroparea').mouseover(function() {
+                $('#accountdetails-navdroparea').show();
+                $('#accountdetails').css('background', '#303749');
+                $('#accountdetails').css('border-left', '1px solid #303749');
+            });
+
+            $('#accountdetails, #accountdetails-navdroparea').mouseout(function() {
+                $('#accountdetails-navdroparea').hide();
+                $('#accountdetails').css('background', 'transparent');
+                $('#accountdetails').css('border-left', '1px solid #5C5882');
+            });
+        });
     </script>
 </body>
 

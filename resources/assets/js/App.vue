@@ -6,27 +6,26 @@
             </div>
 
             <ul class="navlist">
-                <a v-link="dashboard">
-                    <li class="">DASHBOARD</li>
+                <a v-link="'/dashboard'">
+                    <li v-link-active>DASHBOARD</li>
                 </a>
-
-                <a v-link="analytics">
+                <a v-link="'/analytics'">
                     <li class="">ANALYTICS</li>
                 </a>
 
-                <a v-link="campaigns">
+                <a v-link="'/campaigns'">
                     <li class="">CAMPAIGNS</li>
                 </a>
 
-                <a v-link="create-campaigns">
+                <a v-link="'/create-campaigns'">
                     <li class="">CREATE CAMPAIGN</li>
                 </a>
 
-                <a v-link="web-config">
+                <a v-link="'/web-config'">
                     <li class="">WEBSITE CONFIG</li>
                 </a>
 
-                <a v-link="support">
+                <a v-link="'/support'">
                     <li class="">SUPPORT</li>
                 </a>
             </ul>
@@ -42,10 +41,10 @@
                 <!-- ACCOUNT DETAILS -->
                 <div id="accountdetails" class="rightside-navdropdown">ACCOUNT DETAILS <span></span></div>
                 <ul id="accountdetails-navdroparea" class="rightside-navdroparea" style="display:none;">
-                    <a href="/app/profile">
+                    <a href="/profile">
                         <li>EDIT ACCOUNT</li>
                     </a>
-                    <a href="/app/logout">
+                    <a href="/logout">
                         <li>LOGOUT</li>
                     </a>
                 </ul>

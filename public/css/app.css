@@ -8228,6 +8228,13 @@ li > a {
 ul.navlist li:hover, ul.navlist li.active {
   background: #6F6BA2; }
 
+.navlist li a a:hover {
+  color: white;
+  text-decoration: none; }
+
+.active {
+  background: #6F6BA2; }
+
 .rightside-nav {
   float: left;
   width: 100%;

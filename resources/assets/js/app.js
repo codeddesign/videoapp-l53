@@ -1,6 +1,7 @@
 require('./bootstrap');
 
-// Vue.component('app-modal', require('./components/AppModal.vue'));
+Vue.component('app-modal', require('./components/AppModal.vue'));
+
 // app components
 import App from './App.vue'
 import Dashboard from './components/Dashboard.vue'
@@ -28,10 +29,11 @@ router.map({
     '/web-config': {
         component: WebConfig
     },
-    'support': {
+    '/support': {
         component: Support
-    }
+    },
 })
+
 
 // Any invalid route will redirect to home
 router.redirect({
