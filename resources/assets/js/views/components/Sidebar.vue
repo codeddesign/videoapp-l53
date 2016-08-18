@@ -6,26 +6,26 @@
             </div>
 
             <ul class="navlist">
-                <a v-link="'/dashboard'">
+                <a v-link="{name:'dashboard'}">
                     <li v-link-active>DASHBOARD</li>
                 </a>
-                <a v-link="'/analytics'">
+                <a v-link="{name:'analytics'}">
                     <li class="">ANALYTICS</li>
                 </a>
 
-                <a v-link="'/campaigns'">
+                <a v-link="{name:'campaigns.listing'}">
                     <li class="">CAMPAIGNS</li>
                 </a>
 
-                <a v-link="'/create-campaigns'">
+                <a v-link="{name:'campaigns.create'}">
                     <li class="">CREATE CAMPAIGN</li>
                 </a>
 
-                <a v-link="'/web-config'">
+                <a v-link="{name:'webconfig'}">
                     <li class="">WEBSITE CONFIG</li>
                 </a>
 
-                <a v-link="'/support'">
+                <a v-link="{name:'support'}">
                     <li class="">SUPPORT</li>
                 </a>
             </ul>

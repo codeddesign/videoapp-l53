@@ -8,7 +8,8 @@ import App from './views/layouts/default/default.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import Analytics from './views/analytics/Analytics.vue'
 import Campaigns from './views/campaigns/Campaigns.vue'
-import CreateCampaign from './views/campaigns/CreateCampaign.vue'
+import CreateCampaign from './views/campaigns/components/create.vue'
+import ListCampaign from './views/campaigns/components/listing.vue'
 import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 
@@ -27,21 +28,33 @@ const router = new VueRouter({
 
 router.map({
     '/dashboard': {
+        name: 'dashboard',
         component: Dashboard
     },
     '/analytics': {
+        name: 'analytics',
         component: Analytics
     },
     '/campaigns': {
-        component: Campaigns
-    },
-    '/create-campaigns': {
-        component: CreateCampaign
+        name: 'campaigns',
+        component: Campaigns,
+        subRoutes: {
+            '/listing': {
+                name: 'campaigns.listing',
+                component: ListCampaign
+            },
+            '/create': {
+                name: 'campaigns.create',
+                component: CreateCampaign
+            }
+        }
     },
     '/web-config': {
+        name: 'webconfig',
         component: WebConfig
     },
     '/support': {
+        name: 'support',
         component: Support
     },
 })
