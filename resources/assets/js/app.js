@@ -3,7 +3,8 @@ require('./bootstrap');
 Vue.component('app-modal', require('./views/components/AppModal.vue'));
 
 // app components
-import App from './views/Layout.vue'
+// import App from './views/Layout.vue'
+import App from './views/layouts/default/default.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import Analytics from './views/analytics/Analytics.vue'
 import Campaigns from './views/campaigns/Campaigns.vue'
@@ -22,7 +23,6 @@ const router = new VueRouter({
     history: false,
     root: '/app',
     linkActiveClass: 'active', // this is used to set the active links
-    mode: 'html5'
 });
 
 router.map({

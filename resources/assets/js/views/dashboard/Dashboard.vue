@@ -1,10 +1,2 @@
-<template>
-    <div>
-        <h1>dashboard</h1>
-    </div>
-</template>
-<script>
-    export default {
-
-    }
-</script>
+<template src="./dashboard.html"></template>
+<script src="./dashboard.js"></script>
