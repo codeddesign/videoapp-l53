@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta charset="utf-8" id="token" value="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel='shortcut icon' href='/home/images/logo.png'>
     <title>Video App</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">

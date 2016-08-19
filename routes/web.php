@@ -26,3 +26,8 @@ Route::post('password/reset', 'Authentication\ResetPasswordController@reset');
 
 // Vue app.
 Route::get('/app', ['uses' => 'PagesController@index'])->name('app')->middleware('auth', 'verifyaccount');
+
+// Internal API
+Route::get('campaigns-resources', 'Api\CampaignsResourcesController@index');
+Route::resource('campaigns', 'Api\CampaignsController');
+

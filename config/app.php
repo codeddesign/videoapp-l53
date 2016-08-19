@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => 'Video Ad',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,8 @@ return [
         VideoAd\Providers\AuthServiceProvider::class,
         VideoAd\Providers\EventServiceProvider::class,
         VideoAd\Providers\RouteServiceProvider::class,
+
+        Laravel\Passport\PassportServiceProvider::class
 
     ],
 
