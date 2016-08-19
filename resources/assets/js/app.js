@@ -62,7 +62,8 @@ router.map({
 
 // Any invalid route will redirect to home
 router.redirect({
-    '*': '/dashboard'
+    '*': '/dashboard',
+    '/campaigns': '/campaigns/listing'
 })
 
 router.start(App, '#app')
