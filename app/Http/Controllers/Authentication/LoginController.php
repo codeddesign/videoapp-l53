@@ -41,13 +41,13 @@ class LoginController extends Controller
         }
 
         if (!Auth::user()->verified_phone) {
-            // @todo create an even to send a sms message and verify the user
+            // @todo create an event to send a sms message and verify the user
             return redirect()->route('verify.phone');
         }
 
 
         if (!Auth::user()->verified_email) {
-            // @todo create an even to send an email message and verify the user
+            // @todo create an event to send an email message and verify the user
             return redirect()->route('verify.email');
         }
 
