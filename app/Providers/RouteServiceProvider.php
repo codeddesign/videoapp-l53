@@ -17,6 +17,13 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'VideoAd\Http\Controllers';
 
     /**
+     * This namespace is applied to your controller API routes.
+     *
+     * @var string
+     */
+    protected $apiNamespace = 'VideoAd\Http\Controllers\Api';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -69,8 +76,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::group([
-            'middleware' => ['api', 'auth:api'],
-            'namespace' => $this->namespace,
+//            'middleware' => ['api', 'auth:api'],
+            'namespace' => $this->apiNamespace,
             'prefix' => 'api',
         ], function ($router) {
             require base_path('routes/api.php');

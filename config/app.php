@@ -176,7 +176,8 @@ return [
         VideoAd\Providers\EventServiceProvider::class,
         VideoAd\Providers\RouteServiceProvider::class,
 
-        Laravel\Passport\PassportServiceProvider::class
+        Laravel\Passport\PassportServiceProvider::class,
+        Vinelab\Api\ApiServiceProvider::class
 
     ],
 

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b32972c44e2b0f5c75697c0f0b7a0510",
-    "content-hash": "882f2a340087b655b3ddb8453c235f1c",
+    "hash": "cc2b8c6b7b6ed611e4b47cf26df9557b",
+    "content-hash": "ad9f2e5297f386ad896f0ee217ae83c7",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -649,16 +649,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v0.2.2",
+            "version": "v0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "8a091eb7b74caab36b58d5d00a7a7a60e01ea497"
+                "reference": "9af5e9d734e42718608ada9c514db7efb586fdd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/8a091eb7b74caab36b58d5d00a7a7a60e01ea497",
-                "reference": "8a091eb7b74caab36b58d5d00a7a7a60e01ea497",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/9af5e9d734e42718608ada9c514db7efb586fdd9",
+                "reference": "9af5e9d734e42718608ada9c514db7efb586fdd9",
                 "shasum": ""
             },
             "require": {
@@ -709,7 +709,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2016-08-18 19:56:48"
+            "time": "2016-08-19 19:20:56"
         },
         {
             "name": "lcobucci/jwt",
@@ -2371,6 +2371,64 @@
                 "dump"
             ],
             "time": "2016-07-26 08:04:17"
+        },
+        {
+            "name": "vinelab/api-manager",
+            "version": "v0.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Vinelab/api-manager.git",
+                "reference": "c48576e47db9863fca4c634df1ff7558957c90f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Vinelab/api-manager/zipball/c48576e47db9863fca4c634df1ff7558957c90f5",
+                "reference": "c48576e47db9863fca4c634df1ff7558957c90f5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.*",
+                "illuminate/http": "5.*",
+                "illuminate/routing": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "illuminate/pagination": "5.*",
+                "mockery/mockery": "0.9.0",
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "tests/Vinelab/TestCase.php"
+                ],
+                "psr-0": {
+                    "Vinelab\\Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abed Halawi",
+                    "email": "abed.halawi@vinelab.com"
+                },
+                {
+                    "name": "Mahmoud Zalt",
+                    "email": "mahmoud@vinelab.com"
+                }
+            ],
+            "description": "Laravel API Manager Package - beatify and unify your responses with the least effort possible.",
+            "keywords": [
+                "api",
+                "laravel",
+                "package",
+                "response"
+            ],
+            "time": "2015-12-11 11:58:33"
         },
         {
             "name": "vlucas/phpdotenv",
