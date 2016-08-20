@@ -19,3 +19,13 @@ $factory->define(VideoAd\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(VideoAd\Models\CampaignType::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->name,
+        'alias' => $faker->name,
+        'available' => $faker->boolean,
+        'single' => $faker->boolean,
+        'has_name' => $faker->boolean,
+    ];
+});
