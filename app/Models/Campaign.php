@@ -4,6 +4,7 @@ namespace VideoAd\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use VideoAd\User;
 
 /**
  * @author Adib Hanna <adibhanna@gmail.com>
@@ -36,6 +37,16 @@ class Campaign extends Model
     protected $casts = [
         'rpm' => 'integer',
     ];
+
+    /**
+     * A campaign belongs to a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     /**
      * A campaign belongs to a campaign type.

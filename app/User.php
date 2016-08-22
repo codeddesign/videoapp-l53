@@ -6,6 +6,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use VideoAd\Models\Campaign;
 
 /**
  * @author Adib Hanna <adibhanna@gmail.com>
@@ -60,5 +61,15 @@ class User extends Authenticatable
     public function verified()
     {
         return $this->verified_email || $this->verified_phone;
+    }
+
+    /**
+     * A user may have many campaigns.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
     }
 }
