@@ -3,6 +3,7 @@
 namespace VideoAd\Http\Controllers\Api;
 
 use Api;
+use Illuminate\Support\Facades\Session;
 use VideoAd\Http\Controllers\Controller;
 use VideoAd\Http\Mappers\CampaignMapper;
 use VideoAd\Http\Requests\CampaignRequest;
@@ -14,6 +15,8 @@ use VideoAd\Http\Requests\CampaignRequest;
  */
 class CampaignsController extends Controller
 {
+    const TEMPORARY_PREVIEW_KEY = 'temporary_preview_key';
+
     /**
      * List a paginated list of the campaigns.
      *
@@ -39,6 +42,19 @@ class CampaignsController extends Controller
         return Api::respond($campaignMapper,  auth()->user()->campaigns()->findOrFail($id));
     }
 
+    public function storePreviewLink(CampaignMapper $request)
+    {
+        // name, size, type, video
+        $campaign = auth()->user()->addCampaign($request->all(), $toSession = true);
+
+        Session::set(self::TEMPORARY_PREVIEW_KEY, $campaign);
+
+        return [
+            'campaign' => $campaign,
+            'url' => $this->getEmbedLink($campaign->id)
+        ];
+    }
+
     /**
      * Store a new campaign.
      *
@@ -53,6 +69,8 @@ class CampaignsController extends Controller
 
         $data = $request->all() + ['user_id' => $user_id, 'campaign_type_id' => $campaign_type_id];
 
+        Session::remove(self::TEMPORARY_PREVIEW_KEY);
+
         // example of the data sent
         /**
          *  {
@@ -66,7 +84,8 @@ class CampaignsController extends Controller
 
         return response([
             'message' => 'Successfully added a campaign.',
-            'campaign' => $campaign
+            'campaign' => $campaign,
+            'url' => $this->getEmbedLink($campaign->id),
         ], 201);
     }
 
@@ -108,5 +127,18 @@ class CampaignsController extends Controller
         return response([
             'message' => 'Successfully deleted the campaign.'
         ], 200);
+    }
+
+    /**
+     * Generate teh embed link.
+     *
+     * @param int $campaignId
+     * @return string
+     */
+    public function getEmbedLink($campaignId = 0)
+    {
+        $pattern = '%s/p%s.js';
+
+        return sprintf($pattern, env('PLAYER_HOST'), $campaignId);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use VideoAd\Models\Campaign;
+use VideoAd\Services\Youtube;
 
 /**
  * @author Adib Hanna <adibhanna@gmail.com>
@@ -71,5 +72,28 @@ class User extends Authenticatable
     public function campaigns()
     {
         return $this->hasMany(Campaign::class);
+    }
+
+    // @todo remove this from here.
+    public function addCampaign(array $data, $toSession = false)
+    {
+        // add campaign
+        $data['user_id'] = $this->id;
+
+        if (!Campaign::typeHasName($data['type'])) {
+            $data['name'] = Youtube::title($data);
+        }
+
+        $campaign = new Campaign();
+        $campaign->fill($data);
+
+        if (!$toSession) {
+            $campaign->save();
+        }
+
+        // add campaign videos
+        $campaign->videos = $campaign->addVideos($data, $toSession);
+
+        return $campaign;
     }
 }

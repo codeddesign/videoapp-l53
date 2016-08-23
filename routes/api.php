@@ -4,3 +4,4 @@
 Route::resource('campaign-types', 'CampaignTypesController', ['except'=> ['show', 'create', 'edit']]);
 
 Route::resource('campaigns', 'CampaignsController');
+Route::post('/campaigns/store/preview', ['uses' => 'CampaignsController@storePreviewLink', 'as' => 'campaigns.store.preview']);

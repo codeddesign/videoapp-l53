@@ -31,6 +31,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        // check this for more info:
+        // https://docs.sentry.io/hosted/clients/php/integrations/laravel/
+        if ($this->shouldReport($e)) {
+            app('sentry')->captureException($e);
+        }
         parent::report($e);
     }
 
@@ -43,6 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        return response()->view('errors.500', [
+            'sentryID' => $this->sentryID,
+        ], 500);
+
         return parent::render($request, $e);
     }
 

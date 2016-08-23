@@ -57,4 +57,39 @@ class Campaign extends Model
     {
         return $this->belongsTo(CampaignType::class, 'campaign_type_id');
     }
+
+    /**
+     * A campaign may have many videos.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    //@todo remove this from here.
+    public function addVideos(array $data, $toSession = false)
+    {
+        $videos = Video::videosFromData($data);
+
+        $list = [];
+        foreach ($videos as $url) {
+            if (trim($url)) {
+                $video = new Video();
+                $video->fill([
+                    'campaign_id' => $this->id,
+                    'url' => $url,
+                ]);
+
+                if (!$toSession) {
+                    $video->save();
+                }
+
+                $list[] = $video->toArray();
+            }
+        }
+
+        return $list;
+    }
 }
