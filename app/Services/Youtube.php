@@ -5,6 +5,11 @@ namespace VideoAd\Services;
 use InvalidArgumentException;
 use VideoAd\Models\Video;
 
+/**
+ * @author Adib Hanna <adibhanna@gmail.com>
+ * Class Youtube
+ * @package VideoAd\Services
+ */
 class Youtube
 {
     /**

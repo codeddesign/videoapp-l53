@@ -9,7 +9,7 @@
                 eventId: '{{ $sentryID }}',
 
                 // use the public DSN (dont include your secret!)
-                dsn: 'https://<key>@app.getsentry.com/<project>'
+                dsn: 'https://2612feb24a7342a5ba960eaecb41803f@app.getsentry.com/93921'
             });
         </script>
     @endunless

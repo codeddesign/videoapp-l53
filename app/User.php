@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use VideoAd\Models\Campaign;
+use VideoAd\Models\CampaignType;
 use VideoAd\Services\Youtube;
 
 /**
@@ -80,7 +81,10 @@ class User extends Authenticatable
         // add campaign
         $data['user_id'] = $this->id;
 
-        if (!Campaign::typeHasName($data['type'])) {
+        $campaignType = CampaignType::where('alias', $data['type'])->first();
+        $data['campaign_type_id'] = $campaignType->id;
+
+        if (! $campaignType->has_name) {
             $data['name'] = Youtube::title($data);
         }
 

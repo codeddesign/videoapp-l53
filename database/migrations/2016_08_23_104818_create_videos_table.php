@@ -17,6 +17,10 @@ class CreateVideosTable extends Migration
             $table->increments('id');
             $table->string('url');
             $table->enum('source', ['youtube', 'vimeo', 'upload', 'other',])->default('youtube')->index();
+
+            $table->integer('campaign_id')->unsigned();
+            $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

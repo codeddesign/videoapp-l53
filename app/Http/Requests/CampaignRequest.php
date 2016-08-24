@@ -24,10 +24,9 @@ class CampaignRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'rpm' => 'required',
-            'size' => 'required',
-            'campaign_type_id' => 'required'
+//            'name' => 'required',
+//            'rpm' => 'required',
+//            'size' => 'required',
         ];
     }
 }

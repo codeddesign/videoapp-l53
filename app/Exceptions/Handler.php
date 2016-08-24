@@ -8,6 +8,8 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    private $sentryID;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -33,9 +35,9 @@ class Handler extends ExceptionHandler
     {
         // check this for more info:
         // https://docs.sentry.io/hosted/clients/php/integrations/laravel/
-        if ($this->shouldReport($e)) {
-            app('sentry')->captureException($e);
-        }
+//        if ($this->shouldReport($e)) {
+//            $this->sentryID = app('sentry')->captureException($e);
+//        }
         parent::report($e);
     }
 

@@ -15,7 +15,10 @@ use VideoAd\Http\Requests\CampaignRequest;
  */
 class CampaignsController extends Controller
 {
-    const TEMPORARY_PREVIEW_KEY = 'temporary_preview_key';
+    /**
+     * Key for session that holds the temporary preview data.
+     */
+    const TEMPORARY_PREVIEW_KEY = 'temporary_campaign_preview_key';
 
     /**
      * List a paginated list of the campaigns.
@@ -42,16 +45,21 @@ class CampaignsController extends Controller
         return Api::respond($campaignMapper,  auth()->user()->campaigns()->findOrFail($id));
     }
 
-    public function storePreviewLink(CampaignMapper $request)
+    /**
+     * Preview the campaign link.
+     *
+     * @param CampaignRequest $request
+     * @return array
+     */
+    public function storePreviewLink(CampaignRequest $request)
     {
-        // name, size, type, video
+        // pass the following: name, size, type, video
         $campaign = auth()->user()->addCampaign($request->all(), $toSession = true);
 
         Session::set(self::TEMPORARY_PREVIEW_KEY, $campaign);
 
         return [
-            'campaign' => $campaign,
-            'url' => $this->getEmbedLink($campaign->id)
+            'url' => $this->getEmbedLink()
         ];
     }
 
@@ -63,24 +71,11 @@ class CampaignsController extends Controller
      */
     public function store(CampaignRequest $request)
     {
-        $user_id = $request->user()->id;
-
-        $campaign_type_id = $request->campaign_type_id;
-
-        $data = $request->all() + ['user_id' => $user_id, 'campaign_type_id' => $campaign_type_id];
+        // pass the following when POSTing: name, size, type, video
 
         Session::remove(self::TEMPORARY_PREVIEW_KEY);
 
-        // example of the data sent
-        /**
-         *  {
-         *      "name": "campaign name",
-         *      "rpm": 123,
-         *      "size": "auto",
-         *      "campaign_type_id":2
-         *  }
-         */
-        $campaign = auth()->user()->campaigns()->create($data);
+        $campaign = auth()->user()->addCampaign($request->all());
 
         return response([
             'message' => 'Successfully added a campaign.',
@@ -91,6 +86,7 @@ class CampaignsController extends Controller
 
     /**
      * Update a campaign.
+     * @todo
      *
      * @param CampaignRequest $request
      * @param $id
@@ -130,7 +126,9 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Generate teh embed link.
+     * Generate the embed link.
+     * example: http://domain.com/p{number}.js
+     * where 'number' is an interger.
      *
      * @param int $campaignId
      * @return string

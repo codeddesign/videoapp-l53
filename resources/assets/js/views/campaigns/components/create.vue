@@ -4,7 +4,7 @@
             <div class="steps clearfix">
                 <ul>
                     <li v-for="(index, tab) in tabs" :class="{'current': step == tab.name, 'disabled': tab.disabled}" @click="toStep(index + 1)">
-                        <span class="number">@{{ index + 1 }}.</span> @{{ tab.title }}
+                        <span class="number">{{ index + 1 }}.</span> {{ tab.title }}
                     </li>
                 </ul>
             </div>
@@ -14,9 +14,9 @@
                 <div class="selectadtype-title">Select your ad type to proceed:</div>
                 <div class="selectadtype-wrapper">
                     <ul class="selectadtype-adtypes">
-                        <li v-for="(type, info) in campaign_types" :class="{'disabled': !info.available}" @click="pickAdType(type)">
-                            <img :src="'/assets/images/adtype-'+type+'.png'">
-                            <div class="selectadtype-adtypetitle">@{{ info.title }}</div>
+                        <li v-for="type in campaign_types" :class="{'disabled': !type.available}" @click="pickAdType(type)">
+                            <img :src="'/images/adtype-'+type.alias+'.png'">
+                            <div class="selectadtype-adtypetitle">{{ type.title }}</div>
                             <div class="selectadtype-adtypeselect">select this ad</div>
                         </li>
                     </ul>
@@ -27,10 +27,10 @@
             <!-- start create ad name -->
             <div class="adcreation-section" v-show="step == 'name'">
                 <div class="selectadtype-title">
-                    @{{ selectedCampaign.has_name ? 'Create a Reference Name for your Ad:' : 'Ad your youtube link' }}
+                    {{ selectedCampaign.has_name ? 'Create a Reference Name for your Ad:' : 'Ad your youtube link' }}
 
                     <div class="message error" v-if="error">
-                        @{{ error }}
+                        {{ error }}
                     </div>
                 </div>
                 <div class="selectadtype-wrapper">
@@ -52,7 +52,7 @@
                                     <label for="video_size">VIDEO SIZE</label>
 
                                     <select id="video_size" class="yt-uix-form-input-select-element" required v-model="campaign.size">
-                                        <option v-for="(key, value) in sizes" :value="key" :selected="campaign.size==key">@{{value | capitalize }}</optgroup>
+                                        <option v-for="(key, value) in sizes" :value="key" :selected="campaign.size==key">{{value | capitalize }}</optgroup>
                                     </select>
                                 </div>
 
@@ -103,7 +103,163 @@
 </template>
 <script>
     export default {
+        el: 'body',
+        data() {
+            return {
+                campaign_types: null,
+                step: 'type',
+                tabNo: 0,
+                loading: false,
+                error: false,
+                tabs: [
+                    {
+                        name: 'type',
+                        title: 'Select Ad Type',
+                        disabled: false
+                    }, {
+                        name: 'name',
+                        title: 'Create Ad Name',
+                        disabled: true
+                    }, {
+                        name: 'preview',
+                        title: 'Preview Campaign',
+                        disabled: true
+                    }, {
+                        name: 'code',
+                        title: 'Get Code',
+                        disabled: true
+                    }],
+                sizes: null,
+                campaign: {
+                    type: false,
+                    name: '',
+                    size: 'auto',
+                    video: ''
+                },
+                backup: {},
+                savedCampaign: {}
+            }
+        },
+        ready: function() {
+            this.$http.get('/api/campaign-types').then((response)=>{
+                this.campaign_types = response.data.data;
+            });
 
+            this.$http.get('/api/video-sizes').then((response)=>{
+                this.sizes = response.data;
+            });
+
+            // hold a clean copy of campaign
+            this.backup = JSON.parse(JSON.stringify(this.campaign));
+        },
+
+        computed: {
+            selectedCampaign: function() {
+                return _.find(this.campaign_types, (type)=>{
+                    return type.alias == this.campaign.type;
+                });
+            }
+        },
+
+        methods: {
+            resetCampaign: function() {
+                Object.keys(this.campaign).forEach(function(key) {
+                    this.campaign[key] = this.backup[key];
+                }.bind(this));
+            },
+
+            nextStep: function(index) {
+                index -= 1;
+
+                this.tabs[index].disabled = false;
+
+                this.step = this.tabs[index].name;
+            },
+            toStep: function(index) {
+                index -= 1;
+
+                var tab = this.tabs[index];
+
+                if (index == 0) {
+                    this.resetCampaign();
+                }
+
+                this.tabs.forEach(function(tab, i) {
+                    if (i > index) {
+                        tab.disabled = true;
+                    }
+                });
+
+                if (!tab.disabled) {
+                    this.step = tab.name;
+                }
+            },
+            pickAdType: function(type) {
+                this.campaign.type = type.alias;
+
+                this.nextStep(2);
+            },
+            addJSPreview: function(src) {
+                var script;
+
+                if (!src) {
+                    this.$els.previewContainer.innerHTML = '';
+
+                    return false;
+                }
+
+                script = document.createElement('script');
+                script.src = src;
+
+                this.$els.previewContainer.appendChild(script);
+            },
+            checkPreview: function() {
+                this.nextStep(3);
+
+                this.loading = true;
+                this.error = false;
+                this.addJSPreview();
+
+                this.$http.post('/api/campaigns/store/preview', this.campaign)
+                        .then(function(response) {
+                            this.loading = false;
+
+                            this.addJSPreview(response.data.url);
+                        })
+                        .catch(function(response) {
+                            this.error = response.data.message;
+
+                            this.toStep(2);
+                        });
+            },
+            save: function() {
+                this.nextStep(4);
+
+                this.loading = true;
+
+                this.$http.post('/api/campaigns', this.campaign)
+                        .then(function(response) {
+                            this.loading = false;
+
+                            this.resetCampaign();
+
+                            this.tabs.forEach(function(tab, i) {
+                                if (i > 0 && i < 4) {
+                                    tab.disabled = true;
+                                }
+                            });
+
+                            this.savedCampaign = response.data.campaign;
+
+                            this.$nextTick(function() {
+                                this.$els.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>';
+                            });
+                        });
+            },
+            selectEmbedText: function() {
+                this.$els.embedJsCode.select();
+            }
+        }
     }
 </script>
 
