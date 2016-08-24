@@ -30,6 +30,11 @@ class Campaign extends Model
     protected $fillable = ['name', 'user_id', 'campaign_type_id', 'rpm', 'size'];
 
     /**
+     * @var array
+     */
+    protected $appends = ['created_at_humans'];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -37,6 +42,19 @@ class Campaign extends Model
     protected $casts = [
         'rpm' => 'integer',
     ];
+
+    /**
+     * Humans readable time.
+     * We handle missing created_at when is temporary/on-session.
+     */
+    public function getCreatedAtHumansAttribute()
+    {
+        if (!$this->created_at) {
+            return '1 second ago';
+        }
+
+        return $this->created_at->diffForHumans();
+    }
 
     /**
      * A campaign belongs to a user.

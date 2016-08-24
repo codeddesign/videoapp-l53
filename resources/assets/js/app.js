@@ -1,7 +1,5 @@
 require('./bootstrap');
 
-Vue.component('app-modal', require('./views/components/AppModal.vue'));
-
 // app components
 // import App from './views/Layout.vue'
 import App from './views/layouts/default/default.vue'

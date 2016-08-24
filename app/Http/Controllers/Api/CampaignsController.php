@@ -28,7 +28,7 @@ class CampaignsController extends Controller
      */
     public function index(CampaignMapper $campaignMapper)
     {
-        $campaigns = auth()->user()->campaigns()->paginate();
+        $campaigns = auth()->user()->campaigns()->paginate(4);
 
         return Api::respond($campaignMapper, $campaigns);
     }

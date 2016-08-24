@@ -23,6 +23,8 @@ window.Vue = require('vue');
 require('vue-resource');
 window.VueRouter = require('vue-router');
 
+Vue.component('app-modal', require('./views/components/AppModal.vue'));
+
 /**
  * We'll register a HTTP interceptor to attach the "XSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware

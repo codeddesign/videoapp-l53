@@ -103,7 +103,7 @@
 </template>
 <script>
     export default {
-        el: 'body',
+//        el: 'body',
         data() {
             return {
                 campaign_types: null,

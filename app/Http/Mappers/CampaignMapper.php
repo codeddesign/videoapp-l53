@@ -23,7 +23,8 @@ class CampaignMapper
             'rpm' => (int) $campaign->rpm,
             'size' => $campaign->size,
             'user' => $this->user($campaign),
-            'type' => $campaign->type
+            'type' => $campaign->type,
+            'created_at_humans' => $campaign->created_at_humans
         ];
     }
 

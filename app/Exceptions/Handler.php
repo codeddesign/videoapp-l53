@@ -35,9 +35,9 @@ class Handler extends ExceptionHandler
     {
         // check this for more info:
         // https://docs.sentry.io/hosted/clients/php/integrations/laravel/
-        if ($this->shouldReport($e)) {
-            $this->sentryID = app('sentry')->captureException($e);
-        }
+//        if ($this->shouldReport($e)) {
+//            $this->sentryID = app('sentry')->captureException($e);
+//        }
         parent::report($e);
     }
 
