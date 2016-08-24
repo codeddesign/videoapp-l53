@@ -10,6 +10,7 @@ class Handler extends ExceptionHandler
 {
     private $sentryID;
 
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -35,9 +36,9 @@ class Handler extends ExceptionHandler
     {
         // check this for more info:
         // https://docs.sentry.io/hosted/clients/php/integrations/laravel/
-//        if ($this->shouldReport($e)) {
-//            $this->sentryID = app('sentry')->captureException($e);
-//        }
+        if ($this->shouldReport($e)) {
+            $this->sentryID = app('sentry')->captureException($e);
+        }
         parent::report($e);
     }
 
@@ -50,9 +51,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-//        return response()->view('errors.500', [
-//            'sentryID' => $this->sentryID,
-//        ], 500);
+        return response()->view('errors.500', [
+            'sentryID' => $this->sentryID,
+        ], 500);
 
         return parent::render($request, $e);
     }
