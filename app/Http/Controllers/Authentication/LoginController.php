@@ -10,7 +10,7 @@ use VideoAd\Http\Requests\LoginRequest;
 use VideoAd\Http\Controllers\Controller;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class LoginController
  * @package VideoAd\Http\Controllers\Authentication
  */

@@ -11,7 +11,7 @@ use VideoAd\Models\CampaignType;
 use VideoAd\Services\Youtube;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class User
  * @package VideoAd
  */

@@ -5,7 +5,7 @@ namespace VideoAd\Http\Controllers;
 use Illuminate\View\View;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class HomeController
  * @package VideoAd\Http\Controllers
  */

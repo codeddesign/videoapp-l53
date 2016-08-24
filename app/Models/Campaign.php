@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use VideoAd\User;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class Campaign
  * @package VideoAd\Models
  */

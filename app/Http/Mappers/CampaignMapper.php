@@ -5,7 +5,7 @@ namespace VideoAd\Http\Mappers;
 use VideoAd\Models\Campaign;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class CampaignMapper
  * @package VideoAd\Http\Mappers
  */

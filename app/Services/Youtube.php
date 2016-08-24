@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use VideoAd\Models\Video;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class Youtube
  * @package VideoAd\Services
  */

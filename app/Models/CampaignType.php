@@ -5,7 +5,7 @@ namespace VideoAd\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class CampaignType
  * @package VideoAd\Models
  */

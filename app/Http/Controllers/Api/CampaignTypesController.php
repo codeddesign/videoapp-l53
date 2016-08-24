@@ -9,7 +9,7 @@ use VideoAd\Http\Controllers\Controller;
 use VideoAd\Http\Mappers\CampaignTypesMapper;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class CampaignTypesController
  * @package VideoAd\Http\Controllers\Api
  */

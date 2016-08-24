@@ -10,7 +10,7 @@ use VideoAd\Http\Controllers\Controller;
 use VideoAd\Http\Requests\RegistrationRequest;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class RegistrationController
  * @package VideoAd\Http\Controllers\Authentication
  */

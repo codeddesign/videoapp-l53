@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use VideoAd\Services\Youtube;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
+ * @author Coded Design
  * Class Video
  * @package VideoAd\Models
  */
