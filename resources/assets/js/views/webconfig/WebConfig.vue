@@ -26,12 +26,12 @@
 
                 <div v-for="site in sites">
                     <div class="accountpass-accountid">
-                        <div class="sitevalidation-sitelink">@{{ site.link }}</div>
+                        <div class="sitevalidation-sitelink">{{ site.link }}</div>
                         <div class="sitevalidation-timestamp">MARCH 15, 2016</div>
                         <!-- site approval alert -->
 
                         <!-- end approval alert -->
-                        <button v-on:click="remove(site.id)" class="sitevalidation-removesite">REMOVE</button>
+                        <button v-on:click="remove(site)" class="sitevalidation-removesite">REMOVE</button>
 
                         <div class="sitevalidation-siteapproved">APPROVED</div>
                         <div class="sitevalidation-sitepending">PENDING</div>
@@ -46,31 +46,31 @@
         data() {
             return {
                 site: {
-                    'link': ''
+                    link: ''
                 },
                 sites: []
             };
         },
 
-        created: function() {
+        ready() {
             this.$http.get('/api/wordpress').then((response) => {
                 this.$set('sites', response.data.data);
             });
         },
 
         methods: {
-            add: function() {
-                this.$http.post('/api/wordpress', this.site).then((response) => {
+            add() {
+                this.$http.post('/api/wordpress', {domain: this.site.link}).then((response) => {
                     if (response.data.error) {
                         alert(response.data.error);
                         return false;
                     }
-                    this.sites.push({'id': response.data.id, 'link': response.data.link});
+                    this.sites.push(response.data.site);
                 });
             },
 
-            remove: function(site) {
-                this.$http.delete('/api/wordpress/' + id).then(() => {
+            remove(site) {
+                this.$http.delete('/api/wordpress/' + site.id).then(() => {
                     this.sites.$remove(site);
                 });
             }
