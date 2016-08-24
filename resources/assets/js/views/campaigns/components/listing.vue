@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div id="campaign-listing">
+        <app-modal></app-modal>
         <div class="page-index" v-cloak>
             <div class="campaignselection-wrap">
                 <div class="campaignview-wrap">
@@ -132,7 +133,7 @@
             };
         },
 
-        ready: function() {
+        ready() {
             this.$http.get('/api/campaigns?page='+this.pagination.page).then((response) => {
                 this.response.campaigns = response.data.data;
                 this.pagination.page = response.data.page;
@@ -141,7 +142,6 @@
                 if(response.data.per_page < response.data.total) {
                     this.pagination.next = true;
                 }
-                console.log(response.data.total / response.data.page);
             });
         },
 
@@ -171,11 +171,11 @@
 
             },
 
-            toggleAdvancedSearch: function() {
+            toggleAdvancedSearch() {
                 this.advancedSearch = !this.advancedSearch;
             },
 
-            deleteCampaign: function(campaign) {
+            deleteCampaign(campaign) {
                 this.$broadcast('modal-open', {
                     title: 'Confirm',
                     body: 'Are you sure you want to remove "' + campaign.name + '"?',
@@ -190,13 +190,13 @@
                 }.bind(this));
             },
 
-            embedCode: function(campaign) {
+            embedCode(campaign) {
                 this.$broadcast('modal-open', {
                     title: 'Copy the code bellow into your website',
                     body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;"><script src=http://a3m.io:8000/p' + campaign.id +'.js"><\/script><\/textarea>',
                     html: true
                 });
             }
-        }
+        },
     }
 </script>

@@ -17,9 +17,8 @@
     </div>
 </template>
 <script>
-    export default
-    {
-        data: () => {
+    export default {
+        data() {
             return {
                 visible: false,
                 title: false,
