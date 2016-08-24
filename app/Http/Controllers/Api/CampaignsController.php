@@ -72,7 +72,6 @@ class CampaignsController extends Controller
     public function store(CampaignRequest $request)
     {
         // pass the following when POSTing: name, size, type, video
-
         Session::remove(self::TEMPORARY_PREVIEW_KEY);
 
         $campaign = auth()->user()->addCampaign($request->all());
