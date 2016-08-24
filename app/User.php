@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use VideoAd\Models\Campaign;
 use VideoAd\Models\CampaignType;
+use VideoAd\Models\Wordpress;
 use VideoAd\Services\Youtube;
 
 /**
@@ -73,6 +74,16 @@ class User extends Authenticatable
     public function campaigns()
     {
         return $this->hasMany(Campaign::class);
+    }
+
+    /**
+     * A user may have many wordpress sites.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wordpressSites()
+    {
+        return $this->hasMany(Wordpress::class);
     }
 
     // @todo remove this from here.

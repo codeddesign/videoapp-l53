@@ -28,7 +28,7 @@ class CampaignsController extends Controller
      */
     public function index(CampaignMapper $campaignMapper)
     {
-        $campaigns = auth()->user()->campaigns()->paginate();
+        $campaigns = auth()->user()->campaigns()->paginate(200);
 
         return Api::respond($campaignMapper, $campaigns);
     }
@@ -86,7 +86,7 @@ class CampaignsController extends Controller
 
     /**
      * Update a campaign.
-     * @todo
+     * @todo ask adelin abt this.
      *
      * @param CampaignRequest $request
      * @param $id
