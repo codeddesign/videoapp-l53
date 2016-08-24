@@ -86,13 +86,14 @@ class User extends Authenticatable
         return $this->hasMany(Wordpress::class);
     }
 
-    // @todo remove this from here.
+    // @todo refactor this
     public function addCampaign(array $data, $toSession = false)
     {
         // add campaign
         $data['user_id'] = $this->id;
 
         $campaignType = CampaignType::where('alias', $data['type'])->first();
+
         $data['campaign_type_id'] = $campaignType->id;
 
         if (! $campaignType->has_name) {
@@ -100,6 +101,7 @@ class User extends Authenticatable
         }
 
         $campaign = new Campaign();
+
         $campaign->fill($data);
 
         if (!$toSession) {

@@ -4,6 +4,7 @@ namespace VideoAd\Http\Controllers\Api;
 
 use Api;
 use Illuminate\Http\Request;
+use VideoAd\Http\Requests\CampaignTypeRequest;
 use VideoAd\Models\CampaignType;
 use VideoAd\Http\Controllers\Controller;
 use VideoAd\Http\Mappers\CampaignTypesMapper;
@@ -31,21 +32,11 @@ class CampaignTypesController extends Controller
     /**
      * Add a new campaign type.
      *
-     * @param Request $request
+     * @param CampaignTypeRequest $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(Request $request)
+    public function store(CampaignTypeRequest $request)
     {
-        // We are not using a request object to validate
-        // this request for the sake of simplicity.
-        $this->validate($request, [
-            'title' => 'required|max:255',
-            'alias' => 'required|max:255',
-            'available' => 'boolean',
-            'single' => 'boolean',
-            'has_name' => 'boolean',
-        ]);
-
         $type = CampaignType::create($request->all());
 
         return response([
@@ -57,21 +48,14 @@ class CampaignTypesController extends Controller
     /**
      * Update an existing campaign type.
      *
-     * @param Request $request
+     * @param CampaignTypeRequest $request
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Request $request, $id)
+    public function update(CampaignTypeRequest $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required|max:255',
-            'alias' => 'required|max:255',
-            'available' => 'boolean',
-            'single' => 'boolean',
-            'has_name' => 'boolean',
-        ]);
-
         $type = CampaignType::findOrFail($id);
+
         $type->update($request->all());
 
         return response([

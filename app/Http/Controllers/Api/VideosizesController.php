@@ -12,6 +12,9 @@ use VideoAd\Http\Controllers\Controller;
 class VideosizesController extends Controller
 {
     /**
+     * Return the video sizes.
+     * Stored in a config file.
+     *
      * @return View
      */
     public function index()
