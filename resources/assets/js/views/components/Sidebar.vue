@@ -6,28 +6,41 @@
             </div>
 
             <ul class="navlist">
-                <a v-link="{name:'dashboard'}">
-                    <li v-link-active>DASHBOARD</li>
-                </a>
-                <a v-link="{name:'analytics'}">
-                    <li class="">ANALYTICS</li>
-                </a>
+                <li v-link="{name:'dashboard'}">
+                    <a>
+                        <i class="fa fa-dashboard"></i> DASHBOARD
+                    </a>
+                </li>
 
-                <a v-link="{name:'campaigns.listing'}">
-                    <li class="">CAMPAIGNS</li>
-                </a>
+                <li v-link="{name:'campaigns.listing'}">
+                    <a>
+                        <i class="fa fa-newspaper-o"></i> CAMPAIGNS
+                    </a>
+                </li>
 
-                <a v-link="{name:'campaigns.create'}">
-                    <li class="">CREATE CAMPAIGN</li>
-                </a>
+                <li v-link="{name:'campaigns.create'}">
+                    <a>
+                        <i class="fa fa-plus"></i> CREATE CAMPAIGN
+                    </a>
+                </li>
 
-                <a v-link="{name:'webconfig'}">
-                    <li class="">WEBSITE CONFIG</li>
-                </a>
+                <li v-link="{name:'analytics'}">
+                    <a>
+                        <i class="fa fa-bar-chart"></i> ANALYTICS
+                    </a>
+                </li>
 
-                <a v-link="{name:'support'}">
-                    <li class="">SUPPORT</li>
-                </a>
+                <li v-link="{name:'webconfig'}">
+                    <a>
+                        <i class="fa fa-globe"></i> WEBSITES
+                    </a>
+                </li>
+
+                <li v-link="{name:'support'}">
+                    <a>
+                        <i class="fa fa-flag"></i> SUPPORT
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

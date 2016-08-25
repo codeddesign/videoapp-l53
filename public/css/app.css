@@ -8217,9 +8217,15 @@ ul.navlist li {
   width: 100%;
   cursor: pointer; }
 
+ul.navlist li a i {
+  display: initial; }
+
 li > a {
-  color: white;
-  text-decoration: none; }
+  color: white; }
+
+ul.navlist a:hover, a:focus {
+  text-decoration: none;
+  color: white; }
 
 .loginadditional div > a {
   color: white;
@@ -8227,13 +8233,6 @@ li > a {
   cursor: pointer; }
 
 ul.navlist li:hover, ul.navlist li.active {
-  background: #6F6BA2; }
-
-.navlist li a a:hover {
-  color: white;
-  text-decoration: none; }
-
-.active {
   background: #6F6BA2; }
 
 .rightside-nav {
@@ -8275,6 +8274,30 @@ ul.navlist li:hover, ul.navlist li.active {
 #availablesites-navdroparea {
   right: 180px;
   width: 178px; }
+
+.display-dashboardtoparea {
+  float: left;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #E3E1E0; }
+
+.display-dashboardtimewrap {
+  float: left;
+  margin-left: 20px;
+  margin-top: 12px; }
+
+.display-dashboardtimewrap span {
+  font-size: 12px;
+  color: #373F52;
+  margin-right: 5px; }
+
+.display-dashboardtimewrap select {
+  height: 35px;
+  background: #F9F9F7;
+  border: 1px solid #E3E1E0;
+  border-radius: 0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px; }
 
 .display-leftsep {
   float: left;
@@ -8895,7 +8918,7 @@ ul.rightside-navdroparea li:hover {
 .loginadditional {
   float: left;
   width: 100%;
-  margin-top: 35px; }
+  margin-top: 60px; }
 
 .loginadditional .login-registerbutton, .loginadditional .login-lostpassbutton {
   width: 50%;
