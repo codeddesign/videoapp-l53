@@ -72,7 +72,9 @@ ul.navlist li {
 ul.navlist li a i {
   display: initial;
 }
-
+ul.navlist li a span {
+  margin-left: 4px;
+}
 li > a {
   color: white;
 }
