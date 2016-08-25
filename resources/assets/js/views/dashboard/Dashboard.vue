@@ -57,19 +57,73 @@
             </ul>
 
             <!-- CAMPAIGN SELECTION AREA -->
-            <div class="dashboard-dailystatstitle">LATEST CAMPAIGNS</div>
+            <div class="dashboard-dailystatstitle">DAILY STATS</div>
             <ul class="dashboard-dailystatstitles">
-                <li>CAMPAIGN NAME</li>
-                <li>CREATED ON</li>
-                <li>IMPRESSIONS</li>
-                <li>VIDEO PLAYS</li>
+                <li>DATE</li>
+                <li>REQUESTS</li>
+                <li>FILL-RATE</li>
+                <li>eCPM</li>
                 <li>REVENUE</li>
-                <li>ACTIVE</li>
             </ul>
             <ul class="dashboard-dailystatslist">
                 <li>
-                    <div class="dashboard-statslist2">Some campaign name</div>
-                    <div class="dashboard-statslist2">July 10, 2016</div>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">18,000</div>
+                    <div class="dashboard-statslist2">$479</div>
+                    <div class="dashboard-statslist2">$479</div>
+                </li>
+                <li>
+                    <div class="dashboard-statslist1">July 10, 2016</div>
                     <div class="dashboard-statslist2">18,000</div>
                     <div class="dashboard-statslist2">18,000</div>
                     <div class="dashboard-statslist2">$479</div>
