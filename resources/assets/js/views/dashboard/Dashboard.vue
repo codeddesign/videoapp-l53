@@ -1,14 +1,6 @@
 <template>
     <div>
         <div class="page-index">
-            <!--
-            <div class="display-leftsep">
-                <div class="display-septext">VIDEO PLAYS</div>
-            </div>
-            <div class="display-rightsep">
-                <div class="display-septext">REVENUE</div>
-            </div>
-            -->
             <div class="display-dashboardtoparea">
                 <div class="display-dashboardtimewrap">
                     <span>Time Range</span>
@@ -20,78 +12,41 @@
                         <option value="">Last Month</option>
                     </select>
                 </div>
+                <div class="currentcamp-createbutton">
+                    <a href="#">INDEPTH REPORTS</a>
+                </div>
             </div>
-
             <!-- ANALYTICS STATS -->
             <!-- TOP ANALYTICS -->
             <ul class="campaignstats-row" :graphStats='graphStats'>
                 <li>
-                    <div class="campaignstats-title">REQUESTS</div>
-                    <div class="campaignstats-digit" id="currentMonthViews">@{{ response.stats.month.plays }}</div>
-                    <div class="campaignstats-digit"><span id="graph_month"></span></div>
+                    <stats title="request" :value="123123"></stats>
                 </li>
                 <li>
-                    <div class="campaignstats-title">IMPRESSIONS</div>
-                    <div class="campaignstats-digit" id="currentDayViews">@{{ response.stats.day.plays }}</div>
-                    <div class="campaignstats-digit"><span id="graph_day"></span></div>
+                    <stats title="impressions" :value="123123"></stats>
                 </li>
                 <li>
-                    <div class="campaignstats-title">REVENUE</div>
-                    <div class="campaignstats-digit">$@{{ response.stats.month.revenue.toFixed(2) }}</div>
-                    <div class="campaignstats-digit"><span id="graph_month_r"></span></div>
+                    <stats title="revenue" :value="123123" :iscurrency="true" color="#1aa74f"></stats>
                 </li>
                 <li>
-                    <div class="campaignstats-title">eCPM</div>
-                    <div class="campaignstats-digit">$@{{ response.stats.day.revenue.toFixed(2) }}</div>
-                    <div class="campaignstats-digit"><span id="graph_day_r"></span></div>
+                    <stats title="eCPM" :value="123123" :iscurrency="true" color="#1aa74f"></stats>
                 </li>
             </ul>
             <!-- BOTTOM ANALYTICS -->
             <ul class="campaignstats-row" :graphStats='graphStats'>
                 <li>
-                    <div class="campaignstats-title">FILL</div>
-                    <div class="campaignstats-digit" id="currentMonthViews">@{{ response.stats.month.plays }}</div>
-                    <div class="campaignstats-digit"><span id="graph_month"></span></div>
+                    <stats title="fill" :value="123123"></stats>
                 </li>
                 <li>
-                    <div class="campaignstats-title">FILL-RATE</div>
-                    <div class="campaignstats-digit" id="currentDayViews">@{{ response.stats.day.plays }}</div>
-                    <div class="campaignstats-digit"><span id="graph_day"></span></div>
+                    <stats title="fill-rate" :value="123123"></stats>
                 </li>
                 <li>
-                    <div class="campaignstats-title">ERROR-RATE</div>
-                    <div class="campaignstats-digit">$@{{ response.stats.month.revenue.toFixed(2) }}</div>
-                    <div class="campaignstats-digit"><span id="graph_month_r"></span></div>
+                    <stats title="error-rate" :value="4" :ispercentage="true" color="#009dd7"></stats>
                 </li>
                 <li>
-                    <div class="campaignstats-title">USE-RATE</div>
-                    <div class="campaignstats-digit">$@{{ response.stats.day.revenue.toFixed(2) }}</div>
-                    <div class="campaignstats-digit"><span id="graph_day_r"></span></div>
+                    <stats title="use-rate" :value="12" :ispercentage="true" color="#009dd7"></stats>
                 </li>
             </ul>
-
-            <div class='campaign-dateselect'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" />
-                        <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-                    </div>
-                </div>
-            </div>
-            <div class='campaign-dateselect'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" />
-                        <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="currentcamp-createbutton"><a href="/campaign">CREATE NEW CAMPAIGN</a></div>
 
             <ul class="totalstats-row">
                 <li>
@@ -102,74 +57,19 @@
             </ul>
 
             <!-- CAMPAIGN SELECTION AREA -->
-
-            <div class="dashboard-dailystatstitle">DAILY STATS</div>
+            <div class="dashboard-dailystatstitle">LATEST CAMPAIGNS</div>
             <ul class="dashboard-dailystatstitles">
-                <li>DATE</li>
-                <li>REQUESTS</li>
-                <li>FILL-RATE</li>
-                <li>eCPM</li>
+                <li>CAMPAIGN NAME</li>
+                <li>CREATED ON</li>
+                <li>IMPRESSIONS</li>
+                <li>VIDEO PLAYS</li>
                 <li>REVENUE</li>
+                <li>ACTIVE</li>
             </ul>
             <ul class="dashboard-dailystatslist">
                 <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">18,000</div>
-                    <div class="dashboard-statslist2">$479</div>
-                    <div class="dashboard-statslist2">$479</div>
-                </li>
-                <li>
-                    <div class="dashboard-statslist1">July 10, 2016</div>
+                    <div class="dashboard-statslist2">Some campaign name</div>
+                    <div class="dashboard-statslist2">July 10, 2016</div>
                     <div class="dashboard-statslist2">18,000</div>
                     <div class="dashboard-statslist2">18,000</div>
                     <div class="dashboard-statslist2">$479</div>
@@ -180,7 +80,9 @@
     </div>
 </template>
 <script>
-    export default {
+    import Stats from './components/Stats.vue';
 
+    export default {
+        components: {Stats}
     }
 </script>

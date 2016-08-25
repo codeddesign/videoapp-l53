@@ -8433,7 +8433,7 @@ ul.totalstats-row li div canvas {
   color: #EEEEEE;
   margin-right: 20px;
   margin-bottom: 15px;
-  margin-top: 15px;
+  margin-top: 10px;
   cursor: pointer;
   letter-spacing: 0.4px; }
 
@@ -9470,7 +9470,7 @@ ul.dashboard-dailystatstitles {
   border-bottom: 1px solid #E3E1E0; }
 
 ul.dashboard-dailystatstitles li {
-  width: 20%;
+  width: 16.6%;
   background: #F5F5F4;
   border-right: 1px solid #E3E1E0;
   font-size: 10px;
@@ -9497,7 +9497,7 @@ ul.dashboard-dailystatslist li {
 
 .dashboard-statslist1 {
   float: left;
-  width: 20%;
+  width: 16.6%;
   padding-left: 20px;
   font-size: 13px;
   color: #FFFFFF;
@@ -9509,7 +9509,7 @@ ul.dashboard-dailystatslist li:nth-child(2n) .dashboard-statslist1 {
 
 .dashboard-statslist2 {
   float: left;
-  width: 20%;
+  width: 16.6%;
   padding-left: 20px;
   font-size: 13px;
   color: #666666;
