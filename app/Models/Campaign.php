@@ -2,11 +2,11 @@
 
 namespace VideoAd\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Session;
-use VideoAd\Http\Controllers\Api\CampaignsController;
 use VideoAd\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use VideoAd\Http\Controllers\Api\CampaignsController;
 
 /**
  * @author Coded Design
@@ -137,7 +137,6 @@ class Campaign extends Model
             return false;
         };
 
-//        $info = self::$types[$campaign->type];
         $info['type'] = $campaign->type->alias;
 
         return [
