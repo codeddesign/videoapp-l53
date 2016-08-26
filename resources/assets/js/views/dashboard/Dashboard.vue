@@ -57,7 +57,7 @@
             </ul>
 
             <!-- CAMPAIGN SELECTION AREA -->
-            <div class="dashboard-dailystatstitle">DAILY STATS</div>
+            <div class="dashboard-dailystatstitle">LATEST CAMPAIGNS</div>
             <ul class="dashboard-dailystatstitles">
                 <li>DATE</li>
                 <li>REQUESTS</li>
