@@ -8,3 +8,6 @@ Route::resource('campaigns', 'CampaignsController');
 Route::post('/campaigns/store/preview', ['uses' => 'CampaignsController@storePreviewLink', 'as' => 'campaigns.store.preview']);
 
 Route::resource('wordpress', 'WordpressSitesController', ['except'=> ['show', 'create', 'edit', 'update']]);
+
+
+Route::get('dashboard/requests', 'StatsController@requests');

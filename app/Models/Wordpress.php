@@ -73,4 +73,14 @@ class Wordpress extends Model
 
         return str_replace('www.', '', strtolower($parsed['host']));
     }
+
+    /**
+     * @param string $link
+     *
+     * @return null|WordpressSite
+     */
+    public static function byLink($link)
+    {
+        return self::whereDomain(self::linkDomain($link))->first();
+    }
 }

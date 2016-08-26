@@ -5,6 +5,11 @@ namespace VideoAd\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @author Coded Design
+ * Class CampaignEvent
+ * @package VideoAd\Models
+ */
 class CampaignEvent extends Model
 {
     use SoftDeletes;
@@ -18,6 +23,16 @@ class CampaignEvent extends Model
      * @var array
      */
     protected $hidden = ['ip', 'updated_at', 'deleted_at'];
+
+    /**
+     * A campaign event belongs to a campaign.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class, 'campaign_id');
+    }
 
     /**
      * Set the referer on create.

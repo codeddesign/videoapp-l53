@@ -14,6 +14,13 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
+
+    # remove when done
+    Header always set Access-Control-Allow-Origin http://imasdk.googleapis.com
+    Header always set Access-Control-Allow-Credentials true
+    #
+
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

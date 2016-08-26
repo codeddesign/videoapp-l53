@@ -88,7 +88,21 @@ class Campaign extends Model
         return $this->hasMany(Video::class);
     }
 
-    //@todo remove this from here.
+    /**
+     * A campaign can have many events.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function campaignEvents()
+    {
+        return $this->hasMany(CampaignEvent::class);
+    }
+
+    /**
+     * @param array $data
+     * @param bool $toSession
+     * @return array
+     */
     public function addVideos(array $data, $toSession = false)
     {
         $videos = Video::videosFromData($data);
