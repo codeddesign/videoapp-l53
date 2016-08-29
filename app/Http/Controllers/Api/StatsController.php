@@ -20,7 +20,7 @@ class StatsController extends Controller
     public function requests()
     {
         // we are expecting to fetch a 'time' value for the request.
-        // time can be equal to: 'today', '7-days', 'current-month', 'last-month'
+        // 'time' can be equal to: 'today', '7-days', 'current-month', 'last-month'
         return CampaignEvent::requests(request())->count();
     }
 
@@ -32,7 +32,7 @@ class StatsController extends Controller
     public function impressions()
     {
         // we are expecting to fetch a 'time' value for the request.
-        // time can be equal to: 'today', '7-days', 'current-month', 'last-month'
+        // 'time' can be equal to: 'today', '7-days', 'current-month', 'last-month'
         return CampaignEvent::impressions(request())->count();
     }
 }

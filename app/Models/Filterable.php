@@ -25,6 +25,9 @@ trait Filterable
             case 'today': {
                 return $this->today($query);
             }
+            case 'yesterday': {
+                return $this->today($query);
+            }
             case '7-days': {
                 return $this->sevenDays($query);
             }
@@ -50,6 +53,20 @@ trait Filterable
         $today = Carbon::today()->toDateString();
 
         return $query->where('created_at', '>=', $today);
+    }
+
+    /**
+     * Filter the events created yesterday.
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function yesterday($query)
+    {
+        $today = Carbon::today()->toDateString();
+        $yesterday = Carbon::today()->subDay()->toDateString();
+
+        return $query->where('created_at', '<=', $today)->where('created_at', '>=', $yesterday);
     }
 
     /**
