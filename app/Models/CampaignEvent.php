@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class CampaignEvent extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Filterable;
 
     /**
      * @var array

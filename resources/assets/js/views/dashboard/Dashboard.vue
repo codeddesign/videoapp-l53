@@ -21,6 +21,7 @@
             <ul class="campaignstats-row" :graphStats='graphStats'>
                 <li>
                     <stats title="request" :value="123123"></stats>
+                    <small-chart></small-chart>
                 </li>
                 <li>
                     <stats title="impressions" :value="123123"></stats>
@@ -135,8 +136,9 @@
 </template>
 <script>
     import Stats from './components/Stats.vue';
+    import SmallChart from './components/SmallChart.vue';
 
     export default {
-        components: {Stats}
+        components: {Stats, SmallChart}
     }
 </script>

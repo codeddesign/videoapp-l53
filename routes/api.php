@@ -10,4 +10,5 @@ Route::post('/campaigns/store/preview', ['uses' => 'CampaignsController@storePre
 Route::resource('wordpress', 'WordpressSitesController', ['except'=> ['show', 'create', 'edit', 'update']]);
 
 
-Route::get('dashboard/requests', 'StatsController@requests');
+Route::get('stats/requests', 'StatsController@requests');
+Route::get('stats/impressions', 'StatsController@impressions');
