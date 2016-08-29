@@ -2,6 +2,7 @@
 
 namespace VideoAd\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,16 +26,6 @@ class CampaignEvent extends Model
     protected $hidden = ['ip', 'updated_at', 'deleted_at'];
 
     /**
-     * A campaign event belongs to a campaign.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function campaign()
-    {
-        return $this->belongsTo(Campaign::class, 'campaign_id');
-    }
-
-    /**
      * Set the referer on create.
      */
     protected static function boot()
@@ -45,6 +36,46 @@ class CampaignEvent extends Model
             $campaignEvent->referer = refererUtil();
             $campaignEvent->ip = ipUtil();
         });
+    }
+
+    /**
+     * A campaign event belongs to a campaign.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class, 'campaign_id');
+    }
+
+    /**
+     * Fectch the requests, fitlered by a range of time.
+     *
+     * @param $query
+     * @param $request
+     * @return Builder
+     */
+    public function scopeRequests($query, $request)
+    {
+        return $this->whereHas('campaign', function ($query) use($query) {
+            $query->user_id = auth()->user()->id;
+        })->where('name', 'app')->where('event', 'load')->timeRange($request);
+        // timeRange: is found in VideoAd\Models\Filterable trait as a query scope.
+    }
+
+    /**
+     * Fetch the impressions, filtered by a range of time.
+     *
+     * @param $query
+     * @param $request
+     * @return Builder
+     */
+    public function scopeImpressions($query, $request)
+    {
+        return $this->whereHas('campaign', function ($query) use($query) {
+            $query->user_id = auth()->user()->id;
+        })->where('name', 'ad')->where('event', 'start')->timeRange($request);
+        // timeRange: is found in VideoAd\Models\Filterable trait as a query scope.
     }
 
     /**

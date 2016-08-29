@@ -21,22 +21,18 @@ class StatsController extends Controller
     {
         // we are expecting to fetch a 'time' value for the request.
         // time can be equal to: 'today', '7-days', 'current-month', 'last-month'
-        return CampaignEvent::whereHas('campaign', function ($query) {
-            $query->user_id = auth()->user()->id;
-        })->where('name', 'app')->where('event', 'load')->timeRange(request())->count();
+        return CampaignEvent::requests(request())->count();
     }
 
     /**
      * Count the impressions per date range.
-     * 
+     *
      * @return integer
      */
     public function impressions()
     {
         // we are expecting to fetch a 'time' value for the request.
         // time can be equal to: 'today', '7-days', 'current-month', 'last-month'
-        return CampaignEvent::whereHas('campaign', function ($query) {
-            $query->user_id = auth()->user()->id;
-        })->where('name', 'ad')->where('event', 'start')->timeRange(request())->count();
+        return CampaignEvent::impressions(request())->count();
     }
 }

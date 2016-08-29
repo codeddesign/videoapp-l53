@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Builder;
  * @author Coded Design
  * Class FilterRequests
  * @package VideoAd\Models\Filters
+ *
+ * @todo make this dynamic, by reading the method name and translating it to its equivalent filters.
  */
 trait Filterable
 {
@@ -46,6 +48,7 @@ trait Filterable
     public function today($query)
     {
         $today = Carbon::today()->toDateString();
+
         return $query->where('created_at', '>=', $today);
     }
 
@@ -59,6 +62,7 @@ trait Filterable
     {
         $today = Carbon::today()->toDateString();
         $time = Carbon::today()->subWeek()->toDateString();
+
         return $query->where('created_at', '<=', $today)->where('created_at', '>=', $time);
     }
 
