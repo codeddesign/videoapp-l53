@@ -12,3 +12,7 @@ Route::resource('wordpress', 'WordpressSitesController', ['except'=> ['show', 'c
 
 Route::get('stats/requests', 'StatsController@requests');
 Route::get('stats/impressions', 'StatsController@impressions');
+
+//test route
+Route::get('charts/test', 'ChartsController@test');
+Route::get('charts/requests', 'ChartsController@requests');

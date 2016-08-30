@@ -19,6 +19,7 @@
     "chart.js": "^2.2.1",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.3",
+    "jquery-sparkline": "^2.3.2",
     "moment": "^2.14.1",
     "vue-router": "^0.7.13"
   }

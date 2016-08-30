@@ -16,10 +16,8 @@ class CreateCampaignEventsTable extends Migration
         Schema::create('campaign_events', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('campaign_id')
-                ->unsigned()
-                ->references('id')
-                ->on('campaigns');
+            $table->integer('campaign_id')->unsigned();
+            $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
 
             $table->string('name')->index();
 
