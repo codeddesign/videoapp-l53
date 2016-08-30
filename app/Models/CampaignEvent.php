@@ -2,9 +2,12 @@
 
 namespace VideoAd\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @author Coded Design
@@ -76,6 +79,42 @@ class CampaignEvent extends Model
             $query->user_id = auth()->user()->id;
         })->where('name', 'ad')->where('event', 'start')->timeRange($request);
         // timeRange: is found in VideoAd\Models\Filterable trait as a query scope.
+    }
+
+    /**
+     * return the daily count of the requests per month.
+     *
+     * @param $query
+     * @return Collection
+     */
+    public function scopeRequestsStats($query)
+    {
+        return $this->whereHas('campaign', function ($query) use($query) {
+            $query->user_id = auth()->user()->id;
+        })->where('created_at', '>=', Carbon::today()->startOfMonth())
+            ->where('name', 'app')
+            ->where('event', 'load')
+            ->groupBy('date')
+            ->orderBy('date', 'DESC')
+            ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "requests"')]);
+    }
+
+    /**
+     * Return the daily count of the impressions per month.
+     *
+     * @param $query
+     * @return Collection
+     */
+    public function scopeImpressionsStats($query)
+    {
+        return $this->whereHas('campaign', function ($query) use($query) {
+            $query->user_id = auth()->user()->id;
+        })->where('created_at', '>=', Carbon::today()->startOfMonth())
+            ->where('name', 'ad')
+            ->where('event', 'start')
+            ->groupBy('date')
+            ->orderBy('date', 'DESC')
+            ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "impressions"')]);
     }
 
     /**
