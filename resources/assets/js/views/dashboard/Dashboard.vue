@@ -18,39 +18,31 @@
             <!-- TOP ANALYTICS -->
             <ul class="campaignstats-row">
                 <li>
-                    <stats title="request" :value="requests"
-                           chart-url="/api/charts/requests" chart-color="#7772A7"
-                    ></stats>
+                    <stats title="request" :value="requests" :chart-data="requestsChartData" chart-color="#7772A7"></stats>
                 </li>
                 <li>
-                    <stats title="impressions" :value="impressions"
-                           chart-url="/api/charts/impressions" chart-color="#7772A7"
-                    ></stats>
+                    <stats title="impressions" :value="impressions" :chart-data="impressionsChartData" chart-color="#7772A7"></stats>
                 </li>
                 <li>
-                    <stats title="revenue" :value="revenue" color="#1aa74f"
-                           chart-url="/api/charts/test" chart-color="#99c541"
-                    ></stats>
+                    <stats title="revenue" :value="revenue" color="#1aa74f" :chart-data="revenueChartData" chart-color="#99c541"></stats>
                 </li>
                 <li>
-                    <stats title="eCPM" :value="123123" :iscurrency="true" color="#1aa74f"
-                           chart-url="/api/charts/test" chart-color="#99c541"
-                    ></stats>
+                    <stats title="eCPM" :value="123123" color="#1aa74f" :chart-data="[1,2,3,4,5]" chart-color="#99c541"></stats>
                 </li>
             </ul>
             <!-- BOTTOM ANALYTICS -->
             <ul class="campaignstats-row">
                 <li>
-                    <stats title="fill" :value="123123"></stats>
+                    <stats title="fill" :value="123123" :chart-data="[1,2,3,4,5]" chart-color="#7772A7"></stats>
                 </li>
                 <li>
-                    <stats title="fill-rate" :value="123123"></stats>
+                    <stats title="fill-rate" :value="123123" :chart-data="[1,2,3,4,5]" chart-color="#7772A7"></stats>
                 </li>
                 <li>
-                    <stats title="error-rate" :value="4" :ispercentage="true" color="#009dd7"></stats>
+                    <stats title="error-rate" :value="4" :ispercentage="true" color="#009dd7" :chart-data="[1,2,3,4,5]" chart-color="rgb(0, 157, 215)"></stats>
                 </li>
                 <li>
-                    <stats title="use-rate" :value="12" :ispercentage="true" color="#009dd7"></stats>
+                     <stats title="use-rate" :value="12" :ispercentage="true" color="#009dd7" :chart-data="[1,2,3,4,5]" chart-color="rgb(0, 157, 215)"></stats>
                 </li>
             </ul>
 
@@ -120,49 +112,53 @@
                 fill: '',
                 fillRate: '',
                 errorRate: '',
-                useRate: ''
+                useRate: '',
+
+                requestsChartData: '',
+                impressionsChartData: '',
+                revenueChartData: ''
             }
         },
         computed: {
             revenue: function () {
-                // apply currency filter.
+                // apply 'currency' filter.
                 return this.$options.filters.currency((4 * this.impressions) / 1000);
-            }
+            },
         },
         ready() {
-            // upon loading the page for the first time,
-            // fetch all the stats.
             this.stats();
         },
         watch: {
-            // when changing the time range, this will
-            // update the states value on the page.
             timeRange: function () {
                 this.stats();
             }
         },
         methods: {
-            // using this method as an entry point for updating the stats.
-            // this is used just to make things clearer.
             stats() {
+                this.$http.get('/api/charts/all').then((response) => {
+                    this.$set('requestsChartData', response.data.requests);
+                    this.$set('impressionsChartData', response.data.impressions);
+                    this.$set('revenueChartData', response.data.revenue);
+                }, () => console.log('Error fetching the stats.'));
+
                 this.request();
                 this.impression();
             },
+
             // fetch the requests count.
             request() {
                 this.$http.get('/api/stats/requests?time=' + this.timeRange).then((response) => {
                     this.requests = parseInt(response.data);
-                    console.log('fetching requests with time range: ' + this.timeRange);
                 }, () => console.log('Error Fetching the requests count.'));
             },
             // fetch the impressions count.
             impression() {
                 this.$http.get('/api/stats/impressions?time=' + this.timeRange).then((response) => {
                     this.impressions = parseInt(response.data);
-                    console.log('fetching impressions with time range: ' + this.timeRange);
                 }, () => console.log('Error Fetching the impressions count.'));
             }
         },
+
         components: {Stats}
     }
 </script>

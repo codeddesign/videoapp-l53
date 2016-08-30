@@ -2,8 +2,6 @@
 
 namespace VideoAd\Http\Controllers\Api;
 
-use DB;
-use Carbon\Carbon;
 use VideoAd\Http\Controllers\Controller;
 use VideoAd\Models\CampaignEvent;
 use VideoAd\Stats\StatsTransformer;
@@ -15,9 +13,23 @@ use VideoAd\Stats\StatsTransformer;
  */
 class ChartsController extends Controller
 {
-    public function test()
+    /**
+     * @param StatsTransformer $statsTransformer
+     * @return array
+     */
+    public function stats(StatsTransformer $statsTransformer)
     {
-        return collect([1, 2, 3, 4, 5, 5, 4, 1, 7, 6, 4, 9, 6, 4, 2, 1, 2, 3, 4, 5, 5, 4, 8, 9, 0, 0, 0, 0, 0, 0]);
+        $requests = $this->requests($statsTransformer);
+        $impressions = $this->impressions($statsTransformer);
+        $revenue = collect($impressions)->map(function ($value) {
+            return (4 * $value) / 1000;
+        });
+
+        return [
+            'requests' => $requests,
+            'impressions' => $impressions,
+            'revenue' => $revenue
+        ];
     }
 
     /**
