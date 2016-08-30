@@ -24,7 +24,7 @@
                 </li>
                 <li>
                     <stats title="impressions" :value="impressions"
-                           chart-url="/api/charts/test" chart-color="#7772A7"
+                           chart-url="/api/charts/impressions" chart-color="#7772A7"
                     ></stats>
                 </li>
                 <li>
@@ -100,7 +100,6 @@
 
 <script>
     import Stats from './components/Stats.vue';
-    import SmallChart from './components/SmallChart.vue';
 
     export default {
         data() {
@@ -164,6 +163,6 @@
                 }, () => console.log('Error Fetching the impressions count.'));
             }
         },
-        components: {Stats, SmallChart}
+        components: {Stats}
     }
 </script>

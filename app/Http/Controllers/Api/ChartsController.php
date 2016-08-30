@@ -7,6 +7,11 @@ use Carbon\Carbon;
 use VideoAd\Http\Controllers\Controller;
 use VideoAd\Models\CampaignEvent;
 
+/**
+ * @author Coded Design
+ * Class ChartsController
+ * @package VideoAd\Http\Controllers\Api
+ */
 class ChartsController extends Controller
 {
     public function test()
@@ -32,29 +37,58 @@ class ChartsController extends Controller
             ->orderBy('date', 'DESC')
             ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "requests"')]);
 
-        // create a collection containing all the dates of the months
+        return $this->transformToArrayOf('requests', $requestMonthlyCount);
+    }
+
+    /**
+     * @return array
+     */
+    public function impressions()
+    {
+        // fetch the count of 'impressions' for every day.
+        // this returns a collection of ex: [{'date': '2016-01-01', 'impressions': 3}]
+        $impressionsMonthlyCount = CampaignEvent::whereHas('campaign', function ($query) {
+            $query->user_id = auth()->user()->id;
+        })->where('created_at', '>=', Carbon::today()->startOfMonth())
+            ->where('name', 'ad')
+            ->where('event', 'start')
+            ->groupBy('date')
+            ->orderBy('date', 'DESC')
+            ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "impressions"')]);
+
+        return $this->transformToArrayOf('impressions', $impressionsMonthlyCount);
+    }
+
+    /**
+     * @param $statsType
+     * @param $monthlyCount
+     * @return array
+     */
+    protected function transformToArrayOf($statsType, $monthlyCount)
+    {
+        // create a collection containing the dates of the month.
         $daysOfTheMonth = collect(date_range(Carbon::today()->startOfMonth(), Carbon::today()->endOfMonth()));
 
-        // transform the collection to the form of: [{'date': '2016-01-01', 'requests': 0}}]
-        $daysOfTheMonth = $daysOfTheMonth->map(function($day){
-            return ['date' => $day->format("Y-m-d"), 'requests' => 0];
+        // transform the collection into the form of [{'date': '2016-11-11', 'statsType': 0}]
+        $daysOfTheMonth->transform(function($date, $key) use ($statsType){
+            return ['date' => $date->format("Y-m-d"), $statsType => 0];
         });
 
-        // compare the days of the month with the requests,
-        // and update the dates that has requests
-        foreach($requestMonthlyCount as $request) {
-            foreach($daysOfTheMonth as $key => $day) {
-                if($day['date'] == $request['date'] && $request['requests'] > 0) {
-                    $daysOfTheMonth[$key] = $request;
+        // $monthlyCount can be: requests, impressions...
+        foreach ($monthlyCount as $value) {
+            // for each day of the month
+            foreach ($daysOfTheMonth as $key => $day) {
+                // check if we have a count in the db (campaign_events)
+                if ($day['date'] == $value['date'] && $value[$statsType] > 0) {
+                    // update the value of the 'statsType'.
+                    $daysOfTheMonth[$key] = $value;
                 }
             }
         }
 
-        // return only an array or requests sorted by the dates.
-        // this is used for the chart, since we are not putting any labels for the dates
-        // and just showing the requests.
-        return $daysOfTheMonth->map(function($item) {
-            return $item['requests'];
+        // return only the 'statsType' as array ordered by dates.
+        return $daysOfTheMonth->map(function ($item) use ($statsType) {
+            return $item[$statsType];
         });
     }
 }

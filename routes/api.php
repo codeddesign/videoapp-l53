@@ -16,3 +16,4 @@ Route::get('stats/impressions', 'StatsController@impressions');
 //test route
 Route::get('charts/test', 'ChartsController@test');
 Route::get('charts/requests', 'ChartsController@requests');
+Route::get('charts/impressions', 'ChartsController@impressions');
