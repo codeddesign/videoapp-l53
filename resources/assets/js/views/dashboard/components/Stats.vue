@@ -4,9 +4,8 @@
         <div class="campaignstats-digit" id="currentMonthViews" v-bind:style="{'color': color}">{{ value }}</div>
         <div class="campaignstats-digit"><span id="{{title}}"></span></div>
     </div>
-
-
 </template>
+
 <script>
     import Sparkline from 'jquery-sparkline';
 
@@ -33,6 +32,7 @@
                 this.fillGraph();
             }
         },
+
         methods: {
             fillGraph() {
                 if(this.chartData != null) {

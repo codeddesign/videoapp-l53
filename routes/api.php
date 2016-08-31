@@ -13,10 +13,8 @@ Route::resource('wordpress', 'WordpressSitesController', ['except'=> ['show', 'c
 Route::get('stats/requests', 'StatsController@requests');
 Route::get('stats/impressions', 'StatsController@impressions');
 
-//test route
-Route::get('charts/test', 'ChartsController@test');
-
-Route::get('charts/all', 'ChartsController@stats');
-
 Route::get('charts/requests', 'ChartsController@requests');
 Route::get('charts/impressions', 'ChartsController@impressions');
+
+// this route will return all the stats needed for the dashboard.
+Route::get('charts/all', 'ChartsController@stats');

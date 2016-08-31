@@ -4,6 +4,11 @@ namespace VideoAd\Stats;
 
 use Carbon\Carbon;
 
+/**
+ * @author Coded Design
+ * Class StatsTransformer
+ * @package VideoAd\Stats
+ */
 class StatsTransformer
 {
     /**
