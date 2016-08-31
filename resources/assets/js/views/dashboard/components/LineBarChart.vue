@@ -68,6 +68,7 @@
                     type: 'bar',
                     data: data,
                     options: {
+                        animation : false,
                         responsive: true,
                         tooltips: {
                             mode: 'label',

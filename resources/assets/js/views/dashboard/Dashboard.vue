@@ -126,7 +126,9 @@
             },
         },
         ready() {
-            this.stats();
+//            setInterval(()=> {
+                this.stats();
+//            }, 2000);
         },
         watch: {
             timeRange: function () {
