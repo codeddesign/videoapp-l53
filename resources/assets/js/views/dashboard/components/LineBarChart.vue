@@ -1,7 +1,10 @@
 <template>
     <div :ignoreMe="waitChartData">
         <div class="campaignstats-digit">
-            <canvas width="1000" height="285" id="barlinechart" style=""></canvas>
+            <canvas width="1000" height="285" id="barlinechart"
+                    style="margin-top: 20px; padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #d6d4d4; background-color: white">
+
+            </canvas>
         </div>
     </div>
 </template>
@@ -35,7 +38,7 @@
         methods: {
             render() {
                 var data = {
-                    labels: Object.keys(this.revenue),
+                    labels: _.map(Object.keys(this.revenue),function(value){return parseInt(value)+1;}),
                     datasets: [{
                         label: "Impressions",
                         type: 'line',
@@ -75,6 +78,9 @@
                                 fill: false
                             }
                         },
+                        legend: {
+                            display: false
+                        },
                         scales: {
                             xAxes: [{
                                 display: true,
@@ -82,7 +88,7 @@
                                     display: false
                                 },
                                 labels: {
-                                    show: true,
+                                    show: true
                                 }
                             }],
                             yAxes: [{
@@ -91,7 +97,7 @@
                                 position: "left",
                                 id: "y-axis-revenue",
                                 gridLines: {
-                                    display: false
+                                    display: true
                                 },
                                 labels: {
                                     show: true,
@@ -111,8 +117,6 @@
                         }
                     }
                 });
-
-
             },
         }
     }
