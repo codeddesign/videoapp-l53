@@ -48,9 +48,7 @@
 
             <ul class="totalstats-row">
                 <li>
-                    <div class="campaignstats-digit">
-                        <canvas id="graph_total" width="1000" height="285"></canvas>
-                    </div>
+                    <line-bar-chart :revenue="revenueChartData" :impressions="impressionsChartData"></line-bar-chart>
                 </li>
             </ul>
 
@@ -92,6 +90,7 @@
 
 <script>
     import Stats from './components/Stats.vue';
+    import LineBarChart from './components/LineBarChart.vue';
 
     export default {
         data() {
@@ -108,15 +107,16 @@
 
                 requests: '',
                 impressions: '',
-                ecpm: '',
-                fill: '',
-                fillRate: '',
-                errorRate: '',
-                useRate: '',
+
+                ecpm: '', //@todo
+                fill: '', //@todo
+                fillRate: '', //@todo
+                errorRate: '', //@todo
+                useRate: '', //@todo
 
                 requestsChartData: '',
                 impressionsChartData: '',
-                revenueChartData: ''
+                revenueChartData: '',
             }
         },
         computed: {
@@ -159,6 +159,6 @@
             }
         },
 
-        components: {Stats}
+        components: {Stats,LineBarChart}
     }
 </script>

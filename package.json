@@ -16,7 +16,7 @@
     "vue-resource": "^0.9.3"
   },
   "dependencies": {
-    "chart.js": "^2.2.1",
+    "chart.js": "^2.2.2",
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.3",
     "jquery-sparkline": "^2.3.2",
