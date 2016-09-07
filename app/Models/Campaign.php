@@ -4,9 +4,7 @@ namespace VideoAd\Models;
 
 use VideoAd\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use VideoAd\Http\Controllers\Api\CampaignsController;
 
 /**
  * @author Coded Design
@@ -125,44 +123,5 @@ class Campaign extends Model
         }
 
         return $list;
-    }
-
-    /**
-     * Returns campaign details and information about campaign's type.
-     * First it makes and attempt to fetch campaign data from session,
-     * in case it's some data in preview. Otherwise, if non-zero id
-     * is provided it gets it from database.
-     *
-     * @param int $id
-     *
-     * @return Campaign|null
-     */
-    public static function forPlayer($id)
-    {
-        $campaign = Session::get(CampaignsController::TEMPORARY_PREVIEW_KEY);
-
-        if ($id != 0) {
-            $campaign = self::withTrashed()
-                ->with('videos')
-                ->find($id);
-        }
-
-        if (!$campaign) {
-            return false;
-        };
-
-        $info['type'] = $campaign->type->alias;
-
-        return [
-            'campaign' => filterModelKeys(
-                $campaign->toArray(),
-                ['id', 'name', 'size', 'url', 'source']
-            ),
-            'info' => filterModelKeys(
-                $info,
-                ['type', 'available', 'single', 'has_name']
-            ),
-            'tags' => env_adTags(),
-        ];
     }
 }

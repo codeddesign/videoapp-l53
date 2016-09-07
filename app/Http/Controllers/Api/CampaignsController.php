@@ -16,11 +16,6 @@ use VideoAd\Http\Requests\CampaignRequest;
 class CampaignsController extends Controller
 {
     /**
-     * Key for session that holds the temporary preview data.
-     */
-    const TEMPORARY_PREVIEW_KEY = 'temporary_campaign_preview_key';
-
-    /**
      * List a paginated list of the campaigns.
      *
      * @param CampaignMapper $campaignMapper
@@ -56,7 +51,7 @@ class CampaignsController extends Controller
         // pass the following: name, size, type, video
         $campaign = auth()->user()->addCampaign($request->all(), $toSession = true);
 
-        Session::set(self::TEMPORARY_PREVIEW_KEY, $campaign);
+        Session::set(config('videoad.TEMPORARY_PREVIEW_KEY'), $campaign);
 
         return [
             'url' => $this->getEmbedLink()
@@ -72,7 +67,7 @@ class CampaignsController extends Controller
     public function store(CampaignRequest $request)
     {
         // pass the following when POSTing: name, size, type, video
-        Session::remove(self::TEMPORARY_PREVIEW_KEY);
+        Session::remove(config('videoad.TEMPORARY_PREVIEW_KEY'));
 
         $campaign = auth()->user()->addCampaign($request->all());
 

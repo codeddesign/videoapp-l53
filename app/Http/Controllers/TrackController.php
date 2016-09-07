@@ -26,10 +26,11 @@ class TrackController extends Controller
      */
     public function index(Request $request)
     {
+        //id, name, event
         PlayerEvent::save($request->only('i', 'n', 'e'));
 
-        return response($this->onePixel())
-            ->header('Content-Type', 'image/png');
+        // return one pixel
+        return response($this->onePixel())->header('Content-Type', 'image/png');
     }
 
     /**

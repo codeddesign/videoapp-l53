@@ -3,7 +3,6 @@
         <div class="campaignstats-digit">
             <canvas width="1000" height="285" id="barlinechart"
                     style="margin-top: 20px; padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #d6d4d4; background-color: white">
-
             </canvas>
         </div>
     </div>
@@ -38,7 +37,9 @@
         methods: {
             render() {
                 var data = {
-                    labels: _.map(Object.keys(this.revenue),function(value){return parseInt(value)+1;}),
+                    labels: _.map(Object.keys(this.revenue), function (value) {
+                        return parseInt(value) + 1;
+                    }),
                     datasets: [{
                         label: "Impressions",
                         type: 'line',
@@ -51,7 +52,7 @@
                         pointHoverBackgroundColor: '#7772A7',
                         pointHoverBorderColor: '#7772A7',
                         yAxisID: 'y-axis-impressions',
-                    },{
+                    }, {
                         label: "Revenue",
                         type: 'bar',
                         data: Object.keys(this.revenue).map(key => this.revenue[key]),
@@ -68,7 +69,7 @@
                     type: 'bar',
                     data: data,
                     options: {
-                        animation : false,
+                        animation: false,
                         responsive: true,
                         tooltips: {
                             mode: 'label',

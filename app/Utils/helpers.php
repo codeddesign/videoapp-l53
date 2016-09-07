@@ -63,6 +63,9 @@ function ipUtil()
 }
 
 /**
+ * Return the ad tags.
+ * currently storred in the .env file.
+ *
  * @return array
  */
 function env_adTags()

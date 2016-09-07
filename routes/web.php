@@ -31,3 +31,9 @@ Route::get('/app', ['uses' => 'PagesController@index'])->name('app')->middleware
 Route::get('/campaign/{id}', 'CampaignsController@campaign');
 Route::get('/track', 'TrackController@index');
 Route::get('/plugin', 'PluginController@CampaignAdd');
+
+Route::group(['prefix' => '/public/api', 'namespace' => 'Client'], function () {
+    Route::get('/campaign/{id}', 'CampaignsController@campaign');
+    Route::get('/track', 'TrackingController@index');
+    Route::get('/plugin', 'PluginController@CampaignAdd');
+});

@@ -179,6 +179,8 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         Vinelab\Api\ApiServiceProvider::class,
 
+        VideoAd\CampaignEvents\Providers\CampaignEventsServiceProvider::class,
+
         // Sentry integration
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 

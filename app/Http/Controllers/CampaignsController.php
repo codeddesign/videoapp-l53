@@ -2,7 +2,6 @@
 
 namespace VideoAd\Http\Controllers;
 
-use Illuminate\Http\Request;
 use VideoAd\Models\Campaign;
 use VideoAd\Models\CampaignEvent;
 
@@ -22,12 +21,12 @@ class CampaignsController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param int $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function campaign(Request $request, $id = 0)
+    public function campaign($id = 0)
     {
+        // return the campaign information used by the player.
         $campaign = Campaign::forPlayer($id);
 
         if (!$campaign) {

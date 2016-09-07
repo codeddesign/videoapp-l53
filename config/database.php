@@ -116,6 +116,13 @@ return [
             'database' => 0,
         ],
 
+        'campaigns' => [
+            'host' => env('REDIS_HOST_CAMPAIGN', 'localhost'),
+            'password' => env('REDIS_PASSWORD_CAMPAIGN', null),
+            'port' => env('REDIS_PORT_CAMPAIGN', 6379),
+            'database' => 1,
+        ],
+
     ],
 
 ];

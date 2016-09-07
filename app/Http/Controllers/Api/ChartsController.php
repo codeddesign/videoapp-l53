@@ -10,6 +10,10 @@ use VideoAd\Stats\StatsTransformer;
  * @author Coded Design
  * Class ChartsController
  * @package VideoAd\Http\Controllers\Api
+ *
+ * This class is used to prepare the data using to draw the charts (small & big) on
+ * the dashboard page. We are only fetching the 'requests' and 'impressions' so far
+ * since we can calculate the other values from those two.
  */
 class ChartsController extends Controller
 {
