@@ -12,7 +12,7 @@ use VideoAd\Models\Campaign;
 class Manager implements CampaignEvent
 {
     /**
-     * The Campaign Model instance.
+     * The Campaign Repository instance.
      *
      * @var Campaign
      */
@@ -22,7 +22,7 @@ class Manager implements CampaignEvent
      * Manager constructor.
      * @param Campaign $campaign
      */
-    public function __construct(Campaign $campaign)
+    public function __construct(CampaignRepository $campaign)
     {
         $this->campaign = $campaign;
     }
@@ -35,9 +35,9 @@ class Manager implements CampaignEvent
      */
     public function campaignInfo($id)
     {
-        return (!$campaign = $this->forPlayer($id)) ?
-            response(['message' => 'Campaign does not exist.'], 404) :
-            $campaign;
+        $campaignDetails = $this->campaignDetails($id);
+
+        return ($campaignDetails) ? $campaignDetails : response(['message' => 'Campaign does not exist.'], 404);
     }
 
     /**
@@ -50,7 +50,7 @@ class Manager implements CampaignEvent
      *
      * @return array
      */
-    protected function forPlayer($id)
+    protected function campaignDetails($id)
     {
         switch ($id) {
             case 0:
@@ -58,8 +58,8 @@ class Manager implements CampaignEvent
                 $campaign = session(config('videoad.TEMPORARY_PREVIEW_KEY'));
                 break;
             default:
-                // else, fetch it form database.
-                $campaign = $this->campaign->withTrashed()->with('videos')->findOrFail($id);
+                // else, fetch it form database. (with trashed included)
+                $campaign = $this->campaign->findByWithTrashed('id', $id, ['videos']);
                 break;
         }
 
