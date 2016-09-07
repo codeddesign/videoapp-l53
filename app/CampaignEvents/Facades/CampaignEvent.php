@@ -20,6 +20,6 @@ class CampaignEvent extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \VideoAd\CampaignEvents\CampaignEvent::class;
+        return \VideoAd\CampaignEvents\CampaignEventInterface::class;
     }
 }

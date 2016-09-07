@@ -4,10 +4,10 @@ namespace VideoAd\CampaignEvents;
 
 /**
  * @author Coded Design
- * Interface CampaignEvent
+ * Interface CampaignEventInterface
  * @package VideoAd\CampaignEvents
  */
-interface CampaignEvent
+interface CampaignEventInterface
 {
     /**
      * Return the campaign info.

@@ -1,13 +1,15 @@
 <?php
 
-namespace VideoAd\CampaignEvents;
+namespace VideoAd\CampaignEvents\Transformers;
+
+use VideoAd\Models\Campaign;
 
 /**
  * @author Coded Design
  * Class CampaignInfoTransformer
- * @package VideoAd\CampaignEvents
+ * @package VideoAd\CampaignEvents\Transformers
  */
-class CampaignInfoTransformer
+class CampaignTransformer
 {
     /**
      * Transform the campaign data into the desired form.
@@ -15,7 +17,7 @@ class CampaignInfoTransformer
      * @param $campaign
      * @return array
      */
-    public static function transform($campaign)
+    public static function transform(Campaign $campaign)
     {
         return [
             'campaign' => filterModelKeys(

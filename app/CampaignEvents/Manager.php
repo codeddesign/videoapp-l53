@@ -2,14 +2,15 @@
 
 namespace VideoAd\CampaignEvents;
 
-use VideoAd\Models\Campaign;
+use VideoAd\CampaignEvents\Repositories\CampaignInterface;
+use VideoAd\CampaignEvents\Transformers\CampaignTransformer;
 
 /**
  * @author Coded Design
  * Class Manager
  * @package VideoAd\CampaignEvents
  */
-class Manager implements CampaignEvent
+class Manager implements CampaignEventInterface
 {
     /**
      * The Campaign Repository instance.
@@ -22,7 +23,7 @@ class Manager implements CampaignEvent
      * Manager constructor.
      * @param Campaign $campaign
      */
-    public function __construct(CampaignRepository $campaign)
+    public function __construct(CampaignInterface $campaign)
     {
         $this->campaign = $campaign;
     }
@@ -63,6 +64,6 @@ class Manager implements CampaignEvent
                 break;
         }
 
-        return (!$campaign) ? false : CampaignInfoTransformer::transform($campaign);
+        return (!$campaign) ? false : CampaignTransformer::transform($campaign);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace VideoAd\CampaignEvents;
+namespace VideoAd\CampaignEvents\Entities;
 
 /**
  * @author Coded Design
  * Class Event
- * @package VideoAd\CampaignEvents
+ * @package VideoAd\CampaignEvents\Entities
  */
 class Event
 {

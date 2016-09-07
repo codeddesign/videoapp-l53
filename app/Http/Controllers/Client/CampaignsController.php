@@ -14,20 +14,12 @@ use VideoAd\CampaignEvents\Facades\CampaignEvent as CampaignEventFacade;
 class CampaignsController extends Controller
 {
     /**
-     * Create a new instance of this class.
-     */
-    public function __construct()
-    {
-        $this->middleware('cors', ['only' => ['campaign']]);
-    }
-
-    /**
      * Return the campaign info, used by the player.
      *
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function campaign($id)
+    public function __invoke($id)
     {
         CampaignEvent::create(['campaign_id' => $id, 'name' => 'app', 'event' => 'load']);
 

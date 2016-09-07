@@ -1,16 +1,16 @@
 <?php
 
-namespace VideoAd\CampaignEvents;
+namespace VideoAd\CampaignEvents\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use VideoAd\Models\Campaign;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author Coded Design
  * Class CampaignRepository
- * @package VideoAd\CampaignEvents
+ * @package VideoAd\CampaignEvents\Repositories
  */
-class CampaignRepository
+class CampaignRepository implements CampaignInterface
 {
     /**
      * @var Campaign
@@ -75,11 +75,9 @@ class CampaignRepository
                 $query->with($relation);
             }
 
-            $query = $query->withTrashed();
-
             return $query->first();
         }
 
-        return $this->campaign->where($attribute, $value)->first();
+        return $this->campaign->where($attribute, $value)->withTrashed()->first();
     }
 }
