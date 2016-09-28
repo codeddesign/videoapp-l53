@@ -1,16 +1,16 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
 use Api;
-use VideoAd\Http\Controllers\Controller;
-use VideoAd\Http\Mappers\WordpressSitesMapper;
-use VideoAd\Http\Requests\WordpressRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Mappers\WordpressSitesMapper;
+use App\Http\Requests\WordpressRequest;
 
 /**
  * @author Coded Design
- * Class WordpressSitesController
- * @package VideoAd\Http\Controllers\Api
+ *
+ * @package App\Http\Controllers\Api
  */
 class WordpressSitesController extends Controller
 {

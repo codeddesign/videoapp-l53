@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\Services;
+namespace App\Services;
 
-use VideoAd\Models\CampaignEvent;
+use App\Models\CampaignEvent;
 use Illuminate\Support\Facades\Storage;
 
 /**
  * @author Coded Design
- * Class PlayerEvent
- * @package VideoAd\Services
+ *
+ * @package App\Services
  */
 class PlayerEvent
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use VideoAd\User;
+use App\User;
 
 /**
  * @author Coded Design
- * Class Wordpress
- * @package VideoAd\Models
+ *
+ * @package App\Models
  */
 class Wordpress extends Model
 {

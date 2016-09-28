@@ -1,6 +1,6 @@
 <?php
 
-namespace VideoAd\Providers;
+namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,14 +14,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'VideoAd\Http\Controllers';
+    protected $namespace = 'App\Http\Controllers';
 
     /**
      * This namespace is applied to your controller API routes.
      *
      * @var string
      */
-    protected $apiNamespace = 'VideoAd\Http\Controllers\Api';
+    protected $apiNamespace = 'App\Http\Controllers\Api';
 
     /**
      * Define your route model bindings, pattern filters, etc.

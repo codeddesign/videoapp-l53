@@ -1,15 +1,15 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Client;
+namespace App\Http\Controllers\Client;
 
-use VideoAd\Models\CampaignEvent;
-use VideoAd\Http\Controllers\Controller;
-use VideoAd\CampaignEvents\Facades\CampaignEvent as CampaignEventFacade;
+use App\Models\CampaignEvent;
+use App\Http\Controllers\Controller;
+use App\CampaignEvents\Facades\CampaignEvent as CampaignEventFacade;
 
 /**
  * @author Coded Design
- * Class CampaignsController
- * @package VideoAd\Http\Controllers\Client
+ *
+ * @package App\Http\Controllers\Client
  */
 class CampaignsController extends Controller
 {

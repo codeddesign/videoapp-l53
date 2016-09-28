@@ -1,18 +1,18 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Authentication;
+namespace App\Http\Controllers\Authentication;
 
 use Illuminate\View\View;
-use VideoAd\Events\VerifyAccount;
+use App\Events\VerifyAccount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-use VideoAd\Http\Controllers\Controller;
-use VideoAd\Http\Requests\RegistrationRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RegistrationRequest;
 
 /**
  * @author Coded Design
- * Class RegistrationController
- * @package VideoAd\Http\Controllers\Authentication
+ *
+ * @package App\Http\Controllers\Authentication
  */
 class RegistrationController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace VideoAd\Models;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @author Coded Design
- * Class CampaignEvent
- * @package VideoAd\Models
+ *
+ * @package App\Models
  */
 class CampaignEvent extends Model
 {
@@ -63,7 +63,7 @@ class CampaignEvent extends Model
         return $this->whereHas('campaign', function ($query) use($query) {
             $query->user_id = auth()->user()->id;
         })->where('name', 'app')->where('event', 'load')->timeRange($request);
-        // timeRange: is found in VideoAd\Models\Filterable trait as a query scope.
+        // timeRange: is found in App\Models\Filterable trait as a query scope.
     }
 
     /**
@@ -78,7 +78,7 @@ class CampaignEvent extends Model
         return $this->whereHas('campaign', function ($query) use($query) {
             $query->user_id = auth()->user()->id;
         })->where('name', 'ad')->where('event', 'start')->timeRange($request);
-        // timeRange: is found in VideoAd\Models\Filterable trait as a query scope.
+        // timeRange: is found in App\Models\Filterable trait as a query scope.
     }
 
     /**

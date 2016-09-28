@@ -1,8 +1,8 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Authentication;
+namespace App\Http\Controllers\Authentication;
 
-use VideoAd\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller

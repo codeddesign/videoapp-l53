@@ -1,18 +1,18 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Authentication;
+namespace App\Http\Controllers\Authentication;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-use VideoAd\Http\Requests\LoginRequest;
-use VideoAd\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
 
 /**
  * @author Coded Design
- * Class LoginController
- * @package VideoAd\Http\Controllers\Authentication
+ *
+ * @package App\Http\Controllers\Authentication
  */
 class LoginController extends Controller
 {

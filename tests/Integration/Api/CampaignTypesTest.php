@@ -1,7 +1,7 @@
 <?php
 
-use VideoAd\User;
-use VideoAd\Models\CampaignType;
+use App\User;
+use App\Models\CampaignType;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -16,7 +16,7 @@ class CampaignTypesTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(VideoAd\User::class)->create();
+        $this->user = factory(App\User::class)->create();
     }
 
     /**
@@ -117,7 +117,7 @@ class CampaignTypesTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $type = factory(VideoAd\Models\CampaignType::class)->create();
+        $type = factory(App\Models\CampaignType::class)->create();
 
         $this->put('/api/campaign-types/'.$type->id, [
             'title' => $type->title,
@@ -145,7 +145,7 @@ class CampaignTypesTest extends TestCase
         $user = User::create([
             'name' => 'test user',
             'email' => 'test@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => '123456',
             'remember_token' => str_random(10),
             'verified_phone' => 1,
             'verified_email' => 1
@@ -153,7 +153,7 @@ class CampaignTypesTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $type = factory(VideoAd\Models\CampaignType::class)->create();
+        $type = factory(App\Models\CampaignType::class)->create();
 
         $this->delete('/api/campaign-types/'.$type->id, [], ['Accept' => 'application/json']);
 

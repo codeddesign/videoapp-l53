@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoAd\Http\Mappers;
+namespace App\Http\Mappers;
 
-use VideoAd\Models\Campaign;
+use App\Models\Campaign;
 
 /**
  * @author Coded Design
- * Class CampaignMapper
- * @package VideoAd\Http\Mappers
+ *
+ * @package App\Http\Mappers
  */
 class CampaignMapper
 {

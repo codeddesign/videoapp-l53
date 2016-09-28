@@ -1,17 +1,17 @@
 <?php
 
-namespace VideoAd\CampaignEvents\Providers;
+namespace App\CampaignEvents\Providers;
 
-use VideoAd\CampaignEvents\Manager;
+use App\CampaignEvents\Manager;
 use Illuminate\Support\ServiceProvider;
-use VideoAd\CampaignEvents\CampaignEventInterface;
-use VideoAd\CampaignEvents\Repositories\CampaignInterface;
-use VideoAd\CampaignEvents\Repositories\CampaignRepository;
+use App\CampaignEvents\CampaignEventInterface;
+use App\CampaignEvents\Repositories\CampaignInterface;
+use App\CampaignEvents\Repositories\CampaignRepository;
 
 /**
  * @author Coded Design
- * Class CampaignEventsServiceProvider
- * @package VideoAd\CampaignEvents\Providers
+ *
+ * @package App\CampaignEvents\Providers
  */
 class CampaignEventsServiceProvider extends ServiceProvider
 {

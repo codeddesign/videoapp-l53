@@ -1,9 +1,9 @@
 <?php
 
-namespace VideoAd\Http\Requests;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use VideoAd\User;
+use App\User;
 
 class RegistrationRequest extends FormRequest
 {
@@ -41,7 +41,7 @@ class RegistrationRequest extends FormRequest
         return User::create([
             'name' => $this->get('name'),
             'email' => $this->get('email'),
-            'password' => bcrypt($this->get('password'))
+            'password' => $this->get('password')
         ]);
     }
 }

@@ -1,20 +1,18 @@
 <?php
 
-namespace VideoAd;
+namespace App;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use VideoAd\Models\Campaign;
-use VideoAd\Models\CampaignType;
-use VideoAd\Models\Wordpress;
-use VideoAd\Services\Youtube;
+use App\Models\Campaign;
+use App\Models\CampaignType;
+use App\Models\Wordpress;
+use App\Services\Youtube;
 
 /**
  * @author Coded Design
- * Class User
- * @package VideoAd
  */
 class User extends Authenticatable
 {
@@ -53,8 +51,18 @@ class User extends Authenticatable
      */
     protected $casts = [
         'verified_email' => 'boolean',
-        'verified_phone' => 'boolean'
+        'verified_phone' => 'boolean',
     ];
+
+    /**
+     * Encrypt password by default.
+     *
+     * @param string $password
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
 
     /**
      * return the state of the user, if both email and phone are verified.
@@ -96,7 +104,7 @@ class User extends Authenticatable
 
         $data['campaign_type_id'] = $campaignType->id;
 
-        if (! $campaignType->has_name) {
+        if (!$campaignType->has_name) {
             $data['name'] = Youtube::title($data);
         }
 

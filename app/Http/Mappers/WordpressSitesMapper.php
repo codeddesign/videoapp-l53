@@ -1,12 +1,12 @@
 <?php
 
-namespace VideoAd\Http\Mappers;
+namespace App\Http\Mappers;
 
-use VideoAd\Models\Wordpress;
+use App\Models\Wordpress;
 
 /**
  * @author Coded Design
- * Class WordpressSitesMapper
+ *
  * @package Http\Mappers
  */
 class WordpressSitesMapper

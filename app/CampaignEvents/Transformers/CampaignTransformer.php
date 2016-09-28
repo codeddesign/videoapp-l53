@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoAd\CampaignEvents\Transformers;
+namespace App\CampaignEvents\Transformers;
 
-use VideoAd\Models\Campaign;
+use App\Models\Campaign;
 
 /**
  * @author Coded Design
- * Class CampaignInfoTransformer
- * @package VideoAd\CampaignEvents\Transformers
+ *
+ * @package App\CampaignEvents\Transformers
  */
 class CampaignTransformer
 {

@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use VideoAd\User;
+use App\User;
 
 class LoginTest extends TestCase
 {
@@ -48,10 +46,10 @@ class LoginTest extends TestCase
         User::create([
             'name' => 'test user',
             'email' => 'test@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => '123456',
             'remember_token' => str_random(10),
             'verified_phone' => 1,
-            'verified_email' => 1
+            'verified_email' => 1,
         ]);
 
         $this->visit('/login')
@@ -72,10 +70,10 @@ class LoginTest extends TestCase
         User::create([
             'name' => 'test user',
             'email' => 'test@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => '123456',
             'remember_token' => str_random(10),
             'verified_phone' => 0,
-            'verified_email' => 1
+            'verified_email' => 1,
         ]);
 
         $this->visit('/login')
@@ -96,10 +94,10 @@ class LoginTest extends TestCase
         User::create([
             'name' => 'test user',
             'email' => 'test@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => '123456',
             'remember_token' => str_random(10),
             'verified_phone' => 1,
-            'verified_email' => 0
+            'verified_email' => 0,
         ]);
 
         $this->visit('/login')

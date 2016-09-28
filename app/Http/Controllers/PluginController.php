@@ -1,15 +1,15 @@
 <?php
 
-namespace VideoAd\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use VideoAd\Models\Wordpress;
-use VideoAd\User;
+use App\Models\Wordpress;
+use App\User;
 
 /**
  * @author Coded Design
- * Class PluginController
- * @package VideoAd\Http\Controllers
+ *
+ * @package App\Http\Controllers
  */
 class PluginController extends Controller
 {

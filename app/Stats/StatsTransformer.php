@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoAd\Stats;
+namespace App\Stats;
 
 use Carbon\Carbon;
 
 /**
  * @author Coded Design
- * Class StatsTransformer
- * @package VideoAd\Stats
+ *
+ * @package App\Stats
  */
 class StatsTransformer
 {

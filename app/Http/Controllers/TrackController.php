@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use VideoAd\Services\PlayerEvent;
+use App\Services\PlayerEvent;
 
 /**
  * @author Coded Design
- * Class TrackController
- * @package VideoAd\Http\Controllers
+ *
+ * @package App\Http\Controllers
  */
 class TrackController extends Controller
 {

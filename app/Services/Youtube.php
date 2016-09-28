@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\Services;
+namespace App\Services;
 
 use InvalidArgumentException;
-use VideoAd\Models\Video;
+use App\Models\Video;
 
 /**
  * @author Coded Design
- * Class Youtube
- * @package VideoAd\Services
+ *
+ * @package App\Services
  */
 class Youtube
 {

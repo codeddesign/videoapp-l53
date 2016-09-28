@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
-use VideoAd\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 /**
  * @author Coded Design
- * Class VideosizesController
- * @package VideoAd\Http\Controllers\Api
+ *
+ * @package App\Http\Controllers\Api
  */
 class VideosizesController extends Controller
 {

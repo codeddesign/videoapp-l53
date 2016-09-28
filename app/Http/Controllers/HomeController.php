@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoAd\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 
 /**
  * @author Coded Design
- * Class HomeController
- * @package VideoAd\Http\Controllers
+ *
+ * @package App\Http\Controllers
  */
 class HomeController extends Controller
 {

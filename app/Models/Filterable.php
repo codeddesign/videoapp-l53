@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\Models;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @author Coded Design
- * Class FilterRequests
- * @package VideoAd\Models\Filters
+ *
+ * @package App\Models\Filters
  *
  * @todo make this dynamic, by reading the method name and translating it to its equivalent filters.
  */

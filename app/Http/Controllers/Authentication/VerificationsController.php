@@ -1,9 +1,9 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Authentication;
+namespace App\Http\Controllers\Authentication;
 
 use Illuminate\View\View;
-use VideoAd\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 class VerificationsController extends Controller
 {

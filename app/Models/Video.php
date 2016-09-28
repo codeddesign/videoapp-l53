@@ -1,15 +1,15 @@
 <?php
 
-namespace VideoAd\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use VideoAd\Services\Youtube;
+use App\Services\Youtube;
 
 /**
  * @author Coded Design
- * Class Video
- * @package VideoAd\Models
+ *
+ * @package App\Models
  */
 class Video extends Model
 {

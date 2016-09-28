@@ -1,6 +1,6 @@
 <?php
 
-namespace VideoAd\Providers;
+namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'VideoAd\Model' => 'VideoAd\Policies\ModelPolicy',
+        'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**

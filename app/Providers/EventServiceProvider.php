@@ -1,6 +1,6 @@
 <?php
 
-namespace VideoAd\Providers;
+namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,9 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'VideoAd\Events\VerifyAccount' => [
-            'VideoAd\Listeners\VerifyEmail',
-            'VideoAd\Listeners\VerifyPhone',
+        'App\Events\VerifyAccount' => [
+            'App\Listeners\VerifyEmail',
+            'App\Listeners\VerifyPhone',
         ],
     ];
 

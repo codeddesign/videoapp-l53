@@ -1,17 +1,17 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
 use Api;
 use Illuminate\Support\Facades\Session;
-use VideoAd\Http\Controllers\Controller;
-use VideoAd\Http\Mappers\CampaignMapper;
-use VideoAd\Http\Requests\CampaignRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Mappers\CampaignMapper;
+use App\Http\Requests\CampaignRequest;
 
 /**
  * @author Coded Design
- * Class CampaignsController
- * @package VideoAd\Http\Controllers\Api
+ *
+ * @package App\Http\Controllers\Api
  */
 class CampaignsController extends Controller
 {
@@ -131,6 +131,6 @@ class CampaignsController extends Controller
     {
         $pattern = '%s/p%s.js';
 
-        return sprintf($pattern, env('PLAYER_HOST'), $campaignId);
+        return sprintf($pattern, env('PLAYER_URL'), $campaignId);
     }
 }

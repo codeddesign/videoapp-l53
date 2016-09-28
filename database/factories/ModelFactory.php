@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(VideoAd\User::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
@@ -20,7 +20,7 @@ $factory->define(VideoAd\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(VideoAd\Models\CampaignType::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\CampaignType::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->name,
         'alias' => $faker->name,

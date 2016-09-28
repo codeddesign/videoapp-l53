@@ -10,7 +10,7 @@ return [
     | Enter the mappers base namespace
     |
     */
-    'mappers' => 'VideoAd\Http\Mappers\\',
+    'mappers' => 'App\Http\Mappers\\',
 
     /*
     |--------------------------------------------------------------------------

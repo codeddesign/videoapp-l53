@@ -1,8 +1,8 @@
 <?php
 
-namespace VideoAd\Listeners;
+namespace App\Listeners;
 
-use VideoAd\Events\VerifyAccount;
+use App\Events\VerifyAccount;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

@@ -1,13 +1,11 @@
 <?php
 
-namespace VideoAd\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @author Coded Design
- * Class CampaignType
- * @package VideoAd\Models
  */
 class CampaignType extends Model
 {
@@ -33,7 +31,7 @@ class CampaignType extends Model
     protected $casts = [
         'available' => 'boolean',
         'single' => 'boolean',
-        'has_name' => 'boolean'
+        'has_name' => 'boolean',
     ];
 
     /**

@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\CampaignEvents\Repositories;
+namespace App\CampaignEvents\Repositories;
 
-use VideoAd\Models\Campaign;
+use App\Models\Campaign;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author Coded Design
- * Class CampaignRepository
- * @package VideoAd\CampaignEvents\Repositories
+ *
+ * @package App\CampaignEvents\Repositories
  */
 class CampaignRepository implements CampaignInterface
 {

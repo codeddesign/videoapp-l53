@@ -1,14 +1,14 @@
 <?php
 
-namespace VideoAd\CampaignEvents;
+namespace App\CampaignEvents;
 
-use VideoAd\CampaignEvents\Repositories\CampaignInterface;
-use VideoAd\CampaignEvents\Transformers\CampaignTransformer;
+use App\CampaignEvents\Repositories\CampaignInterface;
+use App\CampaignEvents\Transformers\CampaignTransformer;
 
 /**
  * @author Coded Design
- * Class Manager
- * @package VideoAd\CampaignEvents
+ *
+ * @package App\CampaignEvents
  */
 class Manager implements CampaignEventInterface
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace VideoAd\Models;
+namespace App\Models;
 
-use VideoAd\User;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @author Coded Design
- * Class Campaign
- * @package VideoAd\Models
+ *
+ * @package App\Models
  */
 class Campaign extends Model
 {

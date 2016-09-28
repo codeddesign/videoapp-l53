@@ -170,16 +170,16 @@ return [
         /*
          * Application Service Providers...
          */
-        VideoAd\Providers\AppServiceProvider::class,
-        // VideoAd\Providers\BroadcastServiceProvider::class,
-        VideoAd\Providers\AuthServiceProvider::class,
-        VideoAd\Providers\EventServiceProvider::class,
-        VideoAd\Providers\RouteServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
 
         Laravel\Passport\PassportServiceProvider::class,
         Vinelab\Api\ApiServiceProvider::class,
 
-        VideoAd\CampaignEvents\Providers\CampaignEventsServiceProvider::class,
+        App\CampaignEvents\Providers\CampaignEventsServiceProvider::class,
 
         // Sentry integration
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,

@@ -1,11 +1,11 @@
 <?php
 
-namespace VideoAd\CampaignEvents;
+namespace App\CampaignEvents;
 
 /**
  * @author Coded Design
  * Interface CampaignEventInterface
- * @package VideoAd\CampaignEvents
+ * @package App\CampaignEvents
  */
 interface CampaignEventInterface
 {

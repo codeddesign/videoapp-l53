@@ -1,6 +1,6 @@
 <?php
 
-namespace VideoAd\Exceptions;
+namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

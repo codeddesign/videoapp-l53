@@ -1,13 +1,13 @@
 <?php
 
-namespace VideoAd\CampaignEvents\Facades;
+namespace App\CampaignEvents\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @author Coded Design
- * Class CampaignEvent
- * @package VideoAd\CampaignEvents\Facades
+ *
+ * @package App\CampaignEvents\Facades
  */
 class CampaignEvent extends Facade
 {
@@ -20,6 +20,6 @@ class CampaignEvent extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \VideoAd\CampaignEvents\CampaignEventInterface::class;
+        return \App\CampaignEvents\CampaignEventInterface::class;
     }
 }

@@ -1,13 +1,11 @@
 <?php
 
-namespace VideoAd\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 
 /**
- * @author Adib Hanna <adibhanna@gmail.com>
- * Class Cors
- * @package VideoAd\Http\Middleware
+ * @package App\Http\Middleware
  */
 class Cors
 {

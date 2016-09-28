@@ -1,15 +1,15 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
-use VideoAd\Http\Controllers\Controller;
-use VideoAd\Models\CampaignEvent;
-use VideoAd\Stats\StatsTransformer;
+use App\Http\Controllers\Controller;
+use App\Models\CampaignEvent;
+use App\Stats\StatsTransformer;
 
 /**
  * @author Coded Design
- * Class ChartsController
- * @package VideoAd\Http\Controllers\Api
+ *
+ * @package App\Http\Controllers\Api
  *
  * This class is used to prepare the data using to draw the charts (small & big) on
  * the dashboard page. We are only fetching the 'requests' and 'impressions' so far

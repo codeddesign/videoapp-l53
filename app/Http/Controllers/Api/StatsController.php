@@ -1,15 +1,15 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
-use VideoAd\Models\Campaign;
-use VideoAd\Models\CampaignEvent;
-use VideoAd\Http\Controllers\Controller;
+use App\Models\Campaign;
+use App\Models\CampaignEvent;
+use App\Http\Controllers\Controller;
 
 /**
  * @author Coded Design
- * Class StatsController
- * @package VideoAd\Http\Controllers\Api
+ *
+ * @package App\Http\Controllers\Api
  */
 class StatsController extends Controller
 {

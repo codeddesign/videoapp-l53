@@ -1,18 +1,18 @@
 <?php
 
-namespace VideoAd\Http\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
 use Api;
 use Illuminate\Http\Request;
-use VideoAd\Http\Requests\CampaignTypeRequest;
-use VideoAd\Models\CampaignType;
-use VideoAd\Http\Controllers\Controller;
-use VideoAd\Http\Mappers\CampaignTypesMapper;
+use App\Http\Requests\CampaignTypeRequest;
+use App\Models\CampaignType;
+use App\Http\Controllers\Controller;
+use App\Http\Mappers\CampaignTypesMapper;
 
 /**
  * @author Coded Design
- * Class CampaignTypesController
- * @package VideoAd\Http\Controllers\Api
+ *
+ * @package App\Http\Controllers\Api
  */
 class CampaignTypesController extends Controller
 {
