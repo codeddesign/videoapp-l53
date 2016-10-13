@@ -18,11 +18,14 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
+        $response = $next($request);
+
+        $response->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Max-Age', 0)
             ->header('Access-Control-Allow-Credentials', 'false')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
             ->header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Accept, Authorization');
+
+        return $response;
     }
 }

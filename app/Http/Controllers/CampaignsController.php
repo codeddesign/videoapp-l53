@@ -35,6 +35,9 @@ class CampaignsController extends Controller
 
         CampaignEvent::create(['campaign_id' => $id, 'name' => 'app', 'event' => 'load']);
 
-        return response($campaign, 200);
+        return response(array_merge($campaign, [
+            'tags' => env_adTags(),
+            'ip' => ipUtil(),
+        ]), 200);
     }
 }
