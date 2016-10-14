@@ -1,38 +1,41 @@
 @extends('auth.layout')
 
 @section('content')
-    <h1>{{ auth()->user()->email }}</h1>
-    <div class="user-creation">
-        <div class="loginform-registertitle">NEW ACCOUNT</div>
-        <div class="loginform-error"></div>
 
-        <form action="#">
+    @if (! session('verify'))
+        <form action="/verify/phone" method="post">
             {{ csrf_field() }}
-            <div class="error">@{{ error }}</div>
+            @if (count($errors) > 0)
+                <div class="error">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
 
             <div>
-                <input type="tel" name="phone" placeholder="Phone number.." required>
+                <input type="tel" name="phone" placeholder="Phone number..">
                 <span class="loginemailicon"></span>
             </div>
 
             <button>VERIFY NUMBER</button>
         </form>
-
-        <form action="#">
-            <div class="error">@{{ error }}</div>
+    @else
+        <form action="/verify/phone/code" method="post">
+            {{ csrf_field() }}
+            @if (count($errors) > 0)
+                <div class="error">
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
 
             <div>
-                <input type="text" name="phone_code" placeholder="Enter verification number.." required>
+                <input type="text" name="phone_code" placeholder="Enter verification number.." required v-model="user.phone_code" v-el:phoneCode>
             </div>
 
             <button>CONFIRM VERIFICATION NUMBER</button>
         </form>
-
-        <div v-show="step == 'completed'" style="text-align: center;color: white;">
-            <img src="/assets/images/verify-success.png">
-
-            <p>Success!</p>
-            <p>Proceed to login page</p>
-        </div>
-    </div>
+    @endif
 @endsection

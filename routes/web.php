@@ -11,6 +11,8 @@ Route::get('logout', 'Authentication\LoginController@logout');
 // Verification.
 // @todo implementation.
 Route::get('verify/phone', 'Authentication\VerificationsController@verifyPhone')->name('verify.phone');
+Route::post('verify/phone', 'Authentication\VerificationsController@postVerifyPhone');
+Route::post('verify/phone/code', 'Authentication\VerificationsController@postVerifyPhoneCode');
 Route::get('verify/email', 'Authentication\VerificationsController@verifyEmail')->name('verify.email');
 
 // Registration.

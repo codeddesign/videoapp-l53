@@ -121,4 +121,17 @@ class User extends Authenticatable
 
         return $campaign;
     }
+
+    /**
+     * Sets verified phone to true.
+     *
+     * @return User
+     */
+    public function confirmPhone()
+    {
+        $this->verified_phone = true;
+        $this->save();
+
+        return $this;
+    }
 }
