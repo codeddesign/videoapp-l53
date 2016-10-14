@@ -29,6 +29,6 @@ class CreateWordpressesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('wordpresses');
+        Schema::drop('wordpress_sites');
     }
 }
