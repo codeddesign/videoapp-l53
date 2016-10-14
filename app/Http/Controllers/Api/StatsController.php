@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Api
  */
 class StatsController extends Controller
 {
@@ -28,7 +26,7 @@ class StatsController extends Controller
     /**
      * Count the impressions per date range.
      *
-     * @return integer
+     * @return int
      */
     public function impressions()
     {
@@ -43,7 +41,9 @@ class StatsController extends Controller
         // paginated
         // collection methods to consider: reduce
         $events = Campaign::find(9)->campaignEvents()->orderBy('created_at')->get();
+
         return $events;
-        $events->transform(function($item, $key){});
+        $events->transform(function ($item, $key) {
+        });
     }
 }

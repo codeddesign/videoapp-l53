@@ -7,8 +7,6 @@ use App\Services\PlayerEvent;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers
  */
 class TrackController extends Controller
 {

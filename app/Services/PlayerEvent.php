@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Storage;
 
 /**
  * @author Coded Design
- *
- * @package App\Services
  */
 class PlayerEvent
 {
@@ -41,7 +39,7 @@ class PlayerEvent
     public static function save(array $data)
     {
         $data = self::eventData($data);
-        if (!$data) {
+        if (! $data) {
             return false;
         }
 
@@ -63,11 +61,11 @@ class PlayerEvent
     {
         $data = [];
         foreach (self::$fields_map as $field => $key) {
-            if (!isset($query[$key])) {
+            if (! isset($query[$key])) {
                 return false;
             }
 
-            if (!$query[$key]) {
+            if (! $query[$key]) {
                 return false;
             }
 

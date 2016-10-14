@@ -8,8 +8,6 @@ use App\User;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers
  */
 class PluginController extends Controller
 {
@@ -31,7 +29,7 @@ class PluginController extends Controller
     public function campaignAdd(Request $request)
     {
         $site = Wordpress::byLink(refererUtil());
-        if (!$site) {
+        if (! $site) {
             return response(['error' => 'This site is not approved. Contact your admin.']);
         }
 

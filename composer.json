@@ -17,7 +17,8 @@
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "symfony/dom-crawler": "3.1.*",
+        "friendsofphp/php-cs-fixer": "^1.12"
     },
     "autoload": {
         "classmap": [
@@ -28,11 +29,6 @@
         },
         "files": [
             "app/Utils/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
         ]
     },
     "scripts": {

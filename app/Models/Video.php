@@ -8,8 +8,6 @@ use App\Services\Youtube;
 
 /**
  * @author Coded Design
- *
- * @package App\Models
  */
 class Video extends Model
 {

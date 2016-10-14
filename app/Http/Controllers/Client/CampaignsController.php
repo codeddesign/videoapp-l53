@@ -8,8 +8,6 @@ use App\CampaignEvents\Facades\CampaignEvent as CampaignEventFacade;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Client
  */
 class CampaignsController extends Controller
 {

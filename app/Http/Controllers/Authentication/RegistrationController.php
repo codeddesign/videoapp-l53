@@ -11,8 +11,6 @@ use App\Http\Requests\RegistrationRequest;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Authentication
  */
 class RegistrationController extends Controller
 {

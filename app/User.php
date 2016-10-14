@@ -104,7 +104,7 @@ class User extends Authenticatable
 
         $data['campaign_type_id'] = $campaignType->id;
 
-        if (!$campaignType->has_name) {
+        if (! $campaignType->has_name) {
             $data['name'] = Youtube::title($data);
         }
 
@@ -112,7 +112,7 @@ class User extends Authenticatable
 
         $campaign->fill($data);
 
-        if (!$toSession) {
+        if (! $toSession) {
             $campaign->save();
         }
 

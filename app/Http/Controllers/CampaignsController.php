@@ -7,8 +7,6 @@ use App\Models\CampaignEvent;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers
  */
 class CampaignsController extends Controller
 {
@@ -29,7 +27,7 @@ class CampaignsController extends Controller
         // return the campaign information used by the player.
         $campaign = Campaign::forPlayer($id);
 
-        if (!$campaign) {
+        if (! $campaign) {
             return response(['message' => 'Campaign does not exist.'], 404);
         }
 

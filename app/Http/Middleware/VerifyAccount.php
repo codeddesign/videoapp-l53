@@ -15,7 +15,7 @@ class VerifyAccount
      */
     public function handle($request, Closure $next)
     {
-        if(! $request->user()->verified()) {
+        if (! $request->user()->verified()) {
             return redirect()->route('verify.phone');
         }
 

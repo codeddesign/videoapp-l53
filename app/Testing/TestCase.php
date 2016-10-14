@@ -38,10 +38,11 @@ abstract class TestCase extends BaseTestCase
 
     public function prepareDb()
     {
-        if (defined('TESTS_DB_PREPARED')) return;
+        if (defined('TESTS_DB_PREPARED')) {
+            return;
+        }
 
         define('TESTS_DB_PREPARED', true);
-
 
         /** @var DatabaseManager $db */
         $db = $this->app['db'];

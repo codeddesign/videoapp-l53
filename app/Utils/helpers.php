@@ -38,7 +38,7 @@ function filterModelKeys(array $data, array $keys)
             continue;
         }
 
-        if (!isset($only[$key])) {
+        if (! isset($only[$key])) {
             unset($data[$key]);
         }
     }
@@ -80,11 +80,11 @@ function env_adTags()
                 $mode = $matched[1];
             }
 
-            if (!isset($tags[$type])) {
+            if (! isset($tags[$type])) {
                 $tags[$type] = [];
             }
 
-            if (!isset($tags[$type][$mode])) {
+            if (! isset($tags[$type][$mode])) {
                 $tags[$type][$mode] = [];
             }
 
@@ -107,7 +107,7 @@ function env_adTags()
 function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
 {
     if ($from->gt($to)) {
-        return null;
+        return;
     }
 
     // Clone the date objects to avoid issues, then reset their time

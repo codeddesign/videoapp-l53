@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author Coded Design
- *
- * @package App\CampaignEvents\Repositories
  */
 class CampaignRepository implements CampaignInterface
 {
@@ -37,16 +35,14 @@ class CampaignRepository implements CampaignInterface
      */
     public function findBy($attribute, $value, $relations = null, $withTrashed = false)
     {
-        if ($relations and is_array($relations))
-        {
+        if ($relations and is_array($relations)) {
             $query = $this->campaign->where($attribute, $value);
 
-            foreach($relations as $relation)
-            {
+            foreach ($relations as $relation) {
                 $query->with($relation);
             }
 
-            if($withTrashed == true) {
+            if ($withTrashed == true) {
                 $query = $query->withTrashed();
             }
 
@@ -66,12 +62,10 @@ class CampaignRepository implements CampaignInterface
      */
     public function findByWithTrashed($attribute, $value, $relations = null)
     {
-        if ($relations and is_array($relations))
-        {
+        if ($relations and is_array($relations)) {
             $query = $this->campaign->where($attribute, $value);
 
-            foreach($relations as $relation)
-            {
+            foreach ($relations as $relation) {
                 $query->with($relation);
             }
 

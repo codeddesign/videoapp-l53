@@ -2,7 +2,7 @@
 
 return
     [
-        /**
+        /*
          * List of campaigns/ad types that are available.
          *
          * Important:
@@ -59,7 +59,7 @@ return
                 'has_name' => true,
             ],
         ],
-        /**
+        /*
          * Video sizes.
          */
         'sizes' => [
@@ -68,5 +68,5 @@ return
             'medium' => '640x360',
             'large' => '853x480',
             'hd720' => '1280x720',
-        ]
+        ],
     ];

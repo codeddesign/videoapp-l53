@@ -11,8 +11,6 @@ use App\Http\Controllers\Controller;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Authentication
  */
 class LoginController extends Controller
 {
@@ -34,19 +32,18 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request) : RedirectResponse
     {
-        if (!Auth::attempt($request->only(['email', 'password']))) {
+        if (! Auth::attempt($request->only(['email', 'password']))) {
             return redirect()->back()->withInput()->withErrors([
-                $request->get('email') => 'Credentials do not match our records'
+                $request->get('email') => 'Credentials do not match our records',
             ]);
         }
 
-        if (!Auth::user()->verified_phone) {
+        if (! Auth::user()->verified_phone) {
             // @todo create an event to send a sms message and verify the user
             return redirect()->route('verify.phone');
         }
 
-
-        if (!Auth::user()->verified_email) {
+        if (! Auth::user()->verified_email) {
             // @todo create an event to send an email message and verify the user
             return redirect()->route('verify.email');
         }

@@ -4,8 +4,6 @@ namespace App\CampaignEvents\Entities;
 
 /**
  * @author Coded Design
- *
- * @package App\CampaignEvents\Entities
  */
 class Event
 {

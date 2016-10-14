@@ -28,11 +28,11 @@ class CampaignTypesTest extends TestCase
     public function it_fetches_campaigns_types()
     {
         CampaignType::create([
-            'title' => 'In Content Gallery',
-            'alias' => 'incontentgallery',
+            'title'     => 'In Content Gallery',
+            'alias'     => 'incontentgallery',
             'available' => false,
-            'single' => false,
-            'has_name' => true,
+            'single'    => false,
+            'has_name'  => true,
         ]);
 
         $this->actingAs($this->user, 'api');
@@ -40,11 +40,11 @@ class CampaignTypesTest extends TestCase
         $this->visit('/api/campaign-types')
             ->assertResponseOk()//200
             ->seeJson([
-                'title' => 'In Content Gallery',
-                'alias' => 'incontentgallery',
+                'title'     => 'In Content Gallery',
+                'alias'     => 'incontentgallery',
                 'available' => false,
-                'single' => false,
-                'has_name' => true,
+                'single'    => false,
+                'has_name'  => true,
             ]);
     }
 
@@ -70,11 +70,11 @@ class CampaignTypesTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $this->post('/api/campaign-types', [
-            'title' => 'some type',
-            'alias' => 'sometype',
+            'title'     => 'some type',
+            'alias'     => 'sometype',
             'available' => true,
-            'single' => true,
-            'has_name' => true
+            'single'    => true,
+            'has_name'  => true,
         ], ['Accept' => 'application/json']);
 
         $this->assertResponseStatus(201)
@@ -91,20 +91,20 @@ class CampaignTypesTest extends TestCase
         $this->actingAs($this->user, 'api');
 
         $this->post('/api/campaign-types', [
-            'title' => 'some type',
-            'alias' => 'sometype',
+            'title'     => 'some type',
+            'alias'     => 'sometype',
             'available' => 'sadf',
-            'single' => true,
-            'has_name' => true
+            'single'    => true,
+            'has_name'  => true,
         ], ['Accept' => 'application/json']);
 
         $this->seeStatusCode(422);
 
         $this->seeJson(
             [
-              "available" => [
-                    "The available field must be true or false."
-                ]
+                'available' => [
+                    'The available field must be true or false.',
+                ],
             ]
         );
     }
@@ -121,11 +121,11 @@ class CampaignTypesTest extends TestCase
         $type = factory(CampaignType::class)->create();
 
         $this->put('/api/campaign-types/'.$type->id, [
-            'title' => $type->title,
-            'alias' => $type->alias,
+            'title'     => $type->title,
+            'alias'     => $type->alias,
             'available' => true,
-            'single' => true,
-            'has_name' => true
+            'single'    => true,
+            'has_name'  => true,
         ], ['Accept' => 'application/json']);
 
         $this->assertResponseStatus(200);
@@ -144,12 +144,12 @@ class CampaignTypesTest extends TestCase
     public function it_deletes_a_campaign_type()
     {
         $user = User::create([
-            'name' => 'test user',
-            'email' => 'test@gmail.com',
-            'password' => '123456',
+            'name'           => 'test user',
+            'email'          => 'test@gmail.com',
+            'password'       => '123456',
             'remember_token' => str_random(10),
             'verified_phone' => 1,
-            'verified_email' => 1
+            'verified_email' => 1,
         ]);
 
         $this->actingAs($user, 'api');

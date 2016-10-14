@@ -6,8 +6,6 @@ use App\Models\Campaign;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Mappers
  */
 class CampaignMapper
 {
@@ -24,7 +22,7 @@ class CampaignMapper
             'size' => $campaign->size,
             'user' => $this->user($campaign),
             'type' => $campaign->type,
-            'created_at_humans' => $campaign->created_at_humans
+            'created_at_humans' => $campaign->created_at_humans,
         ];
     }
 
@@ -37,7 +35,7 @@ class CampaignMapper
         return [
             'id' => (int) $campaign->user->id,
             'name' => $campaign->user->name,
-            'email' => $campaign->user->email
+            'email' => $campaign->user->email,
         ];
     }
 }

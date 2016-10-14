@@ -9,8 +9,6 @@ use App\Http\Requests\WordpressRequest;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Api
  */
 class WordpressSitesController extends Controller
 {
@@ -39,7 +37,7 @@ class WordpressSitesController extends Controller
 
         return response([
             'message' => 'Successfully added a website.',
-            'site' => $site
+            'site' => $site,
         ], 201);
     }
 

@@ -7,8 +7,6 @@ use App\User;
 
 /**
  * @author Coded Design
- *
- * @package App\Models
  */
 class Wordpress extends Model
 {
@@ -67,7 +65,7 @@ class Wordpress extends Model
     protected static function linkDomain($link)
     {
         $parsed = parse_url($link);
-        if (!isset($parsed['host'])) {
+        if (! isset($parsed['host'])) {
             return false;
         }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use Api;
-use Illuminate\Http\Request;
 use App\Http\Requests\CampaignTypeRequest;
 use App\Models\CampaignType;
 use App\Http\Controllers\Controller;
@@ -11,8 +10,6 @@ use App\Http\Mappers\CampaignTypesMapper;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Api
  */
 class CampaignTypesController extends Controller
 {
@@ -41,7 +38,7 @@ class CampaignTypesController extends Controller
 
         return response([
             'message' => 'Successfully added a campaign type.',
-            'type' => $type
+            'type' => $type,
         ], 201);
     }
 
@@ -60,7 +57,7 @@ class CampaignTypesController extends Controller
 
         return response([
             'message' => 'Successfully updated the campaign type.',
-            'type' => $type
+            'type' => $type,
         ], 200);
     }
 
@@ -77,7 +74,7 @@ class CampaignTypesController extends Controller
         $type->delete();
 
         return response([
-            'message' => 'Successfully deleted the campaign type.'
-        ], 200) ;
+            'message' => 'Successfully deleted the campaign type.',
+        ], 200);
     }
 }

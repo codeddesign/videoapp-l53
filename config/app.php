@@ -184,7 +184,6 @@ return [
         // Sentry integration
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
-
     ],
 
     /*
@@ -232,7 +231,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
-
 
     ],
 

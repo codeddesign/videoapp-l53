@@ -7,8 +7,6 @@ use App\Models\Video;
 
 /**
  * @author Coded Design
- *
- * @package App\Services
  */
 class Youtube
 {
@@ -17,7 +15,6 @@ class Youtube
      *
      * @param $data
      * @return bool|string
-     *
      */
     public static function title($data)
     {
@@ -57,13 +54,13 @@ class Youtube
             $url = self::urlFromData($url);
         }
 
-        if (!trim($url)) {
+        if (! trim($url)) {
             return false;
         }
 
         $parsed = parse_url($url);
 
-        if (!isset($parsed['query'])) {
+        if (! isset($parsed['query'])) {
             throw new InvalidArgumentException('Provided links is not valid.');
         }
 

@@ -6,8 +6,6 @@ use App\Models\Wordpress;
 
 /**
  * @author Coded Design
- *
- * @package Http\Mappers
  */
 class WordpressSitesMapper
 {
@@ -23,7 +21,7 @@ class WordpressSitesMapper
             'link' => $site->link,
             'create_at' => $site->create_at,
             'updated_at' => $site->updated_at,
-            'user_id' => (int) $site->user->id
+            'user_id' => (int) $site->user->id,
         ];
     }
 }

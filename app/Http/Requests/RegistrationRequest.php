@@ -41,7 +41,7 @@ class RegistrationRequest extends FormRequest
         return User::create([
             'name' => $this->get('name'),
             'email' => $this->get('email'),
-            'password' => $this->get('password')
+            'password' => $this->get('password'),
         ]);
     }
 }

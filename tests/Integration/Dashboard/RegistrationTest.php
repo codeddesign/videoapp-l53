@@ -26,8 +26,8 @@ class RegistrationTest extends TestCase
 
         // check if the data has been persisted in the db.
         $this->seeInDatabase('users', [
-            'name' => 'some username',
-            'email' => 'test@mail.com'
+            'name'  => 'some username',
+            'email' => 'test@mail.com',
         ]);
 
         // check if user is authenticated.

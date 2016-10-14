@@ -6,8 +6,6 @@ use Illuminate\View\View;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers
  */
 class HomeController extends Controller
 {

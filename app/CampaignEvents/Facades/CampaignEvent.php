@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @author Coded Design
- *
- * @package App\CampaignEvents\Facades
  */
 class CampaignEvent extends Facade
 {

@@ -6,8 +6,6 @@ use Carbon\Carbon;
 
 /**
  * @author Coded Design
- *
- * @package App\Stats
  */
 class StatsTransformer
 {
@@ -25,8 +23,8 @@ class StatsTransformer
         $daysOfTheMonth = collect(date_range(Carbon::today()->startOfMonth(), Carbon::today()->endOfMonth()));
 
         // transform the collection into the form of [{'date': '2016-11-11', 'statsType': 0}]
-        $daysOfTheMonth->transform(function($date, $key) use ($statsType){
-            return ['date' => $date->format("Y-m-d"), $statsType => 0];
+        $daysOfTheMonth->transform(function ($date, $key) use ($statsType) {
+            return ['date' => $date->format('Y-m-d'), $statsType => 0];
         });
 
         // $monthlyCount can be: requests, impressions...
@@ -48,7 +46,7 @@ class StatsTransformer
     }
 
     /**
-     * This method allows us to use "transformToArrayOf{Impressions|Requests...}
+     * This method allows us to use "transformToArrayOf{Impressions|Requests...}.
      *
      * @param string $method
      * @param array $arguments
@@ -56,11 +54,11 @@ class StatsTransformer
      */
     public function __call($method, $arguments)
     {
-        if (preg_match('/^transformToArrayOf/', $method))
-        {
+        if (preg_match('/^transformToArrayOf/', $method)) {
             $attribute = strtolower(substr($method, 18));
             array_unshift($arguments, $attribute);
-            return call_user_func_array(array($this, 'transformToArrayOf'), $arguments);
+
+            return call_user_func_array([$this, 'transformToArrayOf'], $arguments);
         }
     }
 }

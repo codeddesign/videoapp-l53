@@ -6,8 +6,6 @@ use App\Models\Campaign;
 
 /**
  * @author Coded Design
- *
- * @package App\CampaignEvents\Transformers
  */
 class CampaignTransformer
 {
@@ -28,7 +26,7 @@ class CampaignTransformer
                 'type' => $campaign->type->alias,
                 'available' => $campaign->type->available,
                 'single' => $campaign->type->single,
-                'has_name' => $campaign->type->has_name
+                'has_name' => $campaign->type->has_name,
             ],
             'tags' => env_adTags(),
         ];

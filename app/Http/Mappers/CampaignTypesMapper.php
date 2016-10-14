@@ -6,8 +6,6 @@ use App\Models\CampaignType;
 
 /**
  * @author Coded Design
- *
- * @package Http\Mappers
  */
 class CampaignTypesMapper
 {

@@ -10,8 +10,6 @@ use App\Http\Requests\CampaignRequest;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Api
  */
 class CampaignsController extends Controller
 {
@@ -54,7 +52,7 @@ class CampaignsController extends Controller
         Session::set(config('videoad.TEMPORARY_PREVIEW_KEY'), $campaign);
 
         return [
-            'url' => $this->getEmbedLink()
+            'url' => $this->getEmbedLink(),
         ];
     }
 
@@ -98,7 +96,7 @@ class CampaignsController extends Controller
 
         return response([
             'message' => 'Successfully updated a campaign.',
-            'campaign' => $campaign
+            'campaign' => $campaign,
         ], 200);
     }
 
@@ -115,7 +113,7 @@ class CampaignsController extends Controller
         $campaign->delete();
 
         return response([
-            'message' => 'Successfully deleted the campaign.'
+            'message' => 'Successfully deleted the campaign.',
         ], 200);
     }
 

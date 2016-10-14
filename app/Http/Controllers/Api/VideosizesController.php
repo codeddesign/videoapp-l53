@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 
 /**
  * @author Coded Design
- *
- * @package App\Http\Controllers\Api
  */
 class VideosizesController extends Controller
 {

@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @author Coded Design
- *
- * @package App\Models
  */
 class CampaignEvent extends Model
 {
@@ -60,7 +58,7 @@ class CampaignEvent extends Model
      */
     public function scopeRequests($query, $request)
     {
-        return $this->whereHas('campaign', function ($query) use($query) {
+        return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
         })->where('name', 'app')->where('event', 'load')->timeRange($request);
         // timeRange: is found in App\Models\Filterable trait as a query scope.
@@ -75,7 +73,7 @@ class CampaignEvent extends Model
      */
     public function scopeImpressions($query, $request)
     {
-        return $this->whereHas('campaign', function ($query) use($query) {
+        return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
         })->where('name', 'ad')->where('event', 'start')->timeRange($request);
         // timeRange: is found in App\Models\Filterable trait as a query scope.
@@ -89,7 +87,7 @@ class CampaignEvent extends Model
      */
     public function scopeRequestsStats($query)
     {
-        return $this->whereHas('campaign', function ($query) use($query) {
+        return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
         })->where('created_at', '>=', Carbon::today()->startOfMonth())
             ->where('name', 'app')
@@ -107,7 +105,7 @@ class CampaignEvent extends Model
      */
     public function scopeImpressionsStats($query)
     {
-        return $this->whereHas('campaign', function ($query) use($query) {
+        return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
         })->where('created_at', '>=', Carbon::today()->startOfMonth())
             ->where('name', 'ad')

@@ -28,7 +28,7 @@ class CampaignTypeRequest extends FormRequest
             'alias' => 'required|max:255',
             'available' => 'boolean',
             'single' => 'boolean',
-            'has_name' => 'boolean'
+            'has_name' => 'boolean',
         ];
     }
 }

@@ -16,7 +16,7 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url');
-            $table->enum('source', ['youtube', 'vimeo', 'upload', 'other',])->default('youtube')->index();
+            $table->enum('source', ['youtube', 'vimeo', 'upload', 'other'])->default('youtube')->index();
 
             $table->integer('campaign_id')->unsigned();
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');

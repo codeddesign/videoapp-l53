@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Api\CampaignsController;
 use App\Http\Mappers\CampaignTypesMapper;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -10,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @author Coded Design
- *
- * @package App\Models
  */
 class Campaign extends Model
 {
@@ -51,7 +48,7 @@ class Campaign extends Model
      */
     public function getCreatedAtHumansAttribute()
     {
-        if (!$this->created_at) {
+        if (! $this->created_at) {
             return '1 second ago';
         }
 
@@ -116,7 +113,7 @@ class Campaign extends Model
                     'url' => $url,
                 ]);
 
-                if (!$toSession) {
+                if (! $toSession) {
                     $video->save();
                 }
 
@@ -147,7 +144,7 @@ class Campaign extends Model
                 ->find($id);
         }
 
-        if (!$campaign) {
+        if (! $campaign) {
             return false;
         }
 

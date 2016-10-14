@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 
 /**
- * @package App\Http\Middleware
  */
 class Cors
 {

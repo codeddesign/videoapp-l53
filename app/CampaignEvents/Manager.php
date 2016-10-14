@@ -7,8 +7,6 @@ use App\CampaignEvents\Transformers\CampaignTransformer;
 
 /**
  * @author Coded Design
- *
- * @package App\CampaignEvents
  */
 class Manager implements CampaignEventInterface
 {
@@ -64,6 +62,6 @@ class Manager implements CampaignEventInterface
                 break;
         }
 
-        return (!$campaign) ? false : CampaignTransformer::transform($campaign);
+        return (! $campaign) ? false : CampaignTransformer::transform($campaign);
     }
 }

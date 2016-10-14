@@ -10,8 +10,6 @@ use App\CampaignEvents\Repositories\CampaignRepository;
 
 /**
  * @author Coded Design
- *
- * @package App\CampaignEvents\Providers
  */
 class CampaignEventsServiceProvider extends ServiceProvider
 {
