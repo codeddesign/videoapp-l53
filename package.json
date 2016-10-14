@@ -17,10 +17,11 @@
   },
   "dependencies": {
     "chart.js": "^2.2.2",
-    "eonasdan-bootstrap-datetimepicker": "^4.15.35",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "font-awesome": "^4.6.3",
     "jquery-sparkline": "^2.3.2",
     "moment": "^2.14.1",
-    "vue-router": "^0.7.13"
+    "vue-router": "^0.7.13",
+    "js-cookie": "^2.1.3"
   }
 }

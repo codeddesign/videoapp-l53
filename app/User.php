@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
         'verified_email',
         'verified_phone',
+        'email_verification_token'
     ];
 
     /**
@@ -130,6 +131,19 @@ class User extends Authenticatable
     public function confirmPhone()
     {
         $this->verified_phone = true;
+        $this->save();
+
+        return $this;
+    }
+
+    /**
+     * Sets verified email to true.
+     *
+     * @return User
+     */
+    public function confirmEmail()
+    {
+        $this->verified_email = true;
         $this->save();
 
         return $this;

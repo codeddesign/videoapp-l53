@@ -11,6 +11,13 @@
                 @endforeach
             </div>
         @endif
+
+        @if (session('message'))
+            <div class="success">
+                {{ session('message') }}
+            </div>
+        @endif
+
         <div>
             <input type="email" name="email" placeholder="Email" value="{{ old('email')  }}" required>
             <span class="loginemailicon"></span>

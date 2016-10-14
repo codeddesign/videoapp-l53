@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Services\Nexmo;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
@@ -66,5 +67,16 @@ class VerificationsController extends Controller
     public function verifyEmail() : View
     {
         return view('auth.verify.email');
+    }
+
+    public function verifyEmailToken($token)
+    {
+        User::where('email_verification_token', $token)
+            ->firstOrFail()
+            ->confirmEmail();
+
+        return redirect()
+            ->route('login')
+            ->with('message', 'Your email is now confirmed. Please login.');
     }
 }

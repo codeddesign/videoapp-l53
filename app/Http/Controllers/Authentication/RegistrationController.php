@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Authentication;
 
+use App\Events\AccountCreated;
 use Illuminate\View\View;
 use App\Events\VerifyAccount;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,7 @@ class RegistrationController extends Controller
         $user = $request->register();
 
         // send verification email and phone.
-        event(new VerifyAccount($user));
+        event(new AccountCreated($user));
 
         // login the created user.
         Auth::login($user);

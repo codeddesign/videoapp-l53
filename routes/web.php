@@ -14,6 +14,7 @@ Route::get('verify/phone', 'Authentication\VerificationsController@verifyPhone')
 Route::post('verify/phone', 'Authentication\VerificationsController@postVerifyPhone');
 Route::post('verify/phone/code', 'Authentication\VerificationsController@postVerifyPhoneCode');
 Route::get('verify/email', 'Authentication\VerificationsController@verifyEmail')->name('verify.email');
+Route::get('verify/email/{token}', 'Authentication\VerificationsController@verifyEmailToken')->name('verify.email.token');
 
 // Registration.
 Route::get('register', 'Authentication\RegistrationController@showRegistrationForm');

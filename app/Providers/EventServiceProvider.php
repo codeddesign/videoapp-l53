@@ -13,9 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\VerifyAccount' => [
-            'App\Listeners\VerifyEmail',
-            'App\Listeners\VerifyPhone',
+        'App\Events\AccountCreated' => [
+            'App\Listeners\SendVerificationEmail',
         ],
     ];
 
