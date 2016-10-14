@@ -1,11 +1,14 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+namespace App\Tests\Integration\Dashboard;
+
+use App\Testing\TestCase;
 use App\User;
+use App\Testing\DatabaseTransactions;
 
 class LoginTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
 
     /**
      * Test visiting the homepage, clicking on 'login' link

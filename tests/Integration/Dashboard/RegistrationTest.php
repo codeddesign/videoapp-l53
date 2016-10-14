@@ -1,13 +1,13 @@
 <?php
 
-use App\User;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+namespace App\Tests\Integration\Dashboard;
+
+use App\Testing\DatabaseTransactions;
+use App\Testing\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
 
     /**
      * Test registering a user.

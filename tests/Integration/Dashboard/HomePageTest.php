@@ -1,11 +1,15 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+namespace App\Tests\Integration\Dashboard;
+
+use App\Testing\TestCase;
+use App\Testing\DatabaseTransactions;
+use Illuminate\View\View;
 
 class HomePageTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * Test visiting the home page.
      *
@@ -16,6 +20,6 @@ class HomePageTest extends TestCase
         $this->visit('/')
             ->assertResponseOk()
             ->see('High Impact Ad Solutions')
-            ->isInstanceOf(\Illuminate\View\View::class);
+            ->isInstanceOf(View::class);
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
-use App\User;
+namespace App\Tests\Integration\Api;
+
+use App\Testing\TestCase;
 use App\Models\CampaignType;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Testing\DatabaseTransactions;
+use App\User;
 
 class CampaignTypesTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
 
     protected $user;
 
@@ -16,7 +17,7 @@ class CampaignTypesTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(App\User::class)->create();
+        $this->user = factory(User::class)->create();
     }
 
     /**
@@ -117,7 +118,7 @@ class CampaignTypesTest extends TestCase
     {
         $this->actingAs($this->user, 'api');
 
-        $type = factory(App\Models\CampaignType::class)->create();
+        $type = factory(CampaignType::class)->create();
 
         $this->put('/api/campaign-types/'.$type->id, [
             'title' => $type->title,
@@ -153,7 +154,7 @@ class CampaignTypesTest extends TestCase
 
         $this->actingAs($user, 'api');
 
-        $type = factory(App\Models\CampaignType::class)->create();
+        $type = factory(CampaignType::class)->create();
 
         $this->delete('/api/campaign-types/'.$type->id, [], ['Accept' => 'application/json']);
 
