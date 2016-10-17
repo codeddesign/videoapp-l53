@@ -15,20 +15,20 @@ use App\Services\Youtube;
 /**
  * Database Columns
  *
- * @property int       $id
- * @property string    $name
- * @property string    $email
- * @property string    $password
- * @property string    $email_verification_token
- * @property boolean   $verified_phone
- * @property boolean   $verified_email
- * @property \DateTime $created_at
- * @property \DateTime $updated_at
+ * @property int        $id
+ * @property string     $name
+ * @property string     $email
+ * @property string     $password
+ * @property string     $email_verification_token
+ * @property bool       $verified_phone
+ * @property bool       $verified_email
+ * @property \DateTime  $created_at
+ * @property \DateTime  $updated_at
  *
  * Relationships
  *
- * @property Collection      $campaigns
- * @property Collection      $wordpressSites
+ * @property Collection $campaigns
+ * @property Collection $wordpressSites
  */
 class User extends Authenticatable
 {

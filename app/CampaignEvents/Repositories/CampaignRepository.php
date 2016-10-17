@@ -5,9 +5,6 @@ namespace App\CampaignEvents\Repositories;
 use App\Models\Campaign;
 use Illuminate\Database\Eloquent\Collection;
 
-/**
- * @author Coded Design
- */
 class CampaignRepository implements CampaignInterface
 {
     /**

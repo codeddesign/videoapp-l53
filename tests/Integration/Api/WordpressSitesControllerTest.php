@@ -28,7 +28,7 @@ class WordpressSitesControllerTest extends TestCase
         $this->actingAs($this->user, 'api')
             ->visit('/api/wordpress')
             ->seeJsonStructure([
-                'data'
+                'data',
             ]);
 
         $response = json_decode($this->response->content());

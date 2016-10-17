@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
 
-/**
- * @author Coded Design
- */
 class CampaignsController extends Controller
 {
     /**
@@ -31,7 +28,7 @@ class CampaignsController extends Controller
             return response(['message' => 'Campaign does not exist.'], 404);
         }
 
-        if(isset($campaign['campaign']['id'])) {
+        if (isset($campaign['campaign']['id'])) {
             CampaignEvent::create(['campaign_id' => $id, 'name' => 'app', 'event' => 'load']);
         }
 

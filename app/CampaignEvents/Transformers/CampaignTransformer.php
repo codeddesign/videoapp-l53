@@ -4,9 +4,6 @@ namespace App\CampaignEvents\Transformers;
 
 use App\Models\Campaign;
 
-/**
- * @author Coded Design
- */
 class CampaignTransformer
 {
     /**

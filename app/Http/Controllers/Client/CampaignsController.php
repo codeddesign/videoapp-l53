@@ -6,9 +6,6 @@ use App\Models\CampaignEvent;
 use App\Http\Controllers\Controller;
 use App\CampaignEvents\Facades\CampaignEvent as CampaignEventFacade;
 
-/**
- * @author Coded Design
- */
 class CampaignsController extends Controller
 {
     /**

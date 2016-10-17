@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Api;
 use App\Http\Requests\WordpressRequest;
 use App\Transformers\WordpressSiteTransformer;
 
@@ -10,7 +9,6 @@ class WordpressSitesController extends ApiController
 {
     /**
      * Show the list of wordpress sites belonging to a user.
-     *
      */
     public function index()
     {

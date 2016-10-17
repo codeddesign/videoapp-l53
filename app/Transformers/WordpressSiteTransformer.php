@@ -18,5 +18,4 @@ class WordpressSiteTransformer extends TransformerAbstract
             'user_id'    => (int) $site->user->id,
         ];
     }
-
 }

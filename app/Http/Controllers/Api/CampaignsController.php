@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Api;
 use App\Transformers\CampaignTransformer;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\CampaignRequest;

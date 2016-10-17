@@ -6,9 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @author Coded Design
- *
- *
  * @todo make this dynamic, by reading the method name and translating it to its equivalent filters.
  */
 trait Filterable

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Api;
 use App\Http\Requests\CampaignTypeRequest;
 use App\Models\CampaignType;
 use App\Transformers\CampaignTypeTransformer;
@@ -11,7 +10,6 @@ class CampaignTypesController extends ApiController
 {
     /**
      * Return the list of campaign types.
-     *
      */
     public function index()
     {

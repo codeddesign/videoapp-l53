@@ -30,7 +30,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Accessors
  *
  * @property string       $created_at_humans
- *
  */
 class Campaign extends Model
 {

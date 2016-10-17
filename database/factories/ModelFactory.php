@@ -40,7 +40,7 @@ $factory->define(App\Models\Campaign::class, function (Faker\Generator $faker) {
             return factory(App\Models\CampaignType::class)->create()->id;
         },
         'rpm' => mt_rand(1, 5),
-        'size' => array_rand(['auto', 'small', 'medium', 'large', 'hd720'])
+        'size' => array_rand(['auto', 'small', 'medium', 'large', 'hd720']),
     ];
 });
 
@@ -49,6 +49,6 @@ $factory->define(App\Models\WordpressSite::class, function (Faker\Generator $fak
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
         },
-        'domain' => 'http://' .$faker->unique()->domainName,
+        'domain' => "http://{$faker->unique()->domainName}",
     ];
 });

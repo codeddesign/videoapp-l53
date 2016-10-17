@@ -116,7 +116,7 @@ class ApiController extends Controller
      */
     public function errorResponse($errors, $status = 500, $headers = [])
     {
-        if (!is_array($errors)) {
+        if (! is_array($errors)) {
             $errors = [['message' => $errors, 'code' => 0]];
         }
 

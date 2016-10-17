@@ -13,7 +13,7 @@ class CampaignTransformer extends TransformerAbstract
      * @var array
      */
     protected $availableIncludes = [
-        'user'
+        'user',
     ];
 
     public function transform(Campaign $campaign)
@@ -41,5 +41,4 @@ class CampaignTransformer extends TransformerAbstract
 
         return $this->item($user, new UserTransformer);
     }
-
 }

@@ -15,5 +15,4 @@ class UserTransformer extends TransformerAbstract
             'email' => $user->email,
         ];
     }
-
 }

@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\WordpressSite;
 use App\User;
 
-/**
- * @author Coded Design
- */
 class PluginController extends Controller
 {
     /**

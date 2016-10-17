@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int          $id
  * @property string       $title
  * @property string       $alias
- * @property boolean      $available
- * @property boolean      $single
- * @property boolean      $has_name
+ * @property bool      $available
+ * @property bool      $single
+ * @property bool      $has_name
  * @property \DateTime    $created_at
  * @property \DateTime    $updated_at
  *
