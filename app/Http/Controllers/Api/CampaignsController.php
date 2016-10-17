@@ -3,53 +3,65 @@
 namespace App\Http\Controllers\Api;
 
 use Api;
+use App\Transformers\CampaignTransformer;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\Controller;
 use App\Http\Mappers\CampaignMapper;
 use App\Http\Requests\CampaignRequest;
+use Illuminate\Redis\Database as Redis;
 
 /**
  * @author Coded Design
  */
-class CampaignsController extends Controller
+class CampaignsController extends ApiController
 {
+    protected $previewKey;
+
+    public function __construct()
+    {
+        $this->previewKey = config('videoad.TEMPORARY_PREVIEW_KEY');
+    }
+
     /**
      * List a paginated list of the campaigns.
-     *
-     * @param CampaignMapper $campaignMapper
-     * @return json
      */
-    public function index(CampaignMapper $campaignMapper)
+    public function index()
     {
-        $campaigns = auth()->user()->campaigns()->paginate(200);
+        $campaigns = $this->paginate($this->user()->campaigns()->getQuery());
 
-        return Api::respond($campaignMapper, $campaigns);
+        return $this->paginatedCollectionResponse($campaigns, new CampaignTransformer);
     }
 
     /**
      * Show a specific campaign.
      *
-     * @param CampaignMapper $campaignMapper
      * @param $id
+     *
      * @return json
      */
-    public function show(CampaignMapper $campaignMapper, $id)
+    public function show($id)
     {
-        return Api::respond($campaignMapper,  auth()->user()->campaigns()->findOrFail($id));
+        $campaign = $this->user()->campaigns()->findOrFail($id);
+
+        return $this->itemResponse($campaign, new CampaignTransformer);
     }
 
     /**
      * Preview the campaign link.
      *
      * @param CampaignRequest $request
+     * @param Redis           $redis
+     *
      * @return array
      */
-    public function storePreviewLink(CampaignRequest $request)
+    public function storePreviewLink(CampaignRequest $request, Redis $redis)
     {
         // pass the following: name, size, type, video
-        $campaign = auth()->user()->addCampaign($request->all(), $toSession = true);
+        $campaign = $this->user()->addCampaign($request->all(), $toSession = true);
 
-        Session::set(config('videoad.TEMPORARY_PREVIEW_KEY'), $campaign);
+        $redis->connection()->set(
+            "{$this->user()->id}.{$this->previewKey}",
+            serialize($campaign)
+        );
 
         return [
             'url' => $this->getEmbedLink(),
@@ -59,34 +71,43 @@ class CampaignsController extends Controller
     /**
      * Store a new campaign.
      *
-     * @param CampaignRequest $request
+     * @param CampaignRequest            $request
+     *
+     * @param \Illuminate\Redis\Database $redis
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(CampaignRequest $request)
+    public function store(CampaignRequest $request, Redis $redis)
     {
         // pass the following when POSTing: name, size, type, video
         Session::remove(config('videoad.TEMPORARY_PREVIEW_KEY'));
 
-        $campaign = auth()->user()->addCampaign($request->all());
+        $redis->connection()->del(
+            "{$this->user()->id}.{$this->previewKey}"
+        );
+
+        $campaign = $this->user()->addCampaign($request->all());
 
         return response([
-            'message' => 'Successfully added a campaign.',
+            'message'  => 'Successfully added a campaign.',
             'campaign' => $campaign,
-            'url' => $this->getEmbedLink($campaign->id),
+            'url'      => $this->getEmbedLink($campaign->id),
         ], 201);
     }
 
     /**
      * Update a campaign.
+     *
      * @todo ask adelin abt this.
      *
      * @param CampaignRequest $request
-     * @param $id
+     * @param                 $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function update(CampaignRequest $request, $id)
     {
-        $campaign = auth()->user()->campaigns()->findOrFail($id);
+        $campaign = $this->user()->campaigns()->findOrFail($id);
 
         $campaign_type_id = $request->campaign_type_id;
 
@@ -95,7 +116,7 @@ class CampaignsController extends Controller
         $campaign->update($data);
 
         return response([
-            'message' => 'Successfully updated a campaign.',
+            'message'  => 'Successfully updated a campaign.',
             'campaign' => $campaign,
         ], 200);
     }
@@ -104,11 +125,12 @@ class CampaignsController extends Controller
      * Delete a campaign.
      *
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function destroy($id)
     {
-        $campaign = auth()->user()->campaigns()->findOrFail($id);
+        $campaign = $this->user()->campaigns()->findOrFail($id);
 
         $campaign->delete();
 
@@ -123,6 +145,7 @@ class CampaignsController extends Controller
      * where 'number' is an interger.
      *
      * @param int $campaignId
+     *
      * @return string
      */
     public function getEmbedLink($campaignId = 0)

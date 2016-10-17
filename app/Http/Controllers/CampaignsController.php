@@ -31,7 +31,9 @@ class CampaignsController extends Controller
             return response(['message' => 'Campaign does not exist.'], 404);
         }
 
-        CampaignEvent::create(['campaign_id' => $id, 'name' => 'app', 'event' => 'load']);
+        if(isset($campaign['campaign']['id'])) {
+            CampaignEvent::create(['campaign_id' => $id, 'name' => 'app', 'event' => 'load']);
+        }
 
         return response(array_merge($campaign, [
             'tags' => env_adTags(),
