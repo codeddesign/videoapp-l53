@@ -5,12 +5,8 @@ namespace App\Http\Controllers\Api;
 use Api;
 use App\Http\Requests\CampaignTypeRequest;
 use App\Models\CampaignType;
-use App\Http\Mappers\CampaignTypesMapper;
 use App\Transformers\CampaignTypeTransformer;
 
-/**
- * @author Coded Design
- */
 class CampaignTypesController extends ApiController
 {
     /**

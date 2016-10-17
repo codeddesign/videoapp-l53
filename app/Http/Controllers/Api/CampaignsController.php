@@ -5,13 +5,9 @@ namespace App\Http\Controllers\Api;
 use Api;
 use App\Transformers\CampaignTransformer;
 use Illuminate\Support\Facades\Session;
-use App\Http\Mappers\CampaignMapper;
 use App\Http\Requests\CampaignRequest;
 use Illuminate\Redis\Database as Redis;
 
-/**
- * @author Coded Design
- */
 class CampaignsController extends ApiController
 {
     protected $previewKey;

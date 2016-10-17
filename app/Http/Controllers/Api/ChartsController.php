@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\CampaignEvent;
 use App\Stats\StatsTransformer;
 
-/**
- * @author Coded Design
- */
 class ChartsController extends Controller
 {
     /**

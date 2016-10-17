@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
-/**
- * @author Coded Design
- */
 class VideosizesController extends Controller
 {
     /**
