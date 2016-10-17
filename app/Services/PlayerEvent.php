@@ -5,9 +5,6 @@ namespace App\Services;
 use App\Models\CampaignEvent;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * @author Coded Design
- */
 class PlayerEvent
 {
     /**

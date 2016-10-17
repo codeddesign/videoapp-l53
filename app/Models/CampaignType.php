@@ -5,7 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @author Coded Design
+ * Database Columns
+ *
+ * @property int          $id
+ * @property string       $title
+ * @property string       $alias
+ * @property bool      $available
+ * @property bool      $single
+ * @property bool      $has_name
+ * @property \DateTime    $created_at
+ * @property \DateTime    $updated_at
+ *
+ * Relationships
+ *
+ * @property Collection   $campaigns
  */
 class CampaignType extends Model
 {
@@ -30,8 +43,8 @@ class CampaignType extends Model
      */
     protected $casts = [
         'available' => 'boolean',
-        'single' => 'boolean',
-        'has_name' => 'boolean',
+        'single'    => 'boolean',
+        'has_name'  => 'boolean',
     ];
 
     /**

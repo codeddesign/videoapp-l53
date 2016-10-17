@@ -4,9 +4,6 @@ namespace App\CampaignEvents\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * @author Coded Design
- */
 class CampaignEvent extends Facade
 {
     /**

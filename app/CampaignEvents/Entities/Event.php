@@ -2,9 +2,6 @@
 
 namespace App\CampaignEvents\Entities;
 
-/**
- * @author Coded Design
- */
 class Event
 {
     /**

@@ -9,9 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 
-/**
- * @author Coded Design
- */
 class LoginController extends Controller
 {
     /**
@@ -39,12 +36,10 @@ class LoginController extends Controller
         }
 
         if (! Auth::user()->verified_phone) {
-            // @todo create an event to send a sms message and verify the user
             return redirect()->route('verify.phone');
         }
 
         if (! Auth::user()->verified_email) {
-            // @todo create an event to send an email message and verify the user
             return redirect()->route('verify.email');
         }
 

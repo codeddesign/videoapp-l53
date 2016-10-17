@@ -4,9 +4,6 @@ namespace App\Stats;
 
 use Carbon\Carbon;
 
-/**
- * @author Coded Design
- */
 class StatsTransformer
 {
     /**

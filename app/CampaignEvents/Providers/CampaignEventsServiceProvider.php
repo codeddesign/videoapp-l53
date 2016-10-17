@@ -8,9 +8,6 @@ use App\CampaignEvents\CampaignEventInterface;
 use App\CampaignEvents\Repositories\CampaignInterface;
 use App\CampaignEvents\Repositories\CampaignRepository;
 
-/**
- * @author Coded Design
- */
 class CampaignEventsServiceProvider extends ServiceProvider
 {
     /**

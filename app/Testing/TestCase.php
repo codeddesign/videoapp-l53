@@ -22,6 +22,12 @@ abstract class TestCase extends BaseTestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->prepareDb();
+    }
+
     /**
      * Creates the application.
      *

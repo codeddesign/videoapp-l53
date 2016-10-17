@@ -5,9 +5,6 @@ namespace App\CampaignEvents;
 use App\CampaignEvents\Repositories\CampaignInterface;
 use App\CampaignEvents\Transformers\CampaignTransformer;
 
-/**
- * @author Coded Design
- */
 class Manager implements CampaignEventInterface
 {
     /**
@@ -19,7 +16,8 @@ class Manager implements CampaignEventInterface
 
     /**
      * Manager constructor.
-     * @param Campaign $campaign
+     *
+     * @param \App\CampaignEvents\Repositories\CampaignInterface $campaign
      */
     public function __construct(CampaignInterface $campaign)
     {
