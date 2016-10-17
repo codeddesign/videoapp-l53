@@ -29,3 +29,17 @@ $factory->define(App\Models\CampaignType::class, function (Faker\Generator $fake
         'has_name' => $faker->boolean,
     ];
 });
+
+$factory->define(App\Models\Campaign::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'user_id' => function () {
+            return factory(App\User::class)->create()->id;
+        },
+        'campaign_type_id' => function () {
+            return factory(App\Models\CampaignType::class)->create()->id;
+        },
+        'rpm' => mt_rand(1, 5),
+        'size' => array_rand(['auto', 'small', 'medium', 'large', 'hd720'])
+    ];
+});
