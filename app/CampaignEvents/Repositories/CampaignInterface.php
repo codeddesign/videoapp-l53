@@ -2,10 +2,6 @@
 
 namespace App\CampaignEvents\Repositories;
 
-/**
- * @author Coded Design
- * Interface CampaignInterface
- */
 interface CampaignInterface
 {
     /**

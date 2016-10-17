@@ -6,9 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 
 /**
- * @author Coded Design
+ * Database Columns
+ *
+ * @property int       $id
+ * @property int       $user_id
+ * @property string    $domain
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
+ *
+ * Relationships
+ *
+ * @property User      $user
+ *
+ * Accessors
+ *
+ * @property string    $link
  */
-class Wordpress extends Model
+class WordpressSite extends Model
 {
     /**
      * The table name.

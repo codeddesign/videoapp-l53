@@ -29,7 +29,6 @@ class VerificationsController extends Controller
                 ->route('verify.phone')
                 ->with(['verify' => 'code']);
         } catch (\Exception $ex) {
-
             return redirect()
                 ->route('verify.phone')
                 ->withErrors($ex->getMessage());

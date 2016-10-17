@@ -4,15 +4,11 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Events\AccountCreated;
 use Illuminate\View\View;
-use App\Events\VerifyAccount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 
-/**
- * @author Coded Design
- */
 class RegistrationController extends Controller
 {
     /**

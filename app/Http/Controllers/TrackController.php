@@ -5,14 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\PlayerEvent;
 
-/**
- * @author Coded Design
- */
 class TrackController extends Controller
 {
-    /**
-     * TrackController constructor.
-     */
     public function __construct()
     {
         $this->middleware('cors', ['only' => ['index']]);

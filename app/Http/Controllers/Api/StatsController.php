@@ -6,9 +6,6 @@ use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Http\Controllers\Controller;
 
-/**
- * @author Coded Design
- */
 class StatsController extends Controller
 {
     /**

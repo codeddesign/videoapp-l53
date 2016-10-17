@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 
-/**
- * @author Coded Design
- */
 class PagesController extends Controller
 {
     /**
