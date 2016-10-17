@@ -100,7 +100,7 @@ Vue.component('app-modal', {
  * included with Laravel will automatically verify the header's value.
  */
 Vue.http.interceptors.push(function (request, next) {
-    request.headers['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+    request.headers.set('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
 
     next();
 });
