@@ -8,7 +8,6 @@
         "php": ">=7.0",
         "laravel/framework": "~5.3",
         "laravel/passport": "~0.2",
-        "vinelab/api-manager": "*",
         "predis/predis": "~1.1",
         "sentry/sentry-laravel": "~0.3",
         "league/fractal": "~0.14"
