@@ -5,25 +5,23 @@ namespace App\Http\Controllers\Api;
 use Api;
 use App\Http\Requests\CampaignTypeRequest;
 use App\Models\CampaignType;
-use App\Http\Controllers\Controller;
 use App\Http\Mappers\CampaignTypesMapper;
+use App\Transformers\CampaignTypeTransformer;
 
 /**
  * @author Coded Design
  */
-class CampaignTypesController extends Controller
+class CampaignTypesController extends ApiController
 {
     /**
      * Return the list of campaign types.
      *
-     * @param CampaignTypesMapper $campaignTypesMapper
-     * @return json
      */
-    public function index(CampaignTypesMapper $campaignTypesMapper)
+    public function index()
     {
-        // here we are able to use CampaignType::all() because we will
-        // always have a small number of types. So, there's not risk.
-        return Api::respond($campaignTypesMapper, CampaignType::all());
+        $campaignTypes = CampaignType::all();
+
+        return $this->collectionResponse($campaignTypes, new CampaignTypeTransformer);
     }
 
     /**
@@ -36,7 +34,7 @@ class CampaignTypesController extends Controller
     {
         $type = CampaignType::create($request->all());
 
-        return response([
+        return $this->jsonResponse([
             'message' => 'Successfully added a campaign type.',
             'type' => $type,
         ], 201);
@@ -55,7 +53,7 @@ class CampaignTypesController extends Controller
 
         $type->update($request->all());
 
-        return response([
+        return $this->jsonResponse([
             'message' => 'Successfully updated the campaign type.',
             'type' => $type,
         ], 200);
@@ -73,7 +71,7 @@ class CampaignTypesController extends Controller
 
         $type->delete();
 
-        return response([
+        return $this->jsonResponse([
             'message' => 'Successfully deleted the campaign type.',
         ], 200);
     }
