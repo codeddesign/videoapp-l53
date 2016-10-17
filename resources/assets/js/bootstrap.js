@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 window.Cookies = require('js-cookie');
 
@@ -13,15 +12,12 @@ require('bootstrap-sass/assets/javascripts/bootstrap');
 
 window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker');
 
-/**
- * Vue is a modern JavaScript for building interactive web interfaces using
- * reacting data binding and reusable components. Vue's API is clean and
- * simple, leaving you to focus only on building your next great idea.
- */
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+import router from './router'
+import App from './views/layouts/default/default.vue'
 
-window.Vue = require('vue');
-require('vue-resource');
-window.VueRouter = require('vue-router');
+Vue.use(VueResource)
 
 Vue.component('app-modal', {
     template: `
@@ -31,8 +27,12 @@ Vue.component('app-modal', {
                 <div class="app_modal-body">
                     <div class="app_modal-title" v-show="title">{{ title }}</div>
                     <div class="app_modal-content" v-show="body">
-                        <div v-if="!html"> {{ body }} </div>
-                        <div v-else>{{{ body }}}</div>
+                        <div v-if="!html">
+                            <div v-html="body"></div>
+                        </div>
+                        <div v-else>
+                            <div v-html="body"></div>
+                        </div>
                     </div>
 
                     <div class="app_modal-footer" v-show="confirm">
@@ -99,22 +99,22 @@ Vue.component('app-modal', {
  * the outgoing requests issued by this application. The CSRF middleware
  * included with Laravel will automatically verify the header's value.
  */
-
 Vue.http.interceptors.push(function (request, next) {
     request.headers['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
     next();
 });
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+const app = new Vue({
+  router,
+  ...App,
+  filters: {
+    capitalize: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  }
+})
 
-// import Echo from "laravel-echo"
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+export { app, router }

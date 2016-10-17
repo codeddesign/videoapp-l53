@@ -1,0 +1,74 @@
+var path = require('path')
+var webpack = require('webpack')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+const vueConfig = require('./vue-loader.config')
+
+module.exports = {
+  entry: './resources/assets/js/app.js',
+  output: {
+    path: path.resolve(__dirname, './public/js'),
+    publicPath: '/',
+    filename: 'app.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.vue$/,
+        loader: 'vue'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel',
+        exclude: /node_modules/,
+        query: {
+          presets:[ 'es2015', 'stage-2' ]
+        }
+      },
+      {
+        test: /\.(png|jpg|gif|svg|woff2?|eot|ttf)(\?v=[0-9\.]+)?$/,
+        loader: 'file',
+        query: {
+          limit: 10000,
+          name: '[name].[ext]?[hash:7]'
+        }
+      }
+    ]
+  },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      vue: vueConfig
+    }),
+    new CopyWebpackPlugin([
+        { from: '_redirects' },
+        { from: 'index.html' }
+      ],
+      {
+        // By default, we only copy modified files during
+        // a watch or webpack-dev-server build. Setting this
+        // to `true` copies all files.
+        copyUnmodified: true
+      })
+  ],
+  devServer: {
+    historyApiFallback: true,
+    noInfo: true
+  },
+  devtool: '#eval-source-map'
+}
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ])
+}

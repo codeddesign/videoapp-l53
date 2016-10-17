@@ -66,8 +66,10 @@
         /**
          * Prepare the component.
          */
-        ready() {
-            this.getTokens();
+        mounted() {
+            this.$nextTick(function () {
+                this.getTokens();
+            })
         },
 
         methods: {

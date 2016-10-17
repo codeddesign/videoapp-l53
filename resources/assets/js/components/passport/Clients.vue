@@ -238,16 +238,18 @@
         /**
          * Prepare the component.
          */
-        ready() {
-            this.getClients();
+        mounted() {
+            this.$nextTick(function () {
+                this.getClients();
+                
+                $('#modal-create-client').on('shown.bs.modal', () => {
+                    $('#create-client-name').focus();
+                });
 
-            $('#modal-create-client').on('shown.bs.modal', () => {
-                $('#create-client-name').focus();
-            });
-
-            $('#modal-edit-client').on('shown.bs.modal', () => {
-                $('#edit-client-name').focus();
-            });
+                $('#modal-edit-client').on('shown.bs.modal', () => {
+                    $('#edit-client-name').focus();
+                });
+            })
         },
 
         methods: {

@@ -1,27 +1,45 @@
 {
   "private": true,
   "scripts": {
-    "prod": "gulp --production",
-    "dev": "gulp watch"
+    "dev": "webpack-dev-server --inline --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "build-dev": "cross-env webpack --progress --hide-modules"
   },
-  "devDependencies": {
+  "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
     "jquery": "^3.1.0",
-    "laravel-elixir": "^6.0.0-9",
-    "laravel-elixir-vue": "^0.1.4",
-    "laravel-elixir-webpack-official": "^1.0.2",
     "lodash": "^4.14.0",
-    "vue": "^1.0.26",
-    "vue-resource": "^0.9.3"
-  },
-  "dependencies": {
+    "vue": "^2.0.0",
+    "vue-resource": "^1.0.2",
+    "vue-router": "^2.0.0",
     "chart.js": "^2.2.2",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "font-awesome": "^4.6.3",
     "jquery-sparkline": "^2.3.2",
     "moment": "^2.14.1",
-    "vue-router": "^0.7.13",
     "js-cookie": "^2.1.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.0.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-stage-2": "^6.13.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "cross-env": "^1.0.6",
+    "css-loader": "^0.23.1",
+    "es6-promise": "^3.2.1",
+    "eslint": "^3.5.0",
+    "eslint-config-vue": "^1.1.0",
+    "eslint-plugin-vue": "^0.1.1",
+    "file-loader": "^0.8.4",
+    "node-sass": "^3.10.0",
+    "sass-loader": "^4.0.2",
+    "vue-loader": "^9.5.0",
+    "vue-style-loader": "^1.0.0",
+    "webpack": "^2.1.0-beta.25",
+    "webpack-dev-server": "^2.1.0-beta.5",
+    "eslint-plugin-html": "^1.5.2"
   }
 }

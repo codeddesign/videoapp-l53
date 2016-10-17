@@ -24,8 +24,10 @@
             };
         },
 
-        ready() {
-            this.render();
+        mounted() {
+            this.$nextTick(function () {
+                this.render();
+            })
         },
 
         computed: {

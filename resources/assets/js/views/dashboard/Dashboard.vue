@@ -125,10 +125,10 @@
                 return this.$options.filters.currency((4 * this.impressions) / 1000);
             },
         },
-        ready() {
-//            setInterval(()=> {
+        mounted() {
+            this.$nextTick(function () {
                 this.stats();
-//            }, 2000);
+            })
         },
         watch: {
             timeRange: function () {

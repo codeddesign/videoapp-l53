@@ -3,7 +3,7 @@
         <div id="adcreation-form">
             <div class="steps clearfix">
                 <ul>
-                    <li v-for="(index, tab) in tabs" :class="{'current': step == tab.name, 'disabled': tab.disabled}" @click="toStep(index + 1)">
+                    <li v-for="(tab, index) in tabs" :class="{'current': step == tab.name, 'disabled': tab.disabled}" @click="toStep(index + 1)">
                         <span class="number">{{ index + 1 }}.</span> {{ tab.title }}
                     </li>
                 </ul>
@@ -72,7 +72,7 @@
 
                 <div class="selectadtype-wrapper">
                     <div class="createcampaign-fulltoparea">
-                        <div class="campaign-creationwrap createcampaign-middlecreatewrap preview" v-el:preview-container></div>
+                        <div class="campaign-creationwrap createcampaign-middlecreatewrap preview" ref="preview-container"></div>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                     <div class="createcampaign-fulltoparea">
                         <div class="campaign-creationwrap createcampaign-middlecreatewrap" style="background: none;">
                             <label for="embed_js" class="white" style="font-size: 14px">Copy and paste the code below in your website:</label>
-                            <textarea id="embed_js" style="width: 100%;height: 100%;resize: none;" v-el:embed-js-code @click="selectEmbedText()"></textarea>
+                            <textarea id="embed_js" style="width: 100%;height: 100%;resize: none;" ref="embed-js-code" @click="selectEmbedText()"></textarea>
                         </div>
                     </div>
                 </div>
@@ -139,17 +139,19 @@
                 savedCampaign: {}
             }
         },
-        ready: function() {
-            this.$http.get('/api/campaign-types').then((response)=>{
-                this.campaign_types = response.data.data;
-            });
+        mounted() {
+            this.$nextTick(function () {
+                this.$http.get('/api/campaign-types').then((response)=>{
+                    this.campaign_types = response.data.data;
+                });
 
-            this.$http.get('/api/video-sizes').then((response)=>{
-                this.sizes = response.data;
-            });
+                this.$http.get('/api/video-sizes').then((response)=>{
+                    this.sizes = response.data;
+                });
 
-            // hold a clean copy of campaign
-            this.backup = JSON.parse(JSON.stringify(this.campaign));
+                // hold a clean copy of campaign
+                this.backup = JSON.parse(JSON.stringify(this.campaign));
+            })
         },
 
         computed: {
@@ -202,7 +204,7 @@
                 var script;
 
                 if (!src) {
-                    this.$els.previewContainer.innerHTML = '';
+                    this.$refs.previewContainer.innerHTML = '';
 
                     return false;
                 }
@@ -210,7 +212,7 @@
                 script = document.createElement('script');
                 script.src = src;
 
-                this.$els.previewContainer.appendChild(script);
+                this.$refs.previewContainer.appendChild(script);
             },
             checkPreview: function() {
                 this.nextStep(3);
@@ -251,12 +253,12 @@
                             this.savedCampaign = response.data.campaign;
 
                             this.$nextTick(function() {
-                                this.$els.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>';
+                                this.$refs.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>';
                             });
                         });
             },
             selectEmbedText: function() {
-                this.$els.embedJsCode.select();
+                this.$refs.embedJsCode.select();
             }
         }
     }

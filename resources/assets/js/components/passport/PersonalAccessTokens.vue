@@ -179,13 +179,15 @@
         /**
          * Prepare the component.
          */
-        ready() {
-            this.getTokens();
-            this.getScopes();
+        mounted() {
+            this.$nextTick(function () {
+                this.getTokens();
+                this.getScopes();
 
-            $('#modal-create-token').on('shown.bs.modal', () => {
-                $('#create-token-name').focus();
-            });
+                $('#modal-create-token').on('shown.bs.modal', () => {
+                    $('#create-token-name').focus();
+                });
+            })
         },
 
         methods: {

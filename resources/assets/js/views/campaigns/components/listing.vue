@@ -5,7 +5,7 @@
             <div class="campaignselection-wrap">
                 <div class="campaignview-wrap">
                     <form @submit.prevent="">
-                        <input class="campaignview-search" name="all_search" id="all_search" placeholder="search for.." v-model="search">
+                        <input class="campaignview-search" name="all_search" id="all_search" placeholder="Search for.." v-model="search">
                     </form>
 
                     <form action="#" method="post">
@@ -61,7 +61,7 @@
                             <li>EDIT</li>
                         </ul>
                         <ul class="campaigngrid">
-                            <li v-for="campaign in response.campaigns | filterBy search">
+                            <li v-for="campaign in response.campaigns">
                                 <div class="camplist-data1">{{ campaign.id }}</div>
                                 <div class="camplist-data2">{{ campaign.name }}</div>
                                 <div class="camplist-data3">{{ campaign.created_at_humans }}</div>
@@ -92,10 +92,10 @@
             <nav>
                 <ul class="pager">
                     <li v-show="pagination.previous" class="previous">
-                        <a @click="paginate('previous')" class="page-scroll"><< Previous</a>
+                        <a @click="paginate('previous')" class="page-scroll">Previous</a>
                     </li>
                     <li v-show="pagination.next" class="next">
-                        <a @click="paginate('next')" class="page-scroll">Next >></a>
+                        <a @click="paginate('next')" class="page-scroll">Next</a>
                     </li>
                 </ul>
             </nav>
@@ -133,16 +133,18 @@
             };
         },
 
-        ready() {
-            this.$http.get('/api/campaigns?page='+this.pagination.page).then((response) => {
-                this.response.campaigns = response.data.data;
-                this.pagination.page = response.data.page;
-                this.pagination.per_page = response.data.per_page;
-                this.pagination.total = response.data.total;
-                if(response.data.per_page < response.data.total) {
-                    this.pagination.next = true;
-                }
-            });
+        mounted() {
+            this.$nextTick(function () {
+                this.$http.get('/api/campaigns?page='+this.pagination.page).then((response) => {
+                    this.response.campaigns = response.data.data;
+                    this.pagination.page = response.data.page;
+                    this.pagination.per_page = response.data.per_page;
+                    this.pagination.total = response.data.total;
+                    if(response.data.per_page < response.data.total) {
+                        this.pagination.next = true;
+                    }
+                });
+            })
         },
 
         methods: {
@@ -154,7 +156,7 @@
                     ++this.pagination.page;
                 }
                 this.$http.get('/api/campaigns?page='+this.pagination.page).then((response) => {
-                    this.$set('response.campaigns', response.data.data);
+                    this.$set(this.response, 'campaigns', response.data.data)
                     this.pagination.page = response.data.page;
                     this.pagination.per_page = response.data.per_page;
                     this.pagination.total = response.data.total;
@@ -183,7 +185,8 @@
                 }, function() {
                     this.$http.delete('/api/campaigns/' + campaign.id)
                             .then(function() {
-                                this.response.campaigns.$remove(campaign);
+                                var index = this.response.campaigns.indexOf(campaign);
+                                this.response.campaigns.splice(index, 1)
 
                                 this.$broadcast('modal-close');
                             });

@@ -2,7 +2,7 @@
     <div :ignoreMe="waitChartData">
         <div class="campaignstats-title">{{ title | uppercase }}</div>
         <div class="campaignstats-digit" id="currentMonthViews" v-bind:style="{'color': color}">{{ value }}</div>
-        <div class="campaignstats-digit"><span id="{{title}}"></span></div>
+        <div class="campaignstats-digit"><span v-bind:id="title"></span></div>
     </div>
 </template>
 
@@ -19,12 +19,14 @@
             chartData: []
         },
 
-        ready() {
-            this.fillGraph();
+        mounted() {
+            this.$nextTick(function () {
+                this.fillGraph();
 
-            if(this.ispercentage == true) {
-                this.percentageFilter();
-            }
+                if(this.ispercentage == true) {
+                    this.percentageFilter();
+                }
+            })
         },
 
         computed: {

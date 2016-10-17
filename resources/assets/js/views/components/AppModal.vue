@@ -5,8 +5,12 @@
             <div class="app_modal-body">
                 <div class="app_modal-title" v-show="title">{{ title }}</div>
                 <div class="app_modal-content" v-show="body">
-                    <div v-if="!html"> {{ body }} </div>
-                    <div v-else>{{{ body }}}</div>
+                    <div v-if="!html">
+                        <div v-html="body"></div>
+                    </div>
+                    <div v-else>
+                        <div v-html="body"></div>
+                    </div>
                 </div>
 
                 <div class="app_modal-footer" v-show="confirm">

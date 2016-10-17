@@ -52,10 +52,12 @@
             };
         },
 
-        ready() {
-            this.$http.get('/api/wordpress').then((response) => {
-                this.$set('sites', response.data.data);
-            });
+        mounted() {
+            this.$nextTick(function () {
+                this.$http.get('/api/wordpress').then((response) => {
+                    this.$set('sites', response.data.data);
+                });
+            })
         },
 
         methods: {
@@ -71,7 +73,8 @@
 
             remove(site) {
                 this.$http.delete('/api/wordpress/' + site.id).then(() => {
-                    this.sites.$remove(site);
+                    var index = this.sites.indexOf(site);
+                    this.sites.splice(index, 1)
                 });
             }
         }
