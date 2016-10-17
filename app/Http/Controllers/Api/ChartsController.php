@@ -13,20 +13,21 @@ class ChartsController extends Controller
 {
     /**
      * @param StatsTransformer $statsTransformer
+     *
      * @return array
      */
     public function stats(StatsTransformer $statsTransformer)
     {
-        $requests = $this->requests($statsTransformer);
+        $requests    = $this->requests($statsTransformer);
         $impressions = $this->impressions($statsTransformer);
-        $revenue = collect($impressions)->map(function ($value) {
+        $revenue     = collect($impressions)->map(function ($value) {
             return (4 * $value) / 1000;
         });
 
         return [
-            'requests' => $requests,
+            'requests'    => $requests,
             'impressions' => $impressions,
-            'revenue' => $revenue,
+            'revenue'     => $revenue,
         ];
     }
 
