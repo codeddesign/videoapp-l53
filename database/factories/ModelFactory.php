@@ -43,3 +43,12 @@ $factory->define(App\Models\Campaign::class, function (Faker\Generator $faker) {
         'size' => array_rand(['auto', 'small', 'medium', 'large', 'hd720'])
     ];
 });
+
+$factory->define(App\Models\WordpressSite::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => function () {
+            return factory(App\User::class)->create()->id;
+        },
+        'domain' => 'http://' .$faker->unique()->domainName,
+    ];
+});

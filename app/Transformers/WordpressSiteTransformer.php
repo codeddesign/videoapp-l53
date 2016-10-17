@@ -5,7 +5,7 @@ namespace App\Transformers;
 use App\Models\WordpressSite;
 use League\Fractal\TransformerAbstract;
 
-class WordpressTransformer extends TransformerAbstract
+class WordpressSiteTransformer extends TransformerAbstract
 {
     public function transform(WordpressSite $site)
     {

@@ -3,26 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use Api;
-use App\Http\Controllers\Controller;
-use App\Http\Mappers\WordpressSitesMapper;
 use App\Http\Requests\WordpressRequest;
+use App\Transformers\WordpressSiteTransformer;
 
-/**
- * @author Coded Design
- */
-class WordpressSitesController extends Controller
+class WordpressSitesController extends ApiController
 {
     /**
      * Show the list of wordpress sites belonging to a user.
      *
-     * @param WordpressSitesMapper $mapper
-     * @return json
      */
-    public function index(WordpressSitesMapper $mapper)
+    public function index()
     {
-        $sites = auth()->user()->wordpressSites;
+        $sites = $this->user()->wordpressSites;
 
-        return Api::respond($mapper, $sites);
+        return $this->collectionResponse($sites, new WordpressSiteTransformer);
     }
 
     /**
@@ -33,9 +27,9 @@ class WordpressSitesController extends Controller
      */
     public function store(WordpressRequest $request)
     {
-        $site = auth()->user()->wordpressSites()->create($request->all());
+        $site = $this->user()->wordpressSites()->create($request->all());
 
-        return response([
+        return $this->jsonResponse([
             'message' => 'Successfully added a website.',
             'site' => $site,
         ], 201);
@@ -49,11 +43,11 @@ class WordpressSitesController extends Controller
      */
     public function destroy($id)
     {
-        $site = auth()->user()->wordpressSites()->findOrFail($id);
+        $site = $this->user()->wordpressSites()->findOrFail($id);
 
         $site->delete();
 
-        return response([
+        return $this->jsonResponse([
             'message' => 'Successfully deleted a website.',
         ], 200);
     }
