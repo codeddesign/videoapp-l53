@@ -2,17 +2,33 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Campaign;
 use App\Models\CampaignType;
-use App\Models\Wordpress;
+use App\Models\WordpressSite;
 use App\Services\Youtube;
 
 /**
- * @author Coded Design
+ * Database Columns
+ *
+ * @property int       $id
+ * @property string    $name
+ * @property string    $email
+ * @property string    $password
+ * @property string    $email_verification_token
+ * @property boolean   $verified_phone
+ * @property boolean   $verified_email
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
+ *
+ * Relationships
+ *
+ * @property Collection      $campaigns
+ * @property Collection      $wordpressSites
  */
 class User extends Authenticatable
 {
@@ -29,7 +45,7 @@ class User extends Authenticatable
         'password',
         'verified_email',
         'verified_phone',
-        'email_verification_token'
+        'email_verification_token',
     ];
 
     /**
@@ -92,7 +108,7 @@ class User extends Authenticatable
      */
     public function wordpressSites()
     {
-        return $this->hasMany(Wordpress::class);
+        return $this->hasMany(WordpressSite::class);
     }
 
     // @todo refactor this

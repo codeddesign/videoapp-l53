@@ -10,7 +10,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @author Coded Design
+ * Database Columns
+ *
+ * @property int       $id
+ * @property int       $campaign_id
+ * @property string    $name
+ * @property string    $event
+ * @property string    $referer
+ * @property string    $ip
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
+ *
+ * Relationships
+ *
+ * @property Campaign  $campaign
  */
 class CampaignEvent extends Model
 {
@@ -35,7 +48,7 @@ class CampaignEvent extends Model
 
         self::creating(function ($campaignEvent) {
             $campaignEvent->referer = refererUtil();
-            $campaignEvent->ip = ipUtil();
+            $campaignEvent->ip      = ipUtil();
         });
     }
 
@@ -54,6 +67,7 @@ class CampaignEvent extends Model
      *
      * @param $query
      * @param $request
+     *
      * @return Builder
      */
     public function scopeRequests($query, $request)
@@ -69,6 +83,7 @@ class CampaignEvent extends Model
      *
      * @param $query
      * @param $request
+     *
      * @return Builder
      */
     public function scopeImpressions($query, $request)
@@ -83,6 +98,7 @@ class CampaignEvent extends Model
      * return the daily count of the requests per month.
      *
      * @param $query
+     *
      * @return Collection
      */
     public function scopeRequestsStats($query)
@@ -101,6 +117,7 @@ class CampaignEvent extends Model
      * Return the daily count of the impressions per month.
      *
      * @param $query
+     *
      * @return Collection
      */
     public function scopeImpressionsStats($query)
@@ -126,10 +143,10 @@ class CampaignEvent extends Model
 
         // range
         $from = (isset($data['from']) && trim($data['from'])) ? $data['from'] : date('Y-m-d');
-        $to = (isset($data['to']) && trim($data['to'])) ? $data['to'] : date('Y-m-d');
+        $to   = (isset($data['to']) && trim($data['to'])) ? $data['to'] : date('Y-m-d');
 
         $from = date('Y-m-d H:i:s', strtotime($from.' 00:00:00 -4 hours'));
-        $to = date('Y-m-d H:i:s', strtotime($to.' 23:59:59 -4 hours'));
+        $to   = date('Y-m-d H:i:s', strtotime($to.' 23:59:59 -4 hours'));
 
         $names = self::select('name', 'event')
             ->distinct('name', 'event')

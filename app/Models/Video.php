@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\Youtube;
 
 /**
- * @author Coded Design
+ * Database Columns
+ *
+ * @property int       $id
+ * @property int       $campaign_id
+ * @property string    $url
+ * @property string    $source
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
+ *
+ * Relationships
+ *
+ * @property Campaign  $campaign
  */
 class Video extends Model
 {

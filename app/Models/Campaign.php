@@ -4,11 +4,33 @@ namespace App\Models;
 
 use App\Http\Mappers\CampaignTypesMapper;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @author Coded Design
+ * Database Columns
+ *
+ * @property int          $id
+ * @property int          $user_id
+ * @property int          $campaign_type_id
+ * @property int          $rpm
+ * @property int          $size
+ * @property string       $name
+ * @property \DateTime    $created_at
+ * @property \DateTime    $updated_at
+ *
+ * Relationships
+ *
+ * @property User         $user
+ * @property CampaignType $type
+ * @property Collection   $videos
+ * @property Collection   $campaignEvents
+ *
+ * Accessors
+ *
+ * @property string       $created_at_humans
+ *
  */
 class Campaign extends Model
 {
@@ -97,7 +119,8 @@ class Campaign extends Model
 
     /**
      * @param array $data
-     * @param bool $toSession
+     * @param bool  $toSession
+     *
      * @return array
      */
     public function addVideos(array $data, $toSession = false)
@@ -110,7 +133,7 @@ class Campaign extends Model
                 $video = new Video();
                 $video->fill([
                     'campaign_id' => $this->id,
-                    'url' => $url,
+                    'url'         => $url,
                 ]);
 
                 if (! $toSession) {
@@ -136,19 +159,23 @@ class Campaign extends Model
      */
     public static function forPlayer($id)
     {
-        $campaign = \Session::get(config('videoad.TEMPORARY_PREVIEW_KEY'));
+        $previewKey = config('videoad.TEMPORARY_PREVIEW_KEY');
 
         if ($id != 0) {
             $campaign = self::withTrashed()
                 ->with('videos')
                 ->find($id);
+        } else {
+            $user = auth()->user();
+            $campaignSerialized = app('redis')->connection()->get("{$user->id}.{$previewKey}");
+            $campaign = unserialize($campaignSerialized);
         }
 
         if (! $campaign) {
             return false;
         }
 
-        $info = (new CampaignTypesMapper)->map($campaign->type);
+        $info         = (new CampaignTypesMapper)->map($campaign->type);
         $info['type'] = $campaign->type->alias;
 
         return [
@@ -156,7 +183,7 @@ class Campaign extends Model
                 $campaign->toArray(),
                 ['id', 'name', 'size', 'url', 'source']
             ),
-            'info' => filterModelKeys(
+            'info'     => filterModelKeys(
                 $info,
                 ['type', 'available', 'single', 'has_name']
             ),
