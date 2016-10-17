@@ -11,14 +11,26 @@
 
     export default {
         props: {
-            title: '',
-            value: '',
-            ispercentage: false,
-            color: '',
-            chartColor: '',
-            chartData: []
+            title: {
+              type: String,
+              default: 'Title'
+            },
+            value: {
+              default: 0
+            },
+            ispercentage: {
+              default: false
+            },
+            color: {
+              default: ''
+            },
+            chartColor: {
+              default: ''
+            },
+            chartColor: {
+              default: []
+            },
         },
-
         mounted() {
             this.$nextTick(function () {
                 this.fillGraph();
@@ -51,6 +63,10 @@
             percentageFilter() {
                 this.value = '%' + this.value;
             }
+        },
+
+        filters: {
+            uppercase: v => v.toUpperCase()
         }
     }
 </script>

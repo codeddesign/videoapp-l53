@@ -114,15 +114,15 @@
                 errorRate: '', //@todo
                 useRate: '', //@todo
 
-                requestsChartData: '',
-                impressionsChartData: '',
-                revenueChartData: '',
+                requestsChartData: [],
+                impressionsChartData: [],
+                revenueChartData: [],
             }
         },
         computed: {
             revenue: function () {
                 // apply 'currency' filter.
-                return this.$options.filters.currency((4 * this.impressions) / 1000);
+                return ((4 * this.impressions) / 1000).toFixed(2);
             },
         },
         mounted() {
