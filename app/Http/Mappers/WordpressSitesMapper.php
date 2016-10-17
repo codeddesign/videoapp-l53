@@ -2,7 +2,7 @@
 
 namespace App\Http\Mappers;
 
-use App\Models\Wordpress;
+use App\Models\WordpressSite;
 
 /**
  * @author Coded Design
@@ -10,10 +10,11 @@ use App\Models\Wordpress;
 class WordpressSitesMapper
 {
     /**
-     * @param Wordpress $site
-     * @return array
+     * @param WordpressSite $site
+     *
+*@return array
      */
-    public function map(Wordpress $site)
+    public function map(WordpressSite $site)
     {
         return [
             'id' => (int) $site->id,
