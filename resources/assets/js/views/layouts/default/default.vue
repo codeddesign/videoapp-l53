@@ -18,3 +18,14 @@
         components: { Sidebar, RightsideNav }
     }
 </script>
+<style lang="scss">
+    $bootstrap-sass-asset-helper: true;
+    @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+    @import "node_modules/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker-build";
+
+    $fa-font-path: "~font-awesome/fonts";
+    @import "~font-awesome/scss/font-awesome";
+
+    @import "resources/assets/sass/style";
+</style>

@@ -14,7 +14,7 @@
     "vue-resource": "^1.0.2",
     "vue-router": "^2.0.0",
     "chart.js": "^2.2.2",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.42",
+    "eonasdan-bootstrap-datetimepicker": "git@github.com:Eonasdan/bootstrap-datetimepicker.git",
     "font-awesome": "^4.6.3",
     "jquery-sparkline": "^2.3.2",
     "moment": "^2.14.1",

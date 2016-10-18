@@ -13,6 +13,7 @@ class PagesController extends Controller
      */
     public function index() : View
     {
-        return view('pages.app');
+    	$webpack = config('view.webpack');
+        return view('pages.app', ['webpack' => $webpack]);
     }
 }

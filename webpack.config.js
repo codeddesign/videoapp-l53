@@ -6,9 +6,9 @@ const vueConfig = require('./vue-loader.config')
 module.exports = {
   entry: './resources/assets/js/app.js',
   output: {
-    path: path.resolve(__dirname, './public/js'),
-    publicPath: '/',
-    filename: 'app.js'
+    path: path.resolve(__dirname, './public'),
+    publicPath: 'http://localhost:8080/',
+    filename: 'js/app.js'
   },
   module: {
     loaders: [
@@ -51,7 +51,8 @@ module.exports = {
   ],
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    noInfo: false,
+    inline: true,
   },
   devtool: '#eval-source-map'
 }

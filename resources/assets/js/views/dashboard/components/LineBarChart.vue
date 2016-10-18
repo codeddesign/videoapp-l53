@@ -1,5 +1,5 @@
 <template>
-    <div :ignoreMe="waitChartData">
+    <div>
         <div class="campaignstats-digit">
             <canvas width="1000" height="285" id="barlinechart"
                     style="margin-top: 20px; padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #d6d4d4; background-color: white">
@@ -12,9 +12,13 @@
     import Chart from 'chart.js'
 
     export default {
-        props: {
-            revenue: '',
-            impressions: ''
+        props: {    
+            revenue: {
+                default: ''
+            },
+            impressions: {
+                default: ''
+            }
         },
 
         data() {

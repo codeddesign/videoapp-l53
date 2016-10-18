@@ -25,7 +25,7 @@
             <!-- end select ad type -->
 
             <!-- start create ad name -->
-            <div class="adcreation-section" v-show="step == 'name'">
+            <div class="adcreation-section" v-if="step == 'name'">
                 <div class="selectadtype-title">
                     {{ selectedCampaign.has_name ? 'Create a Reference Name for your Ad:' : 'Ad your youtube link' }}
 
@@ -64,7 +64,7 @@
             </div>
             <!-- end create ad name -->
 
-            <div class="adcreation-section" v-show="step == 'preview'">
+            <div class="adcreation-section" v-if="step == 'preview'">
                 <div class="selectadtype-title">
                     <div v-if="!loading">Your video preview</div>
                     <div v-else>Please wait..</div>

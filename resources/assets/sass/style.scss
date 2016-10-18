@@ -76,6 +76,7 @@ ul.navlist li a span {
   margin-left: 4px;
 }
 li > a {
+  display: block;
   color: white;
 }
 
@@ -1247,7 +1248,6 @@ button.sitevalidation-removesite:hover {
   border-left: 1px solid #5C5882;
   display: inline-block;
   padding-bottom: 70px;
-  height: 100%;
 }
 
 .selectadtype-title {

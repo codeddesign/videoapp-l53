@@ -138,9 +138,9 @@
         methods: {
             stats() {
                 this.$http.get('/api/charts/all').then((response) => {
-                    this.$set('requestsChartData', response.data.requests);
-                    this.$set('impressionsChartData', response.data.impressions);
-                    this.$set('revenueChartData', response.data.revenue);
+                    this.$set(this.requestsChartData, response.data.requests);
+                    this.$set(this.impressionsChartData, response.data.impressions);
+                    this.$set(this.revenueChartData, response.data.revenue);
                 }, () => console.log('Error fetching the stats.'));
 
                 this.request();

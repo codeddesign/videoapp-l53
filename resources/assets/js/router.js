@@ -33,12 +33,12 @@ export default new Router({
       component: Campaigns,
       children: [
         {
-          path: '/listing',
+          path: 'listing',
           name: 'campaigns.listing',
           component: ListCampaign
         },
         {
-          path: '/create',
+          path: 'create',
           name: 'campaigns.create',
           component: CreateCampaign
         }
