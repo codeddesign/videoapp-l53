@@ -64,7 +64,7 @@
             </div>
             <!-- end create ad name -->
 
-            <div class="adcreation-section" v-if="step == 'preview'">
+            <div class="adcreation-section" v-show="step == 'preview'">
                 <div class="selectadtype-title">
                     <div v-if="!loading">Your video preview</div>
                     <div v-else>Please wait..</div>
@@ -72,7 +72,7 @@
 
                 <div class="selectadtype-wrapper">
                     <div class="createcampaign-fulltoparea">
-                        <div class="campaign-creationwrap createcampaign-middlecreatewrap preview" ref="preview-container"></div>
+                        <div class="campaign-creationwrap createcampaign-middlecreatewrap preview" ref="previewContainer"></div>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                     <div class="createcampaign-fulltoparea">
                         <div class="campaign-creationwrap createcampaign-middlecreatewrap" style="background: none;">
                             <label for="embed_js" class="white" style="font-size: 14px">Copy and paste the code below in your website:</label>
-                            <textarea id="embed_js" style="width: 100%;height: 100%;resize: none;" ref="embed-js-code" @click="selectEmbedText()"></textarea>
+                            <textarea id="embed_js" style="width: 100%;height: 100%;resize: none;" ref="embedJsCode" @click="selectEmbedText()"></textarea>
                         </div>
                     </div>
                 </div>
@@ -239,27 +239,30 @@
                 this.loading = true;
 
                 this.$http.post('/api/campaigns', this.campaign)
-                        .then(function(response) {
-                            this.loading = false;
+                    .then(function(response) {
+                        this.loading = false;
 
-                            this.resetCampaign();
+                        this.resetCampaign();
 
-                            this.tabs.forEach(function(tab, i) {
-                                if (i > 0 && i < 4) {
-                                    tab.disabled = true;
-                                }
-                            });
-
-                            this.savedCampaign = response.data.campaign;
-
-                            this.$nextTick(function() {
-                                this.$refs.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>';
-                            });
+                        this.tabs.forEach(function(tab, i) {
+                            if (i > 0 && i < 4) {
+                                tab.disabled = true;
+                            }
                         });
+
+                        this.savedCampaign = response.data.campaign;
+
+                        this.$nextTick(function() {
+                            this.$refs.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>';
+                        });
+                    });
             },
             selectEmbedText: function() {
                 this.$refs.embedJsCode.select();
             }
+        },
+        filters: {
+            capitalize: v => (v[0].toUpperCase() + v.slice(1))
         }
     }
 </script>

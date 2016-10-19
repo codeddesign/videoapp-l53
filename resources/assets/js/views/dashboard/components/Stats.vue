@@ -34,16 +34,15 @@
         mounted() {
             this.$nextTick(function () {
                 this.fillGraph();
-
-                if(this.ispercentage == true) {
-                    this.percentageFilter();
-                }
             })
         },
 
         computed: {
             waitChartData() {
                 this.fillGraph();
+            },
+            percentageFilter() {
+                this.value = '%' + this.value;
             }
         },
 
@@ -60,9 +59,6 @@
                     });
                 }
             },
-            percentageFilter() {
-                this.value = '%' + this.value;
-            }
         },
 
         filters: {

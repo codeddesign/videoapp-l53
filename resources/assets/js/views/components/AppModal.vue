@@ -22,32 +22,35 @@
 </template>
 <script>
     export default {
-        data() {
-            return {
-                visible: false,
-                title: false,
-                body: false,
-                confirm: false,
-                callback: false,
-                loading: false,
-                html: false
+        name: 'App-Modal',
+        props: {
+            visible: {
+              type: Boolean,
+              required: true
+            },
+            title: {
+              type: String,
+              required: true
+            },
+            body: {
+              required: true
+            },
+            confirm: {
+              required: false
+            },
+            callback: {
+              required: false
+            },
+            html: {
+              required: false
             }
         },
-        events: {
-            'modal-open': (setup, callback) => {
-                this.title = setup.title || false;
-                this.body = setup.body || false;
-                this.confirm = setup.confirm || false;
-                this.html = setup.html || false;
-                this.callback = callback || false;
-                this.loading = false;
-                this.open();
-            },
-            'modal-close': () => this.close()
+        data() {
+            return {
+                loading: false
+            }
         },
         methods: {
-            open(callback) {this.visible = true;},
-            close() {this.visible = false;},
             proceed() {
                 if (typeof this.callback == 'function') {
                     this.loading = true;
@@ -57,7 +60,10 @@
                     return false;
                 }
 
-                this.close();
+                //this.close();
+            },
+            close() {
+                this.$emit('close')
             }
         }
     }

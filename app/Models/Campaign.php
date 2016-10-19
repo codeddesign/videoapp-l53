@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Mappers\CampaignTypesMapper;
+use App\Transformers\CampaignTypeTransformer;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -174,7 +174,7 @@ class Campaign extends Model
             return false;
         }
 
-        $info         = (new CampaignTypesMapper)->map($campaign->type);
+        $info         = (new CampaignTypeTransformer)->transform($campaign->type);
         $info['type'] = $campaign->type->alias;
 
         return [

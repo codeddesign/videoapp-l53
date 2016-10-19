@@ -1,6 +1,13 @@
 <template>
     <div id="campaign-listing">
-        <app-modal></app-modal>
+        <app-modal 
+            :visible="modal.visible"
+            :title="modal.title"
+            :body="modal.body"
+            :confirm="modal.confirm"
+            :callback="modal.callback"
+            v-on:close="closeModal"
+        ></app-modal>
         <div class="page-index" v-cloak>
             <div class="campaignselection-wrap">
                 <div class="campaignview-wrap">
@@ -113,6 +120,7 @@
     }
 </style>
 <script>
+    import AppModal from '../../components/AppModal.vue';
     export default {
         data() {
             return {
@@ -129,7 +137,14 @@
                     next: false
                 },
                 startDate: null,
-                endDate: null
+                endDate: null,
+                modal: {
+                    visible: false,
+                    title: '',
+                    body: '',
+                    confirm: false,
+                    callback: () => {}
+                }
             };
         },
 
@@ -148,6 +163,9 @@
         },
 
         methods: {
+            closeModal() {
+                this.modal.visible = false
+            },
             paginate(direction) {
                 if (direction === 'previous') {
                     --this.pagination.page;
@@ -178,7 +196,7 @@
             },
 
             deleteCampaign(campaign) {
-                this.$broadcast('modal-open', {
+                /*this.$broadcast('modal-open', {
                     title: 'Confirm',
                     body: 'Are you sure you want to remove "' + campaign.name + '"?',
                     confirm: true
@@ -190,16 +208,37 @@
 
                                 this.$broadcast('modal-close');
                             });
-                }.bind(this));
+                }.bind(this));*/
+
+                this.modal = {
+                    visible: true,
+                    title: 'Confirm',
+                    body: 'Are you sure you want to remove "' + campaign.name + '"?',
+                    confirm: true,
+                    callback: () => {
+                      this.$http.delete('/api/campaigns/' + campaign.id)
+                        .then(function() {
+                            var index = this.response.campaigns.indexOf(campaign);
+                            this.response.campaigns.splice(index, 1)
+
+                            this.closeModal();
+                        });
+                    }
+                }
+
             },
 
             embedCode(campaign) {
-                this.$broadcast('modal-open', {
-                    title: 'Copy the code bellow into your website',
+                this.modal = {
+                    visible: true,
+                    title: 'Copy the code below into your website',
                     body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;"><script src=http://a3m.io:8000/p' + campaign.id +'.js"><\/script><\/textarea>',
-                    html: true
-                });
+                }
             }
         },
+
+        components: {
+            AppModal
+        }
     }
 </script>
