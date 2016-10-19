@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Services\Youtube;
@@ -9,16 +10,16 @@ use App\Services\Youtube;
 /**
  * Database Columns
  *
- * @property int       $id
- * @property int       $campaign_id
- * @property string    $url
- * @property string    $source
- * @property \DateTime $created_at
- * @property \DateTime $updated_at
+ * @property int      $id
+ * @property int      $campaign_id
+ * @property string   $url
+ * @property string   $source
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
  *
  * Relationships
  *
- * @property Campaign  $campaign
+ * @property Campaign $campaign
  */
 class Video extends Model
 {

@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Database Columns
  *
- * @property int          $id
- * @property string       $title
- * @property string       $alias
- * @property bool      $available
- * @property bool      $single
- * @property bool      $has_name
- * @property \DateTime    $created_at
- * @property \DateTime    $updated_at
+ * @property int        $id
+ * @property string     $title
+ * @property string     $alias
+ * @property bool       $available
+ * @property bool       $single
+ * @property bool       $has_name
+ * @property Carbon     $created_at
+ * @property Carbon     $updated_at
  *
  * Relationships
  *
- * @property Collection   $campaigns
+ * @property Collection $campaigns
  */
 class CampaignType extends Model
 {

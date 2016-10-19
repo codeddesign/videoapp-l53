@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Transformers\CampaignTypeTransformer;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,8 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int          $rpm
  * @property int          $size
  * @property string       $name
- * @property \DateTime    $created_at
- * @property \DateTime    $updated_at
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
  *
  * Relationships
  *
@@ -165,9 +166,9 @@ class Campaign extends Model
                 ->with('videos')
                 ->find($id);
         } else {
-            $user = auth()->user();
+            $user               = auth()->user();
             $campaignSerialized = app('redis')->connection()->get("{$user->id}.{$previewKey}");
-            $campaign = unserialize($campaignSerialized);
+            $campaign           = unserialize($campaignSerialized);
         }
 
         if (! $campaign) {
