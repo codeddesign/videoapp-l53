@@ -68,7 +68,7 @@
                             <li>EDIT</li>
                         </ul>
                         <ul class="campaigngrid">
-                            <li v-for="campaign in response.campaigns">
+                            <li v-for="campaign in filteredCampaigns">
                                 <div class="camplist-data1">{{ campaign.id }}</div>
                                 <div class="camplist-data2">{{ campaign.name }}</div>
                                 <div class="camplist-data3">{{ campaign.created_at_humans }}</div>
@@ -121,6 +121,8 @@
 </style>
 <script>
     import AppModal from '../../components/AppModal.vue';
+    import Fuse from 'fuse.js';
+
     export default {
         data() {
             return {
@@ -234,6 +236,24 @@
                     title: 'Copy the code below into your website',
                     body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;"><script src=http://a3m.io:8000/p' + campaign.id +'.js"><\/script><\/textarea>',
                 }
+            }
+        },
+
+        computed: {
+            filteredCampaigns() {
+                if(this.search == '') {
+                    return this.response.campaigns
+                }
+
+                var options = {
+                  keys: [
+                      "name", "created_at_humans"
+                  ]
+                };
+
+                var fuse = new Fuse(this.response.campaigns, options)
+
+                return fuse.search(this.search)
             }
         },
 
