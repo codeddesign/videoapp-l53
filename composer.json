@@ -45,6 +45,12 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "lint": [
+            "vendor/bin/php-cs-fixer fix . --dry-run --verbose"
+        ],
+        "tests": [
+            "vendor/bin/phpunit"
         ]
     },
     "config": {

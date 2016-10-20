@@ -1,5 +1,4 @@
-window._ = require('lodash');
-window.Cookies = require('js-cookie');
+window.Cookies = require('js-cookie')
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -7,10 +6,10 @@ window.Cookies = require('js-cookie');
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass/assets/javascripts/bootstrap');
+window.$ = window.jQuery = require('jquery')
+require('bootstrap-sass/assets/javascripts/bootstrap')
 
-window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker');
+window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker')
 
 import Vue from 'vue'
 import VueResource from 'vue-resource'
@@ -19,15 +18,21 @@ import App from './views/layouts/default/default.vue'
 
 Vue.use(VueResource)
 
-Vue.http.interceptors.push(function (request, next) {
-    request.headers.set('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+Vue.http.interceptors.push(function(request, next) {
+  request.headers.set(
+    'X-CSRF-TOKEN',
+    $('meta[name="csrf-token"]').attr('content')
+  )
 
-    next();
-});
+  next()
+})
 
 const app = new Vue({
   router,
-  ...App,
+  ...App
 })
 
-export { app, router }
+export {
+  app,
+  router
+}

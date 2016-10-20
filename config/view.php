@@ -30,6 +30,6 @@ return [
 
     'compiled' => realpath(storage_path('framework/views')),
 
-    'webpack' => env('WEBPACK', false)
+    'webpack' => env('WEBPACK', false),
 
 ];

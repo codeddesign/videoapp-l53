@@ -7,7 +7,7 @@ module.exports = {
   entry: './resources/assets/js/app.js',
   output: {
     path: path.resolve(__dirname, './public'),
-    publicPath: 'http://localhost:8080/',
+    publicPath: 'http://videoapp53.dev/',
     filename: 'js/app.js'
   },
   module: {
@@ -20,9 +20,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/,
-        query: {
-          presets:[ 'es2015', 'stage-2' ]
-        }
       },
       {
         test: /\.(png|jpg|gif|svg|woff2?|eot|ttf)(\?v=[0-9\.]+)?$/,
@@ -37,17 +34,7 @@ module.exports = {
   plugins: [
     new webpack.LoaderOptionsPlugin({
       vue: vueConfig
-    }),
-    new CopyWebpackPlugin([
-        { from: '_redirects' },
-        { from: 'index.html' }
-      ],
-      {
-        // By default, we only copy modified files during
-        // a watch or webpack-dev-server build. Setting this
-        // to `true` copies all files.
-        copyUnmodified: true
-      })
+    })
   ],
   devServer: {
     historyApiFallback: true,
@@ -64,12 +51,24 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
-      }
+      },
     }),
+
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    }),
+
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
       compress: {
         warnings: false
+      },
+      output: {
+        comments: false
       }
-    })
+    }),
+
+    // optimize module ids by occurrence count
+    new webpack.optimize.OccurrenceOrderPlugin()
   ])
 }

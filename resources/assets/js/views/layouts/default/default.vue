@@ -1,23 +1,27 @@
 <template>
-    <div>
-        <sidebar></sidebar>
+  <div>
+    <sidebar></sidebar>
 
-        <div class="rightside">
-            <rightside-nav></rightside-nav>
+    <div class="rightside">
+      <rightside-nav></rightside-nav>
 
-            <router-view></router-view>
-        </div>
-
+      <router-view></router-view>
     </div>
-
+  </div>
 </template>
+
 <script>
-    import Sidebar from './../../components/Sidebar.vue'
-    import RightsideNav from './../../components/RightsideNav.vue'
-    export default {
-        components: { Sidebar, RightsideNav }
+  import Sidebar from './../../components/Sidebar.vue'
+  import RightsideNav from './../../components/RightsideNav.vue'
+
+  export default {
+    components: {
+      Sidebar,
+      RightsideNav
     }
+  }
 </script>
+
 <style lang="scss">
     $bootstrap-sass-asset-helper: true;
     @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
