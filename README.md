@@ -24,7 +24,9 @@ CREATE DATABASE videoapp53-testing;
 
 6. Copy `.env.example` to `.env` and edit the file according to your local development environment.
 
-7. Start the Webpack Dev Server using `yarn run dev`.
+7. Install both PHP and JS dependencies - `composer install` and `yarn install`, respectively.
+
+8. Start the Webpack Dev Server using `yarn run dev`.
 
 
 # Contributing
