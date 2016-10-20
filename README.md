@@ -17,7 +17,7 @@ You should install these tools and familiarize yourself with them.
 psql -U homestead -h localhost
 (password: secret)
 CREATE DATABASE videoapp53;
-CREATE DATABASE videoapp53-testing; 
+CREATE DATABASE "videoapp53-testing"; 
 ```
 
 5. Run `php artisan key:generate` to generate your application key.
@@ -26,7 +26,9 @@ CREATE DATABASE videoapp53-testing;
 
 7. Install both PHP and JS dependencies - `composer install` and `yarn install`, respectively.
 
-8. Start the Webpack Dev Server using `yarn run dev`.
+8. Migrate and seed your database: `php artisan migrate` and `php artisan db:seed`
+
+9. Start the Webpack Dev Server using `yarn run dev`.
 
 
 # Contributing
