@@ -2,25 +2,26 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 
 /**
  * Database Columns
  *
- * @property int       $id
- * @property int       $user_id
- * @property string    $domain
- * @property \DateTime $created_at
- * @property \DateTime $updated_at
+ * @property int    $id
+ * @property int    $user_id
+ * @property string $domain
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * Relationships
  *
- * @property User      $user
+ * @property User   $user
  *
  * Accessors
  *
- * @property string    $link
+ * @property string $link
  */
 class WordpressSite extends Model
 {

@@ -1,10 +1,11 @@
 <template>
-    <div>
-        <h1>support</h1>
-    </div>
+  <div>
+    <h1>support</h1>
+  </div>
 </template>
-<script>
-    export default {
 
-    }
+<script>
+  export default {
+
+  }
 </script>

@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel='shortcut icon' href='/home/images/logo.png'>
     <title>Video App</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     {{--include typekit font--}}
     <script src="https://use.typekit.net/lwk5wec.js"></script>
@@ -24,7 +23,11 @@
     <div id="app">
         <app></app>
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
+    @if($webpack)
+        <script src="http://localhost:8080/js/app.js"></script>
+    @else
+        <script src="{{ asset('js/app.js') }}"></script>
+    @endif
 </body>
 
 </html>

@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\DB;
 /**
  * Database Columns
  *
- * @property int       $id
- * @property int       $campaign_id
- * @property string    $name
- * @property string    $event
- * @property string    $referer
- * @property string    $ip
- * @property \DateTime $created_at
- * @property \DateTime $updated_at
+ * @property int      $id
+ * @property int      $campaign_id
+ * @property string   $name
+ * @property string   $event
+ * @property string   $referer
+ * @property string   $ip
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
  *
  * Relationships
  *
- * @property Campaign  $campaign
+ * @property Campaign $campaign
  */
 class CampaignEvent extends Model
 {

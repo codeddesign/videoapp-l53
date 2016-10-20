@@ -76,6 +76,7 @@ ul.navlist li a span {
   margin-left: 4px;
 }
 li > a {
+  display: block;
   color: white;
 }
 
@@ -1247,7 +1248,6 @@ button.sitevalidation-removesite:hover {
   border-left: 1px solid #5C5882;
   display: inline-block;
   padding-bottom: 70px;
-  height: 100%;
 }
 
 .selectadtype-title {
@@ -1800,7 +1800,7 @@ ul.campaigngrid li:nth-child(2n) div {
   -webkit-flex-direction: row;
   flex-direction: row;
   height: 100%;
-  position: fixed;
+  position: absolute;
   width: 100%;
   z-index: 10;
   background-color: rgba(0,0,0, .3);
