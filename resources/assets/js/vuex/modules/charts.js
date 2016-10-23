@@ -2,8 +2,6 @@ import {
   LOAD_DATA
 } from '../mutation-types'
 
-import _ from 'lodash'
-
 const state = {
   revenue: [],
   impressions: [],
