@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "lint": "./node_modules/.bin/eslint 'resources/assets/js/**'"
+    "lint": "eslint 'resources/assets/js/**'"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
