@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div>
     <div class="page-index">
       <div class="display-dashboardtoparea">
@@ -138,9 +138,10 @@
     methods: {
       stats() {
         this.$http.get('/api/charts/all').then((response) => {
-          this.$set(this.requestsChartData, response.data.requests)
-          this.$set(this.impressionsChartData, response.data.impressions)
-          this.$set(this.revenueChartData, response.data.revenue)
+          this.revenueChartData = response.data.revenue
+          this.impressionsChartData = response.data.impressions
+          this.requestsChartData = response.data.requests
+          this.$store.dispatch('loadData', { data: response.data })
         }, () => console.log('Error fetching the stats.'))
 
         this.request()

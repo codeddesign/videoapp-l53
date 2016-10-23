@@ -1,135 +1,125 @@
 <template>
   <div>
-    <div class="campaignstats-digit">
-      <canvas
-        width="1000"
-        height="285"
-        id="barlinechart"
-        style="margin-top: 20px; padding-top: 20px; padding-bottom: 10px; border-top: 1px solid #d6d4d4; background-color: white"
-      />
+    <div id="chart" class="chart">
+      
     </div>
   </div>
 </template>
 
 <script>
-  import Chart from 'chart.js'
+  import Highcharts from 'highcharts'
   import _ from 'lodash'
 
   export default {
-    props: {
-      revenue: {
-        default: ''
-      },
-      impressions: {
-        default: ''
-      }
-    },
-
     data() {
       return {
-        chart: '',
-        legend: ''
+        
       }
-    },
-
-    mounted() {
-      this.$nextTick(function() {
-        this.render()
-      })
     },
 
     computed: {
-      waitChartData() {
-        this.render()
-      }
-    },
-
-    methods: {
-      render() {
-        var data = {
-          labels: _.map(Object.keys(this.revenue), function(value) {
-            return parseInt(value) + 1
-          }),
-          datasets: [{
-            label: 'Impressions',
-            type: 'line',
-            data: Object.keys(this.impressions).map(key => this.impressions[key]),
-            fill: false,
-            borderColor: 'rgb(0, 157, 215)',
-            backgroundColor: '#FFFFFF',
-            pointBorderColor: 'rgb(0, 157, 215)',
-            pointBackgroundColor: '#FFFFFF',
-            pointHoverBackgroundColor: '#7772A7',
-            pointHoverBorderColor: '#7772A7',
-            yAxisID: 'y-axis-impressions'
-          }, {
-            label: 'Revenue',
-            type: 'bar',
-            data: Object.keys(this.revenue).map(key => this.revenue[key]),
-            fill: false,
-            backgroundColor: '#cce0a3',
-            borderColor: '#cce0a3',
-            hoverBackgroundColor: '#cce0a3',
-            hoverBorderColor: '#cce0a3',
-            yAxisID: 'y-axis-revenue'
-          }]
-        }
-
-        this.chart = new Chart(document.getElementById('barlinechart').getContext('2d'), {
-          type: 'bar',
-          data: data,
-          options: {
-            animation: false,
-            responsive: true,
-            tooltips: {
-              mode: 'label',
-              backgroundColor: '#303749'
-            },
-            elements: {
-              line: {
-                fill: false
+      options() {
+        return {
+          credits: {
+            enabled: false
+          },
+          chart: {
+            backgroundColor:'transparent'
+          },
+          shadow: false,
+          title: false,
+          xAxis: [
+            {
+              type: 'datetime',
+              dateTimeLabelFormats: { // don't display the dummy year
+                second: '%l:%M:%S %P',
+                minute: '%l:%M %P',
+                hour: '%l:%M %P',
+              },
+            }
+          ],
+          yAxis: [{ // Primary yAxis
+            labels: {
+              format: '${value}',
+              style: {
+                color: '#989898',
+                fontWeight: 'bold',
+                backgroundColor: 'red'
               }
             },
-            legend: {
-              display: false
+            title: false
+          }, { // Secondary yAxis
+            labels: {
+              format: '{value}',
+              style: {
+                color: Highcharts.getOptions().colors[0]
+              }
             },
-            scales: {
-              xAxes: [{
-                display: true,
-                gridLines: {
-                  display: false
-                },
-                labels: {
-                  show: true
-                }
-              }],
-              yAxes: [{
-                type: 'linear',
-                display: true,
-                position: 'left',
-                id: 'y-axis-revenue',
-                gridLines: {
-                  display: true
-                },
-                labels: {
-                  show: true
-                }
-              }, {
-                type: 'linear',
-                display: true,
-                position: 'right',
-                id: 'y-axis-impressions',
-                gridLines: {
-                  display: false
-                },
-                labels: {
-                  show: true
-                }
-              }]
+            title: false,
+            opposite: true,
+            visible: false
+          }],
+          tooltip: {
+            shared: true,
+            backgroundColor: '#373f52',
+            color: '#ffffff',
+            borderWidth: 0,
+            shadow: false,  
+            useHTML: true,
+            headerFormat: '',
+            style: {
+              color: '#fff',
+              fontSize: '9pt',
             }
-          }
-        })
+          },
+          legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            floating: true,
+          },
+          series: [
+            {
+              name: 'Revenue',
+              type: 'column',
+              yAxis: 0,
+              color: '#cce0a3',
+              data: this.$store.state.charts.revenue,
+              tooltip: {
+                valuePrefix: '$'
+              }
+            },
+            {
+              name: 'Impressions',
+              type: 'spline',
+              color: '#01a3de',
+              yAxis: 1,
+              data: this.$store.state.charts.impressions,
+            }
+          ]
+        }
       }
-    }
+    },
+    mounted() {
+      this.$store.subscribe((mutation, state) => {
+        if(mutation.type === 'LOAD_DATA') {
+          this.$nextTick(function() {
+            console.log(this.options)
+            Highcharts.chart('chart', this.options);
+          })
+        }
+      })
+      
+    },
   }
 </script>
+
+<style lang="scss">
+  .chart {
+    padding: 12px 8px 0 0;
+  }
+
+  .highcharts-plot-background {
+    fill: #fff;
+  }
+</style>

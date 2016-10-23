@@ -14,7 +14,11 @@ window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker')
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import router from './router'
+import store from './vuex/store'
+import { sync } from 'vuex-router-sync'
 import App from './views/layouts/default/default.vue'
+
+sync(store, router)
 
 Vue.use(VueResource)
 
@@ -28,6 +32,7 @@ Vue.http.interceptors.push(function(request, next) {
 })
 
 const app = new Vue({
+  store,
   router,
   ...App
 })
