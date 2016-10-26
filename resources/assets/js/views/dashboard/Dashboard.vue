@@ -91,6 +91,7 @@
 <script>
   import Stats from './components/Stats.vue'
   import LineBarChart from './components/LineBarChart.vue'
+  import socket from '../../services/socket'
 
   export default {
     data() {
@@ -126,6 +127,16 @@
       }
     },
     mounted() {
+      let echo = socket.connection()
+      if(echo) {
+        echo.private('user.1')
+            .listen('CampaignEventReceived', (e) => {
+              //this.$store.dispatch('eventReceived', e)
+            });
+      } else {
+        console.error('Couldn\'t connect to web socket');
+      }
+          
       this.$nextTick(function() {
         this.stats()
       })

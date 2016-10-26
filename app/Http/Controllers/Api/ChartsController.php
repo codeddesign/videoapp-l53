@@ -22,7 +22,7 @@ class ChartsController extends Controller
             return (4 * $value) / 1000;
         });
 
-        $now = Carbon::now();
+        /*$now = Carbon::now();
 
         $requests= [];
         $impressions=[];
@@ -41,7 +41,7 @@ class ChartsController extends Controller
                 $now->copy()->subMinutes(30-$i)->timestamp*1000,
                 mt_rand(300,1500)
             ];
-        }
+        }*/
 
         return [
             'requests'    => $requests,

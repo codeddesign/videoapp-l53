@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Collection;
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -32,7 +31,7 @@ use App\Services\Youtube;
  */
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasApiTokens;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

@@ -107,6 +107,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'jwt_secret' => env('JWT_SECRET'),
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -171,12 +173,11 @@ return [
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Laravel\Passport\PassportServiceProvider::class,
         App\CampaignEvents\Providers\CampaignEventsServiceProvider::class,
 
         // Sentry integration

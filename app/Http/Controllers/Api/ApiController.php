@@ -15,7 +15,7 @@ use League\Fractal\Serializer\DataArraySerializer;
 
 class ApiController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use DispatchesJobs, ValidatesRequests;
 
     /**
      * Create a JSON response from a collection.

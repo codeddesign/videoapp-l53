@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 
 /**
  * Database Columns
@@ -166,8 +167,8 @@ class Campaign extends Model
                 ->with('videos')
                 ->find($id);
         } else {
-            $user               = auth()->user();
-            $campaignSerialized = app('redis')->connection()->get("{$user->id}.{$previewKey}");
+            $previewId = app('request')->cookie('preview_id');
+            $campaignSerialized = app('redis')->connection()->get("{$previewKey}.{$previewId}");
             $campaign           = unserialize($campaignSerialized);
         }
 

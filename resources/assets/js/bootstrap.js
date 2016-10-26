@@ -1,16 +1,18 @@
-window.Cookies = require('js-cookie')
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
 window.$ = window.jQuery = require('jquery')
 require('bootstrap-sass/assets/javascripts/bootstrap')
 
 window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker')
 
+// Fetch JWT from LS or redirect to login page
+import auth from './services/auth'
+let jwt = auth.authenticate()
+
+// Bootstrap the web socket if
+// a connection is available
+import socket from './services/socket'
+socket.bootstrap('http://192.168.10.10:6001', jwt)
+
+// Setup Vue.js and it's dependencies
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import router from './router'
@@ -28,13 +30,23 @@ Vue.http.interceptors.push(function(request, next) {
     $('meta[name="csrf-token"]').attr('content')
   )
 
+  request.headers.set(
+    'Authorization',
+    `Bearer ${jwt}`
+  )
+
   next()
 })
 
 const app = new Vue({
   store,
   router,
-  ...App
+  ...App,
+  data() {
+    return {
+      jwt: jwt
+    }
+  }
 })
 
 export {

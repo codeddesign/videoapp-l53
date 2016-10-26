@@ -28,7 +28,7 @@ Route::get('password/reset/{token}', 'Authentication\ResetPasswordController@sho
 Route::post('password/reset', 'Authentication\ResetPasswordController@reset');
 
 // Vue app.
-Route::get('/app', ['uses' => 'PagesController@index'])->name('app')->middleware('auth', 'verifyaccount');
+Route::get('/app', ['uses' => 'PagesController@index'])->name('app');
 
 // Public endpoint, used by the player.
 Route::get('/campaign/{id}', 'CampaignsController@campaign');

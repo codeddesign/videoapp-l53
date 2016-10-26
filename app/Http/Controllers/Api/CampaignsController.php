@@ -53,14 +53,17 @@ class CampaignsController extends ApiController
         // pass the following: name, size, type, video
         $campaign = $this->user()->addCampaign($request->all(), $toSession = true);
 
-        $redis->connection()->set(
-            "{$this->user()->id}.{$this->previewKey}",
+        $previewId = str_random(16);
+
+        $redis->connection()->setex(
+            "{$this->previewKey}.{$previewId}",
+            60*60,
             serialize($campaign)
         );
 
-        return [
-            'url' => $this->getEmbedLink(),
-        ];
+        return response()
+                ->json(['url' => $this->getEmbedLink()])
+                ->withCookie(cookie('preview_id', $previewId, 60));
     }
 
     /**

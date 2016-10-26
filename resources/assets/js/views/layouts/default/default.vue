@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="jwt">
     <sidebar></sidebar>
 
     <div class="rightside">

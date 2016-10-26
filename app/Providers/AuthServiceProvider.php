@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use Laravel\Passport\Passport;
+use App\JWT\JWT;
+use App\JWT\JWTAuth;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +26,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Passport::routes();
+        $this->app['auth']->extend('jwt', function ($app, $name, array $config) {
+            return new JWTAuth(
+                new JWT($this->app['log']),
+                $this->app['auth']->createUserProvider($config['provider']),
+                $app['request']);
+        });
     }
 }

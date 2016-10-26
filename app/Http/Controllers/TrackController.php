@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CampaignEvents;
 use Illuminate\Http\Request;
 use App\Services\PlayerEvent;
 
@@ -18,8 +19,9 @@ class TrackController extends Controller
      */
     public function index(Request $request)
     {
-        //id, name, event
-        PlayerEvent::save($request->only('i', 'n', 'e'));
+        $data = $request->only(['campaign', 'status', 'source', 'tag']);
+
+        (new CampaignEvents)->handle($data);
 
         // return one pixel
         return response($this->onePixel())->header('Content-Type', 'image/png');
@@ -33,7 +35,7 @@ class TrackController extends Controller
     protected function onePixel()
     {
         return base64_decode(
-            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='
+                'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='
         );
     }
 }

@@ -7,7 +7,6 @@ module.exports = {
   entry: './resources/assets/js/app.js',
   output: {
     path: path.resolve(__dirname, './public'),
-    publicPath: 'http://videoapp53.dev/',
     filename: 'js/app.js'
   },
   module: {
@@ -34,12 +33,17 @@ module.exports = {
   plugins: [
     new webpack.LoaderOptionsPlugin({
       vue: vueConfig
-    })
+    }),
+    new webpack.IgnorePlugin(/pusher-js/),
   ],
   devServer: {
     historyApiFallback: true,
     noInfo: false,
     inline: true,
+    host: "0.0.0.0",
+    watchOptions: {
+      poll: true
+    }
   },
   devtool: '#eval-source-map'
 }
