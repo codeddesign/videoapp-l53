@@ -13,7 +13,7 @@ import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 
 export default new Router({
-  // mode: 'history',
+  mode: 'history',
   base: '/app',
   linkActiveClass: 'active',
   routes: [

@@ -26,9 +26,6 @@ Route::post('password/email', 'Authentication\ForgotPasswordController@sendReset
 Route::get('password/reset/{token}', 'Authentication\ResetPasswordController@showResetForm');
 Route::post('password/reset', 'Authentication\ResetPasswordController@reset');
 
-// Vue app.
-Route::get('/app', ['uses' => 'PagesController@index'])->name('app');
-
 // Public endpoint, used by the player.
 Route::get('/campaign/{id}', 'CampaignsController@campaign');
 Route::get('/track', 'TrackController@index');
@@ -39,3 +36,7 @@ Route::group(['prefix' => '/public/api', 'namespace' => 'Client'], function () {
     Route::get('/track', 'TrackingController@index');
     Route::get('/plugin', 'PluginController@CampaignAdd');
 });
+
+
+// Vue app.
+Route::get('/app/{vue?}', ['name' => 'app', 'uses' => 'PagesController@index'])->where('vue', '[\/\w\.-]*');
