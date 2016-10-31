@@ -16,7 +16,7 @@ class LoginController extends Controller
 
     public function __construct(AuthManager $auth)
     {
-        $this->auth = $auth;
+        $this->auth = $auth->guard('api');
     }
 
     /**
@@ -49,11 +49,11 @@ class LoginController extends Controller
             ]);
         }
 
-        if (! Auth::user()->verified_phone) {
+        if (! $this->auth->user()->verified_phone) {
             return redirect()->route('verify.phone');
         }
 
-        if (! Auth::user()->verified_email) {
+        if (! $this->auth->user()->verified_email) {
             return redirect()->route('verify.email');
         }
 
@@ -71,7 +71,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request) : RedirectResponse
     {
-        Auth::logout();
+        $this->auth->logout();
 
         $request->session()->flush();
 

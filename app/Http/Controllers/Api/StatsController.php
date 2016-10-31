@@ -2,45 +2,46 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Campaign;
 use App\Models\CampaignEvent;
-use App\Http\Controllers\Controller;
+use App\Services\CampaignEvents;
+use App\Stats\StatsTransformer;
+use Illuminate\Http\Request;
 
-class StatsController extends Controller
+class StatsController extends ApiController
 {
     /**
-     * Count the requests per date range.
+     * @param \Illuminate\Http\Request $request
      *
      * @return int
      */
-    public function requests()
+    public function all(Request $request)
     {
-        // we are expecting to fetch a 'time' value for the request.
-        // 'time' can be equal to: 'today', '7-days', 'current-month', 'last-month'
-        return CampaignEvent::requests(request())->count();
+        $timespan = $request->get('time');
+
+        if (! $timespan || $timespan === 'realtime') {
+            $stats = $this->fetchRealTimeData();
+        } else {
+            $stats = $this->fetchHistoricalData($timespan);
+        }
+
+        return $this->jsonResponse($stats);
     }
 
-    /**
-     * Count the impressions per date range.
-     *
-     * @return int
-     */
-    public function impressions()
+    protected function fetchRealTimeData()
     {
-        // we are expecting to fetch a 'time' value for the request.
-        // 'time' can be equal to: 'today', 'yesterday', '7-days', 'current-month', 'last-month'
-        return CampaignEvent::impressions(request())->count();
+        return (new CampaignEvents)->fetchUserCampaignsFromRedis($this->user);
     }
 
-    public function latestCampaigns()
+    protected function fetchHistoricalData($timespan)
     {
-        // date (format: july 10, 2016), requests, fill-rate, eCPM, revenue
-        // paginated
-        // collection methods to consider: reduce
-        $events = Campaign::find(9)->campaignEvents()->orderBy('created_at')->get();
+        $statsByCampaign = CampaignEvent::userStats($timespan)
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->created_at->format('F d, Y');
+            });
 
-        return $events;
-        $events->transform(function ($item, $key) {
-        });
+        $stats = (new StatsTransformer)->transform($statsByCampaign, $timespan);
+
+        return $stats;
     }
 }

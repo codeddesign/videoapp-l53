@@ -18,6 +18,10 @@
     components: {
       Sidebar,
       RightsideNav
+    },
+
+    mounted() {
+      this.$store.dispatch('loadUser')
     }
   }
 </script>

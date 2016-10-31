@@ -32,25 +32,12 @@ class CampaignEvent extends Model
     /**
      * @var array
      */
-    protected $fillable = ['campaign_id', 'name', 'event', 'referer'];
+    protected $fillable = ['campaign_id', 'name', 'count'];
 
     /**
      * @var array
      */
-    protected $hidden = ['ip', 'updated_at', 'deleted_at'];
-
-    /**
-     * Set the referer on create.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        self::creating(function ($campaignEvent) {
-            $campaignEvent->referer = refererUtil();
-            $campaignEvent->ip      = ipUtil();
-        });
-    }
+    protected $hidden = ['updated_at', 'deleted_at'];
 
     /**
      * A campaign event belongs to a campaign.
@@ -62,8 +49,15 @@ class CampaignEvent extends Model
         return $this->belongsTo(Campaign::class, 'campaign_id');
     }
 
+    public function scopeUserStats($query, $timeRange)
+    {
+        return $this->whereHas('campaign', function ($query) use ($query) {
+            $query->user_id = auth()->user()->id;
+        })->timeRange($timeRange);
+    }
+
     /**
-     * Fectch the requests, fitlered by a range of time.
+     * Fetch the requests, filtered by a range of time.
      *
      * @param $query
      * @param $request
@@ -74,7 +68,7 @@ class CampaignEvent extends Model
     {
         return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
-        })->where('name', 'app')->where('event', 'load')->timeRange($request);
+        })->where('name', 'requests')->timeRange($request);
         // timeRange: is found in App\Models\Filterable trait as a query scope.
     }
 
@@ -90,7 +84,7 @@ class CampaignEvent extends Model
     {
         return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
-        })->where('name', 'ad')->where('event', 'start')->timeRange($request);
+        })->where('name', 'impressions')->timeRange($request);
         // timeRange: is found in App\Models\Filterable trait as a query scope.
     }
 
@@ -106,8 +100,7 @@ class CampaignEvent extends Model
         return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
         })->where('created_at', '>=', Carbon::today()->startOfMonth())
-            ->where('name', 'app')
-            ->where('event', 'load')
+            ->where('name', 'requests')
             ->groupBy('date')
             ->orderBy('date', 'DESC')
             ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "requests"')]);
@@ -125,8 +118,7 @@ class CampaignEvent extends Model
         return $this->whereHas('campaign', function ($query) use ($query) {
             $query->user_id = auth()->user()->id;
         })->where('created_at', '>=', Carbon::today()->startOfMonth())
-            ->where('name', 'ad')
-            ->where('event', 'start')
+            ->where('name', 'impressions')
             ->groupBy('date')
             ->orderBy('date', 'DESC')
             ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "impressions"')]);
@@ -175,5 +167,32 @@ class CampaignEvent extends Model
         }
 
         return $names;
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $collection
+     *
+     * @return mixed
+     */
+    public static function saveMany($collection)
+    {
+        $table = with(new static)->getTable();
+
+        /** @var Builder $db */
+        $db = app('db')->table($table);
+
+        $itemsArray = $collection->map(function ($item) {
+            return array_merge(
+                $item,
+                [
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]
+            );
+        });
+
+        $db->insert($itemsArray->toArray());
+
+        return $itemsArray;
     }
 }

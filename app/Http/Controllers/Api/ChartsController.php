@@ -2,62 +2,51 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\CampaignEvent;
 use App\Stats\StatsTransformer;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
-class ChartsController extends Controller
+class ChartsController extends ApiController
 {
     /**
-     * @param StatsTransformer $statsTransformer
+     * @param Request $request
      *
      * @return array
      */
-    public function stats(StatsTransformer $statsTransformer)
+    public function stats(Request $request)
     {
-        $requests    = $this->requests($statsTransformer);
-        $impressions = $this->impressions($statsTransformer);
+        $range = $request->get('time');
+
+        if ($range === 'realtime') {
+            $now = Carbon::now()->timestamp * 1000;
+
+            return [
+                'requests'    => [[$now, 0]],
+                'impressions' => [[$now, 0]],
+                'revenue'     => [[$now, 0]],
+            ];
+        }
+
+        $userStats = CampaignEvent::userStats($range)
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->name.'-'.$item->created_at->format('m/d/Y');
+            });
+
+        $transformer = new StatsTransformer;
+        $requests    = $transformer->transformHighcharts('requests', $userStats, $range);
+        $impressions = $transformer->transformHighcharts('impressions', $userStats, $range);
+
         $revenue     = collect($impressions)->map(function ($value) {
-            return (4 * $value) / 1000;
+            return [$value[0], (4 * $value[1]) / 1000];
         });
-
-        /*$now = Carbon::now();
-
-        $requests= [];
-        $impressions=[];
-        $revenue=[];
-        
-        for($i=0; $i<=30; $i++) {
-            $requests[] = [
-                $now->copy()->subMinutes(30-$i)->timestamp*1000,
-                mt_rand(20000,100000)
-            ];
-            $impressions[] = [
-                $now->copy()->subMinutes(30-$i)->timestamp*1000,
-                mt_rand(200000,1000000)
-            ];
-            $revenue[] = [
-                $now->copy()->subMinutes(30-$i)->timestamp*1000,
-                mt_rand(300,1500)
-            ];
-        }*/
 
         return [
             'requests'    => $requests,
             'impressions' => $impressions,
             'revenue'     => $revenue,
         ];
-    }
-
-    /**
-     * Return an array of the requests count, ordered by the days of the month.
-     *
-     * @return array
-     */
-    public function requests(StatsTransformer $statsTransformer)
-    {
-        return $statsTransformer->transformToArrayOfRequests(CampaignEvent::requestsStats());
     }
 
     /**

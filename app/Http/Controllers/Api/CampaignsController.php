@@ -13,6 +13,7 @@ class CampaignsController extends ApiController
 
     public function __construct()
     {
+        parent::__construct();
         $this->previewKey = config('videoad.TEMPORARY_PREVIEW_KEY');
     }
 
@@ -21,7 +22,7 @@ class CampaignsController extends ApiController
      */
     public function index()
     {
-        $campaigns = $this->paginate($this->user()->campaigns()->getQuery());
+        $campaigns = $this->paginate($this->user->campaigns()->getQuery());
 
         return $this->paginatedCollectionResponse($campaigns, new CampaignTransformer);
     }
@@ -35,7 +36,7 @@ class CampaignsController extends ApiController
      */
     public function show($id)
     {
-        $campaign = $this->user()->campaigns()->findOrFail($id);
+        $campaign = $this->user->campaigns()->findOrFail($id);
 
         return $this->itemResponse($campaign, new CampaignTransformer);
     }
@@ -51,13 +52,13 @@ class CampaignsController extends ApiController
     public function storePreviewLink(CampaignRequest $request, Redis $redis)
     {
         // pass the following: name, size, type, video
-        $campaign = $this->user()->addCampaign($request->all(), $toSession = true);
+        $campaign = $this->user->addCampaign($request->all(), $toSession = true);
 
         $previewId = str_random(16);
 
         $redis->connection()->setex(
             "{$this->previewKey}.{$previewId}",
-            60*60,
+            60 * 60,
             serialize($campaign)
         );
 
@@ -81,10 +82,10 @@ class CampaignsController extends ApiController
         Session::remove(config('videoad.TEMPORARY_PREVIEW_KEY'));
 
         $redis->connection()->del(
-            "{$this->user()->id}.{$this->previewKey}"
+            "{$this->user->id}.{$this->previewKey}"
         );
 
-        $campaign = $this->user()->addCampaign($request->all());
+        $campaign = $this->user->addCampaign($request->all());
 
         return response([
             'message'  => 'Successfully added a campaign.',
@@ -96,8 +97,6 @@ class CampaignsController extends ApiController
     /**
      * Update a campaign.
      *
-     * @todo ask adelin abt this.
-     *
      * @param CampaignRequest $request
      * @param                 $id
      *
@@ -105,7 +104,7 @@ class CampaignsController extends ApiController
      */
     public function update(CampaignRequest $request, $id)
     {
-        $campaign = $this->user()->campaigns()->findOrFail($id);
+        $campaign = $this->user->campaigns()->findOrFail($id);
 
         $campaign_type_id = $request->campaign_type_id;
 
@@ -128,7 +127,7 @@ class CampaignsController extends ApiController
      */
     public function destroy($id)
     {
-        $campaign = $this->user()->campaigns()->findOrFail($id);
+        $campaign = $this->user->campaigns()->findOrFail($id);
 
         $campaign->delete();
 

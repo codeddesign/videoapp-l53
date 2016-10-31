@@ -35,16 +35,17 @@ class CampaignEventReceived implements ShouldBroadcast
         $this->campaignId = $campaignId;
         $this->source     = $source;
         $this->tag        = $tag;
-        $this->timestamp  = $time->timestamp*1000;
+        $this->timestamp  = $time->timestamp * 1000;
         $this->status     = $status;
     }
 
     /**
      * Get the channels the event should broadcast on.
-     *
      */
     public function broadcastOn()
     {
+        \Log::info('Broadcasting to user.'.$this->userId);
+
         return new PrivateChannel('user.'.$this->userId);
     }
 }

@@ -10,11 +10,11 @@ Route::post('/campaigns/store/preview', ['uses' => 'CampaignsController@storePre
 
 Route::resource('wordpress', 'WordpressSitesController', ['except' => ['show', 'create', 'edit', 'update']]);
 
-Route::get('stats/requests', 'StatsController@requests');
-Route::get('stats/impressions', 'StatsController@impressions');
-Route::get('stats/latest-campaigns', 'StatsController@latestCampaigns');
+Route::get('stats/all', 'StatsController@all');
 
 Route::get('charts/requests', 'ChartsController@requests');
 Route::get('charts/impressions', 'ChartsController@impressions');
 // this route will return all the stats needed for the dashboard.
 Route::get('charts/all', 'ChartsController@stats');
+
+Route::get('user', 'UsersController@user');

@@ -2,60 +2,68 @@
 
 namespace App\Stats;
 
-use Carbon\Carbon;
+use App\Models\DateRange;
+use Illuminate\Support\Collection;
 
 class StatsTransformer
 {
-    /**
-     * Transform the data of the stats (requests, impressions...) to an array
-     * that can be used by the charting library.
-     *
-     * @param $statsType
-     * @param $monthlyCount
-     * @return array
-     */
-    public function transformToArrayOf($statsType, $monthlyCount)
+    protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors'];
+
+    public function transform(Collection $stats, $range)
     {
-        // create a collection containing the dates of the month.
-        $daysOfTheMonth = collect(date_range(Carbon::today()->startOfMonth(), Carbon::today()->endOfMonth()));
+        $dateRange = call_user_func(DateRange::class.'::'.$range);
 
-        // transform the collection into the form of [{'date': '2016-11-11', 'statsType': 0}]
-        $daysOfTheMonth->transform(function ($date, $key) use ($statsType) {
-            return ['date' => $date->format('Y-m-d'), $statsType => 0];
-        });
+        $data = [];
 
-        // $monthlyCount can be: requests, impressions...
-        foreach ($monthlyCount as $value) {
-            // for each day of the month
-            foreach ($daysOfTheMonth as $key => $day) {
-                // check if we have a count in the db (campaign_events)
-                if ($day['date'] == $value['date'] && $value[$statsType] > 0) {
-                    // update the value of the 'statsType'.
-                    $daysOfTheMonth[$key] = $value;
+        // Loop through all days in the given range
+        foreach ($dateRange->arrayByStep() as $day) {
+            $key = $day->format('F d, Y');
+
+            // If this day has any data
+            if ($stats->has($key)) {
+                $events = $stats->get($key);
+
+                foreach ($events as $event) {
+                    $data[$key][$event->name] = $event->count;
+                }
+
+                // If some stat was not available in the stats, it should be 0
+                if ($missingKeys = array_diff(self::$allStats, array_keys($data[$key]))) {
+                    foreach ($missingKeys as $missingKey) {
+                        $data[$key][$missingKey] = 0;
+                    }
+                }
+            } else {
+                // If this day has no data, all keys should be 0
+                foreach (self::$allStats as $stat) {
+                    $data[$key][$stat] = 0;
                 }
             }
         }
 
-        // return only the 'statsType' as array ordered by dates.
-        return $daysOfTheMonth->map(function ($item) use ($statsType) {
-            return $item[$statsType];
-        });
+        return $data;
     }
 
-    /**
-     * This method allows us to use "transformToArrayOf{Impressions|Requests...}.
-     *
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call($method, $arguments)
+    public function transformHighcharts($type, Collection $stats, $range)
     {
-        if (preg_match('/^transformToArrayOf/', $method)) {
-            $attribute = strtolower(substr($method, 18));
-            array_unshift($arguments, $attribute);
+        $dateRange = call_user_func(DateRange::class.'::'.$range);
 
-            return call_user_func_array([$this, 'transformToArrayOf'], $arguments);
+        $data = [];
+
+        foreach ($dateRange->arrayByStep() as $day) {
+            // The array key format is type-mm/dd/YYYY
+            // Example: requests-10/31/2016
+            $key = $type.'-'.$day->format('m/d/Y');
+            $timestamp = $day->timestamp * 1000;
+
+            if ($stats->has($key)) {
+                $item = $stats->get($key)[0];
+                $data[] = [$timestamp, $item->count];
+            } else {
+                $data[] = [$timestamp, 0];
+            }
         }
+
+        return $data;
     }
 }

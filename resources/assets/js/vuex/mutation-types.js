@@ -1,2 +1,2 @@
-export const LOAD_DATA = 'LOAD_DATA'
-export const EVENT_RECEIVED = 'EVENT_RECEIVED'
+// users.js
+export const LOAD_USER = 'LOAD_USER'

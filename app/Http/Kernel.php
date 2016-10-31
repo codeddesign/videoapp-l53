@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\EncryptCookies::class,
             'throttle:60,1',
             'bindings',
-            'auth.jwt'
+            'auth:api',
         ],
     ];
 

@@ -110,7 +110,6 @@ class User extends Authenticatable
         return $this->hasMany(WordpressSite::class);
     }
 
-    // @todo refactor this
     public function addCampaign(array $data, $toSession = false)
     {
         // add campaign

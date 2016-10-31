@@ -12,7 +12,7 @@ class WordpressSitesController extends ApiController
      */
     public function index()
     {
-        $sites = $this->user()->wordpressSites;
+        $sites = $this->user->wordpressSites;
 
         return $this->collectionResponse($sites, new WordpressSiteTransformer);
     }
@@ -25,7 +25,7 @@ class WordpressSitesController extends ApiController
      */
     public function store(WordpressRequest $request)
     {
-        $site = $this->user()->wordpressSites()->create($request->all());
+        $site = $this->user->wordpressSites()->create($request->all());
 
         return $this->jsonResponse([
             'message' => 'Successfully added a website.',
@@ -41,7 +41,7 @@ class WordpressSitesController extends ApiController
      */
     public function destroy($id)
     {
-        $site = $this->user()->wordpressSites()->findOrFail($id);
+        $site = $this->user->wordpressSites()->findOrFail($id);
 
         $site->delete();
 

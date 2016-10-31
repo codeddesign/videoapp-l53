@@ -6,8 +6,9 @@
     "html/indent": "+2",
   },
   "rules": {
-    "space-before-function-paren": [2, "never"],
-    "no-useless-escape": "off"
+    "space-before-function-paren": "off",
+    "no-useless-escape": "off",
+    "prefer-const": "off"
   },
   "globals": {
     "$": true,

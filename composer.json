@@ -47,7 +47,7 @@
             "php artisan optimize"
         ],
         "lint": [
-            "vendor/bin/php-cs-fixer fix . --dry-run --verbose"
+            "vendor/bin/php-cs-fixer fix . --verbose"
         ],
         "tests": [
             "vendor/bin/phpunit"

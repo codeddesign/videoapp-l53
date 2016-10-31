@@ -9,7 +9,6 @@ Route::post('login', 'Authentication\LoginController@login');
 Route::get('logout', 'Authentication\LoginController@logout');
 
 // Verification.
-// @todo implementation.
 Route::get('verify/phone', 'Authentication\VerificationsController@verifyPhone')->name('verify.phone');
 Route::post('verify/phone', 'Authentication\VerificationsController@postVerifyPhone');
 Route::post('verify/phone/code', 'Authentication\VerificationsController@postVerifyPhoneCode');

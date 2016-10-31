@@ -3,7 +3,7 @@ import Echo from 'laravel-echo'
 export default {
 
   bootstrap(host, jwt) {
-    if(typeof io !== 'undefined') {
+    if (typeof io !== 'undefined') {
       window.Echo = new Echo({
         broadcaster: 'socket.io',
         host: host,
@@ -18,7 +18,7 @@ export default {
 
   connection() {
     let echo = window.Echo
-    if(typeof echo !== 'undefined') {
+    if (typeof echo !== 'undefined') {
       return echo
     } else {
       return null

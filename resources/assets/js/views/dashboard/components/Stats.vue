@@ -2,7 +2,7 @@
   <div>
     <div class="campaignstats-title">{{ title | uppercase }}</div>
     <div class="campaignstats-digit" id="currentMonthViews" v-bind:style="{'color': color}">
-      {{ this.formattedValue }}
+      {{ value }}
     </div>
     <div class="campaignstats-digit"><span v-bind:id="title"></span></div>
   </div>
@@ -20,10 +20,7 @@
         default: 'Title'
       },
       value: {
-        default: 0
-      },
-      isPercentage: {
-        default: false
+        default: ''
       },
       color: {
         default: ''
@@ -32,7 +29,7 @@
         default: ''
       },
       chartData: {
-        default: []
+        default: () => []
       }
     },
 
@@ -45,14 +42,6 @@
     computed: {
       waitChartData() {
         this.fillGraph()
-      },
-
-      formattedValue() {
-        if (this.isPercentage) {
-          return this.value + '%'
-        } else {
-          return this.value
-        }
       }
     },
 

@@ -178,8 +178,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\CampaignEvents\Providers\CampaignEventsServiceProvider::class,
-
         // Sentry integration
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 

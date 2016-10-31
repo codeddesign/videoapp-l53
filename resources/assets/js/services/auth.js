@@ -5,10 +5,10 @@ export default {
   authenticate(redirect = '/login') {
     let jwt = ls.get('jwt')
 
-    if(jwt === null) {
+    if (jwt === null) {
       jwt = Cookies.get('jwt_token')
 
-      if(typeof jwt === 'undefined') {
+      if (typeof jwt === 'undefined') {
         window.location.href = redirect
       } else {
         ls.set('jwt', jwt)
@@ -16,5 +16,11 @@ export default {
     }
 
     return jwt
+  },
+
+  logout(redirect = '/login') {
+    ls.remove('jwt')
+    Cookies.remove('jwt_token')
+    window.location.href = redirect
   }
 }

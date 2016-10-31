@@ -1,10 +1,10 @@
-import ls from 'local-storage';
+import ls from 'local-storage'
 
 export default {
   get(key, defaultVal = null) {
     let val = ls(key)
 
-    return val ? val : defaultVal
+    return val || defaultVal
   },
 
   set(key, val) {

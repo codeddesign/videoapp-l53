@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Api\TrackRequest;
 use App\Services\CampaignEvents;
-use Illuminate\Http\Request;
-use App\Services\PlayerEvent;
 
 class TrackController extends Controller
 {
@@ -14,12 +13,13 @@ class TrackController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param TrackRequest $request
+     *
      * @return mixed
      */
-    public function index(Request $request)
+    public function index(TrackRequest $request)
     {
-        $data = $request->only(['campaign', 'status', 'source', 'tag']);
+        $data = $request->transform();
 
         (new CampaignEvents)->handle($data);
 

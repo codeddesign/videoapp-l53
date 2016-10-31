@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\User;
 use League\Fractal\Manager;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
@@ -15,7 +13,17 @@ use League\Fractal\Serializer\DataArraySerializer;
 
 class ApiController extends Controller
 {
-    use DispatchesJobs, ValidatesRequests;
+    /** @var User */
+    protected $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = auth()->user();
+
+            return $next($request);
+        });
+    }
 
     /**
      * Create a JSON response from a collection.
@@ -134,13 +142,5 @@ class ApiController extends Controller
     public function paginate($query, $perPage = 100)
     {
         return $query->paginate($perPage);
-    }
-
-    /**
-     * @return \App\User|null
-     */
-    protected function user()
-    {
-        return auth()->user();
     }
 }

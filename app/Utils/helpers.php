@@ -111,8 +111,8 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
     }
 
     // Clone the date objects to avoid issues, then reset their time
-    $from = $from->copy()->startOfDay();
-    $to = $to->copy()->startOfDay();
+    $from = $from->copy();
+    $to = $to->copy();
 
     // Include the end date in the range
     if ($inclusive) {
@@ -130,4 +130,71 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
     }
 
     return ! empty($range) ? $range : null;
+}
+
+function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10)
+{
+    $campaignEvents = new \App\Services\CampaignEvents();
+    $time = 0;
+
+    do {
+        $repeat = mt_rand($min, $max);
+
+        for ($i = 0;$i < $repeat;$i++) {
+            $rate = mt_rand(0, 100);
+
+            $campaignEvents->handle([
+                'campaign' => 1,
+                'source' => 'app',
+                'status' => 200,
+                'tag' => null,
+            ]);
+
+            if ($rate > $failPercent) {
+                //success
+                $campaignEvents->handle([
+                    'campaign' => 1,
+                    'source' => 'tag',
+                    'status' => 0,
+                    'tag' => 'http://example-tag.com',
+                ]);
+
+                $campaignEvents->handle([
+                    'campaign' => 1,
+                    'source' => 'ad',
+                    'status' => 0,
+                    'tag' => null,
+                ]);
+            } else {
+                if (mt_rand(0, 100) > 50) {
+                    //tag error
+                    $campaignEvents->handle([
+                        'campaign' => 1,
+                        'source' => 'tag',
+                        'status' => 400,
+                        'tag' => 'http://example-tag.com',
+                    ]);
+                } else {
+                    //ad error
+                    $campaignEvents->handle([
+                        'campaign' => 1,
+                        'source' => 'tag',
+                        'status' => 0,
+                        'tag' => 'http://example-tag.com',
+                    ]);
+
+                    $campaignEvents->handle([
+                        'campaign' => 1,
+                        'source' => 'ad',
+                        'status' => 300,
+                        'tag' => null,
+                    ]);
+                }
+            }
+        }
+
+        $time++;
+
+        sleep(1);
+    } while ($time < $seconds);
 }
