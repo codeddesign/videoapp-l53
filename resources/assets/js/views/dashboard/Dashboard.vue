@@ -19,10 +19,10 @@
           <stats title="impressions" :value="impressions"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="revenue" color="#1aa74f" :isCurrency="true"></stats>
+          <stats title="revenue" :value="revenue" color="#1aa74f"></stats>
         </li>
         <li>
-          <stats title="ecpm" :value="ecpm" color="#1aa74f" :isCurrency="true"></stats>
+          <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
         </li>
       </ul>
       <!-- BOTTOM ANALYTICS -->
@@ -31,13 +31,13 @@
           <stats title="fill" :value="fills"></stats>
         </li>
         <li>
-          <stats title="fill-rate" :value="fillRate" :isPercentage="true"></stats>
+          <stats title="fill-rate" :value="fillRate"></stats>
         </li>
         <li>
-          <stats title="error-rate" :value="errorRate" color="#009dd7" :isPercentage="true"></stats>
+          <stats title="error-rate" :value="errorRate" color="#009dd7"></stats>
         </li>
         <li>
-          <stats title="use-rate" :value="useRate" color="#009dd7" :isPercentage="true"></stats>
+          <stats title="use-rate" :value="useRate" color="#009dd7"></stats>
         </li>
       </ul>
 
@@ -57,12 +57,6 @@
         </div>
       </div>
 
-      <!--<ul class="totalstats-row">
-        <li>
-          
-        </li>
-      </ul>-->
-
       <!-- CAMPAIGN SELECTION AREA -->
       <div class="dashboard-dailystatstitle">DAILY STATS</div>
       <ul class="dashboard-dailystatstitles">
@@ -77,7 +71,9 @@
           <div class="dashboard-statslist1">{{ date }}</div>
           <div class="dashboard-statslist2">{{ stat.requests }}</div>
           <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.requests) }}%</div>
-          <div class="dashboard-statslist2">{{ calculateEcpm(stat.impressions, stat.revenue) }}</div>
+          <div class="dashboard-statslist2">
+            {{ calculateEcpm(stat.impressions, calculateRevenue(stat.impressions, false)) }}
+          </div>
           <div class="dashboard-statslist2">{{ calculateRevenue(stat.impressions) }}</div>
         </li>
       </ul>
@@ -114,7 +110,6 @@
         requests: 0,
         impressions: 0,
 
-        ecpm: 0,
         fills: 0,
         fillErrors: 0,
 
@@ -131,12 +126,14 @@
     },
 
     computed: {
-      revenue: function() {
+      revenue() {
         return this.calculateRevenue(this.impressions)
       },
 
       ecpm() {
-        return this.calculateEcpm(this.revenue, this.impressions)
+        // we calculate the revenue again to get the raw
+        // value instead of the formatted currency
+        return this.calculateEcpm(this.impressions, this.calculateRevenue(this.impressions, false))
       },
 
       fillRate() {

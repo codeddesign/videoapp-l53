@@ -1,8 +1,14 @@
 import accounting from 'accounting'
 
 export default {
-  calculateRevenue(impressions) {
-    return accounting.formatMoney((4 * impressions) / 1000)
+  calculateRevenue(impressions, format = true) {
+    let revenue = (4 * impressions) / 1000
+
+    if (format) {
+      return accounting.formatMoney(revenue)
+    } else {
+      return revenue
+    }
   },
 
   calculateFillRate(impressions, requests) {

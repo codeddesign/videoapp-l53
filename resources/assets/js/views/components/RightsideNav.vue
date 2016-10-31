@@ -1,7 +1,7 @@
 <template>
   <div class="rightside-nav">
     <div class="rightside-navlefttitle">
-      {{ this.$route.name }}
+      {{ title }}
     </div>
     <!-- ACCOUNT DETAILS -->
     <div id="accountdetails" class="rightside-navdropdown">ACCOUNT DETAILS <span></span></div>
@@ -28,8 +28,14 @@
 </template>
 
 <script>
+  import titles from '../../services/titles'
   export default {
-    name: 'Rightside-Nav'
+    name: 'Rightside-Nav',
+    computed: {
+      title() {
+        return titles.title(this.$route)
+      }
+    }
   }
 
   import $ from 'jquery'
