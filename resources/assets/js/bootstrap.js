@@ -10,7 +10,7 @@ let jwt = auth.authenticate()
 // Bootstrap the web socket if
 // a connection is available
 import socket from './services/socket'
-socket.bootstrap('http://192.168.10.10:6001', jwt)
+socket.bootstrap('//' + window.socketIoIp + ':6001', jwt)
 
 // Setup Vue.js and it's dependencies
 import Vue from 'vue'
