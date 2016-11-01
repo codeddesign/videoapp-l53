@@ -9,8 +9,9 @@ class StatsTransformer
 {
     protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors'];
 
-    public function transformRealtime($stats) {
-        if($stats === null) {
+    public function transformRealtime($stats)
+    {
+        if ($stats === null) {
             $stats = [];
 
             foreach (self::$allStats as $stat) {

@@ -37,6 +37,5 @@ Route::group(['prefix' => '/public/api', 'namespace' => 'Client'], function () {
     Route::get('/plugin', 'PluginController@CampaignAdd');
 });
 
-
 // Vue app.
 Route::get('/app/{vue?}', ['as' => 'app', 'uses' => 'PagesController@index'])->where('vue', '[\/\w\.-]*');

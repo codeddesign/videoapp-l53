@@ -206,15 +206,15 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
  * Source: https://gist.github.com/Nickology/f700e319cbafab5eaedc
  * @param arrays (all parameters must be arrays)
  * @author Nick Jouannem <nick@nickology.com>
- * @access public
  * @return void
  */
-function array_merge_recursive_numeric($arrays) {
+function array_merge_recursive_numeric($arrays)
+{
     // If there's only one array, it's already merged
 
     // Remove any items in $arrays that are NOT arrays
-    foreach($arrays as $key => $array) {
-        if (!is_array($array)) {
+    foreach ($arrays as $key => $array) {
+        if (! is_array($array)) {
             unset($arrays[$key]);
         }
     }
@@ -223,22 +223,19 @@ function array_merge_recursive_numeric($arrays) {
     // We will merge all other arrays with this one.
     $final = array_shift($arrays);
 
-    foreach($arrays as $b) {
-
-        foreach($final as $key => $value) {
+    foreach ($arrays as $b) {
+        foreach ($final as $key => $value) {
 
             // If $key does not exist in $b, then it is unique and can be safely merged
-            if (!isset($b[$key])) {
-
+            if (! isset($b[$key])) {
                 $final[$key] = $value;
-
             } else {
 
                 // If $key is present in $b, then we need to merge and sum numeric values in both
-                if ( is_numeric($value) && is_numeric($b[$key]) ) {
+                if (is_numeric($value) && is_numeric($b[$key])) {
                     // If both values for these keys are numeric, we sum them
                     $final[$key] = $value + $b[$key];
-                } else if (is_array($value) && is_array($b[$key])) {
+                } elseif (is_array($value) && is_array($b[$key])) {
                     // If both values are arrays, we recursively call ourself
                     $final[$key] = array_merge_recursive_numeric($value, $b[$key]);
                 } else {
@@ -246,20 +243,16 @@ function array_merge_recursive_numeric($arrays) {
                     // In this scenario, we will $b's value for $key is used
                     $final[$key] = $b[$key];
                 }
-
             }
-
         }
 
         // Finally, we need to merge any keys that exist only in $b
-        foreach($b as $key => $value) {
-            if (!isset($final[$key])) {
+        foreach ($b as $key => $value) {
+            if (! isset($final[$key])) {
                 $final[$key] = $value;
             }
         }
-
     }
 
     return $final;
-
 }

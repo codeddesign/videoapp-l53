@@ -16,7 +16,7 @@ class InitialUserSeeder extends Seeder
             'password' => 'admin',
             'verified_email' => true,
             'verified_phone' => true,
-            'admin' => true
+            'admin' => true,
         ]);
     }
 }

@@ -77,7 +77,7 @@ export default new Router({
     }, {
       path: '/logout',
       name: 'logout',
-      component: Logout,
+      component: Logout
     },
 
     // Redirects

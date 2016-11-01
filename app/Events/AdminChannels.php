@@ -8,7 +8,8 @@ use Predis\Client;
 
 trait AdminChannels
 {
-    public function getAdminChannels() {
+    public function getAdminChannels()
+    {
         /** @var Client $redis */
         $redis = app('redis');
 
@@ -19,8 +20,8 @@ trait AdminChannels
 
         $channels = [];
 
-        foreach($adminIds as $id) {
-            $channels[] = new PrivateChannel('user.' . $id);
+        foreach ($adminIds as $id) {
+            $channels[] = new PrivateChannel('user.'.$id);
         }
 
         return $channels;

@@ -194,7 +194,7 @@
         this.fetchChart()
       },
       currentUser() {
-        if(this.currentUser.isAdmin) {
+        if (this.currentUser.isAdmin) {
           this.$router.push({ name: 'admin.dashboard' })
         }
 

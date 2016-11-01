@@ -155,8 +155,6 @@
       }
     },
     mounted() {
-
-
       this.$nextTick(function() {
         this.fetchStats()
         this.fetchChart()
@@ -199,32 +197,32 @@
       },
 
       currentUser() {
-        if(! this.currentUser.isAdmin) {
+        if (!this.currentUser.isAdmin) {
           this.$router.push({ name: 'dashboard' })
         }
 
         let echo = socket.connection()
         if (echo) {
-            echo.private('user.' + this.currentUser.id)
-                .listen('CampaignEventReceived', (e) => {
-                  switch (events.type(e)) {
-                    case 'request':
-                      this.requests++
-                      break
-                    case 'impression':
-                      this.impressions++
-                      break
-                    case 'fill':
-                      this.fills++
-                      break
-                    case 'tag-error':
-                      this.fillErrors++
-                      break
-                    case 'ad-error':
-                      this.adErrors++
-                      break
-                  }
-                })
+          echo.private('user.' + this.currentUser.id)
+              .listen('CampaignEventReceived', (e) => {
+                switch (events.type(e)) {
+                  case 'request':
+                    this.requests++
+                    break
+                  case 'impression':
+                    this.impressions++
+                    break
+                  case 'fill':
+                    this.fills++
+                    break
+                  case 'tag-error':
+                    this.fillErrors++
+                    break
+                  case 'ad-error':
+                    this.adErrors++
+                    break
+                }
+              })
           let that = this
           setInterval(function() {
             that.currentTime = moment()

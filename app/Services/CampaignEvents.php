@@ -29,17 +29,19 @@ class CampaignEvents
         $this->saveOnRedis($data);
     }
 
-    public function fetchAllCampaigns() {
+    public function fetchAllCampaigns()
+    {
         $redis = $this->getRedis();
 
-        $ids = collect($redis->keys('campaign:*'))->map(function($key) {
+        $ids = collect($redis->keys('campaign:*'))->map(function ($key) {
             return explode(':', $key)[1];
         })->toArray();
 
         return $this->fetchMultipleCampaigns($ids);
     }
 
-    public function fetchMultipleCampaigns(array $ids) {
+    public function fetchMultipleCampaigns(array $ids)
+    {
         $data = [];
 
         foreach ($ids as $id) {
@@ -132,7 +134,7 @@ class CampaignEvents
                 ]);
             }
 
-            var_dump('Deleting Redis key: '. $key);
+            var_dump('Deleting Redis key: '.$key);
             $redis->del([$key]);
         }
 
