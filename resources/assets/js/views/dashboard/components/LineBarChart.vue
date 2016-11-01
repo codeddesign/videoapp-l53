@@ -103,6 +103,12 @@
       }
     },
 
+    computed: {
+      currentUser() {
+        return this.$store.state.users.currentUser
+      }
+    },
+
     props: {
       timeRange: {
         default: ''
@@ -170,9 +176,24 @@
         this.chartData = {}
         this.seriesMap = {}
 
+        let that = this
+        setInterval(function() {
+          that.updateChart()
+        }, 1000)
+      })
+    },
+
+    watch: {
+      revenue(newRevenue) {
+        this.chart.series[0].setData(this.revenue)
+      },
+      impressions(newImpressions) {
+        this.chart.series[1].setData(this.impressions)
+      },
+      currentUser() {
         let echo = socket.connection()
         if (echo) {
-          echo.private('user.1')
+          echo.private('user.' + this.currentUser.id)
               .listen('CampaignEventReceived', (e) => {
                 if (!events.isImpression(e) || this.timeRange !== 'realtime') {
                   return
@@ -189,20 +210,6 @@
         } else {
           console.error('Couldn\'t connect to web socket')
         }
-
-        let that = this
-        setInterval(function() {
-          that.updateChart()
-        }, 1000)
-      })
-    },
-
-    watch: {
-      revenue(newRevenue) {
-        this.chart.series[0].setData(this.revenue)
-      },
-      impressions(newImpressions) {
-        this.chart.series[1].setData(this.impressions)
       }
     }
   }

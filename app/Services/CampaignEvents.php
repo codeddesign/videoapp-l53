@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Events\CampaignEventReceived;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Redis\Database as Redis;
 use Illuminate\Support\Collection;
@@ -19,6 +18,10 @@ class CampaignEvents
 
     public function handle($data)
     {
+        if (! $data['campaign']) {
+            return;
+        }
+
         $userId = $this->getUserForCampaign($data['campaign']);
 
         $this->broadcastEvent($data, $userId);
@@ -26,32 +29,24 @@ class CampaignEvents
         $this->saveOnRedis($data);
     }
 
-    public function fetchUserCampaignsFromRedis(User $user)
-    {
-        $campaignIds = $user->campaigns->pluck('id');
+    public function fetchAllCampaigns() {
+        $redis = $this->getRedis();
 
-        $requests    = 0;
-        $impressions = 0;
-        $fills       = 0;
-        $fillErrors  = 0;
-        $adErrors    = 0;
+        $ids = collect($redis->keys('campaign:*'))->map(function($key) {
+            return explode(':', $key)[1];
+        })->toArray();
 
-        foreach ($campaignIds as $id) {
-            $data = $this->fetchStatusForCampaign($id);
-            $requests += $data['requests'];
-            $impressions += $data['impressions'];
-            $fills += $data['fills'];
-            $fillErrors += $data['fillErrors'];
-            $adErrors += $data['adErrors'];
+        return $this->fetchMultipleCampaigns($ids);
+    }
+
+    public function fetchMultipleCampaigns(array $ids) {
+        $data = [];
+
+        foreach ($ids as $id) {
+            $data[] = $this->fetchStatusForCampaign($id);
         }
 
-        return [
-            'requests'    => $requests,
-            'impressions' => $impressions,
-            'fills'       => $fills,
-            'fillErrors'  => $fillErrors,
-            'adErrors'    => $adErrors,
-        ];
+        return array_merge_recursive_numeric($data);
     }
 
     public function fetchStatusForCampaign($campaignId)
@@ -98,8 +93,8 @@ class CampaignEvents
             }
         }
 
-        $requests += $data['source:app:status:200'];
-        $impressions += $data['source:ad:status:0'];
+        $requests += array_get($data, 'source:app:status:200', 0);
+        $impressions += array_get($data, 'source:ad:status:0', 0);
 
         return [
             'requests'    => $requests,
@@ -124,21 +119,24 @@ class CampaignEvents
 
             $data = $this->fetchStatusForCampaign($id);
 
-            foreach ($data as $key => $value) {
-                if ($key === 'tags') {
+            foreach ($data as $name => $value) {
+                if ($name === 'tags') {
                     //TODO: save tag events separately
                     continue;
                 }
 
                 $events->push([
                     'campaign_id' => $id,
-                    'name'        => $key,
+                    'name'        => $name,
                     'count'       => $value,
                 ]);
             }
 
-            CampaignEvent::saveMany($events);
+            var_dump('Deleting Redis key: '. $key);
+            $redis->del([$key]);
         }
+
+        CampaignEvent::saveMany($events);
 
         return $events;
     }

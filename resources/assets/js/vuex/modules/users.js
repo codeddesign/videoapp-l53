@@ -5,13 +5,13 @@ import {
 import User from '../../models/user'
 
 const state = {
-  currentUser: null
+  currentUser: {}
 }
 
 const actions = {
   loadUser({ commit }) {
     User.load().then((user) => {
-      commit(LOAD_USER, user)
+      commit(LOAD_USER, user.data)
     })
   }
 }

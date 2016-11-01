@@ -39,4 +39,4 @@ Route::group(['prefix' => '/public/api', 'namespace' => 'Client'], function () {
 
 
 // Vue app.
-Route::get('/app/{vue?}', ['name' => 'app', 'uses' => 'PagesController@index'])->where('vue', '[\/\w\.-]*');
+Route::get('/app/{vue?}', ['as' => 'app', 'uses' => 'PagesController@index'])->where('vue', '[\/\w\.-]*');

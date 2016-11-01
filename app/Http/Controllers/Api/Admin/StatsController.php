@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
 use App\Services\CampaignEvents;
 use App\Stats\StatsTransformer;
@@ -29,15 +30,15 @@ class StatsController extends ApiController
 
     protected function fetchRealTimeData()
     {
-        $ids = $this->user->campaigns->pluck('id')->toArray();
-        $stats = (new CampaignEvents)->fetchMultipleCampaigns($ids);
+        $stats = (new CampaignEvents)->fetchAllCampaigns();
 
         return (new StatsTransformer)->transformRealtime($stats);
     }
 
     protected function fetchHistoricalData($timespan)
     {
-        $statsByCampaign = CampaignEvent::userStats($timespan)
+        $statsByCampaign = CampaignEvent::query()
+            ->timeRange($timespan)
             ->get()
             ->groupBy(function ($item) {
                 return $item->created_at->format('F d, Y');

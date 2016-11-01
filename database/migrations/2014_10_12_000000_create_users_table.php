@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->boolean('verified_email')->default(false);
             $table->boolean('verified_phone')->default(false);
 
+            $table->boolean('admin')->default(false);
+
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

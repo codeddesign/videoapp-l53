@@ -9,9 +9,9 @@
         <a href="#">
           <li>EDIT ACCOUNT</li>
         </a>
-        <a href="/logout">
-          <li>LOGOUT</li>
-        </a>
+        <router-link :to="{ name: 'logout'}" tag="li">
+          LOGOUT
+        </router-link>
     </ul>
 
     <!-- AVAILABLE WEBSITES -->
@@ -28,12 +28,11 @@
 </template>
 
 <script>
-  import titles from '../../services/titles'
   export default {
     name: 'Rightside-Nav',
     computed: {
       title() {
-        return titles.title(this.$route)
+        return this.$route.meta.title
       }
     }
   }

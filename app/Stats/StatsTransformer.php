@@ -9,6 +9,18 @@ class StatsTransformer
 {
     protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors'];
 
+    public function transformRealtime($stats) {
+        if($stats === null) {
+            $stats = [];
+
+            foreach (self::$allStats as $stat) {
+                $stats[$stat] = 0;
+            }
+        }
+
+        return $stats;
+    }
+
     public function transform(Collection $stats, $range)
     {
         $dateRange = call_user_func(DateRange::class.'::'.$range);
@@ -19,24 +31,17 @@ class StatsTransformer
         foreach ($dateRange->arrayByStep() as $day) {
             $key = $day->format('F d, Y');
 
-            // If this day has any data
+            // Initialize all stats with 0
+            foreach (self::$allStats as $stat) {
+                $data[$key][$stat] = 0;
+            }
+
+            // Sum the data
             if ($stats->has($key)) {
                 $events = $stats->get($key);
 
                 foreach ($events as $event) {
-                    $data[$key][$event->name] = $event->count;
-                }
-
-                // If some stat was not available in the stats, it should be 0
-                if ($missingKeys = array_diff(self::$allStats, array_keys($data[$key]))) {
-                    foreach ($missingKeys as $missingKey) {
-                        $data[$key][$missingKey] = 0;
-                    }
-                }
-            } else {
-                // If this day has no data, all keys should be 0
-                foreach (self::$allStats as $stat) {
-                    $data[$key][$stat] = 0;
+                    $data[$key][$event->name] += $event->count;
                 }
             }
         }

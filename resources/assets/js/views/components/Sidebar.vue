@@ -5,45 +5,60 @@
         <div class="videologo"></div>
       </div>
 
-      <ul class="navlist">
-        <router-link :to="{ name: 'dashboard'}" tag="li">
-          <a>
-            <i class="fa fa-dashboard"></i> <span>DASHBOARD</span>
-          </a>
-        </router-link>
+      <!-- User Menu -->
+      <div v-if="! currentUser.isAdmin">
 
-        <router-link :to="{ name: 'analytics'}" tag="li">
-          <a>
-            <i class="fa fa-bar-chart"></i> <span>ANALYTICS</span>
-          </a>
-        </router-link>
+        <ul class="navlist">
+          <router-link :to="{ name: 'dashboard'}" tag="li">
+            <a>
+              <i class="fa fa-dashboard"></i> <span>DASHBOARD</span>
+            </a>
+          </router-link>
 
-        <router-link :to="{ name: 'campaigns.listing'}" tag="li">
-          <a>
-            <i class="fa fa-newspaper-o"></i> <span>CAMPAIGNS</span>
-          </a>
-        </router-link>
+          <router-link :to="{ name: 'analytics'}" tag="li">
+            <a>
+              <i class="fa fa-bar-chart"></i> <span>ANALYTICS</span>
+            </a>
+          </router-link>
 
-        <router-link :to="{ name: 'campaigns.create'}" tag="li">
-          <a>
-            <i class="fa fa-plus"></i> <span>CREATE CAMPAIGN</span>
-          </a>
-        </router-link>
+          <router-link :to="{ name: 'campaigns.listing'}" tag="li">
+            <a>
+              <i class="fa fa-newspaper-o"></i> <span>CAMPAIGNS</span>
+            </a>
+          </router-link>
 
-        <router-link :to="{ name: 'webconfig'}" tag="li">
-          <a>
-            <i class="fa fa-globe"></i> <span>WEBSITES</span>
-          </a>
-        </router-link>
+          <router-link :to="{ name: 'campaigns.create'}" tag="li">
+            <a>
+              <i class="fa fa-plus"></i> <span>CREATE CAMPAIGN</span>
+            </a>
+          </router-link>
 
-        <router-link :to="{ name: 'support'}" tag="li">
-          <a>
-            <i class="fa fa-flag"></i> <span>SUPPORT</span>
-          </a>
-        </router-link>
-      </ul>
+          <router-link :to="{ name: 'webconfig'}" tag="li">
+            <a>
+              <i class="fa fa-globe"></i> <span>WEBSITES</span>
+            </a>
+          </router-link>
 
-      <div class="sidebar-wpbutton">WORDPRESS PLUGIN</div>
+          <router-link :to="{ name: 'support'}" tag="li">
+            <a>
+              <i class="fa fa-flag"></i> <span>SUPPORT</span>
+            </a>
+          </router-link>
+        </ul>
+        <div class="sidebar-wpbutton">WORDPRESS PLUGIN</div>
+      </div>
+
+      <!-- Admin Menu -->
+      <div v-else>
+        <ul class="navlist">
+          <router-link :to="{ name: 'admin.dashboard'}" tag="li">
+            <a>
+              <i class="fa fa-dashboard"></i> <span>DASHBOARD</span>
+            </a>
+          </router-link>
+        </ul>
+      </div>
+
     </div>
   </div>
 </template>
@@ -74,6 +89,12 @@
 
 <script>
   export default {
-    name: 'Sidebar'
+    name: 'Sidebar',
+
+    computed: {
+      currentUser() {
+        return this.$store.state.users.currentUser
+      }
+    }
   }
 </script>

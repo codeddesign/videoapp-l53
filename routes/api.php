@@ -18,3 +18,11 @@ Route::get('charts/impressions', 'ChartsController@impressions');
 Route::get('charts/all', 'ChartsController@stats');
 
 Route::get('user', 'UsersController@user');
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
+    Route::get('/', function () {
+        return 'You\'re an admin.';
+    });
+
+    Route::get('stats/all', 'StatsController@all');
+});

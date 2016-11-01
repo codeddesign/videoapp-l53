@@ -7,16 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel='shortcut icon' href='/home/images/logo.png'>
     <title>Video App</title>
-
-    {{--include typekit font--}}
-    <script src="https://use.typekit.net/lwk5wec.js"></script>
-    <script>
-        try {
-            Typekit.load({
-                async: true
-            });
-        } catch (e) {}
-    </script>
 </head>
 
 <body>
@@ -29,6 +19,16 @@
     @else
         <script src="{{ asset('js/app.js') }}"></script>
     @endif
+
+    {{--include typekit font--}}
+    <script src="https://use.typekit.net/lwk5wec.js"></script>
+    <script>
+        try {
+            Typekit.load({
+                async: true
+            });
+        } catch (e) {}
+    </script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class CampaignEventReceived implements ShouldBroadcast
 {
-    use SerializesModels;
+    use SerializesModels, AdminChannels;
 
     public $campaignId;
     public $source;
@@ -44,8 +44,9 @@ class CampaignEventReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        \Log::info('Broadcasting to user.'.$this->userId);
-
-        return new PrivateChannel('user.'.$this->userId);
+        return array_merge(
+            [new PrivateChannel('user.'.$this->userId)],
+            $this->getAdminChannels()
+        );
     }
 }

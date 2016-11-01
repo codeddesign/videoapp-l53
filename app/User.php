@@ -21,6 +21,7 @@ use App\Services\Youtube;
  * @property string     $email_verification_token
  * @property bool       $verified_phone
  * @property bool       $verified_email
+ * @property bool       $admin
  * @property \DateTime  $created_at
  * @property \DateTime  $updated_at
  *

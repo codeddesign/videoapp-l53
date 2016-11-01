@@ -71,8 +71,6 @@ class LoginController extends Controller
      */
     public function logout(Request $request) : RedirectResponse
     {
-        $this->auth->logout();
-
         $request->session()->flush();
 
         $request->session()->regenerate();

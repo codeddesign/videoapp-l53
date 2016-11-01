@@ -132,7 +132,7 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
     return ! empty($range) ? $range : null;
 }
 
-function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10)
+function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10, $seconds = 10)
 {
     $campaignEvents = new \App\Services\CampaignEvents();
     $time = 0;
@@ -144,7 +144,7 @@ function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10
             $rate = mt_rand(0, 100);
 
             $campaignEvents->handle([
-                'campaign' => 1,
+                'campaign' => $campaign,
                 'source' => 'app',
                 'status' => 200,
                 'tag' => null,
@@ -153,14 +153,14 @@ function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10
             if ($rate > $failPercent) {
                 //success
                 $campaignEvents->handle([
-                    'campaign' => 1,
+                    'campaign' => $campaign,
                     'source' => 'tag',
                     'status' => 0,
                     'tag' => 'http://example-tag.com',
                 ]);
 
                 $campaignEvents->handle([
-                    'campaign' => 1,
+                    'campaign' => $campaign,
                     'source' => 'ad',
                     'status' => 0,
                     'tag' => null,
@@ -169,7 +169,7 @@ function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10
                 if (mt_rand(0, 100) > 50) {
                     //tag error
                     $campaignEvents->handle([
-                        'campaign' => 1,
+                        'campaign' => $campaign,
                         'source' => 'tag',
                         'status' => 400,
                         'tag' => 'http://example-tag.com',
@@ -177,14 +177,14 @@ function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10
                 } else {
                     //ad error
                     $campaignEvents->handle([
-                        'campaign' => 1,
+                        'campaign' => $campaign,
                         'source' => 'tag',
                         'status' => 0,
                         'tag' => 'http://example-tag.com',
                     ]);
 
                     $campaignEvents->handle([
-                        'campaign' => 1,
+                        'campaign' => $campaign,
                         'source' => 'ad',
                         'status' => 300,
                         'tag' => null,
@@ -197,4 +197,69 @@ function sendTestEvents($min = 100, $max = 200, $failPercent = 10, $seconds = 10
 
         sleep(1);
     } while ($time < $seconds);
+}
+
+/**
+ * array_merge_recursive_numeric function.  Merges N arrays into one array AND sums the values of identical keys.
+ * WARNING: If keys have values of different types, the latter values replace the previous ones.
+ *
+ * Source: https://gist.github.com/Nickology/f700e319cbafab5eaedc
+ * @param arrays (all parameters must be arrays)
+ * @author Nick Jouannem <nick@nickology.com>
+ * @access public
+ * @return void
+ */
+function array_merge_recursive_numeric($arrays) {
+    // If there's only one array, it's already merged
+
+    // Remove any items in $arrays that are NOT arrays
+    foreach($arrays as $key => $array) {
+        if (!is_array($array)) {
+            unset($arrays[$key]);
+        }
+    }
+
+    // We start by setting the first array as our final array.
+    // We will merge all other arrays with this one.
+    $final = array_shift($arrays);
+
+    foreach($arrays as $b) {
+
+        foreach($final as $key => $value) {
+
+            // If $key does not exist in $b, then it is unique and can be safely merged
+            if (!isset($b[$key])) {
+
+                $final[$key] = $value;
+
+            } else {
+
+                // If $key is present in $b, then we need to merge and sum numeric values in both
+                if ( is_numeric($value) && is_numeric($b[$key]) ) {
+                    // If both values for these keys are numeric, we sum them
+                    $final[$key] = $value + $b[$key];
+                } else if (is_array($value) && is_array($b[$key])) {
+                    // If both values are arrays, we recursively call ourself
+                    $final[$key] = array_merge_recursive_numeric($value, $b[$key]);
+                } else {
+                    // If both keys exist but differ in type, then we cannot merge them.
+                    // In this scenario, we will $b's value for $key is used
+                    $final[$key] = $b[$key];
+                }
+
+            }
+
+        }
+
+        // Finally, we need to merge any keys that exist only in $b
+        foreach($b as $key => $value) {
+            if (!isset($final[$key])) {
+                $final[$key] = $value;
+            }
+        }
+
+    }
+
+    return $final;
+
 }

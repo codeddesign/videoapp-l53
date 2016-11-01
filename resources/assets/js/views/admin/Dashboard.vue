@@ -1,96 +1,98 @@
 <template>
-  <div>
-    <div class="page-index">
-      <div class="display-dashboardtoparea">
-        <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
-          <span>( LIVE STATS UP TO {{ currentTime.format('hh:mm a') }} )</span>
-        </div>
-        <router-link :to="{ name: 'campaigns.create'}">
-          <div class="currentcamp-createbutton">CREATE NEW CAMPAIGN</div>
-        </router-link>
-      </div>
-      <!-- ANALYTICS STATS -->
-      <!-- TOP ANALYTICS -->
-      <ul class="campaignstats-row">
-        <li>
-            <stats title="request" :value="requests"></stats>
-        </li>
-        <li>
-          <stats title="impressions" :value="impressions"></stats>
-        </li>
-        <li>
-          <stats title="revenue" :value="revenue" color="#1aa74f"></stats>
-        </li>
-        <li>
-          <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
-        </li>
-      </ul>
-      <!-- BOTTOM ANALYTICS -->
-      <ul class="campaignstats-row">
-        <li>
-          <stats title="fill" :value="fills"></stats>
-        </li>
-        <li>
-          <stats title="fill-rate" :value="fillRate"></stats>
-        </li>
-        <li>
-          <stats title="error-rate" :value="errorRate" color="#009dd7"></stats>
-        </li>
-        <li>
-          <stats title="use-rate" :value="useRate" color="#009dd7"></stats>
-        </li>
-      </ul>
-
-      <div class="dashstats-graphwrapper">
-        <div class="display-dashboardtimewrap">
-          <div class="dashstats-choosetime">Graph Time Range: </div>
-          <select v-model="timeRange" class="dashboard-graphtimeselect">
-            <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
-              {{ timeRange.text }}
-            </option>
-          </select>
-          <div class="dashstats-graphselectarrow"></div>
-        </div>
-        <!-- START GRAPH AREA -->
-        <div class="dashstats-graph">
-          <line-bar-chart :timeRange="timeRange" :revenue="revenueChartData" :impressions="impressionsChartData"></line-bar-chart>
-        </div>
-      </div>
-
-      <!-- CAMPAIGN SELECTION AREA -->
-      <div class="dashboard-dailystatstitle">DAILY STATS</div>
-      <ul class="dashboard-dailystatstitles">
-        <li>DATE</li>
-        <li>REQUESTS</li>
-        <li>FILL-RATE</li>
-        <li>eCPM</li>
-        <li>REVENUE</li>
-      </ul>
-      <ul class="dashboard-dailystatslist">
-        <li v-for="(stat, date) in dailyStats">
-          <div class="dashboard-statslist1">{{ date }}</div>
-          <div class="dashboard-statslist2">{{ stat.requests }}</div>
-          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.requests) }}%</div>
-          <div class="dashboard-statslist2">
-            {{ calculateEcpm(stat.impressions, calculateRevenue(stat.impressions, false)) }}
+  <div v-if="currentUser.isAdmin">
+    <div>
+      <div class="page-index">
+        <div class="display-dashboardtoparea">
+          <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
+            <span>( LIVE STATS UP TO {{ currentTime.format('hh:mm a') }} )</span>
           </div>
-          <div class="dashboard-statslist2">{{ calculateRevenue(stat.impressions) }}</div>
-        </li>
-      </ul>
+          <router-link :to="{ name: 'campaigns.create'}">
+            <div class="currentcamp-createbutton">CREATE NEW CAMPAIGN</div>
+          </router-link>
+        </div>
+        <!-- ANALYTICS STATS -->
+        <!-- TOP ANALYTICS -->
+        <ul class="campaignstats-row">
+          <li>
+              <stats title="request" :value="requests"></stats>
+          </li>
+          <li>
+            <stats title="impressions" :value="impressions"></stats>
+          </li>
+          <li>
+            <stats title="revenue" :value="revenue" color="#1aa74f"></stats>
+          </li>
+          <li>
+            <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
+          </li>
+        </ul>
+        <!-- BOTTOM ANALYTICS -->
+        <ul class="campaignstats-row">
+          <li>
+            <stats title="fill" :value="fills"></stats>
+          </li>
+          <li>
+            <stats title="fill-rate" :value="fillRate"></stats>
+          </li>
+          <li>
+            <stats title="error-rate" :value="errorRate" color="#009dd7"></stats>
+          </li>
+          <li>
+            <stats title="use-rate" :value="useRate" color="#009dd7"></stats>
+          </li>
+        </ul>
+
+        <div class="dashstats-graphwrapper">
+          <div class="display-dashboardtimewrap">
+            <div class="dashstats-choosetime">Graph Time Range: </div>
+            <select v-model="timeRange" class="dashboard-graphtimeselect">
+              <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
+                {{ timeRange.text }}
+              </option>
+            </select>
+            <div class="dashstats-graphselectarrow"></div>
+          </div>
+          <!-- START GRAPH AREA -->
+          <div class="dashstats-graph">
+            <line-bar-chart :timeRange="timeRange" :revenue="revenueChartData" :impressions="impressionsChartData"></line-bar-chart>
+          </div>
+        </div>
+
+        <!-- CAMPAIGN SELECTION AREA -->
+        <div class="dashboard-dailystatstitle">DAILY STATS</div>
+        <ul class="dashboard-dailystatstitles">
+          <li>DATE</li>
+          <li>REQUESTS</li>
+          <li>FILL-RATE</li>
+          <li>eCPM</li>
+          <li>REVENUE</li>
+        </ul>
+        <ul class="dashboard-dailystatslist">
+          <li v-for="(stat, date) in dailyStats">
+            <div class="dashboard-statslist1">{{ date }}</div>
+            <div class="dashboard-statslist2">{{ stat.requests }}</div>
+            <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.requests) }}%</div>
+            <div class="dashboard-statslist2">
+              {{ calculateEcpm(stat.impressions, calculateRevenue(stat.impressions, false)) }}
+            </div>
+            <div class="dashboard-statslist2">{{ calculateRevenue(stat.impressions) }}</div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Stats from './components/Stats.vue'
-  import LineBarChart from './components/LineBarChart.vue'
+  import Stats from '../dashboard/components/Stats.vue'
+  import LineBarChart from '../dashboard/components/LineBarChart.vue'
   import socket from '../../services/socket'
   import events from '../../services/events'
   import stats from '../../services/stats'
   import moment from 'moment'
 
   export default {
-    name: 'Dashboard',
+    name: 'AdminDashboard',
 
     data() {
       return {
@@ -153,6 +155,8 @@
       }
     },
     mounted() {
+
+
       this.$nextTick(function() {
         this.fetchStats()
         this.fetchChart()
@@ -161,7 +165,7 @@
 
     methods: {
       fetchStats() {
-        this.$http.get('/api/stats/all?time=realtime').then(
+        this.$http.get('/api/admin/stats/all?time=realtime').then(
           (response) => {
             this.requests = parseInt(response.data.requests)
             this.impressions = parseInt(response.data.impressions)
@@ -171,7 +175,7 @@
           }, () => console.log('Error fetching the stats count.')
         )
 
-        this.$http.get('/api/stats/all?time=tenDays').then(
+        this.$http.get('/api/admin/stats/all?time=tenDays').then(
           (response) => {
             this.dailyStats = response.data
           }, () => console.log('Error fetching the stats count.')
@@ -193,33 +197,34 @@
       timeRange(newTimeRange) {
         this.fetchChart()
       },
+
       currentUser() {
-        if(this.currentUser.isAdmin) {
-          this.$router.push({ name: 'admin.dashboard' })
+        if(! this.currentUser.isAdmin) {
+          this.$router.push({ name: 'dashboard' })
         }
 
         let echo = socket.connection()
         if (echo) {
-          echo.private('user.' + this.currentUser.id)
-              .listen('CampaignEventReceived', (e) => {
-                switch (events.type(e)) {
-                  case 'request':
-                    this.requests++
-                    break
-                  case 'impression':
-                    this.impressions++
-                    break
-                  case 'fill':
-                    this.fills++
-                    break
-                  case 'tag-error':
-                    this.fillErrors++
-                    break
-                  case 'ad-error':
-                    this.adErrors++
-                    break
-                }
-              })
+            echo.private('user.' + this.currentUser.id)
+                .listen('CampaignEventReceived', (e) => {
+                  switch (events.type(e)) {
+                    case 'request':
+                      this.requests++
+                      break
+                    case 'impression':
+                      this.impressions++
+                      break
+                    case 'fill':
+                      this.fills++
+                      break
+                    case 'tag-error':
+                      this.fillErrors++
+                      break
+                    case 'ad-error':
+                      this.adErrors++
+                      break
+                  }
+                })
           let that = this
           setInterval(function() {
             that.currentTime = moment()
