@@ -3,7 +3,7 @@
   "plugins": ["html"],
   "settings": {
     "html/report-bad-indent": 2,
-    "html/indent": "+2",
+    "html/indent": "+2"
   },
   "rules": {
     "space-before-function-paren": "off",

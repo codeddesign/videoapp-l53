@@ -13,7 +13,7 @@
     <div id="app">
         <app></app>
     </div>
-    <script src="http://192.168.10.10:6001/socket.io/socket.io.js"></script>
+    <script src="//{{ env('SOCKET_IO_IP') }}:6001/socket.io/socket.io.js"></script>
     @if($webpack)
         <script src="http://192.168.10.10:8080/js/app.js"></script>
     @else
