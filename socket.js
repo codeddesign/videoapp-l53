@@ -6,7 +6,7 @@ var options = {
   authHost: process.env.APP_URL,
   authPath: '/broadcasting/auth',
   host: '0.0.0.0',
-  port: 6001,
+  port: 3000,
   devMode: process.env.APP_DEBUG,
   database: "redis",
 };
