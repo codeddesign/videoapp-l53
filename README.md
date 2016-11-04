@@ -30,6 +30,8 @@ CREATE DATABASE "videoapp53-testing";
 
 9. Start the Webpack Dev Server using `yarn run dev`.
 
+10. Start the Socket.io server using `node socket.js`. Alternatively use [pm2](https://github.com/Unitech/pm2) to run it as a service. 
+
 
 # Contributing
 
