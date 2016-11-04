@@ -174,12 +174,12 @@ class CampaignEvents
 
         $value = "source:{$data['source']}:status:{$data['status']}";
 
-        if ($data['tag']) {
+        if (key_exists('tag', $data)) {
             $tagBase64 = base64_encode($data['tag']);
             $value .= ":tag:{$tagBase64}";
         }
 
-        if ($data['referrer']) {
+        if (key_exists('referrer', $data)) {
             $websiteId = WordpressSite::idByLink($data['referrer']);
 
             if($websiteId) {
