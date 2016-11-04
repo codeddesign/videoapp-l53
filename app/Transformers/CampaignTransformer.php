@@ -14,7 +14,7 @@ class CampaignTransformer extends TransformerAbstract
      */
     protected $availableIncludes = [
         'user',
-        '30dayrevenue'
+        '30dayrevenue',
     ];
 
     public function transform(Campaign $campaign)

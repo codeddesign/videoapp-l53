@@ -7,7 +7,7 @@
       <!-- DROP FORM -->
       <form action="#" method="post">
           <div class="campaignview-searchicon"></div>
-      
+
           <div class="campaignview-dropbutton" v-on:click="toggleAdvancedSearch">advanced search</div>
           <div class="campaignview-droppedarea" v-show="advancedSearch">
               <div class="campview-dropwhere">
@@ -48,8 +48,8 @@
           </div>
       </form>
       <!-- END DROP FORM -->
-    </div>  
-    
+    </div>
+
     <!-- CAMPAIGN SELECTION AREA -->
     <ul class="dashboard-dailystatstitles dashboard-accountstitles" style="border-top:0;">
         <li>ACCOUNT ID</li>
@@ -82,8 +82,8 @@
 </template>
 
 <script>
-  import moment from 'moment'
   import Fuse from 'fuse.js'
+  import _ from 'lodash'
 
   export default {
     name: 'Accounts',
@@ -114,18 +114,18 @@
       },
 
       valueFilterSet() {
-        return this.filters[0]['option'] !== '' && this.filters[0]['value'] !== '';
+        return this.filters[0]['option'] !== '' && this.filters[0]['value'] !== ''
       },
 
       rangeFilterSet() {
-        return this.filters[1]['option'] !== '' && 
-        (this.filters[1]['min'] !== '' || this.filters[1]['max'] !== '');
+        return this.filters[1]['option'] !== '' &&
+        (this.filters[1]['min'] !== '' || this.filters[1]['max'] !== '')
       },
 
       filteredAccounts() {
         let filteredAccounts = this.accounts
 
-        if(this.valueFilterSet) {
+        if (this.valueFilterSet) {
           filteredAccounts = filteredAccounts.filter((account) => {
             return _.includes(
               account[this.filters[0]['option']].toLowerCase(),
@@ -134,7 +134,7 @@
           })
         }
 
-        if(this.rangeFilterSet) {
+        if (this.rangeFilterSet) {
           filteredAccounts = filteredAccounts.filter((account) => {
             let min = this.filters[1]['min'] !== '' ? this.filters[1]['min'] : 0
             let max = this.filters[1]['max'] !== '' ? this.filters[1]['max'] : false
@@ -142,11 +142,11 @@
 
             // Set the right field for comparison
             let value = null
-            if (option == 'campaigns') {
+            if (option === 'campaigns') {
               value = account[option].data.length
             }
-            
-            if(max) {
+
+            if (max) {
               return value >= min && value <= max
             } else {
               return value >= min
@@ -170,7 +170,7 @@
           filteredAccounts = fuse.search(this.search)
         }
 
-        return filteredAccounts        
+        return filteredAccounts
       }
     },
 
@@ -188,7 +188,7 @@
     },
 
     mounted() {
-      this.$store.dispatch('loadAccounts');
+      this.$store.dispatch('loadAccounts')
     }
   }
 </script>

@@ -34,10 +34,10 @@ export default {
 
   calculateErrorRate(impressions, adErrors) {
     // adErrors / impressions
-    let errorRate =  0
-    
+    let errorRate = 0
+
     if (impressions !== 0) {
-      errorRate = ((adErrors / impressions) * 100) 
+      errorRate = ((adErrors / impressions) * 100)
     }
 
     return errorRate.toFixed(2) + '%'

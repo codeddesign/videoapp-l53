@@ -8,7 +8,8 @@ use App\Transformers\WordpressSiteTransformer;
 
 class WebsitesController extends ApiController
 {
-    public function pending() {
+    public function pending()
+    {
         $pendingWebsites = WordpressSite::where('approved', false)->get();
 
         return $this->collectionResponse($pendingWebsites, new WordpressSiteTransformer);

@@ -7,7 +7,7 @@
 <script>
   export default {
     name: 'AdminArea',
-    
+
     computed: {
       currentUser() {
         return this.$store.state.users.currentUser

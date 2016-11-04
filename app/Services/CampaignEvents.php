@@ -6,6 +6,7 @@ use App\Events\CampaignEventReceived;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Models\WordpressSite;
+use App\Stats\RedisStats;
 use Carbon\Carbon;
 use Illuminate\Redis\Database as Redis;
 use Illuminate\Support\Collection;
@@ -54,59 +55,9 @@ class CampaignEvents
 
     public function fetchStatusForCampaign($campaignId)
     {
-        $redis = $this->getRedis();
+        $redisStats = new RedisStats;
 
-        $data = $redis->hgetall("campaign:{$campaignId}");
-        if (count($data) === 0) {
-            return;
-        }
-
-        $requests    = 0;
-        $impressions = 0;
-        $fills       = 0;
-        $fillErrors  = 0;
-        $adErrors    = 0;
-        $tags        = [];
-
-        foreach ($data as $key => $value) {
-            // any tag status
-            if (preg_match('/source:tag:status:([0-9]*)(?::tag:(.*))?/', $key, $matches)) {
-                $status = $matches[1];
-                if ($status == 0) {
-                    $fills += $value;
-                } else {
-                    $fillErrors += $value;
-                }
-
-                //tag is set
-                if (count($matches) > 2) {
-                    $tag = base64_decode($matches[2]);
-                    if (! array_key_exists($tag, $tags)) {
-                        $tags[$tag] = [];
-                    }
-                    $tags[$tag][$status] = $value;
-                }
-                continue;
-            }
-
-            // any ad status >= 100 is an ad error
-            if (preg_match('/(source:ad:status:[0-9]{3}.*)/', $key)) {
-                $adErrors += $value;
-                continue;
-            }
-        }
-
-        $requests += array_get($data, 'source:app:status:200', 0);
-        $impressions += array_get($data, 'source:ad:status:0', 0);
-
-        return [
-            'requests'    => $requests,
-            'impressions' => $impressions,
-            'fills'       => $fills,
-            'adErrors'    => $adErrors,
-            'fillErrors'  => $fillErrors,
-            'tags'        => $tags,
-        ];
+        return $redisStats->fetchStatusForCampaign($campaignId);
     }
 
     public function persistRedisData()
@@ -174,15 +125,15 @@ class CampaignEvents
 
         $value = "source:{$data['source']}:status:{$data['status']}";
 
-        if (key_exists('tag', $data)) {
+        if (array_get($data, 'tag') !== null) {
             $tagBase64 = base64_encode($data['tag']);
             $value .= ":tag:{$tagBase64}";
         }
 
-        if (key_exists('referrer', $data)) {
+        if (array_get($data, 'referrer') !== null) {
             $websiteId = WordpressSite::idByLink($data['referrer']);
 
-            if($websiteId) {
+            if ($websiteId) {
                 $value .= ":website:{$websiteId}";
             }
         }

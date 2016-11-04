@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Events\AccountCreated;
-use App\Http\Requests\UserDetailsRequest;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;

@@ -5,6 +5,7 @@ import {
 } from '../mutation-types'
 
 import Admin from '../../models/admin'
+import _ from 'lodash'
 
 const state = {
   pendingWebsites: [],
@@ -40,7 +41,7 @@ const mutations = {
   },
   [ACTIVATE_USER](state, user) {
     _.remove(state.accounts, (account) => {
-      return account.id == user.id
+      return account.id === user.id
     })
     state.accounts.push(user)
   }

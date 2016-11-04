@@ -135,6 +135,8 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
 function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10, $seconds = 10)
 {
     $campaignEvents = new \App\Services\CampaignEvents();
+    $referrer = 'http://videoplayer.dev/test/dev';
+    $tag = 2;
     $time = 0;
 
     do {

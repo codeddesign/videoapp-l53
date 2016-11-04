@@ -166,7 +166,6 @@
 
 <script>
   export default {
-    name: 'TagManagement',
-
+    name: 'TagManagement'
   }
 </script>

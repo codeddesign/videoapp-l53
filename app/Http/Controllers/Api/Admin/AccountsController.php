@@ -9,17 +9,20 @@ use Illuminate\Http\Request;
 
 class AccountsController extends ApiController
 {
-    public function index() {
+    public function index()
+    {
         $accounts = User::with('campaigns')->get();
 
         return $this->collectionResponse($accounts, new UserTransformer);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $account = User::where('id', $id)->with('wordpressSites');
     }
 
-    public function activate($id, Request $request) {
+    public function activate($id, Request $request)
+    {
         $user = User::findOrFail($id);
 
         $user->active = $request->get('status');

@@ -104,15 +104,15 @@ class WordpressSite extends Model
 
         $domain = self::linkDomain($link);
 
-        if(! $domain) {
-            return null;
+        if (! $domain) {
+            return;
         }
 
         if (is_null($websiteId = $redis->hget('domain_website', $domain))) {
             $website = self::whereDomain($domain)->first();
 
             if (! $website) {
-                return null;
+                return;
             }
 
             $redis->hset('domain_website', $domain, $website->id);
