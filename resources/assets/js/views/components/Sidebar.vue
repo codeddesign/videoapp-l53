@@ -9,40 +9,40 @@
       <div v-if="! currentUser.isAdmin">
 
         <ul class="navlist">
-          <router-link :to="{ name: 'dashboard'}" tag="li">
-            <a>
-              <i class="fa fa-dashboard"></i> <span>DASHBOARD</span>
-            </a>
+          <router-link :to="{ name: 'dashboard'}">
+            <li>
+              <span>DASHBOARD</span>
+            </li>
           </router-link>
 
-          <router-link :to="{ name: 'analytics'}" tag="li">
-            <a>
-              <i class="fa fa-bar-chart"></i> <span>ANALYTICS</span>
-            </a>
+          <router-link :to="{ name: 'analytics'}">
+            <li>
+              <span>ANALYTICS</span>
+            </li>
           </router-link>
 
-          <router-link :to="{ name: 'campaigns.listing'}" tag="li">
-            <a>
-              <i class="fa fa-newspaper-o"></i> <span>CAMPAIGNS</span>
-            </a>
+          <router-link :to="{ name: 'campaigns.listing'}">
+            <li>
+              <span>CAMPAIGNS</span>
+            </li>
           </router-link>
 
-          <router-link :to="{ name: 'campaigns.create'}" tag="li">
-            <a>
-              <i class="fa fa-plus"></i> <span>CREATE CAMPAIGN</span>
-            </a>
+          <router-link :to="{ name: 'campaigns.create'}">
+            <li>
+              <span>CREATE CAMPAIGN</span>
+            </li>
           </router-link>
 
-          <router-link :to="{ name: 'webconfig'}" tag="li">
-            <a>
-              <i class="fa fa-globe"></i> <span>WEBSITES</span>
-            </a>
+          <router-link :to="{ name: 'webconfig'}">
+            <li>
+              <span>WEBSITES</span>
+            </li>
           </router-link>
 
-          <router-link :to="{ name: 'support'}" tag="li">
-            <a>
-              <i class="fa fa-flag"></i> <span>SUPPORT</span>
-            </a>
+          <router-link :to="{ name: 'support'}">
+            <li>
+              <span>SUPPORT</span>
+            </li>
           </router-link>
         </ul>
         <div class="sidebar-wpbutton">WORDPRESS PLUGIN</div>
@@ -51,10 +51,34 @@
       <!-- Admin Menu -->
       <div v-else>
         <ul class="navlist">
-          <router-link :to="{ name: 'admin.dashboard'}" tag="li">
-            <a>
-              <i class="fa fa-dashboard"></i> <span>DASHBOARD</span>
-            </a>
+          <router-link :to="{ name: 'admin.dashboard'}">
+            <li>
+              <span>DASHBOARD</span>
+            </li>
+          </router-link>
+
+          <router-link :to="{ name: 'admin.accounts'}">
+            <li>
+              <span>ACCOUNTS</span>
+            </li>
+          </router-link>
+
+          <router-link :to="{ name: 'admin.accounts'}">
+            <li>
+              <span>REPORTS</span>
+            </li>
+          </router-link>
+
+          <router-link :to="{ name: 'admin.tagmanagement'}">
+            <li>
+              <span>TAG MANAGEMENT</span>
+            </li>
+          </router-link>
+
+          <router-link :to="{ name: 'admin.accounts'}">
+            <li>
+              <span>SETTINGS</span>
+            </li>
           </router-link>
         </ul>
       </div>

@@ -25,9 +25,11 @@ class RegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'     => 'required|max:255',
-            'email'    => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'first_name' => 'required|max:255',
+            'last_name'  => 'required|max:255',
+            'company'    => 'required|max:255',
+            'email'      => 'required|email|max:255|unique:users',
+            'password'   => 'required|min:6|confirmed',
         ];
     }
 
@@ -39,7 +41,9 @@ class RegistrationRequest extends FormRequest
     public function register()
     {
         return User::create([
-            'name'                     => $this->get('name'),
+            'first_name'               => $this->get('first_name'),
+            'last_name'                => $this->get('last_name'),
+            'company'                  => $this->get('company'),
             'email'                    => $this->get('email'),
             'password'                 => $this->get('password'),
             'email_verification_token' => str_random(32),

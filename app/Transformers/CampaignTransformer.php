@@ -14,6 +14,7 @@ class CampaignTransformer extends TransformerAbstract
      */
     protected $availableIncludes = [
         'user',
+        '30dayrevenue'
     ];
 
     public function transform(Campaign $campaign)
@@ -36,6 +37,13 @@ class CampaignTransformer extends TransformerAbstract
      * @return \League\Fractal\Resource\Item
      */
     public function includeUser(Campaign $campaign)
+    {
+        $user = $campaign->user;
+
+        return $this->item($user, new UserTransformer);
+    }
+
+    public function include30DayRevenue(Campaign $campaign)
     {
         $user = $campaign->user;
 

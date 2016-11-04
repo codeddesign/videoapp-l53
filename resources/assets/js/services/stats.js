@@ -17,7 +17,7 @@ export default {
       return 0
     }
 
-    return ((impressions / requests) * 100).toFixed(2)
+    return ((impressions / requests) * 100).toFixed(2) + '%'
   },
 
   calculateEcpm(impressions, revenue) {
@@ -32,11 +32,13 @@ export default {
 
   calculateErrorRate(impressions, adErrors) {
     // adErrors / impressions
-    if (impressions === 0) {
-      return 0
+    let errorRate =  0
+    
+    if (impressions !== 0) {
+      errorRate = ((adErrors / impressions) * 100) 
     }
 
-    return ((adErrors / impressions) * 100).toFixed(2) + '%'
+    return errorRate.toFixed(2) + '%'
   },
 
   calculateUseRate(impressions, fills) {

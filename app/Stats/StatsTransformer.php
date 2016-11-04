@@ -17,6 +17,8 @@ class StatsTransformer
             foreach (self::$allStats as $stat) {
                 $stats[$stat] = 0;
             }
+        } else {
+            unset($stats['tags']);
         }
 
         return $stats;

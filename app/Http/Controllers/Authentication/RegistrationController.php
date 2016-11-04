@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Events\AccountCreated;
+use App\Http\Requests\UserDetailsRequest;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -39,8 +41,11 @@ class RegistrationController extends Controller
 
         // login the created user.
         Auth::login($user);
+        $token = Auth::guard('api')->fromUser($user);
+
+        $jwtCookie = cookie('jwt_token', $token, 0, null, null, false, false);
 
         // login the user and redirect to the phone verification page.
-        return redirect()->route('verify.phone');
+        return redirect()->route('verify.phone')->withCookie($jwtCookie);
     }
 }

@@ -49,15 +49,16 @@ class LoginController extends Controller
             ]);
         }
 
-        if (! $this->auth->user()->verified_phone) {
-            return redirect()->route('verify.phone');
-        }
-
-        if (! $this->auth->user()->verified_email) {
-            return redirect()->route('verify.email');
-        }
-
         $jwtCookie = cookie('jwt_token', $token, 0, null, null, false, false);
+
+        if (! $this->auth->user()->verified_phone) {
+            return redirect()->route('verify.phone')->withCookie($jwtCookie);
+        }
+
+        if (! $this->auth->user()->company) {
+            return redirect()->route('user.details')->withCookie($jwtCookie);
+        }
+
 
         return redirect()->route('app')->withCookie($jwtCookie);
     }

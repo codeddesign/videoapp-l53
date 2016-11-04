@@ -13,8 +13,8 @@ class WordpressSiteTransformer extends TransformerAbstract
             'id'         => (int) $site->id,
             'domain'     => $site->domain,
             'link'       => $site->link,
-            'created_at' => $site->created_at,
-            'updated_at' => $site->updated_at,
+            'approved'   => (bool) $site->approved,
+            'created_at' => $site->created_at->timestamp,
             'user_id'    => (int) $site->user->id,
         ];
     }

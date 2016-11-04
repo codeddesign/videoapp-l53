@@ -15,13 +15,16 @@ use App\Services\Youtube;
  * Database Columns
  *
  * @property int        $id
- * @property string     $name
+ * @property string     $first_name
+ * @property string     $last_name
+ * @property string     $company
  * @property string     $email
  * @property string     $password
  * @property string     $email_verification_token
  * @property bool       $verified_phone
  * @property bool       $verified_email
  * @property bool       $admin
+ * @property bool       $active
  * @property \DateTime  $created_at
  * @property \DateTime  $updated_at
  *
@@ -40,7 +43,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'company',
         'email',
         'password',
         'verified_email',

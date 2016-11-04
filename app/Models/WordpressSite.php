@@ -96,4 +96,28 @@ class WordpressSite extends Model
     {
         return self::whereDomain(self::linkDomain($link))->first();
     }
+
+    public static function idByLink($link)
+    {
+        /** @var Client $redis */
+        $redis = app('redis')->connection();
+
+        $domain = self::linkDomain($link);
+
+        if(! $domain) {
+            return null;
+        }
+
+        if (is_null($websiteId = $redis->hget('domain_website', $domain))) {
+            $website = self::whereDomain($domain)->first();
+
+            if (! $website) {
+                return null;
+            }
+
+            $redis->hset('domain_website', $domain, $website->id);
+        }
+
+        return (int) $websiteId;
+    }
 }

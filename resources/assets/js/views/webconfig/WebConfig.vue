@@ -18,7 +18,7 @@
         <div class="sitevalidation-howitworks"><span></span> HOW APPROVAL WORKS</div>
 
         <div class="sitevalidation-worksaddtl"><span>NEW WEBSITE APPROVAL MAY TAKE UP TO 24 HOURS.</span>
-          <br>YOU WILL RECIEVE AN EMAIL ONCE YOUR WEBSITE HAS BEEN APPROVED.
+          <br>YOU WILL RECEIVE AN EMAIL ONCE YOUR WEBSITE HAS BEEN APPROVED.
         </div>
       </div>
 
@@ -34,8 +34,8 @@
             <!-- end approval alert -->
             <button v-on:click="remove(site)" class="sitevalidation-removesite">REMOVE</button>
 
-            <div class="sitevalidation-siteapproved">APPROVED</div>
-            <div class="sitevalidation-sitepending">PENDING</div>
+            <div v-show="site.approved" class="sitevalidation-siteapproved">APPROVED</div>
+            <div v-show="! site.approved" class="sitevalidation-sitepending">PENDING</div>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
     mounted() {
       this.$nextTick(function() {
         this.$http.get('/api/wordpress').then((response) => {
-          this.$set('sites', response.data.data)
+          this.sites = response.data.data
         })
       })
     },

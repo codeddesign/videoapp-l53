@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Events\CampaignEventReceived;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
+use App\Models\WordpressSite;
 use Carbon\Carbon;
 use Illuminate\Redis\Database as Redis;
 use Illuminate\Support\Collection;
@@ -176,6 +177,14 @@ class CampaignEvents
         if ($data['tag']) {
             $tagBase64 = base64_encode($data['tag']);
             $value .= ":tag:{$tagBase64}";
+        }
+
+        if ($data['referrer']) {
+            $websiteId = WordpressSite::idByLink($data['referrer']);
+
+            if($websiteId) {
+                $value .= ":website:{$websiteId}";
+            }
         }
 
         $redis->hincrby("campaign:{$data['campaign']}", $value, 1);

@@ -14,7 +14,10 @@ import Support from './views/support/Support.vue'
 import Logout from './views/components/Logout.vue'
 
 // Admin Componentes
+import Admin from './views/admin/Admin.vue'
 import AdminDashboard from './views/admin/Dashboard.vue'
+import AdminAccounts from './views/admin/Accounts.vue'
+import TagManagement from './views/admin/TagManagement.vue'
 
 export default new Router({
   mode: 'history',
@@ -71,13 +74,37 @@ export default new Router({
         title: 'Support'
       }
     }, {
-      path: '/admin',
-      name: 'admin.dashboard',
-      component: AdminDashboard
-    }, {
       path: '/logout',
       name: 'logout',
       component: Logout
+    }, {
+      path: '/admin',
+      name: 'admin',
+      component: Admin,
+      children: [
+        {
+          path: 'dashboard',
+          name: 'admin.dashboard',
+          component: AdminDashboard,
+          meta: {
+            title: 'Admin Dashboard'
+          }
+        }, {
+          path: 'accounts',
+          name: 'admin.accounts',
+          component: AdminAccounts,
+          meta: {
+            title: 'Manage Accounts'
+          }
+        }, {
+          path: 'tagmanagement',
+          name: 'admin.tagmanagement',
+          component: TagManagement,
+          meta: {
+            title: 'Manage Tags'
+          }
+        }
+      ]
     },
 
     // Redirects

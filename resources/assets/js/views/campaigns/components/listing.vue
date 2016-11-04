@@ -18,8 +18,8 @@
           <form action="#" method="post">
             <div class="campaignview-searchicon"></div>
 
-            <div class="campaignview-dropbutton" @click="toggleAdvancedSearch">advanced search</div>
-            <div class="campaignview-droppedarea" v-if="advancedSearch">
+            <div class="campaignview-dropbutton" v-on:click="toggleAdvancedSearch">advanced search</div>
+            <div class="campaignview-droppedarea" v-show="advancedSearch">
               <div class="campview-dropwhere">
                 <div class="campview-droptitle">WHERE</div>
                 <select name="ad_campaign_select">

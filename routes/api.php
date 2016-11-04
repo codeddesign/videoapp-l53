@@ -25,4 +25,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     });
 
     Route::get('stats/all', 'StatsController@all');
+
+    Route::get('websites/pending', 'WebsitesController@pending');
+
+    Route::get('accounts', 'AccountsController@index');
+    Route::post('accounts/{id}/activate', 'AccountsController@activate');
 });

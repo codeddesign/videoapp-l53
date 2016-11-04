@@ -18,7 +18,15 @@
             @endif
 
             <div>
-                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <span class="loginemailicon"></span>
+            </div>
+            <div>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <span class="loginemailicon"></span>
+            </div>
+            <div>
+                <input type="text" name="company" placeholder="Company" required>
                 <span class="loginemailicon"></span>
             </div>
             <div>

@@ -12,6 +12,7 @@ export default {
         window.location.href = redirect
       } else {
         ls.set('jwt', jwt)
+        Cookies.remove('jwt_token')
       }
     }
 

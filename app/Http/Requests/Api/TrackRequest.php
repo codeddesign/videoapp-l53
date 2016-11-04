@@ -19,10 +19,11 @@ class TrackRequest extends FormRequest
     public function transform()
     {
         return [
+            'campaign' => (int) $this->get('campaign'),
             'source'   => $this->get('source'),
             'status'   => (int) $this->get('status'),
             'tag'      => $this->get('tag'),
-            'campaign' => (int) $this->get('campaign'),
+            'referrer' => $this->get('referrer'),
         ];
     }
 }

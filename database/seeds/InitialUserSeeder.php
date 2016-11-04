@@ -11,12 +11,14 @@ class InitialUserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'admin',
-            'email' => 'admin@admin.dev',
-            'password' => 'admin',
+            'first_name'     => 'admin',
+            'last_name'      => 'admin',
+            'company'        => 'a3m',
+            'email'          => 'admin@admin.dev',
+            'password'       => 'admin',
             'verified_email' => true,
             'verified_phone' => true,
-            'admin' => true,
+            'admin'          => true,
         ]);
     }
 }

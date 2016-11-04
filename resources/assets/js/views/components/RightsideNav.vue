@@ -14,7 +14,7 @@
         </router-link>
     </ul>
 
-    <!-- AVAILABLE WEBSITES -->
+    <!-- AVAILABLE WEBSITES
     <div id="availablesites" class="rightside-navdropdown">WEBSITES <span></span></div>
     <ul id="availablesites-navdroparea" class="rightside-navdroparea" style="display:none;">
       <a href="#">
@@ -23,7 +23,7 @@
       <a href="#">
         <li>ABC.COM</li>
       </a>
-    </ul>
+    </ul>-->
   </div>
 </template>
 
