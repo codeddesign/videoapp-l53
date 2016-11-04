@@ -13,11 +13,13 @@ export default {
 
   calculateFillRate(impressions, requests) {
     // Fill Rate: impressions/requests
-    if (requests === 0) {
-      return 0
+    let fillRate = 0
+
+    if (requests !== 0) {
+      fillRate = ((impressions / requests) * 100)
     }
 
-    return ((impressions / requests) * 100).toFixed(2) + '%'
+    return fillRate.toFixed(2) + '%'
   },
 
   calculateEcpm(impressions, revenue) {
@@ -42,10 +44,12 @@ export default {
   },
 
   calculateUseRate(impressions, fills) {
-    if (fills === 0) {
-      return 0
+    let useRate = 0
+
+    if (fills !== 0) {
+      useRate = ((impressions / fills) * 100)
     }
 
-    return ((impressions / fills) * 100).toFixed(2) + '%'
+    return useRate.toFixed(2) + '%'
   }
 }
