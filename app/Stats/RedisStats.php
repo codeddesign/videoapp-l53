@@ -18,10 +18,7 @@ class RedisStats
 
         $data = $redis->hgetall("campaign:{$campaignId}");
 
-        $stats = [];
-        foreach ($this->keys as $key) {
-            $stats[$key] = 0;
-        }
+        $stats = $this->addMissingKeys([], $this->keys);
 
         $stats['tags'] = [];
         $stats['websites'] = [];

@@ -86,7 +86,6 @@ class CampaignEvents
                 ]);
             }
 
-            var_dump('Deleting Redis key: '.$key);
             $redis->del([$key]);
         }
 
@@ -97,7 +96,7 @@ class CampaignEvents
 
     /**
      * Broadcasts a new event to a private channel
-     * that the dashboard is subscribed to
+     * that the user's dashboard is subscribed to
      *
      * @param $data
      * @param $userId
@@ -117,6 +116,8 @@ class CampaignEvents
     }
 
     /**
+     * Save a campaign event in Redis
+     *
      * @param $data
      */
     protected function saveOnRedis($data)
@@ -142,8 +143,8 @@ class CampaignEvents
     }
 
     /**
-     * Fetch the user_id for a given campaign by
-     * leveraging Redis as a cache using an hash map
+     * Fetch the user_id for a given campaign
+     * by using a Redis hash map as cache
      *
      * @param $campaignId
      *

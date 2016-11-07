@@ -78,12 +78,29 @@
           </div>
       </li>
     </ul>
+    <div class="understatlist-wrapper">
+      <div class="dashpagination-wrapper">
+        <div @click="pagination.previousPage()" class="dashpag-left"></div>
+        <div class="dashpag-numbers">{{ pagination.currentPage() }} of {{ pagination.totalPages() }}</div>
+        <div @click="pagination.nextPage()" class="dashpag-right"></div>
+      </div>
+      <div class="dashpagerows-wrapper">
+        <div class="dashpagerows-title">Display Rows:</div>
+        <select v-model="pagination['options']['perPage']">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+        <div class="dashpagerows-selectarrow"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Fuse from 'fuse.js'
   import _ from 'lodash'
+  import Pagination from '../../services/pagination'
 
   export default {
     name: 'Accounts',
@@ -103,6 +120,16 @@
             max: ''
           }
         ],
+
+        pagination: new Pagination({
+          page: 1,
+          perPage: 10
+        }),
+
+        paginationasd: {
+          'page': 1,
+          'perPage': 10
+        },
 
         advancedSearch: false
       }
@@ -170,7 +197,8 @@
           filteredAccounts = fuse.search(this.search)
         }
 
-        return filteredAccounts
+        this.pagination.data = filteredAccounts
+        return this.pagination.getData()
       }
     },
 
