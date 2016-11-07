@@ -19,6 +19,8 @@ class AccountsController extends ApiController
     public function show($id)
     {
         $account = User::where('id', $id)->with('wordpressSites');
+
+        return $account;
     }
 
     public function activate($id, Request $request)

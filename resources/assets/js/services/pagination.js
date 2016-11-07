@@ -2,14 +2,14 @@ import _ from 'lodash'
 
 export default class Pagination {
 
-  constructor(options, data) {
+  constructor() {
     this.page = 1
-    this.options = options
+    this.perPage = 10
     this.data = []
   }
 
   totalPages() {
-    let pages = Math.ceil(this.data.length / this.options.perPage)
+    let pages = Math.ceil(this.data.length / this.perPage)
 
     if (pages === 0) {
       pages = 1
@@ -22,8 +22,7 @@ export default class Pagination {
     // The current page should be reset if
     // it's larger than the total number
     // of pages (e.g.: perPage changes)
-
-    if(this.page > this.totalPages()) {
+    if (this.page > this.totalPages()) {
       this.page = this.totalPages()
     }
 
@@ -47,6 +46,6 @@ export default class Pagination {
   }
 
   getData() {
-    return _.chunk(this.data, this.options.perPage)[this.page - 1]
+    return _.chunk(this.data, this.perPage)[this.page - 1]
   }
 }

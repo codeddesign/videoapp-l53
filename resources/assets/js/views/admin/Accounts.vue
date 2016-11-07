@@ -86,7 +86,7 @@
       </div>
       <div class="dashpagerows-wrapper">
         <div class="dashpagerows-title">Display Rows:</div>
-        <select v-model="pagination['options']['perPage']">
+        <select v-model="pagination['perPage']">
           <option value="10">10</option>
           <option value="25">25</option>
           <option value="50">50</option>
@@ -121,15 +121,7 @@
           }
         ],
 
-        pagination: new Pagination({
-          page: 1,
-          perPage: 10
-        }),
-
-        paginationasd: {
-          'page': 1,
-          'perPage': 10
-        },
+        pagination: new Pagination(),
 
         advancedSearch: false
       }

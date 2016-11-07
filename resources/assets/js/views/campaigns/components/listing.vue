@@ -1,6 +1,6 @@
 <template>
   <div id="campaign-listing">
-    <app-modal 
+    <app-modal
         :visible="modal.visible"
         :title="modal.title"
         :body="modal.body"
@@ -92,39 +92,36 @@
                 </div>
               </li>
             </ul>
+            <div class="understatlist-wrapper">
+              <div class="dashpagination-wrapper">
+                <div @click="pagination.previousPage()" class="dashpag-left"></div>
+                <div class="dashpag-numbers">{{ pagination.currentPage() }} of {{ pagination.totalPages() }}</div>
+                <div @click="pagination.nextPage()" class="dashpag-right"></div>
+              </div>
+              <div class="dashpagerows-wrapper">
+                <div class="dashpagerows-title">Display Rows:</div>
+                <select v-model="pagination['perPage']">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <div class="dashpagerows-selectarrow"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <nav>
-        <ul class="pager">
-          <li v-show="pagination.previous" class="previous">
-            <a @click="paginate('previous')" class="page-scroll">Previous</a>
-          </li>
-          <li v-show="pagination.next" class="next">
-            <a @click="paginate('next')" class="page-scroll">Next</a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 </template>
 
-<style>
-  .pager li > a {
-    color: #23527c;
-  }
-  .pager li > a:hover, .pager li > a:focus {
-    text-decoration: none;
-    background-color: #eeeeee;
-    cursor: pointer;
-  }
-</style>
-
 <script>
   import AppModal from '../../components/AppModal.vue'
   import Fuse from 'fuse.js'
+  import Pagination from '../../../services/pagination'
 
   export default {
+    name: 'Listing',
     data() {
       return {
         search: '',
@@ -132,13 +129,7 @@
         response: {
           campaigns: []
         },
-        pagination: {
-          page: 1,
-          per_page: '',
-          total: '',
-          previous: false,
-          next: false
-        },
+        pagination: new Pagination(),
         startDate: null,
         endDate: null,
         modal: {
@@ -153,14 +144,8 @@
 
     mounted() {
       this.$nextTick(function() {
-        this.$http.get('/api/campaigns?page=' + this.pagination.page).then((response) => {
+        this.$http.get('/api/campaigns').then((response) => {
           this.response.campaigns = response.data.data
-          this.pagination.page = response.data.page
-          this.pagination.per_page = response.data.per_page
-          this.pagination.total = response.data.total
-          if (response.data.per_page < response.data.total) {
-            this.pagination.next = true
-          }
         })
       })
     },
@@ -168,28 +153,6 @@
     methods: {
       closeModal() {
         this.modal.visible = false
-      },
-      paginate(direction) {
-        if (direction === 'previous') {
-          --this.pagination.page
-        } else if (direction === 'next') {
-          ++this.pagination.page
-        }
-        this.$http.get('/api/campaigns?page=' + this.pagination.page).then((response) => {
-          this.$set(this.response, 'campaigns', response.data.data)
-          this.pagination.page = response.data.page
-          this.pagination.per_page = response.data.per_page
-          this.pagination.total = response.data.total
-          if (response.data.page < response.data.total / response.data.per_page) {
-            this.pagination.next = false
-          }
-          if (response.data.page === 1) {
-            this.pagination.previous = false
-          }
-          if (response.data.page > 1 && response.data.page < response.data.total) {
-            this.pagination.previous = true
-          }
-        })
       },
 
       toggleAdvancedSearch() {
@@ -225,20 +188,23 @@
 
     computed: {
       filteredCampaigns() {
-        if (this.search === '') {
-          return this.response.campaigns
+        let filteredCampaigns = this.response.campaigns
+
+        if (this.search !== '') {
+          var options = {
+            keys: [
+              'name',
+              'created_at_humans'
+            ]
+          }
+
+          var fuse = new Fuse(this.response.campaigns, options)
+
+          filteredCampaigns = fuse.search(this.search)
         }
 
-        var options = {
-          keys: [
-            'name',
-            'created_at_humans'
-          ]
-        }
-
-        var fuse = new Fuse(this.response.campaigns, options)
-
-        return fuse.search(this.search)
+        this.pagination.data = filteredCampaigns
+        return this.pagination.getData()
       }
     },
 
