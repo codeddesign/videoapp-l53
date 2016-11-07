@@ -55,6 +55,10 @@ class LoginController extends Controller
             return redirect()->route('verify.phone')->withCookie($jwtCookie);
         }
 
+        if (! $this->auth->user()->verified_email) {
+            return redirect()->route('verify.email')->withCookie($jwtCookie);
+        }
+
         return redirect()->route('app')->withCookie($jwtCookie);
     }
 

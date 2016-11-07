@@ -46,18 +46,13 @@ class LoginTest extends TestCase
      */
     public function it_logs_in_the_user()
     {
-        User::create([
-            'name' => 'test user',
-            'email' => 'test@gmail.com',
-            'password' => '123456',
-            'remember_token' => str_random(10),
-            'verified_phone' => 1,
-            'verified_email' => 1,
+        $user = factory(User::class)->create([
+            'password' => '123123'
         ]);
 
         $this->visit('/login')
-            ->type('test@gmail.com', 'email')
-            ->type('123456', 'password')
+            ->type($user->email, 'email')
+            ->type('123123', 'password')
             ->press('login')
             ->seePageIs('app');
     }
@@ -70,18 +65,14 @@ class LoginTest extends TestCase
      */
     public function it_shows_verify_phone_page()
     {
-        User::create([
-            'name' => 'test user',
-            'email' => 'test@gmail.com',
-            'password' => '123456',
-            'remember_token' => str_random(10),
-            'verified_phone' => 0,
-            'verified_email' => 1,
+        $user = factory(User::class)->create([
+            'password' => '123123',
+            'verified_phone' => false
         ]);
 
         $this->visit('/login')
-            ->type('test@gmail.com', 'email')
-            ->type('123456', 'password')
+            ->type($user->email, 'email')
+            ->type('123123', 'password')
             ->press('login')
             ->seePageIs('/verify/phone');
     }
@@ -94,18 +85,14 @@ class LoginTest extends TestCase
      */
     public function it_shows_verify_email_page()
     {
-        User::create([
-            'name' => 'test user',
-            'email' => 'test@gmail.com',
-            'password' => '123456',
-            'remember_token' => str_random(10),
-            'verified_phone' => 1,
-            'verified_email' => 0,
+        $user = factory(User::class)->create([
+            'password' => '123123',
+            'verified_email' => false
         ]);
 
         $this->visit('/login')
-            ->type('test@gmail.com', 'email')
-            ->type('123456', 'password')
+            ->type($user->email, 'email')
+            ->type('123123', 'password')
             ->press('login')
             ->seePageIs('/verify/email');
     }

@@ -18,7 +18,9 @@ class RegistrationTest extends TestCase
     {
         // register a user.
         $this->visit('/register')
-            ->type('some username', 'name')
+            ->type('fname', 'first_name')
+            ->type('lname', 'last_name')
+            ->type('a3m', 'company')
             ->type('test@mail.com', 'email')
             ->type('123123', 'password')
             ->type('123123', 'password_confirmation')
@@ -26,7 +28,8 @@ class RegistrationTest extends TestCase
 
         // check if the data has been persisted in the db.
         $this->seeInDatabase('users', [
-            'name'  => 'some username',
+            'first_name'  => 'fname',
+            'company'  => 'a3m',
             'email' => 'test@mail.com',
         ]);
 

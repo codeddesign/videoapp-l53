@@ -143,14 +143,7 @@ class CampaignTypesTest extends TestCase
      */
     public function it_deletes_a_campaign_type()
     {
-        $user = User::create([
-            'name'           => 'test user',
-            'email'          => 'test@gmail.com',
-            'password'       => '123456',
-            'remember_token' => str_random(10),
-            'verified_phone' => 1,
-            'verified_email' => 1,
-        ]);
+        $user = factory(User::class)->create();
 
         $this->actingAs($user, 'api');
 
