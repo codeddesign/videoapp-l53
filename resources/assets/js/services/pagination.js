@@ -19,6 +19,14 @@ export default class Pagination {
   }
 
   currentPage() {
+    // The current page should be reset if
+    // it's larger than the total number
+    // of pages (e.g.: perPage changes)
+
+    if(this.page > this.totalPages()) {
+      this.page = this.totalPages()
+    }
+
     return this.page
   }
 
