@@ -119,6 +119,7 @@
   import AppModal from '../../components/AppModal.vue'
   import Fuse from 'fuse.js'
   import Pagination from '../../../services/pagination'
+  import http from '../../../services/http'
 
   export default {
     name: 'Listing',
@@ -144,9 +145,10 @@
 
     mounted() {
       this.$nextTick(function() {
-        this.$http.get('/api/campaigns').then((response) => {
-          this.response.campaigns = response.data.data
-        })
+        http.get('/campaigns')
+            .then((response) => {
+              this.response.campaigns = response.data.data
+            })
       })
     },
 
@@ -166,13 +168,13 @@
           body: 'Are you sure you want to remove "' + campaign.name + '"?',
           confirm: true,
           callback: () => {
-            this.$http.delete('/api/campaigns/' + campaign.id)
-            .then(function() {
-              var index = this.response.campaigns.indexOf(campaign)
-              this.response.campaigns.splice(index, 1)
+            http.delete('/campaigns/' + campaign.id)
+                .then((response) => {
+                  var index = this.response.campaigns.indexOf(campaign)
+                  this.response.campaigns.splice(index, 1)
 
-              this.closeModal()
-            })
+                  this.closeModal()
+                })
           }
         }
       },

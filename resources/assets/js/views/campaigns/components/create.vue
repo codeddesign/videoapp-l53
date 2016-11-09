@@ -103,6 +103,7 @@
 </template>
 <script>
   import _ from 'lodash'
+  import http from '../../../services/http'
 
   export default {
     data() {
@@ -144,13 +145,15 @@
     },
     mounted() {
       this.$nextTick(function() {
-        this.$http.get('/api/campaign-types').then((response) => {
-          this.campaign_types = response.data.data
-        })
+        http.get('/campaign-types')
+            .then((response) => {
+              this.campaign_types = response.data.data
+            })
 
-        this.$http.get('/api/video-sizes').then((response) => {
-          this.sizes = response.data
-        })
+        http.get('/video-sizes')
+            .then((response) => {
+              this.sizes = response.data
+            })
 
         // hold a clean copy of campaign
         this.backup = JSON.parse(JSON.stringify(this.campaign))
@@ -225,41 +228,41 @@
         this.error = false
         this.addJSPreview()
 
-        this.$http.post('/api/campaigns/store/preview', this.campaign)
-        .then(function(response) {
-          this.loading = false
+        http.post('/campaigns/store/preview', this.campaign)
+            .then((response) => {
+              this.loading = false
 
-          this.addJSPreview(response.data.url)
-        })
-        .catch(function(response) {
-          this.error = response.data.message
+              this.addJSPreview(response.data.url)
+            })
+            .catch((response) => {
+              this.error = response.data.message
 
-          this.toStep(2)
-        })
+              this.toStep(2)
+            })
       },
       save: function() {
         this.nextStep(4)
 
         this.loading = true
 
-        this.$http.post('/api/campaigns', this.campaign)
-        .then(function(response) {
-          this.loading = false
+        http.post('/campaigns', this.campaign)
+            .then((response) => {
+              this.loading = false
 
-          this.resetCampaign()
+              this.resetCampaign()
 
-          this.tabs.forEach(function(tab, i) {
-            if (i > 0 && i < 4) {
-              tab.disabled = true
-            }
-          })
+              this.tabs.forEach(function(tab, i) {
+                if (i > 0 && i < 4) {
+                  tab.disabled = true
+                }
+              })
 
-          this.savedCampaign = response.data.campaign
+              this.savedCampaign = response.data.campaign
 
-          this.$nextTick(function() {
-            this.$refs.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>'
-          })
-        })
+              this.$nextTick(function() {
+                this.$refs.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>'
+              })
+            })
       },
 
       selectEmbedText: function() {

@@ -1,22 +1,22 @@
-import Vue from 'vue'
+import axios from '../services/http'
 
 export default {
   loadPendingWebsites() {
-    return Vue.http.get('/api/admin/websites/pending')
+    return axios.get('/admin/websites/pending')
     .then((response) => {
       return response.data
     })
   },
 
   loadAccounts() {
-    return Vue.http.get('/api/admin/accounts?include=campaigns')
+    return axios.get('/admin/accounts?include=campaigns')
     .then((response) => {
       return response.data
     })
   },
 
   activateAccount(id, status) {
-    return Vue.http.post('/api/admin/accounts/' + id + '/activate?include=campaigns', {
+    return axios.post('/admin/accounts/' + id + '/activate?include=campaigns', {
       status: status
     })
     .then((response) => {

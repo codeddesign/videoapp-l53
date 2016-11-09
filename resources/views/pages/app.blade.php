@@ -15,6 +15,7 @@
     </div>
     <script>
         window.socketIoIp = '{{ env('SOCKET_IO_IP') }}';
+        window.apiDomain = '{{ env('APP_URL') }}';
     </script>
     <script src="//{{ env('SOCKET_IO_IP') }}:3000/socket.io/socket.io.js"></script>
     @if($webpack)

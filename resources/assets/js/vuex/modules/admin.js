@@ -37,13 +37,14 @@ const mutations = {
     state.pendingWebsites = sites
   },
   [LOAD_ACCOUNTS](state, accounts) {
-    state.accounts = accounts
+    state.accounts = _.sortBy(accounts, ['id'])
   },
   [ACTIVATE_USER](state, user) {
     _.remove(state.accounts, (account) => {
       return account.id === user.id
     })
     state.accounts.push(user)
+    state.accounts = _.sortBy(state.accounts, ['id'])
   }
 }
 

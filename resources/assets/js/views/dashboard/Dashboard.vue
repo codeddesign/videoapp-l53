@@ -87,7 +87,9 @@
   import socket from '../../services/socket'
   import events from '../../services/events'
   import stats from '../../services/stats'
+  import http from '../../services/http'
   import moment from 'moment'
+  import _ from 'lodash'
 
   export default {
     name: 'Dashboard',
@@ -156,44 +158,51 @@
       this.$nextTick(function() {
         this.fetchStats()
         this.fetchChart()
+
+        // if the user is loaded, set up the socket
+        // if not, the socket will be set by the watcher
+        if (!_.isEmpty(this.currentUser)) {
+          this.setupSocket()
+        }
       })
     },
 
     methods: {
       fetchStats() {
-        this.$http.get('/api/stats/all?time=realtime').then(
-          (response) => {
-            this.requests = parseInt(response.data.requests)
-            this.impressions = parseInt(response.data.impressions)
-            this.fills = parseInt(response.data.fills)
-            this.adErrors = parseInt(response.data.adErrors)
-            this.fillErrors = parseInt(response.data.fillErrors)
-          }, () => console.log('Error fetching the stats count.')
-        )
+        http.get('/stats/all?time=realtime')
+            .then((response) => {
+              this.requests = parseInt(response.data.requests)
+              this.impressions = parseInt(response.data.impressions)
+              this.fills = parseInt(response.data.fills)
+              this.adErrors = parseInt(response.data.adErrors)
+              this.fillErrors = parseInt(response.data.fillErrors)
+            })
+            .catch((error) => {
+              console.error('Error fetching the stats count.')
+            })
 
-        this.$http.get('/api/stats/all?time=tenDays').then(
-          (response) => {
-            this.dailyStats = response.data
-          }, () => console.log('Error fetching the stats count.')
-        )
+        http.get('/stats/all?time=tenDays')
+            .then((response) => {
+              this.dailyStats = response.data
+            })
+            .catch((error) => {
+              console.error('Error fetching the stats count.')
+            })
       },
 
       fetchChart() {
-        this.$http.get('/api/charts/all?time=' + this.timeRange).then((response) => {
-          this.revenueChartData = response.data.revenue
-          this.impressionsChartData = response.data.impressions
-          this.requestsChartData = response.data.requests
-        }, () => console.log('Error fetching the stats.'))
+        http.get('/charts/all?time=' + this.timeRange)
+            .then((response) => {
+              this.revenueChartData = response.data.revenue
+              this.impressionsChartData = response.data.impressions
+              this.requestsChartData = response.data.requests
+            })
+            .catch((error) => {
+              console.error('Error fetching the stats.')
+            })
       },
 
-      ...stats
-    },
-
-    watch: {
-      timeRange(newTimeRange) {
-        this.fetchChart()
-      },
-      currentUser() {
+      setupSocket() {
         if (this.currentUser.isAdmin) {
           this.$router.push({ name: 'admin.dashboard' })
         }
@@ -227,6 +236,17 @@
         } else {
           console.error('Couldn\'t connect to web socket')
         }
+      },
+
+      ...stats
+    },
+
+    watch: {
+      timeRange(newTimeRange) {
+        this.fetchChart()
+      },
+      currentUser() {
+        this.setupSocket()
       }
     },
 

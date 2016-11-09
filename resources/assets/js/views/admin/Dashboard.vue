@@ -16,7 +16,7 @@
           <div class="dashboard-secondaryviewaccount">VIEW ACCOUNT</div>
         </div>
       </div>
-    
+
       <div class="display-dashboardtoparea">
         <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
           <span>( LIVE STATS UP TO {{ currentTime.format('hh:mm a') }} )</span>
@@ -70,9 +70,9 @@
             <option value="">Last Month</option>
           </select>
           <div class="admindash-supplierdroparrow"></div>
-          </div>  
+          </div>
         </div>
-      </div>    
+      </div>
       <ul class="admindashboard-dailystatstitles">
           <li>SUPPLIER</li>
           <li>PLATFORM</li>
@@ -112,7 +112,7 @@
         </div>
       </div>
 
-      
+
     </div>
   </div>
 </template>
@@ -123,7 +123,9 @@
   import socket from '../../services/socket'
   import events from '../../services/events'
   import stats from '../../services/stats'
+  import http from '../../services/http'
   import moment from 'moment'
+  import _ from 'lodash'
 
   export default {
     name: 'AdminDashboard',
@@ -197,45 +199,52 @@
         this.fetchStats()
         this.fetchChart()
         this.$store.dispatch('loadPendingWebsites')
+
+        // if the user is loaded, set up the socket
+        // if not, the socket will be set by the watcher
+        if (!_.isEmpty(this.currentUser)) {
+          this.setupSocket()
+        }
       })
     },
 
     methods: {
       fetchStats() {
-        this.$http.get('/api/admin/stats/all?time=realtime').then(
-          (response) => {
+        http.get('/admin/stats/all?time=realtime')
+          .then((response) => {
             this.requests = parseInt(response.data.requests)
             this.impressions = parseInt(response.data.impressions)
             this.fills = parseInt(response.data.fills)
             this.adErrors = parseInt(response.data.adErrors)
             this.fillErrors = parseInt(response.data.fillErrors)
-          }, () => console.log('Error fetching the stats count.')
-        )
+          })
+          .catch((error) => {
+            console.error('Error fetching the stats count.')
+          })
 
-        this.$http.get('/api/admin/stats/all?time=tenDays').then(
-          (response) => {
+        http.get('/admin/stats/all?time=tenDays')
+          .then((response) => {
             this.dailyStats = response.data
-          }, () => console.log('Error fetching the stats count.')
-        )
+          })
+          .catch((error) => {
+            console.error('Error fetching the stats count.')
+          })
       },
 
       fetchChart() {
-        this.$http.get('/api/charts/all?time=' + this.timeRange).then((response) => {
-          this.revenueChartData = response.data.revenue
-          this.impressionsChartData = response.data.impressions
-          this.requestsChartData = response.data.requests
-        }, () => console.log('Error fetching the stats.'))
+        http.get('/charts/all?time=' + this.timeRange)
+          .then((response) => {
+            this.revenueChartData = response.data.revenue
+            this.impressionsChartData = response.data.impressions
+            this.requestsChartData = response.data.requests
+          })
+          .catch((error) => {
+            console.error('Error fetching the charts data.')
+          })
       },
 
-      ...stats
-    },
-
-    watch: {
-      timeRange(newTimeRange) {
-        this.fetchChart()
-      },
-
-      currentUser() {
+      setupSocket() {
+        console.log('setting up socket')
         let echo = socket.connection()
         if (echo) {
           echo.private('user.' + this.currentUser.id)
@@ -265,6 +274,18 @@
         } else {
           console.error('Couldn\'t connect to web socket')
         }
+      },
+
+      ...stats
+    },
+
+    watch: {
+      timeRange(newTimeRange) {
+        this.fetchChart()
+      },
+
+      currentUser() {
+        this.setupSocket()
       }
     },
 

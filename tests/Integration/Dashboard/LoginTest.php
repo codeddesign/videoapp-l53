@@ -47,7 +47,7 @@ class LoginTest extends TestCase
     public function it_logs_in_the_user()
     {
         $user = factory(User::class)->create([
-            'password' => '123123'
+            'password' => '123123',
         ]);
 
         $this->visit('/login')
@@ -67,7 +67,7 @@ class LoginTest extends TestCase
     {
         $user = factory(User::class)->create([
             'password' => '123123',
-            'verified_phone' => false
+            'verified_phone' => false,
         ]);
 
         $this->visit('/login')
@@ -87,7 +87,7 @@ class LoginTest extends TestCase
     {
         $user = factory(User::class)->create([
             'password' => '123123',
-            'verified_email' => false
+            'verified_email' => false,
         ]);
 
         $this->visit('/login')

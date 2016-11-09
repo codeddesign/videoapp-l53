@@ -43,6 +43,8 @@
   </div>
 </template>
 <script>
+  import http from '../../services/http'
+
   export default {
     data() {
       return {
@@ -55,28 +57,31 @@
 
     mounted() {
       this.$nextTick(function() {
-        this.$http.get('/api/wordpress').then((response) => {
-          this.sites = response.data.data
-        })
+        http.get('/wordpress')
+            .then((response) => {
+              this.sites = response.data.data
+            })
       })
     },
 
     methods: {
       add() {
-        this.$http.post('/api/wordpress', { domain: this.site.link }).then((response) => {
-          if (response.data.error) {
-            console.log(response.data.error)
-            return false
-          }
-          this.sites.push(response.data.site)
-        })
+        http.post('/wordpress', { domain: this.site.link })
+            .then((response) => {
+              this.sites.push(response.data.site)
+            })
+            .catch((error) => {
+              console.error(error)
+              return false
+            })
       },
 
       remove(site) {
-        this.$http.delete('/api/wordpress/' + site.id).then(() => {
-          var index = this.sites.indexOf(site)
-          this.sites.splice(index, 1)
-        })
+        http.delete('/wordpress/' + site.id)
+            .then((response) => {
+              var index = this.sites.indexOf(site)
+              this.sites.splice(index, 1)
+            })
       }
     }
   }
