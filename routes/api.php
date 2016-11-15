@@ -30,4 +30,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 
     Route::get('accounts', 'AccountsController@index');
     Route::post('accounts/{id}/activate', 'AccountsController@activate');
+
+    Route::get('tags', 'TagsController@index');
+    Route::post('tags', 'TagsController@store');
+    Route::patch('tags/{id}', 'TagsController@update');
+    Route::post('tags/{id}/activate', 'TagsController@activate');
+
+    Route::get('countries', 'CountriesController@index');
+    Route::post('countries/subdivisions', 'CountriesController@show');
 });

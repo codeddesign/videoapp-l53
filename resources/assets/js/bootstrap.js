@@ -19,10 +19,13 @@ socket.bootstrap('//' + window.socketIoIp + ':3000', jwt)
 
 // Setup Vue.js and it's dependencies
 import Vue from 'vue'
+import VeeValidate from 'vee-validate'
 import router from './router'
 import store from './vuex/store'
 import { sync } from 'vuex-router-sync'
 import App from './views/layouts/default/default.vue'
+
+Vue.use(VeeValidate)
 
 sync(store, router)
 

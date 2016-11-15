@@ -127,8 +127,7 @@ class CampaignEvents
         $value = "source:{$data['source']}:status:{$data['status']}";
 
         if (array_get($data, 'tag') !== null) {
-            $tagBase64 = base64_encode($data['tag']);
-            $value .= ":tag:{$tagBase64}";
+            $value .= ":tag:{$data['tag']}";
         }
 
         if (array_get($data, 'referrer') !== null) {

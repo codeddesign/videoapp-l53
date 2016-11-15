@@ -17,7 +17,7 @@ import Logout from './views/components/Logout.vue'
 import Admin from './views/admin/Admin.vue'
 import AdminDashboard from './views/admin/Dashboard.vue'
 import AdminAccounts from './views/admin/Accounts.vue'
-import TagManagement from './views/admin/TagManagement.vue'
+import TagManagement from './views/admin/tags/TagManagement.vue'
 
 export default new Router({
   mode: 'history',
@@ -97,7 +97,7 @@ export default new Router({
             title: 'Manage Accounts'
           }
         }, {
-          path: 'tagmanagement',
+          path: 'tags',
           name: 'admin.tagmanagement',
           component: TagManagement,
           meta: {

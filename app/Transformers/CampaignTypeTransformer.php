@@ -3,9 +3,8 @@
 namespace App\Transformers;
 
 use App\Models\CampaignType;
-use League\Fractal\TransformerAbstract;
 
-class CampaignTypeTransformer extends TransformerAbstract
+class CampaignTypeTransformer extends Transformer
 {
     public function transform(CampaignType $type)
     {

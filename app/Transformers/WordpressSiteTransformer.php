@@ -3,9 +3,8 @@
 namespace App\Transformers;
 
 use App\Models\WordpressSite;
-use League\Fractal\TransformerAbstract;
 
-class WordpressSiteTransformer extends TransformerAbstract
+class WordpressSiteTransformer extends Transformer
 {
     public function transform(WordpressSite $site)
     {
@@ -13,7 +12,7 @@ class WordpressSiteTransformer extends TransformerAbstract
             'id'         => (int) $site->id,
             'domain'     => $site->domain,
             'link'       => $site->link,
-            'approved'   => (bool) $site->approved,
+            'approved'   => (boolean) $site->approved,
             'created_at' => $site->created_at->timestamp,
             'user_id'    => (int) $site->user->id,
         ];

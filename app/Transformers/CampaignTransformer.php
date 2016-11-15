@@ -3,9 +3,8 @@
 namespace App\Transformers;
 
 use App\Models\Campaign;
-use League\Fractal\TransformerAbstract;
 
-class CampaignTransformer extends TransformerAbstract
+class CampaignTransformer extends Transformer
 {
     /**
      * List of resources possible to include

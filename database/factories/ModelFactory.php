@@ -56,3 +56,25 @@ $factory->define(App\Models\WordpressSite::class, function (Faker\Generator $fak
         'domain' => "http://{$faker->unique()->domainName}",
     ];
 });
+
+$factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
+    return [
+        'url' => "http://{$faker->unique()->domainName}",
+        'advertiser' => $faker->company,
+        'description' => $faker->word,
+        'description' => $faker->word,
+        'platform_type' => collect(['all', 'desktop', 'mobile'])->random(),
+        'campaign_types' => collect(['preroll', 'onscroll', 'infinity', 'unknown'])->random(2),
+        'ad_type' => collect(['instream', 'outstream', 'all'])->random(),
+        'date_range' => false,
+        'daily_request_limit' => mt_rand(100, 500),
+        'delay_time' => mt_rand(1000, 5000),
+        'ecpm' => mt_rand(1000, 5000),
+        'guarantee_limit' => mt_rand(1000, 5000),
+        'guarantee_order' => mt_rand(1, 6),
+        'priority_count' => mt_rand(1, 6),
+        'timeout_limit' => mt_rand(1, 6),
+        'wrapper_limit' => mt_rand(1, 6),
+        'active' => mt_rand(0, 1),
+    ];
+});

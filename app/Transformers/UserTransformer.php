@@ -3,9 +3,8 @@
 namespace App\Transformers;
 
 use App\User;
-use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends TransformerAbstract
+class UserTransformer extends Transformer
 {
     protected $availableIncludes = [
         'campaigns',

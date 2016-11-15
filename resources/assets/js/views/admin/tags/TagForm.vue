@@ -1,0 +1,471 @@
+<template>
+<!-- CREATE & EDIT TAGS -->
+  <div class="tagmanage-tagcreationwrapper">
+    <div class="tagcreate-topbuttonswrap">
+      <div class="tagcreate-topcancel" @click="hideForm">CANCEL EDIT</div>
+      <div class="tagcreate-toptestpage">LOAD TEST PAGE</div>
+    </div>
+    <div class="tagcreate-formwrapper">
+      <div class="tagcreate-fullheadertitle">TAG CREATION / EDITING</div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-fullinnertitle">AD TAG</div>
+        <input name="url" ref="url" v-model="tag['url']" v-validate data-rules="required" placeholder="http://a3m.io/a/h/xxx?cb=[CACHE_BREAKER]&pageUrl=[REFERRER_URL]&eov=eov" class="tagcreate-longinput">
+        <ul class="tagcreate-macrolist">
+          <li v-for="macro in macros" @click="insertAtCaret(macro)">
+           {{ macro }}
+          </li>
+        </ul>
+        <div class="tagcreate-showmacros">SHOW ALL MACROS <span></span></div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-halfinnerwrap">
+          <div class="tagcreate-fullinnertitle">ADVERTISER NAME</div>
+          <input class="tagcreate-longinput" v-model="tag['advertiser']" placeholder="A3M" name="advertiser" v-validate data-rules="required">
+        </div>
+        <div class="tagcreate-halfinnerwrap">
+          <div class="tagcreate-fullinnertitle">TAG DESCRIPTION NAME</div>
+          <input class="tagcreate-longinput tagcreate-uppercase" v-model="tag['description']" placeholder="A3M_DESKTOP_OUTSTREAM" name="description" v-validate data-rules="required">
+        </div>
+      </div>
+
+    </div>
+    <div class="tagcreate-formwrapper">
+      <div class="tagcreate-fullheadertitle">LIVE CONFIGURATION</div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">PLATFORM TYPE</div>
+          <div class="tagcreate-selectwrap">
+            <select v-model="tag['platform_type']" class="tagcreate-dropdown">
+              <option value="all">All</option>
+              <option value="desktop">Desktop</option>
+              <option value="mobile">Mobile</option>
+            </select>
+            <div class="tagcreate-selectarrow"></div>
+          </div>
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">AD TYPE</div>
+          <div class="tagcreate-selectwrap">
+            <select v-model="tag['ad_type']" @change="changedType()" class="tagcreate-dropdown">
+              <option value="all">All</option>
+              <option value="instream">Instream</option>
+              <option value="outstream">Outstream</option>
+            </select>
+            <div class="tagcreate-selectarrow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">CAMPAIGN TYPE</div>
+          <div class="tagcreate-checkwrap">
+            <input v-bind:disabled="disabled.preroll" v-model="tag['campaign_types']['preroll']" type="checkbox" id="check-preroll" />
+            <label v-bind:class="{ disabled:disabled.preroll }" for="check-preroll">Pre-roll</label>
+          </div>
+          <div class="tagcreate-checkwrap">
+            <input v-bind:disabled="disabled.onscroll" v-model="tag['campaign_types']['onscroll']" type="checkbox" id="check-on-scroll" />
+            <label v-bind:class="{ disabled:disabled.onscroll }" for="check-on-scroll">On-scroll</label>
+          </div>
+          <div class="tagcreate-checkwrap">
+            <input v-bind:disabled="disabled.infinity" v-model="tag['campaign_types']['infinity']" type="checkbox" id="check-infinity" />
+            <label v-bind:class="{ disabled:disabled.infinity }" for="check-infinity">Infinity</label>
+          </div>
+          <div class="tagcreate-checkwrap">
+            <input v-model="tag['campaign_types']['unknown']" type="checkbox" id="check-unknown" />
+            <label for="check-unknown">Unknown</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-fullinnertitle">AD START-END</div>
+        <div class="tagcreate-checkwrap">
+          <div class="tagcreate-startendcheckwrap">
+            <input type="checkbox" v-model="tag['date_range']" id="check-adstart" />
+            <label for="check-adstart">ACTIVATE START-END TIME</label>
+          </div>
+        </div>
+        <div class="tagcreate-sepline"></div>
+        <div class="tagcreate-starttimewrap">
+          <div class="tagcreate-timetitle">START DATE</div>
+          <input id="starttime-datepicker" v-datepicker="{ key: 'start_date' }" class="tagtime-datepicker" placeholder="select date..">
+        </div>
+        <div class="tagcreate-endtimewrap">
+          <div class="tagcreate-timetitle">END DATE</div>
+          <input id="endtime-datepicker" v-datepicker="{ key: 'end_date' }" class="tagtime-datepicker" placeholder="select date..">
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">TIMEOUT LIMIT</div>
+          <input v-model="tag['timeout_limit']" class="tagcreate-longinput" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">WRAPPER LIMIT</div>
+          <input v-model="tag['wrapper_limit']" class="tagcreate-longinput" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">DELAY TIME</div>
+          <input v-model="tag['delay_time']" class="tagcreate-longinput" placeholder="0">
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">DAILY REQUEST LIMIT</div>
+          <input class="tagcreate-longinput" v-model="tag['daily_request_limit']" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">PRIORITY COUNT</div>
+          <input class="tagcreate-longinput" v-model="tag['priority_count']" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">eCPM</div>
+          <input class="tagcreate-longinput" v-model="tag['ecpm']" placeholder="0">
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">GUARANTEE LIMIT</div>
+          <input class="tagcreate-longinput" v-model="tag['guarantee_limit']" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">GUARANTEE ORDER</div>
+          <div class="tagcreate-selectwrap">
+            <select class="tagcreate-dropdown" v-model="tag['guarantee_order']">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <div class="tagcreate-selectarrow"></div>
+          </div>
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">CONFIRM?</div>
+          <div class="tagcreate-checkwrap">
+            <div class="tagcreate-startendcheckwrap" style="margin-top:8px;">
+              <input type="checkbox" id="check-dailyguarantee" />
+              <label for="check-dailyguarantee">CONFIRM GUARANTEE</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-fullinnertitle">AD TARGETING</div>
+        <div class="tagcreate-targetwrap">
+          <div class="tagcreate-targetleftsidebar">
+            <ul class="tagcreate-targetlist">
+              <li class="active">GEOGRAPHY</li>
+              <li>DEVICES</li>
+            </ul>
+          </div>
+          <div class="tagcreate-targetcenterarea">
+            <div class="tabmanage-headerbar"></div>
+            <div class="tagmanage-tabbed tagmanage-targeting">
+              <div>
+                <input name="tagmanage-targeting" id="tagmanage-tabbed10" type="radio" checked>
+                <section>
+                  <h1>
+                    <label for="tagmanage-tabbed10">SEARCH / BROWSER</label>
+                  </h1>
+                  <div>
+                    <div class="tabcreate-searchwrap">
+                      <input class="tagcreate-tabsearch" placeholder="SEARCH GEO LOCATION..">
+                      <div class="tagcreate-tabsearchsubmit">
+                        <div class="tagcreate-searchsubmiticon"></div>
+                      </div>
+                    </div>
+                    <ul class="tagcreate-geolist">
+                      <li v-for="country in countries">
+                        <div class="tagcreate-geotitle">{{ country.name }} <span>COUNTRY</span></div>
+                        <div class="tagcreate-geodropbutton">
+                          <div class="adtargetdrop"></div>
+                        </div>
+                        <div class="tagcreate-geoexclude">exclude</div>
+                        <div class="tagcreate-geoinclude" @click="include(country)">include</div>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+              <div>
+                <input name="tagmanage-targeting" id="tagmanage-tabbed11" type="radio">
+                <section>
+                  <h1>
+                    <label for="tagmanage-tabbed11">MANUAL ENTRY</label>
+                  </h1>
+                  <div><p>coming soon..</p></div>
+                </section>
+              </div>
+            </div>
+          </div><!-- end tabs area -->
+          <div class="tagcreate-targetrightsidebar">
+            <div class="tagcreate-criteriaheader">SELECTED CRITERIA</div>
+
+            <!-- GEOGRAPHY DROPDOWN -->
+            <div class="tagcreate-criteriatitle createcriteriatitle">GEOGRAPHY <span></span></div>
+            <ul class="tagcreate-criterialist creategeolistdrop">
+              <li v-for="criteria in tag.included">
+                <div class="tagcreate-criteriaradius"></div>
+                <div class="tagcreate-criteriainner"><span>Country:</span> {{ criteria.name }}</div>
+                <div class="tagcreate-criteriadelete" @click="deleteInclude(criteria)"></div>
+
+                <div class="tagcreate-criteriasetradiuswrap">
+                  <div class="tagcreate-criteriaradiustitle">Set Radius:</div>
+                  <input class="tagcreate-criteriaradiusinput" placeholder="0">
+                  <div class="tagcreate-criteriaradiusmilestitle">miles</div>
+                  <input>SAVE</input>
+                  <div class="tagcreate-criteriaradiuscancel">CANCEL</div>
+                </div>
+              </li>
+              <li>
+                <div class="tagcreate-criteriaradius"></div>
+                <div class="tagcreate-criteriainner"><span>City:</span> New York</div>
+                <div class="tagcreate-criteriadelete"></div>
+
+                <div class="tagcreate-criteriasetradiuswrap">
+                  <div class="tagcreate-criteriaradiustitle">Set Radius:</div>
+                  <input class="tagcreate-criteriaradiusinput" placeholder="0">
+                  <div class="tagcreate-criteriaradiusmilestitle">miles</div>
+                  <input>SAVE</input>
+                  <div class="tagcreate-criteriaradiuscancel">CANCEL</div>
+                </div>
+              </li>
+              <li>
+                <div class="tagcreate-criteriadelete"></div>
+                <div class="tagcreate-criteriaradius"></div>                                <div class="tagcreate-criteriainner"><span>Zip:</span> 90210</div>
+                <div class="tagcreate-criteriaradiustitle">Radius: 5 miles</div>
+
+                <div class="tagcreate-criteriasetradiuswrap">
+                  <div class="tagcreate-criteriaradiustitle">Set Radius:</div>
+                  <input class="tagcreate-criteriaradiusinput" placeholder="0">
+                  <div class="tagcreate-criteriaradiusmilestitle">miles</div>
+                  <input>SAVE</input>
+                  <div class="tagcreate-criteriaradiuscancel">CANCEL</div>
+                </div>
+              </li>
+            </ul>
+            <!-- END GEOGRAPHY DROPDOWN -->
+            <!-- DEVICES DROPDOWN -->
+            <div class="tagcreate-criteriatitle">DEVICES <span></span></div>
+            <!-- END DEVICES DROPDOWN -->
+          </div>
+        </div>
+      </div>
+
+    </div><!-- END .tagcreate-formwrapper -->
+
+    <div class="tagcreate-formwrapper">
+      <div class="tagcreate-fullheadertitle">DEMO CONFIGURATION</div>
+      <div class="tagcreate-formbg">
+
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">PLATFORM TYPE</div>
+          <div class="tagcreate-selectwrap">
+            <select class="tagcreate-dropdown">
+              <option value="">All</option>
+              <option value="">Desktop</option>
+              <option value="">Mobile</option>
+            </select>
+            <div class="tagcreate-selectarrow"></div>
+          </div>
+        </div>
+
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">AD TYPE</div>
+          <div class="tagcreate-selectwrap">
+            <select class="tagcreate-dropdown">
+              <option value="">All</option>
+              <option value="">Instream</option>
+              <option value="">Outstream</option>
+            </select>
+            <div class="tagcreate-selectarrow"></div>
+          </div>
+        </div>
+
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">CAMPAIGN TYPE</div>
+          <div class="tagcreate-selectwrap">
+            <select class="tagcreate-dropdown">
+              <option value="">All</option>
+              <option value="">On-scroll</option>
+              <option value="">Infinity</option>
+            </select>
+            <div class="tagcreate-selectarrow"></div>
+          </div>
+        </div>
+
+      </div><!-- END .tagcreate-formbg -->
+
+      <div class="tagcreate-formbg">
+
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">TIMEOUT LIMIT</div>
+          <input class="tagcreate-longinput" value="" placeholder="0">
+        </div>
+
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">WRAPPER LIMIT</div>
+          <input class="tagcreate-longinput" value="" placeholder="0">
+        </div>
+
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">DELAY TIME</div>
+          <input class="tagcreate-longinput" value="" placeholder="0">
+        </div>
+
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">SESSION MAX REQUESTS</div>
+          <input class="tagcreate-longinput" value="" placeholder="0">
+        </div>
+
+      </div><!-- END .tagcreate-formbg -->
+
+    </div><!-- END .tagcreate-formwrapper -->
+
+    <div class="tagcreate-savetagwrap">
+      <div class="tagcreate-savetagbutton" @click="saveTag">SAVE TAG CONFIGURATION</div>
+      <div class="tagcreate-canceltagbutton" @click="hideForm">CANCEL</div>
+    </div>
+
+  </div>
+</template>
+
+<style lang="scss">
+  .tagcreate-geotitle {
+    text-transform: uppercase;
+  }
+
+  .disabled {
+    text-decoration: line-through;
+  }
+</style>
+
+<script>
+  import $ from 'jquery'
+  import _ from 'lodash'
+  import moment from 'moment'
+
+  export default {
+    name: 'TagForm',
+
+    data() {
+      return {
+        tag: _.cloneDeep(this.$store.state.admin.currentTag),
+        macros: [
+          'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
+          'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE'
+        ]
+      }
+    },
+
+    mounted() {
+      this.$watch('tag', (value) => {
+        this.$store.dispatch('setCurrentTag', value)
+      }, {
+        deep: true
+      })
+    },
+
+    methods: {
+      saveTag(e) {
+        this.$validator.validateAll()
+        if (this.errors.any()) {
+          e.preventDefault()
+          var errorMsg = this.errors.errors.map((error) => {
+            return error.msg + '\n'
+          })
+
+          window.alert(errorMsg)
+        } else {
+          this.$store.dispatch('saveCurrentTag')
+        }
+      },
+
+      changedType() {
+        if (this.tag.ad_type === 'instream') {
+          this.tag.campaign_types.onscroll = false
+          this.tag.campaign_types.infinity = false
+        }
+
+        if (this.tag.ad_type === 'outstream') {
+          this.tag.campaign_types.preroll = false
+        }
+      },
+
+      include(country) {
+        if (!this.tag.included) {
+          this.$set(this.tag, 'included', [country])
+        } else {
+          this.tag.included.push(country)
+        }
+      },
+
+      deleteInclude(country) {
+        this.tag.included = this.tag.included.filter(item => item !== country)
+      },
+
+      hideForm() {
+        this.$store.dispatch('setShowTagForm', false)
+      },
+
+      insertAtCaret(value) {
+        var field = this.$refs.url
+        var scrollPos = field.scrollTop
+        var caretPos = field.selectionStart
+
+        var front = (field.value).substring(0, caretPos)
+        var back = (field.value).substring(field.selectionEnd, field.value.length)
+        field.value = front + value + back
+        caretPos = caretPos + value.length
+        field.selectionStart = caretPos
+        field.selectionEnd = caretPos
+        field.focus()
+        field.scrollTop = scrollPos
+        this.$set(this.tag, 'url', field.value)
+      }
+    },
+
+    computed: {
+      countries() {
+        return this.$store.state.admin.countries
+      },
+
+      disabled() {
+        return {
+          'preroll': this.tag.ad_type === 'outstream',
+          'onscroll': this.tag.ad_type === 'instream',
+          'infinity': this.tag.ad_type === 'instream',
+          'unknown': false
+        }
+      }
+    },
+
+    directives: {
+      datepicker: {
+        bind: function (el, binding, vnode) {
+          var vm = vnode.context
+          $(el).datepicker({
+            onClose: function (date) {
+              vm.$set(vm.tag, binding.value.key, date)
+            }
+          })
+          if (vm.tag[binding.value.key]) {
+            let date = moment(vm.tag[binding.value.key])
+            $(el).datepicker('setDate', date.format('L'))
+          }
+        }
+      }
+    }
+  }
+</script>
