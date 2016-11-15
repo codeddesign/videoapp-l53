@@ -153,7 +153,7 @@
           <div class="tagcreate-fullinnertitle">CONFIRM?</div>
           <div class="tagcreate-checkwrap">
             <div class="tagcreate-startendcheckwrap" style="margin-top:8px;">
-              <input type="checkbox" id="check-dailyguarantee" />
+              <input v-model="tag['guarantee_enabled']" type="checkbox" id="check-dailyguarantee" />
               <label for="check-dailyguarantee">CONFIRM GUARANTEE</label>
             </div>
           </div>

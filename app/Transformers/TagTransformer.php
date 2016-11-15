@@ -24,6 +24,7 @@ class TagTransformer extends Transformer
             'ecpm'                => (int) $tag->ecpm,
             'guarantee_limit'     => (int) $tag->guarantee_limit,
             'guarantee_order'     => (int) $tag->guarantee_order,
+            'guarantee_enabled'   => (boolean) $tag->guarantee_order,
             'priority_count'      => (int) $tag->priority_count,
             'timeout_limit'       => (int) $tag->timeout_limit,
             'wrapper_limit'       => (int) $tag->wrapper_limit,

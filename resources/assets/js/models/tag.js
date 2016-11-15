@@ -61,7 +61,8 @@ export default {
       daily_request_limit: '',
       wrapper_limit: '',
       guarantee_limit: '',
-      guarantee_order: '',
+      guarantee_order: '1',
+      guarantee_enabled: false,
       ecpm: '',
       delay_time: '',
       priority_count: ''

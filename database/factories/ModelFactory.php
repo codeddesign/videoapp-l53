@@ -72,6 +72,7 @@ $factory->define(App\Models\Tag::class, function (Faker\Generator $faker) {
         'ecpm' => mt_rand(1000, 5000),
         'guarantee_limit' => mt_rand(1000, 5000),
         'guarantee_order' => mt_rand(1, 6),
+        'guarantee_enabled' => mt_rand(0, 1),
         'priority_count' => mt_rand(1, 6),
         'timeout_limit' => mt_rand(1, 6),
         'wrapper_limit' => mt_rand(1, 6),

@@ -55,6 +55,7 @@ class StoreTagRequest extends Request
             'ecpm'                => (int) $this->get('ecpm'),
             'guarantee_limit'     => (int) $this->get('guarantee_limit'),
             'guarantee_order'     => (int) $this->get('guarantee_order'),
+            'guarantee_enabled'   => (boolean) $this->get('guarantee_enabled'),
             'priority_count'      => (int) $this->get('priority_count'),
             'timeout_limit'       => (int) $this->get('timeout_limit'),
             'wrapper_limit'       => (int) $this->get('wrapper_limit'),

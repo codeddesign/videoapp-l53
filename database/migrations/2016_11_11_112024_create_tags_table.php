@@ -31,6 +31,7 @@ class CreateTagsTable extends Migration
             $table->integer('priority_count');
             $table->integer('guarantee_limit');
             $table->integer('guarantee_order');
+            $table->boolean('guarantee_enabled')->default(false);
             $table->integer('ecpm');
             $table->boolean('active')->default(true);
             $table->timestamps();
