@@ -180,19 +180,23 @@
                   </h1>
                   <div>
                     <div class="tabcreate-searchwrap">
-                      <input class="tagcreate-tabsearch" placeholder="SEARCH GEO LOCATION..">
+                      <input v-model="geoFilter" class="tagcreate-tabsearch" placeholder="SEARCH GEO LOCATION..">
                       <div class="tagcreate-tabsearchsubmit">
                         <div class="tagcreate-searchsubmiticon"></div>
                       </div>
                     </div>
+                    <a v-show="showLocations !== 'countries'" @click="geoBack()">Back</a>
                     <ul class="tagcreate-geolist">
-                      <li v-for="country in countries">
-                        <div class="tagcreate-geotitle">{{ country.name }} <span>COUNTRY</span></div>
-                        <div class="tagcreate-geodropbutton">
+                      <li v-for="location in locations">
+                        <div class="tagcreate-geotitle" @click="expandLocation(location)">
+                          {{ location.name }}
+                          <span>{{ location.type }}</span>
+                        </div>
+                        <div class="tagcreate-geodropbutton" @click="toggleGeoInclude()">
                           <div class="adtargetdrop"></div>
                         </div>
-                        <div class="tagcreate-geoexclude">exclude</div>
-                        <div class="tagcreate-geoinclude" @click="include(country)">include</div>
+                        <div class="tagcreate-geoinclude" v-show="!geoInclude" @click="excludeLocation(location)">exclude</div>
+                        <div class="tagcreate-geoinclude" v-show="geoInclude" @click="includeLocation(location)">include</div>
                       </li>
                     </ul>
                   </div>
@@ -213,46 +217,27 @@
             <div class="tagcreate-criteriaheader">SELECTED CRITERIA</div>
 
             <!-- GEOGRAPHY DROPDOWN -->
-            <div class="tagcreate-criteriatitle createcriteriatitle">GEOGRAPHY <span></span></div>
+            <div class="tagcreate-criteriatitle createcriteriatitle">
+              GEOGRAPHY (INCLUDED)
+              <span></span>
+            </div>
             <ul class="tagcreate-criterialist creategeolistdrop">
-              <li v-for="criteria in tag.included">
+              <li v-for="criteria in tag.included_locations">
                 <div class="tagcreate-criteriaradius"></div>
-                <div class="tagcreate-criteriainner"><span>Country:</span> {{ criteria.name }}</div>
+                <div class="tagcreate-criteriainner"><span>{{ _.capitalize(criteria.type) }}:</span> {{ criteria.name }}</div>
                 <div class="tagcreate-criteriadelete" @click="deleteInclude(criteria)"></div>
-
-                <div class="tagcreate-criteriasetradiuswrap">
-                  <div class="tagcreate-criteriaradiustitle">Set Radius:</div>
-                  <input class="tagcreate-criteriaradiusinput" placeholder="0">
-                  <div class="tagcreate-criteriaradiusmilestitle">miles</div>
-                  <input>SAVE</input>
-                  <div class="tagcreate-criteriaradiuscancel">CANCEL</div>
-                </div>
               </li>
-              <li>
+            </ul>
+
+            <div class="tagcreate-criteriatitle createcriteriatitle">
+              GEOGRAPHY (EXCLUDED)
+              <span></span>
+            </div>
+            <ul class="tagcreate-criterialist creategeolistdrop">
+              <li v-for="criteria in tag.excluded_locations">
                 <div class="tagcreate-criteriaradius"></div>
-                <div class="tagcreate-criteriainner"><span>City:</span> New York</div>
-                <div class="tagcreate-criteriadelete"></div>
-
-                <div class="tagcreate-criteriasetradiuswrap">
-                  <div class="tagcreate-criteriaradiustitle">Set Radius:</div>
-                  <input class="tagcreate-criteriaradiusinput" placeholder="0">
-                  <div class="tagcreate-criteriaradiusmilestitle">miles</div>
-                  <input>SAVE</input>
-                  <div class="tagcreate-criteriaradiuscancel">CANCEL</div>
-                </div>
-              </li>
-              <li>
-                <div class="tagcreate-criteriadelete"></div>
-                <div class="tagcreate-criteriaradius"></div>                                <div class="tagcreate-criteriainner"><span>Zip:</span> 90210</div>
-                <div class="tagcreate-criteriaradiustitle">Radius: 5 miles</div>
-
-                <div class="tagcreate-criteriasetradiuswrap">
-                  <div class="tagcreate-criteriaradiustitle">Set Radius:</div>
-                  <input class="tagcreate-criteriaradiusinput" placeholder="0">
-                  <div class="tagcreate-criteriaradiusmilestitle">miles</div>
-                  <input>SAVE</input>
-                  <div class="tagcreate-criteriaradiuscancel">CANCEL</div>
-                </div>
+                <div class="tagcreate-criteriainner"><span>{{ _.capitalize(criteria.type) }}:</span> {{ criteria.name }}</div>
+                <div class="tagcreate-criteriadelete" @click="deleteExclude(criteria)"></div>
               </li>
             </ul>
             <!-- END GEOGRAPHY DROPDOWN -->
@@ -349,12 +334,27 @@
   .disabled {
     text-decoration: line-through;
   }
+
+  .tagcreate-targetwrap {
+    height: 100% !important ;
+  }
+
+  .tagmanage-targeting a {
+    display: block;
+    padding: 0 0 4px 8px;
+    cursor: pointer;
+  }
+
+  .tagcreate-geolist li {
+    position: relative;
+  }
 </style>
 
 <script>
   import $ from 'jquery'
   import _ from 'lodash'
   import moment from 'moment'
+  import Fuse from 'fuse.js'
 
   export default {
     name: 'TagForm',
@@ -365,7 +365,9 @@
         macros: [
           'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
           'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE'
-        ]
+        ],
+        geoFilter: '',
+        geoInclude: true
       }
     },
 
@@ -403,16 +405,46 @@
         }
       },
 
-      include(country) {
-        if (!this.tag.included) {
-          this.$set(this.tag, 'included', [country])
+      geoBack() {
+        this.$store.dispatch('locationBack')
+        this.geoFilter = ''
+      },
+
+      expandLocation(location) {
+        if(location.type === 'city') {
+          return;
+        }
+
+        this.$store.dispatch('expandLocation', location)
+        this.$store.subscribe((mutation, state) => {
+          if(mutation.type === 'LOAD_LOCATIONS') {
+            this.geoFilter = ''
+          }
+        })
+      },
+
+      includeLocation(location) {
+        if (!this.tag.included_locations) {
+          this.$set(this.tag, 'included_locations', [location])
         } else {
-          this.tag.included.push(country)
+          this.tag.included_locations.push(location)
         }
       },
 
-      deleteInclude(country) {
-        this.tag.included = this.tag.included.filter(item => item !== country)
+      excludeLocation(location) {
+        if (!this.tag.excluded_locations) {
+          this.$set(this.tag, 'excluded_locations', [location])
+        } else {
+          this.tag.excluded_locations.push(location)
+        }
+      },
+
+      deleteInclude(location) {
+        this.tag.included_locations = this.tag.included_locations.filter(item => item !== location)
+      },
+
+      deleteExclude(location) {
+        this.tag.excluded_locations = this.tag.excluded_locations.filter(item => item !== location)
       },
 
       hideForm() {
@@ -433,12 +465,36 @@
         field.focus()
         field.scrollTop = scrollPos
         this.$set(this.tag, 'url', field.value)
+      },
+
+      toggleGeoInclude() {
+        this.geoInclude = ! this.geoInclude
       }
     },
 
     computed: {
-      countries() {
-        return this.$store.state.admin.countries
+      showLocations() {
+        return this.$store.state.admin.showLocations
+      },
+
+      locations() {
+        let showLocations = this.showLocations
+        let locations = this.$store.state.admin.locations[showLocations]
+
+        if (this.geoFilter !== '') {
+          var options = {
+            threshold: 0.3,
+            keys: [
+              'name'
+            ]
+          }
+
+          var fuse = new Fuse(locations, options)
+
+          locations = fuse.search(this.geoFilter)
+        }
+
+        return locations
       },
 
       disabled() {

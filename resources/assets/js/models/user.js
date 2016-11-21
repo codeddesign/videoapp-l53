@@ -7,8 +7,8 @@ export default {
       .then((response) => {
         return response.data
       })
-      .catch((errorResponse) => {
-        if (errorResponse.status === 401) {
+      .catch((error) => {
+        if (error.response.status=== 401) {
           console.log('logout')
           auth.logout()
         }

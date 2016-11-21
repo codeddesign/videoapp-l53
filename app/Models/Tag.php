@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $timeout_limit
  * @property int    $wrapper_limit
  * @property bool   $active
+ * @property array  $included_locations
+ * @property array  $excluded_locations
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -36,7 +38,8 @@ class Tag extends Model
         'url', 'advertiser', 'description', 'platform_type', 'campaign_types',
         'ad_type', 'date_range', 'start_date', 'end_date', 'daily_request_limit',
         'delay_time', 'ecpm', 'guarantee_limit', 'guarantee_order', 'guarantee_enabled',
-        'priority_count', 'timeout_limit', 'wrapper_limit', 'active',
+        'priority_count', 'timeout_limit', 'wrapper_limit', 'active', 'included_locations',
+        'excluded_locations',
     ];
 
     protected $dates = [
@@ -45,6 +48,56 @@ class Tag extends Model
     ];
 
     protected $casts = [
-        'campaign_types' => 'array',
+        'campaign_types'     => 'array',
+        'included_locations' => 'array',
+        'excluded_locations' => 'array',
     ];
+
+    static function forLocation(array $location) {
+        $tags = static::all();
+
+        $tags = $tags->filter(function(self $tag) use ($location) {
+            // If there's no targeting, all locations are allowed
+            if(count($tag->included_locations) === 0 && count($tag->excluded_locations) === 0) {
+                return true;
+            }
+
+            // If the location is excluded, filter the tag out
+            if(count($tag->excluded_locations) > 0) {
+                foreach($tag->excluded_locations as $excludedLocation) {
+                    if(static::compareLocations($location, $excludedLocation) === true) {
+                        return false;
+                    }
+                }
+            }
+
+            // If there are include locations, the user must be within them
+            if(count($tag->included_locations) > 0) {
+                foreach($tag->included_locations as $includedLocation) {
+                    if(static::compareLocations($location, $includedLocation) === true) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // The user location is not excluded and
+            // there are not included locations
+            return true;
+        });
+
+        return $tags;
+    }
+
+    static function compareLocations($userLocation, $location) {
+        return (
+            $userLocation['country'] === $location['country']
+            && (
+                ! isset($location['state']) || $location['state'] === $userLocation['state']
+            )
+            && (
+                ! isset($location['city']) || $location['city'] === $userLocation['city']
+            )
+        );
+    }
 }

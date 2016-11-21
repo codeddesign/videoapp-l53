@@ -59,6 +59,27 @@ class StoreTagRequest extends Request
             'priority_count'      => (int) $this->get('priority_count'),
             'timeout_limit'       => (int) $this->get('timeout_limit'),
             'wrapper_limit'       => (int) $this->get('wrapper_limit'),
+            'included_locations'  => $this->flattenLocations($this->get('included_locations')),
+            'excluded_locations'  => $this->flattenLocations($this->get('excluded_locations')),
         ];
+    }
+
+    private function flattenLocations($locations) {
+        $locations = collect($locations);
+
+        $locations = $locations->map(function($location) {
+            $locationArray = [$location['type'] => $location['name']];
+
+            if(array_get($location, 'parent') === null) {
+                return $locationArray;
+            }
+
+            return array_merge(
+                $location['parent'],
+                $locationArray
+            );
+        });
+
+        return $locations;
     }
 }

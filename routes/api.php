@@ -36,6 +36,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::patch('tags/{id}', 'TagsController@update');
     Route::post('tags/{id}/activate', 'TagsController@activate');
 
-    Route::get('countries', 'CountriesController@index');
-    Route::post('countries/subdivisions', 'CountriesController@show');
+    Route::get('locations', 'LocationsController@index');
+    Route::post('locations/expand', 'LocationsController@show');
 });

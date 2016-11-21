@@ -56,7 +56,8 @@ export default {
         infinity: false,
         unknown: false
       },
-      included: [],
+      included_locations: [],
+      excluded_locations: [],
       timeout_limit: '',
       daily_request_limit: '',
       wrapper_limit: '',

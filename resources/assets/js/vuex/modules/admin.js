@@ -7,7 +7,8 @@ import {
   SET_CURRENT_TAG,
   SAVE_CURRENT_TAG,
   LOAD_TAGS,
-  LOAD_COUNTRIES
+  LOAD_LOCATIONS,
+  LOCATION_BACK
 } from '../mutation-types'
 
 import Admin from '../../models/admin'
@@ -21,7 +22,12 @@ const state = {
   tags: [],
   showTagForm: false,
   currentTag: Tag.default(),
-  countries: []
+  locations: {
+    countries: [],
+    states: [],
+    cities: []
+  },
+  showLocations: 'countries'
 }
 
 const actions = {
@@ -73,9 +79,19 @@ const actions = {
 
   loadCountries({ commit }) {
     Country.all().then((countries) => {
-      commit(LOAD_COUNTRIES, countries)
+      commit(LOAD_LOCATIONS, countries)
     })
-  }
+  },
+
+  expandLocation({ commit }, location) {
+    Country.expand(location).then(locations => {
+      commit(LOAD_LOCATIONS, locations)
+    })
+  },
+
+  locationBack({ commit }) {
+    commit(LOCATION_BACK)
+  },
 }
 
 const mutations = {
@@ -117,8 +133,36 @@ const mutations = {
 
   },
 
-  [LOAD_COUNTRIES](state, countries) {
-    state.countries = countries
+  [LOAD_LOCATIONS](state, locations) {
+    if(locations.length === 0) {
+      return
+    }
+
+    switch(locations[0].type) {
+      case 'country':
+        state.showLocations = 'countries'
+        state.locations.countries = locations
+        break
+      case 'state':
+        state.showLocations = 'states'
+        state.locations.states = locations
+        break
+      case 'city':
+        state.showLocations = 'cities'
+        state.locations.cities = locations
+        break
+    }
+  },
+
+  [LOCATION_BACK](state) {
+    switch(state.showLocations) {
+      case 'cities':
+        state.showLocations = 'states'
+        break
+      case 'states':
+        state.showLocations = 'countries'
+        break
+    }
   }
 }
 

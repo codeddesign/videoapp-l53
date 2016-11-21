@@ -28,6 +28,8 @@ class TagTransformer extends Transformer
             'priority_count'      => (int) $tag->priority_count,
             'timeout_limit'       => (int) $tag->timeout_limit,
             'wrapper_limit'       => (int) $tag->wrapper_limit,
+            'included_locations'  => $this->parseLocations($tag->included_locations),
+            'excluded_locations'  => $this->parseLocations($tag->excluded_locations),
             'active'              => (boolean) $tag->active,
         ];
     }
@@ -48,5 +50,35 @@ class TagTransformer extends Transformer
 
             return false;
         });
+    }
+
+    protected function parseLocations($locations) {
+        $locations = collect($locations)->map(function($location) {
+            if(isset($location['city'])) {
+                return [
+                    'name' => $location['city'],
+                    'type' => 'city',
+                    'parent' => [
+                        'country' => $location['country'],
+                        'state' => $location['state']
+                    ]
+                ];
+            } elseif(isset($location['state'])) {
+                return [
+                    'name' => $location['state'],
+                    'type' => 'state',
+                    'parent' => [
+                        'country' => $location['country']
+                    ]
+                ];
+            } else {
+                return [
+                    'name' => $location['country'],
+                    'type' => 'country',
+                ];
+            }
+        });
+
+        return $locations;
     }
 }

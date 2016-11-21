@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Geolite\Location;
 use App\Models\Campaign;
+use App\Models\Tag;
 
 class CampaignsController extends Controller
 {
@@ -27,9 +29,16 @@ class CampaignsController extends Controller
             return response(['message' => 'Campaign does not exist.'], 404);
         }
 
+        $ip = request()->get('ip') ?? ipUtil();
+
+        $location = Location::byIp($ip);
+
+        $tags = Tag::forLocation($location);
+
         return response(array_merge($campaign, [
-            'tags' => env_adTags(),
-            'ip' => ipUtil(),
+            'tags' => $tags,
+            'ip' => $ip,
+            'location' => $location
         ]), 200);
     }
 }

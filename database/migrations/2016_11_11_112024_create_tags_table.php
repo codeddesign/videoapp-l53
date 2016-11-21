@@ -34,6 +34,8 @@ class CreateTagsTable extends Migration
             $table->boolean('guarantee_enabled')->default(false);
             $table->integer('ecpm');
             $table->boolean('active')->default(true);
+            $table->jsonb('included_locations');
+            $table->jsonb('excluded_locations');
             $table->timestamps();
         });
     }
