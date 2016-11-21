@@ -19,7 +19,6 @@ class TagsController extends ApiController
 
     public function store(StoreTagRequest $request)
     {
-        \Log::info($request->transform());
         Tag::create($request->transform());
 
         $tags = Tag::all();
