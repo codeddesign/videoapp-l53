@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         PersistEvents::class,
-        ImportCommand::class
+        ImportCommand::class,
     ];
 
     /**

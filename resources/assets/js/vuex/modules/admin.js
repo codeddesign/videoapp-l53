@@ -91,7 +91,7 @@ const actions = {
 
   locationBack({ commit }) {
     commit(LOCATION_BACK)
-  },
+  }
 }
 
 const mutations = {
@@ -134,11 +134,11 @@ const mutations = {
   },
 
   [LOAD_LOCATIONS](state, locations) {
-    if(locations.length === 0) {
+    if (locations.length === 0) {
       return
     }
 
-    switch(locations[0].type) {
+    switch (locations[0].type) {
       case 'country':
         state.showLocations = 'countries'
         state.locations.countries = locations
@@ -155,7 +155,7 @@ const mutations = {
   },
 
   [LOCATION_BACK](state) {
-    switch(state.showLocations) {
+    switch (state.showLocations) {
       case 'cities':
         state.showLocations = 'states'
         break

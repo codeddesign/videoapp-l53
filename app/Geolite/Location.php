@@ -48,7 +48,7 @@ class Location extends Model
 
         return (new self)->byGeonameId($result->geoname_id, $keys_only);
 
-        return !$result ? false : $result;
+        return ! $result ? false : $result;
     }
 
     /**
@@ -65,7 +65,7 @@ class Location extends Model
             $keys_only = array_flip($keys_only);
 
             foreach ($result as $key => $value) {
-                if ($match_keys && !isset($keys_only[$key])) {
+                if ($match_keys && ! isset($keys_only[$key])) {
                     unset($result[$key]);
                 }
             }

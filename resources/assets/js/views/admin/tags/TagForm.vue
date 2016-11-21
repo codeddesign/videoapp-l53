@@ -411,13 +411,13 @@
       },
 
       expandLocation(location) {
-        if(location.type === 'city') {
-          return;
+        if (location.type === 'city') {
+          return
         }
 
         this.$store.dispatch('expandLocation', location)
         this.$store.subscribe((mutation, state) => {
-          if(mutation.type === 'LOAD_LOCATIONS') {
+          if (mutation.type === 'LOAD_LOCATIONS') {
             this.geoFilter = ''
           }
         })
@@ -468,7 +468,7 @@
       },
 
       toggleGeoInclude() {
-        this.geoInclude = ! this.geoInclude
+        this.geoInclude = !this.geoInclude
       }
     },
 

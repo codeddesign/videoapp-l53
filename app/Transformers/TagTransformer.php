@@ -52,24 +52,25 @@ class TagTransformer extends Transformer
         });
     }
 
-    protected function parseLocations($locations) {
-        $locations = collect($locations)->map(function($location) {
-            if(isset($location['city'])) {
+    protected function parseLocations($locations)
+    {
+        $locations = collect($locations)->map(function ($location) {
+            if (isset($location['city'])) {
                 return [
                     'name' => $location['city'],
                     'type' => 'city',
                     'parent' => [
                         'country' => $location['country'],
-                        'state' => $location['state']
-                    ]
+                        'state' => $location['state'],
+                    ],
                 ];
-            } elseif(isset($location['state'])) {
+            } elseif (isset($location['state'])) {
                 return [
                     'name' => $location['state'],
                     'type' => 'state',
                     'parent' => [
-                        'country' => $location['country']
-                    ]
+                        'country' => $location['country'],
+                    ],
                 ];
             } else {
                 return [

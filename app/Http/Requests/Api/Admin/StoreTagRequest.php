@@ -64,13 +64,14 @@ class StoreTagRequest extends Request
         ];
     }
 
-    private function flattenLocations($locations) {
+    private function flattenLocations($locations)
+    {
         $locations = collect($locations);
 
-        $locations = $locations->map(function($location) {
+        $locations = $locations->map(function ($location) {
             $locationArray = [$location['type'] => $location['name']];
 
-            if(array_get($location, 'parent') === null) {
+            if (array_get($location, 'parent') === null) {
                 return $locationArray;
             }
 

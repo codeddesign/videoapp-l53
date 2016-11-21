@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Geolite\Location;
 use App\Http\Controllers\Api\ApiController;
-use App\Transformers\CountryTransformer;
-use App\Transformers\SubdivisionTransformer;
 use Illuminate\Http\Request;
 
 class LocationsController extends ApiController

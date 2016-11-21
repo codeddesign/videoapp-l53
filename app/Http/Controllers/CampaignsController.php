@@ -38,7 +38,7 @@ class CampaignsController extends Controller
         return response(array_merge($campaign, [
             'tags' => $tags,
             'ip' => $ip,
-            'location' => $location
+            'location' => $location,
         ]), 200);
     }
 }

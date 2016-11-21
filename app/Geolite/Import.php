@@ -49,7 +49,7 @@ class Import
             $row = array_combine($keys, $values);
 
             // ignore the ones that don't have an id
-            if (!trim($row['geoname_id'])) {
+            if (! trim($row['geoname_id'])) {
                 continue;
             }
 
@@ -108,7 +108,7 @@ class Import
     private function csv_lines($csv_file)
     {
         $file_path = (storage_path().'/geolite/'.$csv_file);
-        if (!file_exists($file_path)) {
+        if (! file_exists($file_path)) {
             echo 'File: '.$file_path.' does not exist';
 
             exit;

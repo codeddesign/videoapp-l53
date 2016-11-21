@@ -54,7 +54,8 @@ class Tag extends Model
         'excluded_locations' => 'array',
     ];
 
-    static function forLocation(array $location) {
+    public static function forLocation(array $location)
+    {
         $cache = app(Repository::class);
 
         // Cache the tags for 5 minutes
@@ -62,28 +63,29 @@ class Tag extends Model
             return Tag::all();
         });
 
-        $tags = $tags->filter(function(self $tag) use ($location) {
+        $tags = $tags->filter(function (self $tag) use ($location) {
             // If there's no targeting, all locations are allowed
-            if(count($tag->included_locations) === 0 && count($tag->excluded_locations) === 0) {
+            if (count($tag->included_locations) === 0 && count($tag->excluded_locations) === 0) {
                 return true;
             }
 
             // If the location is excluded, filter the tag out
-            if(count($tag->excluded_locations) > 0) {
-                foreach($tag->excluded_locations as $excludedLocation) {
-                    if(static::compareLocations($location, $excludedLocation) === true) {
+            if (count($tag->excluded_locations) > 0) {
+                foreach ($tag->excluded_locations as $excludedLocation) {
+                    if (static::compareLocations($location, $excludedLocation) === true) {
                         return false;
                     }
                 }
             }
 
             // If there are include locations, the user must be within them
-            if(count($tag->included_locations) > 0) {
-                foreach($tag->included_locations as $includedLocation) {
-                    if(static::compareLocations($location, $includedLocation) === true) {
+            if (count($tag->included_locations) > 0) {
+                foreach ($tag->included_locations as $includedLocation) {
+                    if (static::compareLocations($location, $includedLocation) === true) {
                         return true;
                     }
                 }
+
                 return false;
             }
 
@@ -95,7 +97,8 @@ class Tag extends Model
         return $tags;
     }
 
-    static function compareLocations($userLocation, $location) {
+    public static function compareLocations($userLocation, $location)
+    {
         return (
             $userLocation['country'] === $location['country']
             && (
