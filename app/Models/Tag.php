@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -54,7 +55,12 @@ class Tag extends Model
     ];
 
     static function forLocation(array $location) {
-        $tags = static::all();
+        $cache = app(Repository::class);
+
+        // Cache the tags for 5 minutes
+        $tags = $cache->remember('tags.all', 5, function () {
+            return Tag::all();
+        });
 
         $tags = $tags->filter(function(self $tag) use ($location) {
             // If there's no targeting, all locations are allowed

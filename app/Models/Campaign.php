@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Transformers\CampaignTypeTransformer;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -161,11 +162,14 @@ class Campaign extends Model
     public static function forPlayer($id)
     {
         $previewKey = config('videoad.TEMPORARY_PREVIEW_KEY');
+        $cache = app(Repository::class);
 
         if ($id != 0) {
-            $campaign = self::withTrashed()
-                ->with('videos')
-                ->find($id);
+            $campaign = $cache->remember("campaigns.{$id}", 5, function () use ($id) {
+                return self::withTrashed()
+                    ->with('videos')
+                    ->find($id);
+            });
         } else {
             $previewId = app('request')->cookie('preview_id');
             $campaignSerialized = app('redis')->connection()->get("{$previewKey}.{$previewId}");
