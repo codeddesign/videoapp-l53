@@ -424,6 +424,10 @@
       },
 
       includeLocation(location) {
+        if(this.checkLocationExistance(location)) {
+          return
+        }
+
         if (!this.tag.included_locations) {
           this.$set(this.tag, 'included_locations', [location])
         } else {
@@ -432,11 +436,29 @@
       },
 
       excludeLocation(location) {
+        if(this.checkLocationExistance(location)) {
+          return
+        }
+
         if (!this.tag.excluded_locations) {
           this.$set(this.tag, 'excluded_locations', [location])
         } else {
           this.tag.excluded_locations.push(location)
         }
+      },
+
+      checkLocationExistance(location) {
+        if(_.findIndex(this.tag.included_locations, location) !== -1) {
+          alert(location.name + ' is already included.')
+          return true
+        }
+
+        if(_.findIndex(this.tag.excluded_locations, location) !== -1) {
+          alert(location.name + ' is already excluded.')
+          return true
+        }
+
+        return false
       },
 
       deleteInclude(location) {
