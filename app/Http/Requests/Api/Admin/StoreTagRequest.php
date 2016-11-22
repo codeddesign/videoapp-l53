@@ -52,7 +52,7 @@ class StoreTagRequest extends Request
             'end_date'            => $this->get('end_date') ? Carbon::parse($this->get('end_date')) : null,
             'daily_request_limit' => (int) $this->get('daily_request_limit'),
             'delay_time'          => (int) $this->get('delay_time'),
-            'ecpm'                => (int) $this->get('ecpm'),
+            'ecpm'                => (int) ($this->get('ecpm') * 100),
             'guarantee_limit'     => (int) $this->get('guarantee_limit'),
             'guarantee_order'     => (int) $this->get('guarantee_order'),
             'guarantee_enabled'   => (boolean) $this->get('guarantee_enabled'),

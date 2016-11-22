@@ -126,7 +126,7 @@
         </div>
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">eCPM</div>
-          <input class="tagcreate-longinput" v-model="tag['ecpm']" placeholder="0">
+          <input class="tagcreate-longinput" v-model="tag['ecpm']" placeholder="0" name="ecpm" v-validate data-rules="required|not_in:0">
         </div>
       </div>
 
@@ -382,6 +382,11 @@
     methods: {
       saveTag(e) {
         this.$validator.validateAll()
+
+        if(! this.validCampaignTypes) {
+          this.errors.add('campaign types', 'At least one campaign type is required.')
+        }
+
         if (this.errors.any()) {
           e.preventDefault()
           var errorMsg = this.errors.errors.map((error) => {
@@ -495,6 +500,14 @@
     },
 
     computed: {
+      validCampaignTypes() {
+        return _.some(this.tag.campaign_types, function(val, key) {
+          if (val === true) {
+            return true
+          }
+        })
+      },
+
       showLocations() {
         return this.$store.state.admin.showLocations
       },

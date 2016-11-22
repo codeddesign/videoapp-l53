@@ -21,7 +21,7 @@ class TagTransformer extends Transformer
             'end_date'            => $this->date($tag->end_date),
             'daily_request_limit' => (int) $tag->daily_request_limit,
             'delay_time'          => (int) $tag->delay_time,
-            'ecpm'                => (int) $tag->ecpm,
+            'ecpm'                => (float) $tag->ecpm/100,
             'guarantee_limit'     => (int) $tag->guarantee_limit,
             'guarantee_order'     => (int) $tag->guarantee_order,
             'guarantee_enabled'   => (boolean) $tag->guarantee_enabled,
