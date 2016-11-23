@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\DB;
  *
  * @property int      $id
  * @property int      $campaign_id
+ * @property int      $tag_id
+ * @property int      $website_id
  * @property string   $name
- * @property string   $event
- * @property string   $referer
- * @property string   $ip
+ * @property int      $count
  * @property Carbon   $created_at
  * @property Carbon   $updated_at
  *
@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
  */
 class CampaignEvent extends Model
 {
-    use SoftDeletes, Filterable;
+    use SoftDeletes, Filterable, SaveMany;
 
     /**
      * @var array
@@ -47,6 +47,26 @@ class CampaignEvent extends Model
     public function campaign()
     {
         return $this->belongsTo(Campaign::class, 'campaign_id');
+    }
+
+    /**
+     * A campaign event belongs to a tag.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+     */
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class, 'tag_id');
+    }
+
+    /**
+     * A campaign event belongs to a website.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+     */
+    public function website()
+    {
+        return $this->belongsTo(WordpressSite::class, 'website_id');
     }
 
     public function scopeUserStats($query, $timeRange)
@@ -122,32 +142,5 @@ class CampaignEvent extends Model
             ->groupBy('date')
             ->orderBy('date', 'DESC')
             ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "impressions"')]);
-    }
-
-    /**
-     * @param \Illuminate\Support\Collection $collection
-     *
-     * @return mixed
-     */
-    public static function saveMany($collection)
-    {
-        $table = with(new static)->getTable();
-
-        /** @var Builder $db */
-        $db = app('db')->table($table);
-
-        $itemsArray = $collection->map(function ($item) {
-            return array_merge(
-                $item,
-                [
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]
-            );
-        });
-
-        $db->insert($itemsArray->toArray());
-
-        return $itemsArray;
     }
 }

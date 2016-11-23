@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input name="tagmanage-tabbed" id="tagmanage-tabbed2" type="radio">
+    <input name="tagmanage-tabbed" id="tagmanage-tabbed2" type="radio" checked>
     <section>
       <h1>
         <label for="tagmanage-tabbed2">COMPARE TAGS</label>
@@ -9,18 +9,16 @@
         <!-- START CHART TIME RANGE -->
         <div class="display-dashboardtoparea">
             <div class="display-dashboardtimewrap">
-              <div class="dashmaintime-title">Time Range</div>
-              <div class="dashboard-mainselect">
-                <select>
-                <option value="">Today</option>
-                <option value="">Yesterday</option>
-                <option value="">Last 7 Days</option>
-                <option value="">This Month</option>
-                <option value="">Last Month</option>
-              </select>
-              <div class="dashmain-selectarrow"></div>
+                <div class="dashmaintime-title">Time Range</div>
+                <div class="dashboard-mainselect">
+                  <select v-model="timeRange">
+                    <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
+                      {{ timeRange.text }}
+                    </option>
+                  </select>
+                <div class="dashmain-selectarrow"></div>
+                </div>
               </div>
-            </div>
             <a href="/campaign">
               <div class="currentcamp-createbutton">GENERATE REPORT</div>
           </a>
@@ -40,15 +38,15 @@
               <ul class="taggraph-textlist">
                 <li>
                   <div class="taggraph-listtitle">REQUESTS:</div>
-                  <div class="taggraph-listnumber">30,404,357</div>
+                  <div class="taggraph-listnumber">{{ requests }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">FILLS:</div>
-                  <div class="taggraph-listnumber">101,593</div>
+                  <div class="taggraph-listnumber">{{ fills }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">IMPRESSIONS:</div>
-                  <div class="taggraph-listnumber">22,509</div>
+                  <div class="taggraph-listnumber">{{ impressions }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">FILL-RATE:</div>
@@ -137,246 +135,6 @@
                   <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
                   <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
               </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    AOL
-                </div>
-                  <div class="dashboard-statslist2">MOBILE</div>
-                  <div class="dashboard-statslist2">OUTSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    TUBEMOGUL
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    TUBEMOGUL
-                </div>
-                  <div class="dashboard-statslist2">MOBILE</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    BEACHFRONT
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    BEACHFRONT
-                </div>
-                  <div class="dashboard-statslist2">MOBILE</div>
-                  <div class="dashboard-statslist2">OUTSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    TREMOR
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    TREMOR
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">OUTSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    BARONS
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    BARONS
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">OUTSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-onscroll">
-                <label for="check-onscroll"></label>
-              </div>
-                    KIOSKED
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-graphcompare">
-                <label for="check-graphcompare"></label>
-              </div>
-                    KOSKED
-                </div>
-                  <div class="dashboard-statslist2">MOBILE</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-graphcompare">
-                <label for="check-graphcompare"></label>
-              </div>
-                    ALTITUDE
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-graphcompare">
-                <label for="check-graphcompare"></label>
-              </div>
-                    ALTITUDE
-                </div>
-                  <div class="dashboard-statslist2">MOBILE</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-graphcompare">
-                <label for="check-graphcompare"></label>
-              </div>
-                    YELLOWHAMMER
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">INSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
-              <li>
-                  <div class="dashboard-statslist1">
-                    <div class="tagcreate-checkwrap">
-                <input type="checkbox" id="check-graphcompare">
-                <label for="check-graphcompare"></label>
-              </div>
-                    YELLOWHAMMER
-                </div>
-                  <div class="dashboard-statslist2">DESKTOP</div>
-                  <div class="dashboard-statslist2">OUTSTREAM</div>
-                  <div class="dashboard-statslist2">1,057 <span class="up">(+ 34%)</span></div>
-                  <div class="dashboard-statslist2">1,501 <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">4% <span class="down">(- 34%)</span></div>
-                  <div class="dashboard-statslist2">17% <span class="down">(- 34%)</span></div>
-              </li>
           </ul>
           <div class="understatlist-wrapper">
             <div class="dashpagination-wrapper">
@@ -401,7 +159,68 @@
 </template>
 
 <script>
+  import stats from '../../../services/stats'
+  import http from '../../../services/http'
+  import moment from 'moment'
+
   export default {
-    name: 'CompareTags'
+    name: 'CompareTags',
+
+    data() {
+      return {
+        // used for the Time Range Select.
+        currentTime: moment(),
+
+        timeRange: 'today',
+        timeRangeOptions: [
+          { text: 'Today', value: 'today' },
+          { text: 'Yesterday', value: 'yesterday' },
+          { text: 'Last 7 Days', value: 'sevenDays' },
+          { text: 'This Month', value: 'thisMonth' },
+          { text: 'Last Month', value: 'lastMonth' }
+        ],
+
+        requests: 0,
+        impressions: 0,
+
+        fills: 0,
+        fillErrors: 0,
+
+        adErrors: 0,
+
+        useRate: 0,
+
+        dailyStats: []
+      }
+    },
+
+    methods: {
+      fetchStats() {
+        http.get('/admin/stats/all?time=' + this.timeRange)
+            .then((response) => {
+              this.requests = parseInt(response.data.requests)
+              this.impressions = parseInt(response.data.impressions)
+              this.fills = parseInt(response.data.fills)
+              this.adErrors = parseInt(response.data.adErrors)
+              this.fillErrors = parseInt(response.data.fillErrors)
+            })
+            .catch((error) => {
+              console.error('Error fetching the stats count.')
+            })
+      }
+    },
+
+    mounted() {
+      this.$nextTick(function() {
+        this.fetchStats()
+      })
+    },
+
+    watch: {
+      timeRange(newTimeRange) {
+        this.fetchStats()
+      },
+    }
+
   }
 </script>

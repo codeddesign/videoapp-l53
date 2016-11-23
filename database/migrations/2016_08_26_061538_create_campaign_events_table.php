@@ -19,6 +19,12 @@ class CreateCampaignEventsTable extends Migration
             $table->integer('campaign_id')->unsigned();
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
 
+            $table->integer('tag_id')->unsigned()->nullable();
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+
+            $table->integer('website_id')->unsigned()->nullable();
+            $table->foreign('website_id')->references('id')->on('wordpress_sites')->onDelete('cascade');
+
             $table->string('name')->index();
 
             $table->integer('count');

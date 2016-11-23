@@ -136,10 +136,10 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
 {
     $campaignEvents = new \App\Services\CampaignEvents();
     $referrer = 'http://videoplayer.dev/test/dev';
-    $tag = 2;
     $time = 0;
 
     do {
+        $tag = collect([1,2])->random();
         $repeat = mt_rand($min, $max);
 
         for ($i = 0;$i < $repeat;$i++) {
@@ -149,7 +149,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                 'campaign' => $campaign,
                 'source' => 'app',
                 'status' => 200,
-                'tag' => null,
+                'tag' => $tag,
             ]);
 
             if ($rate > $failPercent) {
@@ -158,14 +158,14 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                     'campaign' => $campaign,
                     'source' => 'tag',
                     'status' => 0,
-                    'tag' => 'http://example-tag.com',
+                    'tag' => $tag,
                 ]);
 
                 $campaignEvents->handle([
                     'campaign' => $campaign,
                     'source' => 'ad',
                     'status' => 0,
-                    'tag' => null,
+                    'tag' => $tag,
                 ]);
             } else {
                 if (mt_rand(0, 100) > 50) {
@@ -174,7 +174,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                         'campaign' => $campaign,
                         'source' => 'tag',
                         'status' => 400,
-                        'tag' => 'http://example-tag.com',
+                        'tag' => $tag,
                     ]);
                 } else {
                     //ad error
@@ -182,14 +182,14 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                         'campaign' => $campaign,
                         'source' => 'tag',
                         'status' => 0,
-                        'tag' => 'http://example-tag.com',
+                        'tag' => $tag,
                     ]);
 
                     $campaignEvents->handle([
                         'campaign' => $campaign,
                         'source' => 'ad',
                         'status' => 300,
-                        'tag' => null,
+                        'tag' => $tag,
                     ]);
                 }
             }

@@ -24,6 +24,15 @@ class StatsTransformer
         return $stats;
     }
 
+    /**
+     * Transforms an array of Campaign Events into
+     * daily stats given by the $range variable
+     *
+     * @param \Illuminate\Support\Collection $stats
+     * @param                                $range
+     *
+     * @return array
+     */
     public function transform(Collection $stats, $range)
     {
         $dateRange = call_user_func(DateRange::class.'::'.$range);
@@ -52,6 +61,29 @@ class StatsTransformer
         return $data;
     }
 
+    /**
+     * Transforms an array of Campaign Events into
+     * a single array with all the summed values
+     *
+     * @param \Illuminate\Support\Collection $stats
+     *
+     * @return array
+     */
+    public function transformSumAll(Collection $stats) {
+        $data = [];
+
+        // Initialize all stats with 0
+        foreach (self::$allStats as $stat) {
+            $data[$stat] = 0;
+        }
+
+        foreach($stats as $stat) {
+            $data[$stat->name] += $stat->count;
+        }
+
+        return $data;
+    }
+
     public function transformHighcharts($type, Collection $stats, $range)
     {
         $dateRange = call_user_func(DateRange::class.'::'.$range);
@@ -65,8 +97,8 @@ class StatsTransformer
             $timestamp = $day->timestamp * 1000;
 
             if ($stats->has($key)) {
-                $item = $stats->get($key)[0];
-                $data[] = [$timestamp, $item->count];
+                $count = $stats->get($key)->sum('count');
+                $data[] = [$timestamp, $count];
             } else {
                 $data[] = [$timestamp, 0];
             }

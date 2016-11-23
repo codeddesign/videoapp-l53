@@ -29,6 +29,7 @@ class ChartsController extends ApiController
         }
 
         $userStats = CampaignEvent::userStats($range)
+            ->with('tag')
             ->get()
             ->groupBy(function ($item) {
                 return $item->name.'-'.$item->created_at->format('m/d/Y');

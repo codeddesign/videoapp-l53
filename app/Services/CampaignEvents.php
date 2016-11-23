@@ -73,17 +73,8 @@ class CampaignEvents
 
             $data = $this->fetchStatusForCampaign($id);
 
-            foreach ($data as $name => $value) {
-                if ($name === 'tags') {
-                    //TODO: save tag events separately
-                    continue;
-                }
-
-                $events->push([
-                    'campaign_id' => $id,
-                    'name'        => $name,
-                    'count'       => $value,
-                ]);
+            foreach ($data as $event) {
+                $events->push($event);
             }
 
             $redis->del([$key]);
@@ -92,6 +83,21 @@ class CampaignEvents
         CampaignEvent::saveMany($events);
 
         return $events;
+    }
+
+    protected function processTags($campaignId, $data, $tags) {
+        foreach($data as $tagId => $tagData) {
+            foreach($tagData as $name => $value) {
+                $tags->push([
+                    'tag_id'      => $tagId,
+                    'campaign_id' => $campaignId,
+                    'name'        => $name,
+                    'count'       => $value,
+                ]);
+            }
+        }
+
+        return $tags;
     }
 
     /**

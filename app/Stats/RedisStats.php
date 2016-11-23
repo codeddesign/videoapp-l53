@@ -3,6 +3,7 @@
 namespace App\Stats;
 
 use Illuminate\Redis\Database as Redis;
+use Illuminate\Support\Collection;
 
 class RedisStats
 {
@@ -18,10 +19,7 @@ class RedisStats
 
         $data = $redis->hgetall("campaign:{$campaignId}");
 
-        $stats = $this->addMissingKeys([], $this->keys);
-
-        $stats['tags'] = [];
-        $stats['websites'] = [];
+        $stats = new Collection();
 
         if (count($data) === 0) {
             return $stats;
@@ -31,8 +29,8 @@ class RedisStats
             if (preg_match($regex, $key, $matches)) {
                 $source  = array_get($matches, 1);
                 $status  = (int) array_get($matches, 2);
-                $tag     = array_get($matches, 3);
-                $website = (int) array_get($matches, 4);
+                $tag     = array_get($matches, 3) ? intval(array_get($matches, 3)) : null;
+                $website = array_get($matches, 4) ? intval(array_get($matches, 4)) : null;
 
                 switch ($source) {
                     case 'app':
@@ -50,9 +48,11 @@ class RedisStats
             }
         }
 
-        foreach ($stats['websites'] as &$website) {
-            $website = $this->addMissingKeys($website, $this->keys);
-        }
+        //attach the campaign id to all events
+        $stats = $stats->map(function($event) use($campaignId) {
+            $event['campaign_id'] = $campaignId;
+            return $event;
+        });
 
         return $stats;
     }
@@ -68,14 +68,15 @@ class RedisStats
         return $array;
     }
 
-    protected function handleAppStats($stats, $value, $status, $tag, $website)
+    protected function handleAppStats(Collection $stats, $value, $status, $tag = null, $website = null)
     {
         if ($status == 200) {
-            $stats['requests'] += $value;
-
-            if ($website) {
-                $this->accumulate($stats['websites'][$website], 'requests', $value);
-            }
+            $stats->push([
+                'name'       => 'requests',
+                'count'      => $value,
+                'tag_id'     => $tag,
+                'website_id' => $website,
+            ]);
         }
 
         return $stats;
@@ -84,21 +85,19 @@ class RedisStats
     protected function handleTagStats($stats, $value, $status, $tag, $website)
     {
         if ($status == 0) {
-            $stats['fills'] += $value;
-
-            if ($website) {
-                $this->accumulate($stats['websites'][$website], 'fills', $value);
-            }
+            $stats->push([
+                'name'       => 'fills',
+                'count'      => $value,
+                'tag_id'     => $tag,
+                'website_id' => $website,
+            ]);
         } else {
-            $stats['fillErrors'] += $value;
-
-            if ($website) {
-                $this->accumulate($stats['websites'][$website], 'fillErrors', $value);
-            }
-        }
-
-        if ($tag) {
-            $this->accumulate($stats['tags'][$tag], $status, $value);
+            $stats->push([
+                'name'       => 'fillErrors',
+                'count'      => $value,
+                'tag_id'     => $tag,
+                'website_id' => $website,
+            ]);
         }
 
         return $stats;
@@ -107,17 +106,19 @@ class RedisStats
     protected function handleAdStats($stats, $value, $status, $tag, $website)
     {
         if ($status < 100) {
-            $stats['impressions'] += $value;
-
-            if ($website) {
-                $this->accumulate($stats['websites'][$website], 'impressions', $value);
-            }
+            $stats->push([
+                'name'       => 'impressions',
+                'count'      => $value,
+                'tag_id'     => $tag,
+                'website_id' => $website,
+            ]);
         } else {
-            $stats['adErrors'] += $value;
-
-            if ($website) {
-                $this->accumulate($stats['websites'][$website], 'adErrors', $value);
-            }
+            $stats->push([
+                'name'       => 'adErrors',
+                'count'      => $value,
+                'tag_id'     => $tag,
+                'website_id' => $website,
+            ]);
         }
 
         return $stats;

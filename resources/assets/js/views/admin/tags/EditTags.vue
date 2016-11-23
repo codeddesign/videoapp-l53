@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input name="tagmanage-tabbed" id="tagmanage-tabbed1" type="radio" checked>
+    <input name="tagmanage-tabbed" id="tagmanage-tabbed1" type="radio">
     <section>
       <h1>
         <label for="tagmanage-tabbed1">EDIT TAGS</label>
