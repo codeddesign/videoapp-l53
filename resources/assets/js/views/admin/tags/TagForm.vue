@@ -367,7 +367,8 @@
           'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE'
         ],
         geoFilter: '',
-        geoInclude: true
+        geoInclude: true,
+        submitting: false
       }
     },
 
@@ -383,7 +384,7 @@
       saveTag(e) {
         this.$validator.validateAll()
 
-        if(! this.validCampaignTypes) {
+        if (!this.validCampaignTypes) {
           this.errors.add('campaign types', 'At least one campaign type is required.')
         }
 
@@ -429,7 +430,7 @@
       },
 
       includeLocation(location) {
-        if(this.checkLocationExistance(location)) {
+        if (this.checkLocationExistance(location)) {
           return
         }
 
@@ -441,7 +442,7 @@
       },
 
       excludeLocation(location) {
-        if(this.checkLocationExistance(location)) {
+        if (this.checkLocationExistance(location)) {
           return
         }
 
@@ -453,13 +454,13 @@
       },
 
       checkLocationExistance(location) {
-        if(_.findIndex(this.tag.included_locations, location) !== -1) {
-          alert(location.name + ' is already included.')
+        if (_.findIndex(this.tag.included_locations, location) !== -1) {
+          window.alert(location.name + ' is already included.')
           return true
         }
 
-        if(_.findIndex(this.tag.excluded_locations, location) !== -1) {
-          alert(location.name + ' is already excluded.')
+        if (_.findIndex(this.tag.excluded_locations, location) !== -1) {
+          window.alert(location.name + ' is already excluded.')
           return true
         }
 

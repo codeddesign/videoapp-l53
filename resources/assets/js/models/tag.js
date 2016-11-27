@@ -1,8 +1,14 @@
 import axios from '../services/http'
 
 export default {
-  all() {
-    return axios.get('admin/tags')
+  all(range = null) {
+    let url = 'admin/tags'
+
+    if (range !== null) {
+      url = url + '?compareRange=' + range
+    }
+
+    return axios.get(url)
       .then((response) => {
         return response.data.data
       })

@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     });
 
     Route::get('stats/all', 'StatsController@all');
+    Route::get('charts/all', 'ChartsController@stats');
 
     Route::get('websites/pending', 'WebsitesController@pending');
 

@@ -20,6 +20,7 @@ const state = {
   pendingWebsites: [],
   accounts: [],
   tags: [],
+  tagsToCompare: [],
   showTagForm: false,
   currentTag: Tag.default(),
   locations: {
@@ -49,8 +50,8 @@ const actions = {
     })
   },
 
-  loadTags({ commit }) {
-    Tag.all().then((tags) => {
+  loadTags({ commit }, range = null) {
+    Tag.all(range).then((tags) => {
       commit(LOAD_TAGS, tags)
     })
   },

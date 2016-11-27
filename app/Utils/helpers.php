@@ -139,7 +139,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
     $time = 0;
 
     do {
-        $tag = collect([1,2])->random();
+        $tag = collect([1, 2])->random();
         $repeat = mt_rand($min, $max);
 
         for ($i = 0;$i < $repeat;$i++) {

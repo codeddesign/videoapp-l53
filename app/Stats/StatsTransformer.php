@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class StatsTransformer
 {
-    protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors'];
+    protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors', 'revenue'];
 
     public function transformRealtime($stats)
     {
@@ -69,7 +69,8 @@ class StatsTransformer
      *
      * @return array
      */
-    public function transformSumAll(Collection $stats) {
+    public function transformSumAll(Collection $stats)
+    {
         $data = [];
 
         // Initialize all stats with 0
@@ -77,24 +78,40 @@ class StatsTransformer
             $data[$stat] = 0;
         }
 
-        foreach($stats as $stat) {
+        foreach ($stats as $stat) {
             $data[$stat->name] += $stat->count;
+
+            if ($stat->name === 'impressions') {
+                $data['revenue'] += $this->calculateRevenue($stat->count, $stat->tag->ecpm);
+            }
         }
 
         return $data;
     }
 
-    public function transformHighcharts($type, Collection $stats, $range)
+    public function sumAllAndAverage(Collection $stats, $count)
+    {
+        $data = collect($this->transformSumAll($stats));
+
+        $data = $data->map(function ($item) use ($count) {
+            return round($item / $count);
+        });
+
+        return $data;
+    }
+
+    //TODO: Refactor so we just use the highcharts() function
+    public function transformHighcharts($type, Collection $stats, $format, $range, $step = null)
     {
         $dateRange = call_user_func(DateRange::class.'::'.$range);
 
         $data = [];
 
-        foreach ($dateRange->arrayByStep() as $day) {
+        foreach ($dateRange->arrayByStep($step) as $period) {
             // The array key format is type-mm/dd/YYYY
             // Example: requests-10/31/2016
-            $key = $type.'-'.$day->format('m/d/Y');
-            $timestamp = $day->timestamp * 1000;
+            $key = $period->format($format);
+            $timestamp = $period->timestamp * 1000;
 
             if ($stats->has($key)) {
                 $count = $stats->get($key)->sum('count');
@@ -105,5 +122,45 @@ class StatsTransformer
         }
 
         return $data;
+    }
+
+    public function highcharts(Collection $stats, $format, $range, $step = null)
+    {
+        $dateRange = call_user_func(DateRange::class.'::'.$range);
+
+        $data = [];
+
+        foreach (self::$allStats as $stat) {
+            $data[$stat] = [];
+        }
+
+        foreach ($dateRange->arrayByStep($step) as $period) {
+            $key = $period->format($format);
+            $timestamp = $period->timestamp * 1000;
+
+            if ($stats->has($key)) {
+                $events = $stats->get($key);
+
+                foreach (self::$allStats as $stat) {
+                    if ($events->where('name', $stat)->isEmpty()) {
+                        $data[$stat][] = [$timestamp, 0];
+                    } else {
+                        $count = $events->where('name', $stat)->sum('count');
+                        $data[$stat][] = [$timestamp, $count];
+                    }
+                }
+            } else {
+                foreach (self::$allStats as $stat) {
+                    $data[$stat][] = [$timestamp, 0];
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    protected function calculateRevenue($impressions, $ecpm)
+    {
+        return ($impressions / 1000) * ($ecpm / 100);
     }
 }

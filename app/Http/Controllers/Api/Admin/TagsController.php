@@ -4,15 +4,45 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\Admin\StoreTagRequest;
+use App\Models\CampaignEvent;
+use App\Models\DateRange;
 use App\Models\Tag;
+use App\Stats\StatsTransformer;
 use App\Transformers\TagTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class TagsController extends ApiController
 {
-    public function index()
+    public function index(Request $request)
     {
         $tags = Tag::all()->sortBy('id');
+
+        $compareRange = $request->get('compareRange');
+
+        $stats = CampaignEvent::query()->with('tag');
+
+        $days = 1;
+
+        if ($compareRange) {
+            $stats->timeRange($compareRange);
+            $dateRange = call_user_func(DateRange::class.'::'.$compareRange);
+            $days = $dateRange->days();
+        }
+
+        // When using "today" as the range, the
+        // days count is 0 when it should be 1
+        if ($days === 0) {
+            $days = 1;
+        }
+
+        $stats = $stats->get()->groupBy('tag_id');
+
+        $statsTransformer = new StatsTransformer;
+
+        foreach ($tags as $tag) {
+            $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days);
+        }
 
         return $this->collectionResponse($tags, new TagTransformer);
     }

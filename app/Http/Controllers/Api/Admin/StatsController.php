@@ -39,6 +39,7 @@ class StatsController extends ApiController
     {
         $statsByCampaign = CampaignEvent::query()
             ->timeRange($timespan)
+            ->with('tag')
             ->get();
 
         $stats = (new StatsTransformer)->transformSumAll($statsByCampaign);

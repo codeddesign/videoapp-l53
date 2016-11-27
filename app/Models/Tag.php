@@ -35,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tag extends Model
 {
+    use Filterable;
+
     protected $fillable = [
         'url', 'advertiser', 'description', 'platform_type', 'campaign_types',
         'ad_type', 'date_range', 'start_date', 'end_date', 'daily_request_limit',

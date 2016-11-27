@@ -28,16 +28,18 @@ class ChartsController extends ApiController
             ];
         }
 
+        $keyFormat = 'm/d/Y';
+
         $userStats = CampaignEvent::userStats($range)
             ->with('tag')
             ->get()
-            ->groupBy(function ($item) {
-                return $item->name.'-'.$item->created_at->format('m/d/Y');
+            ->groupBy(function ($item) use ($keyFormat) {
+                return $item->name.'-'.$item->created_at->format($keyFormat);
             });
 
         $transformer = new StatsTransformer;
-        $requests    = $transformer->transformHighcharts('requests', $userStats, $range);
-        $impressions = $transformer->transformHighcharts('impressions', $userStats, $range);
+        $requests    = $transformer->transformHighcharts('requests', $userStats, $keyFormat, $range);
+        $impressions = $transformer->transformHighcharts('impressions', $userStats, $keyFormat, $range);
 
         $revenue     = collect($impressions)->map(function ($value) {
             return [$value[0], (4 * $value[1]) / 1000];

@@ -22,16 +22,21 @@ class DateRange
     {
         $step = $step ?: $this->defaultStep();
 
-        $period = new DatePeriod($this->from, $step, $this->to);
+        $dateRange = new DatePeriod($this->from, $step, $this->to);
 
         // Convert the DatePeriod into a plain array of Carbon objects
         $range = new Collection;
 
-        foreach ($period as $day) {
-            $range->push(new Carbon($day));
+        foreach ($dateRange as $period) {
+            $range->push(new Carbon($period));
         }
 
         return $range;
+    }
+
+    public function days()
+    {
+        return (int) ceil($this->to->diffInHours($this->from) / 24);
     }
 
     public static function today()
@@ -46,6 +51,76 @@ class DateRange
     {
         $from = Carbon::now()->subDay()->startOfDay();
         $to   = Carbon::now()->subDay()->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function twoDaysAgo()
+    {
+        $from = Carbon::now()->subDays(2)->startOfDay();
+        $to   = Carbon::now()->subDays(2)->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function threeDaysAgo()
+    {
+        $from = Carbon::now()->subDays(3)->startOfDay();
+        $to   = Carbon::now()->subDays(3)->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function oneWeekAgo()
+    {
+        $from = Carbon::now()->subWeek()->startOfDay();
+        $to   = Carbon::now()->subWeek()->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    /**
+     * Last x days implies that "today" is
+     * not included in the date range
+     *
+     * Used for comparisons with today
+     */
+    public static function lastTwoDays()
+    {
+        $from = Carbon::now()->subDays(2)->startOfDay();
+        $to   = Carbon::now()->subDays(1)->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function lastThreeDays()
+    {
+        $from = Carbon::now()->subDays(3)->startOfDay();
+        $to   = Carbon::now()->subDays(1)->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function lastSevenDays()
+    {
+        $from = Carbon::now()->subDays(7)->startOfDay();
+        $to   = Carbon::now()->subDays(1)->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function twoDays()
+    {
+        $from = Carbon::now()->subDays(2)->startOfDay();
+        $to   = Carbon::now()->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function threeDays()
+    {
+        $from = Carbon::now()->subDays(3)->startOfDay();
+        $to   = Carbon::now()->endOfDay();
 
         return new static($from, $to);
     }

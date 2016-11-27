@@ -8,7 +8,7 @@ class TagTransformer extends Transformer
 {
     public function transform(Tag $tag)
     {
-        return [
+        $transformedTag = [
             'id'                  => (int) $tag->id,
             'url'                 => $tag->url,
             'advertiser'          => $tag->advertiser,
@@ -21,7 +21,7 @@ class TagTransformer extends Transformer
             'end_date'            => $this->date($tag->end_date),
             'daily_request_limit' => (int) $tag->daily_request_limit,
             'delay_time'          => (int) $tag->delay_time,
-            'ecpm'                => (float) $tag->ecpm/100,
+            'ecpm'                => (float) $tag->ecpm / 100,
             'guarantee_limit'     => (int) $tag->guarantee_limit,
             'guarantee_order'     => (int) $tag->guarantee_order,
             'guarantee_enabled'   => (boolean) $tag->guarantee_enabled,
@@ -32,6 +32,14 @@ class TagTransformer extends Transformer
             'excluded_locations'  => $this->parseLocations($tag->excluded_locations),
             'active'              => (boolean) $tag->active,
         ];
+
+        if ($tag->stats) {
+            $transformedTag = array_merge($transformedTag, [
+                'stats' => $tag->stats,
+            ]);
+        }
+
+        return $transformedTag;
     }
 
     protected function fillCampaignTypes($types)

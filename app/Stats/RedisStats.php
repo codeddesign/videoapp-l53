@@ -49,8 +49,9 @@ class RedisStats
         }
 
         //attach the campaign id to all events
-        $stats = $stats->map(function($event) use($campaignId) {
+        $stats = $stats->map(function ($event) use ($campaignId) {
             $event['campaign_id'] = $campaignId;
+
             return $event;
         });
 

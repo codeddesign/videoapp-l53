@@ -85,9 +85,10 @@ class CampaignEvents
         return $events;
     }
 
-    protected function processTags($campaignId, $data, $tags) {
-        foreach($data as $tagId => $tagData) {
-            foreach($tagData as $name => $value) {
+    protected function processTags($campaignId, $data, $tags)
+    {
+        foreach ($data as $tagId => $tagData) {
+            foreach ($tagData as $name => $value) {
                 $tags->push([
                     'tag_id'      => $tagId,
                     'campaign_id' => $campaignId,
