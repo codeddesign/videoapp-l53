@@ -101,6 +101,7 @@
   import Pagination from '../../../services/pagination'
   import stats from '../../../services/stats'
   import http from '../../../services/http'
+  import _ from 'lodash'
 
   export default {
     name: 'TagList',

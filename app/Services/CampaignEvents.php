@@ -48,7 +48,7 @@ class CampaignEvents
         $data = new Collection();
 
         foreach ($ids as $id) {
-            $this->fetchStatusForCampaign($id)->map(function($stat) use ($data) {
+            $this->fetchStatusForCampaign($id)->map(function ($stat) use ($data) {
                 $data->push((object) $stat);
             });
         }
@@ -57,8 +57,8 @@ class CampaignEvents
 
         $tags = Tag::whereIn('id', $tagIds)->get();
 
-        $data = $data->map(function($event) use ($tags) {
-            if($event->tag_id) {
+        $data = $data->map(function ($event) use ($tags) {
+            if ($event->tag_id) {
                 $event->tag = $tags->find($event->tag_id);
             }
 

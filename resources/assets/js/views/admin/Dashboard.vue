@@ -247,7 +247,7 @@
 
       getTagStats(tag) {
         let types = _.map(tag.campaign_types, (value, type) => {
-          if(value === true) {
+          if (value === true) {
             return type
           }
         }).filter((type) => { return type !== undefined })
@@ -256,7 +256,7 @@
           return this.tags[tag.platform_type][type]
         }).filter((tag) => { return tag !== undefined })
 
-        if(this.tags[tag.platform_type][tag.ad_type] !== undefined) {
+        if (this.tags[tag.platform_type][tag.ad_type] !== undefined) {
           tagStats.push(this.tags[tag.platform_type][tag.ad_type])
         }
 
@@ -283,7 +283,7 @@
                       tag.impressions++
                     })
                     this.impressions++
-                    this.revenue += (e.tag.ecpm)/1000
+                    this.revenue += (e.tag.ecpm) / 1000
                     break
                   case 'fill':
                     this.fills++

@@ -78,32 +78,32 @@ class StatsTransformer
             $data[$stat] = 0;
         }
 
-        if($tagStats) {
+        if ($tagStats) {
             $data['tags'] = [
                 'mobile' => [
                     'preroll' => [
                         'requests' => 0,
                         'impressions' => 0,
-                        'errors' => 0
+                        'errors' => 0,
                     ],
                     'outstream' => [
                         'requests' => 0,
                         'impressions' => 0,
-                        'errors' => 0
+                        'errors' => 0,
                     ],
                 ],
                 'desktop' => [
                     'preroll' => [
                         'requests' => 0,
                         'impressions' => 0,
-                        'errors' => 0
+                        'errors' => 0,
                     ],
                     'outstream' => [
                         'requests' => 0,
                         'impressions' => 0,
-                        'errors' => 0
+                        'errors' => 0,
                     ],
-                ]
+                ],
             ];
         }
 
@@ -114,7 +114,7 @@ class StatsTransformer
                 $data['revenue'] += $this->calculateRevenue($stat->count, $stat->tag->ecpm);
             }
 
-            if($tagStats) {
+            if ($tagStats) {
                 $this->parseTagStats($data, $stat);
             }
         }
@@ -192,21 +192,22 @@ class StatsTransformer
         return $data;
     }
 
-    protected function parseTagStats(&$data, $stat) {
+    protected function parseTagStats(&$data, $stat)
+    {
         $statName = $stat->name;
 
-        if($statName === 'adErrors' || $statName === 'fillErrors') {
+        if ($statName === 'adErrors' || $statName === 'fillErrors') {
             $statName = 'errors';
         }
 
         $tag = $stat->tag;
 
-        if(isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
+        if (isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
             $data['tags'][$tag->platform_type][$tag->ad_type][$statName] += $stat->count;
         }
 
-        foreach($tag->campaign_types as $type) {
-            if(isset($data['tags'][$tag->platform_type][$type][$statName])) {
+        foreach ($tag->campaign_types as $type) {
+            if (isset($data['tags'][$tag->platform_type][$type][$statName])) {
                 $data['tags'][$tag->platform_type][$type][$statName] += $stat->count;
             }
         }

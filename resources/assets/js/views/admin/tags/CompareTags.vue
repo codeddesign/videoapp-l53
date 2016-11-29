@@ -78,10 +78,8 @@
 </template>
 
 <script>
-  import _ from 'lodash'
   import stats from '../../../services/stats'
   import http from '../../../services/http'
-  import Pagination from '../../../services/pagination'
   import TagChart from './TagChart.vue'
   import TagList from './TagList.vue'
   import moment from 'moment'
@@ -111,7 +109,7 @@
         fillErrors: 0,
         adErrors: 0,
 
-        chartData: [],
+        chartData: []
       }
     },
 
