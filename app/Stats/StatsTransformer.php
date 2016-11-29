@@ -11,15 +11,13 @@ class StatsTransformer
 
     public function transformRealtime($stats)
     {
-        if ($stats === null) {
-            $stats = [];
+        $data = [];
 
-            foreach (self::$allStats as $stat) {
-                $stats[$stat] = 0;
-            }
-        } else {
-            unset($stats['tags']);
+        foreach (self::$allStats as $stat) {
+            $data[$stat] = 0;
         }
+
+        dd($stats);
 
         return $stats;
     }
@@ -67,9 +65,11 @@ class StatsTransformer
      *
      * @param \Illuminate\Support\Collection $stats
      *
+     * @param bool                           $tagStats
+     *
      * @return array
      */
-    public function transformSumAll(Collection $stats)
+    public function transformSumAll(Collection $stats, $tagStats = false)
     {
         $data = [];
 
@@ -78,11 +78,44 @@ class StatsTransformer
             $data[$stat] = 0;
         }
 
+        if($tagStats) {
+            $data['tags'] = [
+                'mobile' => [
+                    'preroll' => [
+                        'requests' => 0,
+                        'impressions' => 0,
+                        'errors' => 0
+                    ],
+                    'outstream' => [
+                        'requests' => 0,
+                        'impressions' => 0,
+                        'errors' => 0
+                    ],
+                ],
+                'desktop' => [
+                    'preroll' => [
+                        'requests' => 0,
+                        'impressions' => 0,
+                        'errors' => 0
+                    ],
+                    'outstream' => [
+                        'requests' => 0,
+                        'impressions' => 0,
+                        'errors' => 0
+                    ],
+                ]
+            ];
+        }
+
         foreach ($stats as $stat) {
             $data[$stat->name] += $stat->count;
 
             if ($stat->name === 'impressions') {
                 $data['revenue'] += $this->calculateRevenue($stat->count, $stat->tag->ecpm);
+            }
+
+            if($tagStats) {
+                $this->parseTagStats($data, $stat);
             }
         }
 
@@ -157,6 +190,26 @@ class StatsTransformer
         }
 
         return $data;
+    }
+
+    protected function parseTagStats(&$data, $stat) {
+        $statName = $stat->name;
+
+        if($statName === 'adErrors' || $statName === 'fillErrors') {
+            $statName = 'errors';
+        }
+
+        $tag = $stat->tag;
+
+        if(isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
+            $data['tags'][$tag->platform_type][$tag->ad_type][$statName] += $stat->count;
+        }
+
+        foreach($tag->campaign_types as $type) {
+            if(isset($data['tags'][$tag->platform_type][$type][$statName])) {
+                $data['tags'][$tag->platform_type][$type][$statName] += $stat->count;
+            }
+        }
     }
 
     protected function calculateRevenue($impressions, $ecpm)

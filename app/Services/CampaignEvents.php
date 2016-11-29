@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Events\CampaignEventReceived;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
+use App\Models\Tag;
 use App\Models\WordpressSite;
 use App\Stats\RedisStats;
 use Carbon\Carbon;
@@ -44,13 +45,27 @@ class CampaignEvents
 
     public function fetchMultipleCampaigns(array $ids)
     {
-        $data = [];
+        $data = new Collection();
 
         foreach ($ids as $id) {
-            $data[] = $this->fetchStatusForCampaign($id);
+            $this->fetchStatusForCampaign($id)->map(function($stat) use ($data) {
+                $data->push((object) $stat);
+            });
         }
 
-        return array_merge_recursive_numeric($data);
+        $tagIds = $data->pluck('tag_id')->unique()->values();
+
+        $tags = Tag::whereIn('id', $tagIds)->get();
+
+        $data = $data->map(function($event) use ($tags) {
+            if($event->tag_id) {
+                $event->tag = $tags->find($event->tag_id);
+            }
+
+            return $event;
+        });
+
+        return $data;
     }
 
     public function fetchStatusForCampaign($campaignId)

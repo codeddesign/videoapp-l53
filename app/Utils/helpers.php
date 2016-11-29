@@ -1,4 +1,5 @@
 <?php
+use App\Models\Tag;
 
 /**
  *  Echo's the provided css $class if the current route is matched.
@@ -137,12 +138,13 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
     $campaignEvents = new \App\Services\CampaignEvents();
     $referrer = 'http://videoplayer.dev/test/dev';
     $time = 0;
+    $tags = Tag::all()->pluck('id');
 
     do {
-        $tag = collect([1, 2])->random();
         $repeat = mt_rand($min, $max);
 
         for ($i = 0;$i < $repeat;$i++) {
+            $tag = collect($tags)->random();
             $rate = mt_rand(0, 100);
 
             $campaignEvents->handle([

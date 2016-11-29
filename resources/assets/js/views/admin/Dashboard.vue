@@ -19,7 +19,7 @@
 
       <div class="display-dashboardtoparea">
         <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
-          <span>( LIVE STATS UP TO {{ currentTime.format('hh:mm a') }} )</span>
+          <span>( LIVE STATS FROM {{ currentTime.clone().startOf('hour').format('hh:mm a') }} UP TO {{ currentTime.format('hh:mm a') }} )</span>
         </div>
         <router-link :to="{ name: 'campaigns.create'}">
           <div class="currentcamp-createbutton">GENERATE REPORT</div>
@@ -35,89 +35,56 @@
           <stats title="impressions" :value="impressions"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="revenue" color="#1aa74f"></stats>
+          <stats title="revenue" :value="presentRevenue" color="#1aa74f"></stats>
         </li>
         <li>
           <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
         </li>
       </ul>
-      <!-- BOTTOM ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-          <stats title="fill" :value="fills"></stats>
+          <stats title="desktop pre-roll fill"
+          :value="calculateFillRate(tags.desktop.preroll.impressions, tags.desktop.preroll.requests)"></stats>
         </li>
         <li>
-          <stats title="fill-rate" :value="fillRate"></stats>
+          <stats title="mobile pre-roll fill"
+          :value="calculateFillRate(tags.mobile.preroll.impressions, tags.mobile.preroll.requests)"></stats>
         </li>
         <li>
-          <stats title="error-rate" :value="errorRate" color="#009dd7"></stats>
+          <stats title="desktop pre-roll errors"
+          :value="calculateErrorRate(tags.desktop.preroll.impressions, tags.desktop.preroll.errors)"></stats>
         </li>
         <li>
-          <stats title="use-rate" :value="useRate" color="#009dd7"></stats>
+          <stats title="mobile pre-roll errors"
+          :value="calculateErrorRate(tags.mobile.preroll.impressions, tags.mobile.preroll.errors)"></stats>
+        </li>
+      </ul>
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="desktop outstream fill"
+          :value="calculateFillRate(tags.desktop.outstream.impressions, tags.desktop.outstream.requests)"></stats>
+        </li>
+        <li>
+          <stats title="mobile outstream fill"
+          :value="calculateFillRate(tags.mobile.outstream.impressions, tags.mobile.outstream.requests)"></stats>
+        </li>
+        <li>
+          <stats title="desktop outstream errors"
+          :value="calculateErrorRate(tags.desktop.outstream.impressions, tags.desktop.outstream.errors)"></stats>
+        </li>
+        <li>
+          <stats title="mobile outstream errors"
+          :value="calculateErrorRate(tags.mobile.outstream.impressions, tags.mobile.outstream.errors)"></stats>
         </li>
       </ul>
 
-            <!-- CAMPAIGN SELECTION AREA -->
-      <div class="admindash-supplierwrapper">
-        <div class="admindash-dailystatstitle">SUPPLIER ANALYTICS</div>
-        <div class="admindash-suppliercompare">
-          <div class="admindash-suppliercomparetitle">Compare to:</div>
-          <div class="admindash-supplierdroplist">
-            <select>
-            <option value="">Yesterday</option>
-            <option value="">Last 7 Days</option>
-            <option value="">This Month</option>
-            <option value="">Last Month</option>
-          </select>
-          <div class="admindash-supplierdroparrow"></div>
-          </div>
-        </div>
-      </div>
-      <ul class="admindashboard-dailystatstitles">
-          <li>SUPPLIER</li>
-          <li>PLATFORM</li>
-          <li>TYPE</li>
-          <li>REQUESTS</li>
-          <li>IMPRESSIONS</li>
-          <li>FILL-RATE</li>
-          <li>ERROR-RATE</li>
-          <li>TAG DISPLAY %</li>
-      </ul>
-      <ul class="admindashboard-dailystatslist">
-          <li>
-              <div class="dashboard-statslist1">AOL</div>
-              <div class="dashboard-statslist2">DESKTOP</div>
-              <div class="dashboard-statslist2">PRE-ROLL</div>
-              <div class="dashboard-statslist2">1,057 <span class="down">(-34%)</span></div>
-              <div class="dashboard-statslist2">1,501 <span class="down">(-34%)</span></div>
-              <div class="dashboard-statslist2">17% <span class="down">(-34%)</span></div>
-              <div class="dashboard-statslist2">4% <span class="down">(-34%)</span></div>
-              <div class="dashboard-statslist2">17% <span class="up">(+34%)</span></div>
-          </li>
-      </ul>
-      <div class="understatlist-wrapper">
-        <div class="dashpagination-wrapper">
-          <div class="dashpag-left"></div>
-          <div class="dashpag-numbers">1 of 12</div>
-          <div class="dashpag-right"></div>
-        </div>
-        <div class="dashpagerows-wrapper">
-          <div class="dashpagerows-title">Display Rows:</div>
-          <select>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-          </select>
-          <div class="dashpagerows-selectarrow"></div>
-        </div>
-      </div>
-
-
+      <tag-list></tag-list>
     </div>
   </div>
 </template>
 
 <script>
+  import TagList from './tags/TagList.vue'
   import Stats from '../dashboard/components/Stats.vue'
   import LineBarChart from '../dashboard/components/LineBarChart.vue'
   import socket from '../../services/socket'
@@ -125,6 +92,7 @@
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
+  import accounting from 'accounting'
   import _ from 'lodash'
 
   export default {
@@ -145,8 +113,40 @@
           { text: 'Last Month', value: 'lastMonth' }
         ],
 
+        tags: {
+          mobile: {
+            preroll: {
+              requests: 0,
+              impressions: 0,
+              errors: 0
+            },
+
+            outstream: {
+              requests: 0,
+              impressions: 0,
+              errors: 0
+            }
+          },
+
+          desktop: {
+            preroll: {
+              requests: 0,
+              impressions: 0,
+              errors: 0
+            },
+
+            outstream: {
+              requests: 0,
+              impressions: 0,
+              errors: 0
+            }
+          }
+        },
+
         requests: 0,
         impressions: 0,
+
+        revenue: 0,
 
         fills: 0,
         fillErrors: 0,
@@ -164,6 +164,10 @@
         return this.$store.state.users.currentUser
       },
 
+      presentRevenue() {
+        return accounting.formatMoney(this.revenue)
+      },
+
       alerts() {
         return this.pendingWebsites.length
       },
@@ -172,14 +176,10 @@
         return this.$store.state.admin.pendingWebsites
       },
 
-      revenue() {
-        return this.calculateRevenue(this.impressions)
-      },
-
       ecpm() {
         // we calculate the revenue again to get the raw
         // value instead of the formatted currency
-        return this.calculateEcpm(this.impressions, this.calculateRevenue(this.impressions, false))
+        return this.calculateEcpm(this.impressions, this.revenue)
       },
 
       fillRate() {
@@ -215,8 +215,10 @@
             this.requests = parseInt(response.data.requests)
             this.impressions = parseInt(response.data.impressions)
             this.fills = parseInt(response.data.fills)
+            this.revenue = parseFloat(response.data.revenue)
             this.adErrors = parseInt(response.data.adErrors)
             this.fillErrors = parseInt(response.data.fillErrors)
+            this.tags = response.data.tags
           })
           .catch((error) => {
             console.error('Error fetching the stats count.')
@@ -243,23 +245,53 @@
           })
       },
 
+      getTagStats(tag) {
+        let types = _.map(tag.campaign_types, (value, type) => {
+          if(value === true) {
+            return type
+          }
+        }).filter((type) => { return type !== undefined })
+
+        let tagStats = types.map(type => {
+          return this.tags[tag.platform_type][type]
+        }).filter((tag) => { return tag !== undefined })
+
+        if(this.tags[tag.platform_type][tag.ad_type] !== undefined) {
+          tagStats.push(this.tags[tag.platform_type][tag.ad_type])
+        }
+
+        return tagStats
+      },
+
       setupSocket() {
         console.log('setting up socket')
         let echo = socket.connection()
         if (echo) {
           echo.private('user.' + this.currentUser.id)
               .listen('CampaignEventReceived', (e) => {
+                console.log(e)
+                let tags = this.getTagStats(e.tag)
                 switch (events.type(e)) {
                   case 'request':
                     this.requests++
+                    tags.forEach((tag) => {
+                      tag.requests++
+                    })
                     break
                   case 'impression':
+                    tags.forEach((tag) => {
+                      tag.impressions++
+                    })
                     this.impressions++
+                    this.revenue += (e.tag.ecpm)/1000
                     break
                   case 'fill':
                     this.fills++
                     break
                   case 'tag-error':
+                    tags.forEach((tag) => {
+                      tag.errors++
+                    })
                     this.fillErrors++
                     break
                   case 'ad-error':
@@ -291,7 +323,8 @@
 
     components: {
       Stats,
-      LineBarChart
+      LineBarChart,
+      TagList
     }
   }
 </script>

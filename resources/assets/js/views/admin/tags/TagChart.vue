@@ -106,7 +106,6 @@
 
     watch: {
       chartData(newChartData) {
-        console.log(newChartData)
         this.renderChart()
       }
     }

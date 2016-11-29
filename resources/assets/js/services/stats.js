@@ -51,5 +51,15 @@ export default {
     }
 
     return useRate.toFixed(2) + '%'
+  },
+
+  calculateTagDisplayPercent(impressions, totalImpressions) {
+    let tagDisplay = 0
+
+    if (totalImpressions !== 0) {
+      tagDisplay = ((impressions / totalImpressions) * 100)
+    }
+
+    return tagDisplay.toFixed(2) + '%'
   }
 }
