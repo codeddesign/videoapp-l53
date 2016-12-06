@@ -21,7 +21,7 @@ class RegistrationTest extends TestCase
             ->type('fname', 'first_name')
             ->type('lname', 'last_name')
             ->type('a3m', 'company')
-            ->type('test@mail.com', 'email')
+            ->type('hello@ruigomes.me', 'email')
             ->type('123123', 'password')
             ->type('123123', 'password_confirmation')
             ->press('register');
@@ -30,7 +30,7 @@ class RegistrationTest extends TestCase
         $this->seeInDatabase('users', [
             'first_name'  => 'fname',
             'company'  => 'a3m',
-            'email' => 'test@mail.com',
+            'email' => 'hello@ruigomes.me',
         ]);
 
         // check if user is authenticated.

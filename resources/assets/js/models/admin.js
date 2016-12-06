@@ -8,8 +8,15 @@ export default {
     })
   },
 
+  loadGlobalOptions() {
+    return axios.get('/admin/globalOptions')
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   loadAccounts() {
-    return axios.get('/admin/accounts?include=campaigns')
+    return axios.get('/admin/accounts?include=campaigns,websites,notes')
     .then((response) => {
       return response.data
     })
@@ -19,6 +26,13 @@ export default {
     return axios.post('/admin/accounts/' + id + '/activate?include=campaigns', {
       status: status
     })
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
+  updateGlobalOptions(options) {
+    return axios.put('/admin/globalOptions', options)
     .then((response) => {
       return response.data.data
     })

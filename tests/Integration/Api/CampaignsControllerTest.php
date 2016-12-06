@@ -4,7 +4,7 @@ namespace Integration\Api;
 
 use App\Models\Campaign;
 use App\Testing\TestCase;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 class CampaignsController extends TestCase

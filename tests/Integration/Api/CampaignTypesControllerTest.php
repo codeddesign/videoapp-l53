@@ -5,7 +5,7 @@ namespace App\Tests\Integration\Api;
 use App\Testing\TestCase;
 use App\Models\CampaignType;
 use App\Testing\DatabaseTransactions;
-use App\User;
+use App\Models\User;
 
 class CampaignTypesTest extends TestCase
 {

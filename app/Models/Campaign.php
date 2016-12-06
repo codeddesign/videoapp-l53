@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Transformers\CampaignTypeTransformer;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Collection;

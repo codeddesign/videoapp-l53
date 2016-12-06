@@ -17,6 +17,7 @@ import Logout from './views/components/Logout.vue'
 import Admin from './views/admin/Admin.vue'
 import AdminDashboard from './views/admin/Dashboard.vue'
 import AdminAccounts from './views/admin/Accounts.vue'
+import AccountInfo from './views/admin/AccountInfo.vue'
 import TagManagement from './views/admin/tags/TagManagement.vue'
 
 export default new Router({
@@ -96,7 +97,16 @@ export default new Router({
           meta: {
             title: 'Manage Accounts'
           }
-        }, {
+        },
+        {
+          path: 'accounts/:accountId',
+          name: 'admin.accounts.info',
+          component: AccountInfo,
+          meta: {
+            title: 'Account Information'
+          }
+        },
+        {
           path: 'tags',
           name: 'admin.tagmanagement',
           component: TagManagement,

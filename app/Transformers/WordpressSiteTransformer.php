@@ -8,7 +8,7 @@ class WordpressSiteTransformer extends Transformer
 {
     public function transform(WordpressSite $site)
     {
-        return [
+        $transformedSite = [
             'id'         => (int) $site->id,
             'domain'     => $site->domain,
             'link'       => $site->link,
@@ -16,5 +16,13 @@ class WordpressSiteTransformer extends Transformer
             'created_at' => $site->created_at->timestamp,
             'user_id'    => (int) $site->user->id,
         ];
+
+        if ($site->stats) {
+            $transformedSite = array_merge($transformedSite, [
+                'stats' => $site->stats,
+            ]);
+        }
+
+        return $transformedSite;
     }
 }

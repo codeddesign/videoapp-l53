@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
@@ -38,7 +38,7 @@ $factory->define(App\Models\Campaign::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'user_id' => function () {
-            return factory(App\User::class)->create()->id;
+            return factory(App\Models\User::class)->create()->id;
         },
         'campaign_type_id' => function () {
             return factory(App\Models\CampaignType::class)->create()->id;
@@ -51,7 +51,7 @@ $factory->define(App\Models\Campaign::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\WordpressSite::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function () {
-            return factory(App\User::class)->create()->id;
+            return factory(App\Models\User::class)->create()->id;
         },
         'domain' => "http://{$faker->unique()->domainName}",
     ];

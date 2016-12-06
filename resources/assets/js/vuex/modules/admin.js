@@ -8,9 +8,14 @@ import {
   SAVE_CURRENT_TAG,
   LOAD_TAGS,
   LOAD_LOCATIONS,
-  LOCATION_BACK
+  LOCATION_BACK,
+  ADD_NOTE,
+  LOAD_WEBSITE_STATS,
+  LOAD_GLOBAL_OPTIONS,
+  UPDATE_GLOBAL_OPTIONS
 } from '../mutation-types'
 
+import User from '../../models/user'
 import Admin from '../../models/admin'
 import Country from '../../models/country'
 import Tag from '../../models/tag'
@@ -28,7 +33,9 @@ const state = {
     states: [],
     cities: []
   },
-  showLocations: 'countries'
+  websitesStats: [],
+  showLocations: 'countries',
+  globalOptions: []
 }
 
 const actions = {
@@ -41,6 +48,12 @@ const actions = {
   loadAccounts({ commit }) {
     Admin.loadAccounts().then((accounts) => {
       commit(LOAD_ACCOUNTS, accounts.data)
+    })
+  },
+
+  loadGlobalOptions({ commit }) {
+    Admin.loadGlobalOptions().then((globalOptions) => {
+      commit(LOAD_GLOBAL_OPTIONS, globalOptions)
     })
   },
 
@@ -92,6 +105,24 @@ const actions = {
 
   locationBack({ commit }) {
     commit(LOCATION_BACK)
+  },
+
+  addNote({ commit }, { account, note }) {
+    User.addNote(account.id, note).then(note => {
+      commit(ADD_NOTE, { account: account, note: note })
+    })
+  },
+
+  loadWebsitesStats({ commit }, account) {
+    User.loadWebsiteStats(account.id).then(stats => {
+      commit(LOAD_WEBSITE_STATS, stats)
+    })
+  },
+
+  updateGlobalOptions({ commit }, globalOptions) {
+    Admin.updateGlobalOptions(globalOptions).then(globalOptions => {
+      commit(UPDATE_GLOBAL_OPTIONS, globalOptions)
+    })
   }
 }
 
@@ -117,6 +148,15 @@ const mutations = {
   },
 
   [SET_CURRENT_TAG](state, tag) {
+    let globalOptions = state.globalOptions
+
+    // if the tag option is undefined, use the global option
+    globalOptions.map(option => {
+      if (tag[option.option] === '') {
+        tag[option.option] = option.value
+      }
+    })
+
     state.currentTag = tag
   },
 
@@ -164,6 +204,23 @@ const mutations = {
         state.showLocations = 'countries'
         break
     }
+  },
+
+  [ADD_NOTE](state, { account, note }) {
+    let user = _.find(state.accounts, { id: account.id })
+    user.notes.data.unshift(note)
+  },
+
+  [LOAD_WEBSITE_STATS](state, stats) {
+    state.websitesStats = stats
+  },
+
+  [LOAD_GLOBAL_OPTIONS](state, globalOptions) {
+    state.globalOptions = globalOptions
+  },
+
+  [UPDATE_GLOBAL_OPTIONS](state, globalOptions) {
+    state.globalOptions = globalOptions
   }
 }
 

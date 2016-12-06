@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Tag;
+use App\Models\WordpressSite;
 
 /**
  *  Echo's the provided css $class if the current route is matched.
@@ -137,15 +138,18 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
 function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10, $seconds = 10)
 {
     $campaignEvents = new \App\Services\CampaignEvents();
-    $referrer = 'http://videoplayer.dev/test/dev';
+    $sites = WordpressSite::all()->pluck('domain');
     $time = 0;
     $tags = Tag::all()->pluck('id');
+    $faker = Faker\Factory::create();
 
     do {
         $repeat = mt_rand($min, $max);
 
         for ($i = 0;$i < $repeat;$i++) {
             $tag = collect($tags)->random();
+            $site = collect($sites)->random();
+            $referrer = 'http://'.$site.'/'.$faker->slug();
             $rate = mt_rand(0, 100);
 
             $campaignEvents->handle([
@@ -153,6 +157,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                 'source' => 'app',
                 'status' => 200,
                 'tag' => $tag,
+                'referrer' => $referrer,
             ]);
 
             if ($rate > $failPercent) {
@@ -162,6 +167,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                     'source' => 'tag',
                     'status' => 0,
                     'tag' => $tag,
+                    'referrer' => $referrer,
                 ]);
 
                 $campaignEvents->handle([
@@ -169,6 +175,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                     'source' => 'ad',
                     'status' => 0,
                     'tag' => $tag,
+                    'referrer' => $referrer,
                 ]);
             } else {
                 if (mt_rand(0, 100) > 50) {
@@ -178,6 +185,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                         'source' => 'tag',
                         'status' => 400,
                         'tag' => $tag,
+                        'referrer' => $referrer,
                     ]);
                 } else {
                     //ad error
@@ -186,6 +194,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                         'source' => 'tag',
                         'status' => 0,
                         'tag' => $tag,
+                        'referrer' => $referrer,
                     ]);
 
                     $campaignEvents->handle([
@@ -193,6 +202,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                         'source' => 'ad',
                         'status' => 300,
                         'tag' => $tag,
+                        'referrer' => $referrer,
                     ]);
                 }
             }

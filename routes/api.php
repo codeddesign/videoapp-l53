@@ -24,12 +24,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
         return 'You\'re an admin.';
     });
 
+    Route::get('globalOptions', 'GlobalOptionsController@index');
+    Route::put('globalOptions', 'GlobalOptionsController@update');
+
     Route::get('stats/all', 'StatsController@all');
     Route::get('charts/all', 'ChartsController@stats');
 
+    Route::get('websites/stats', 'WebsitesController@stats');
     Route::get('websites/pending', 'WebsitesController@pending');
 
     Route::get('accounts', 'AccountsController@index');
+    Route::post('accounts/{id}/note', 'AccountsController@addNote');
     Route::post('accounts/{id}/activate', 'AccountsController@activate');
 
     Route::get('tags', 'TagsController@index');

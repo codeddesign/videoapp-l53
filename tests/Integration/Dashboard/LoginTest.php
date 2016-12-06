@@ -3,7 +3,7 @@
 namespace App\Tests\Integration\Dashboard;
 
 use App\Testing\TestCase;
-use App\User;
+use App\Models\User;
 use App\Testing\DatabaseTransactions;
 
 class LoginTest extends TestCase

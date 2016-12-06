@@ -63,6 +63,7 @@
     </ul>
     <ul class="dashboard-dailystatslist dashboard-accountslist">
       <li v-for="account in filteredAccounts">
+        <div @click="showAccount(account)">
           <div class="dashboard-statslist1">{{ account.id }}</div>
           <div class="dashboard-statslist2">{{ account.company }}</div>
           <div class="dashboard-statslist2">{{ account.first_name }}</div>
@@ -70,12 +71,13 @@
           <div class="dashboard-statslist2">{{ account.created_at_humans }}</div>
           <div class="dashboard-statslist2">{{ account.campaigns.data.length }}</div>
           <div class="dashboard-statslist2">$117,880</div>
-          <div class="dashboard-statslist2">
-            <div class="dashboard-switch">
-              <input v-bind:id="account.id" v-on:change="activateAccount(account.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" type="checkbox" v-bind:checked="account.active">
-              <label v-bind:for="account.id" class="cmn-labelchange"></label>
-            </div>
+        </div>
+        <div class="dashboard-statslist2">
+          <div class="dashboard-switch">
+            <input v-bind:id="account.id" v-on:change="activateAccount(account.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" type="checkbox" v-bind:checked="account.active">
+            <label v-bind:for="account.id" class="cmn-labelchange"></label>
           </div>
+        </div>
       </li>
     </ul>
     <div class="understatlist-wrapper">
@@ -204,6 +206,10 @@
           id: id,
           status: event.target.checked
         })
+      },
+
+      showAccount(account) {
+        this.$router.push({ name: 'admin.accounts.info', params: { accountId: account.id }})
       }
     },
 

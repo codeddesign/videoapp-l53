@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
+use App\Models\User;
 use App\Stats\StatsTransformer;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class ChartsController extends ApiController
     public function stats(Request $request)
     {
         $range = $request->get('time') ?? 'today';
+        $user = $request->get('user');
 
         if ($range === 'today' || $range === 'yesterday') {
             $step = CarbonInterval::hour();
@@ -28,9 +30,15 @@ class ChartsController extends ApiController
         }
 
         $stats = CampaignEvent::query()
-            ->with('tag')
-            ->timeRange($range)
-            ->get()
+            ->with('tag', 'website')
+            ->timeRange($range);
+
+        if ($user) {
+            $websites = User::with('wordpressSites')->find($user)->wordpressSites->pluck('id');
+            $stats->whereIn('website_id', $websites);
+        }
+
+        $stats = $stats->get()
             ->groupBy(function ($item) use ($keyFormat) {
                 return $item->created_at->format($keyFormat);
             });

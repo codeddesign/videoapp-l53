@@ -3542,3 +3542,403 @@ ul.tagcreate-criterialist li:hover .tagcreate-criteriadelete {
     margin-top: 42px;
     cursor: pointer;
 }
+
+.userinfo-abovegraph {
+    float: left;
+    width: 100%;
+    height: 46px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E3E1E0;
+}
+.userinfo-returntosearch {
+    float: left;
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #868686;
+    line-height: 47px;
+}
+.userinfo-useractivate {
+    float: right;
+    width: 212px;
+    height: 32px;
+    background: #F0EFD8;
+    border: 1px solid #E4E1CA;
+    margin-right: 20px;
+    margin-top: 6px;
+}
+.userinfo-activatetitle {
+    float: left;
+    line-height: 32px;
+    color: #666666;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 9px;
+}
+.userinfo-activateon {
+    float: right;
+    background: url('/images/useractivateon.png');
+    width: 32px;
+    height: 22px;
+    margin-top: 4px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+.userinfo-activateon:hover {
+    background: url('/images/useractivateon.png') 0 -22px;
+}
+.userinfo-activateoff {
+    float: right;
+    background: url('/images/useractivateoff.png');
+    width: 22px;
+    height: 22px;
+    margin-top: 4px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+.userinfo-activateoff:hover {
+    background: url('/images/useractivateoff.png') 0 -22px;
+}
+.userinfo-graphwrap {
+    float: left;
+    width: 100%;
+    background: #FFFFFF;
+    height: 310px;
+    overflow: hidden;
+}
+.userinfo-graphleft {
+    float: left;
+    width: 460px;
+}
+.userinfo-graphright {
+    float: right;
+    width: calc(100% - 460px);
+    position: relative;
+}
+ul.userinfo-userdatalist {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-right: 1px solid #EEEEEE;
+    padding-bottom: 17px;
+}
+ul.userinfo-userdatalist li {
+    float: left;
+    list-style-type: none;
+    height: 39px;
+    border-bottom: 1px solid #EEEEEE;
+    width: 100%;
+}
+.userinfo-listtitle {
+    float: left;
+    width: 128px;
+    font-size: 11px;
+    color: #868686;
+    padding-left: 20px;
+    border-right: 1px solid #EEEEEE;
+}
+.userinfo-listdesc {
+    float: left;
+    width: calc(100% - 130px);
+    font-size: 12px;
+    color: #373F52;
+    padding-left: 20px;
+}
+ul.userinfo-userdatalist li:first-child {
+    height: 59px;
+}
+ul.userinfo-userdatalist li:first-child .userinfo-listdesc{
+    font-weight: 600;
+    font-size: 14px;
+}
+ul.userinfo-userdatalist li div {
+    padding-top: 12px;
+    padding-bottom: 11px;
+}
+ul.userinfo-userdatalist li:first-child div {
+    padding-top: 30px;
+}
+ul.userinfo-userdatalist li:first-child .userinfo-listtitle {
+    line-height: 22px;
+}
+ul.userinfo-userdatalist li:nth-child(5) {
+    height: 78px;
+}
+ul.userinfo-userdatalist li:nth-child(5) .userinfo-listtitle {
+    padding-bottom: 58px;
+}
+ul.userinfo-userdatalist li:nth-child(6) .userinfo-listtitle {
+    padding-bottom: 29px;
+}
+ul.userinfo-userdatalist li:last-child {
+    border-bottom: none;
+}
+.userinfo-bankinfobutton {
+    float: left;
+    width: 118px;
+    height: 26px;
+    background: #BA0200;
+    text-align: center;
+    line-height: 26px;
+    font-size: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+}
+.userinfo-bankinfobutton:hover {
+    background: #930302;
+}
+.userinfo-addtllinkswrap {
+    float: left;
+    width: 100%;
+    height: 57px;
+    background: #F6F6F6;
+    border-top: 1px solid #EEEEEE;
+    position: absolute;
+    margin-top: 253px;
+}
+ul.userinfo-addtllinks {
+    float: right;
+    margin: 0;
+    padding: 0;
+    margin-right: 15px;
+    margin-top: 11px;
+}
+ul.userinfo-addtllinks li {
+    display: inline-block;
+    background: #3F485D;
+    width: 120px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    color: #FFFFFF;
+    font-size: 11px;
+    cursor: pointer;
+}
+.userinfo-selectwrap {
+    float: left;
+    width: 100%;
+}
+.userinfo-websitesheader {
+    float: left;
+    width: 100%;
+    background: #6C689E;
+    height: 50px;
+}
+.userinfo-websitestitle {
+    float: left;
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-top: 18px;
+}
+ul.userinfo-itemlistheader {
+    float: left;
+    width: 100%;
+    background: #F5F5F4;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+ul.userinfo-itemlistheader li {
+    float: left;
+    width: 160px;
+    line-height: 44px;
+    font-size: 10px;
+    color: #868686;
+    padding-left: 20px;
+    border-right: 1px solid #E3E1E0;
+    list-style-type: none;
+}
+ul.userinfo-itemlistheader li:nth-child(2), ul.userinfo-itemlistheader li:nth-child(3) {
+    width: 120px;
+}
+ul.userinfo-itemlistheader li:nth-child(4) {
+    width: 102px;
+}
+ul.userinfo-itemlistheader li:nth-child(5) {
+    width: 115px;
+}
+ul.userinfo-itemlistheader li:nth-child(6) {
+    width: 277px;
+    border-right: 0;
+}
+ul.userinfo-itemlistheader li:last-child {
+    border-right: 0;
+    border-left: 1px solid #E3E1E0;
+    float: right;
+}
+ul.userinfo-statslist li div div {
+    width: 160px;
+}
+ul.userinfo-statslist li div div:nth-child(2), ul.userinfo-statslist li div div:nth-child(3) {
+    width: 120px;
+}
+ul.userinfo-statslist li div div:nth-child(4) {
+    width: 102px;
+}
+ul.userinfo-statslist li div div:nth-child(5) {
+    width: 115px;
+}
+ul.userinfo-statslist li div div:nth-child(6) {
+    width: calc(100% - 776px);
+    border-right: 1px solid #e3e1e0;
+}
+ul.userinfo-statslist li .dashboard-statslist3 {
+    float: right;
+    width: 159px;
+}
+.userinfo-noteswrapper {
+    float: left;
+    width: 100%;
+    background: #303749;
+    min-height: 50px;
+    /*border-left: 1px solid #414A63;*/
+    border-top: 1px solid #414A63;
+}
+.userinfo-notesinfotitle {
+    float: left;
+    margin-left: 20px;
+    font-size: 11px;
+    color: #FFFFFF;
+    margin-top: 20px;
+}
+.userinfo-notescounttitle {
+    float: right;
+    background: #FF4000;
+    height: 24px;
+    line-height: 25px;
+    font-size: 11px;
+    text-align: center;
+    border-radius: 99px;
+    -moz-border-radius: 99px;
+    -webkit-border-radius: 99px;
+    padding: 0 10px;
+    margin-right: 20px;
+    margin-top: 20px;
+    color: #FFFFFF;
+}
+.userinfo-notesinnerwrapper {
+    float: left;
+    width: 100%;
+    padding: 0 80px;
+    margin-top: 20px;
+}
+.userinfo-chatbubblewrap {
+    float: left;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.userinfo-chatbubble {
+    width: 100%;
+    float: left;
+    padding: 15px;
+    color: #666666;
+    background: #FFFFFF;
+    margin-top: 7px;
+}
+.userinfo-chatbubbleusername {
+    float: left;
+    font-size: 12px;
+    color: #999999;
+    font-weight: 600;
+}
+.userinfo-chatbubbledate {
+    float: left;
+    font-size: 12px;
+    color: #999999;
+    font-weight: 600;
+    margin-left: 35px;
+}
+.userinfo-commentmakecomment {
+    background: #6F6BA2;
+    float: left;
+    width: 100%;
+    min-height: 134px;
+    padding: 10px;
+    margin-top: 20px;
+}
+.userinfo-commenttextarea {
+    float: left;
+    width: 100%;
+    max-width: 100%;
+    height: 75px;
+    background: #FFFFFF;
+    font-size: 13px;
+    color: #666666;
+    padding: 10px;
+    border: 0;
+}
+.userinfo-commentsubmitnote {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    background: #3F485D;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-size: 11px;
+    color: #FFFFFF;
+}
+.userinfo-bankinfomodal {
+    width: 345px;
+    /*height: 309px;*/
+    border: 1px solid #DDDDDD;
+    background: #FFFFFF;
+    position: absolute;
+    z-index: 9999;
+    margin-left: 459px;
+    margin-top: -255px;
+    padding: 0 !important;
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+}
+.userinfo-bankinfoinner {
+    float: left;
+    width: 324px;
+    min-height: 43px;
+    background: #F4F4F4;
+    padding: 0 !important;
+    margin: 0;
+    margin-left: 9px;
+    margin-bottom: 4px;
+}
+.userinfo-bankinfotitle {
+    float: left;
+    margin-left: 10px;
+    width: 112px;
+    font-size: 11px;
+    color: #858585;
+    line-height: 43px;
+    font-weight: 500;
+    padding: 0 !important;
+}
+.userinfo-bankinfosub {
+    text-transform: uppercase;
+    width: 180px;
+    color: #373F52;
+    font-size: 12px;
+    margin-left: 10px;
+    float: left;
+    padding: 0 !important;
+    line-height: 17px;
+    margin-top: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.userbankclose {
+    background: url('/images/userbankclose.png');
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    cursor: pointer;
+}
+.userbankclose:hover {
+    background: url('/images/userbankclose.png') 0 -22px;
+}

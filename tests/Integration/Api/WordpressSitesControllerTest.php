@@ -5,7 +5,7 @@ namespace Integration\Api;
 use App\Models\WordpressSite;
 use App\Testing\DatabaseTransactions;
 use App\Testing\TestCase;
-use App\User;
+use App\Models\User;
 
 class WordpressSitesControllerTest extends TestCase
 {

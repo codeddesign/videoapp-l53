@@ -3,6 +3,7 @@
     <div class="tagmanage-tabbed">
       <compare-tags></compare-tags>
       <edit-tags></edit-tags>
+      <global-options></global-options>
     </div>
   </div>
 </template>
@@ -10,11 +11,18 @@
 <script>
   import EditTags from './EditTags.vue'
   import CompareTags from './CompareTags.vue'
+  import GlobalOptions from './GlobalOptions.vue'
+
   export default {
     name: 'TagManagement',
     components: {
       EditTags,
-      CompareTags
+      CompareTags,
+      GlobalOptions
+    },
+
+    mounted() {
+      this.$store.dispatch('loadGlobalOptions')
     }
   }
 </script>

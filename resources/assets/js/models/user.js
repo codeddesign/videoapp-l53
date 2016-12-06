@@ -13,5 +13,19 @@ export default {
           auth.logout()
         }
       })
+  },
+
+  addNote(id, note) {
+    return axios.post('/admin/accounts/' + id + '/note', { content: note })
+      .then((response) => {
+        return response.data.data
+      })
+  },
+
+  loadWebsiteStats(id) {
+    return axios.get('/admin/websites/stats?user_id=' + id)
+      .then((response) => {
+        return response.data.data
+      })
   }
 }

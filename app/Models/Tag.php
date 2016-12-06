@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
+use Carbon\Carbon;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
 
@@ -61,8 +63,14 @@ class Tag extends Model
         $cache = app(Repository::class);
 
         // Cache the tags for 5 minutes
-        $tags = $cache->remember('tags.all', 5, function () {
-            return Tag::all();
+        $tags = $cache->remember('tags.all', 1, function () {
+            return Tag::where('active', true)->where(function ($query) {
+                $date = Carbon::now();
+
+                return $query->where('date_range', false)
+                    ->orWhere('start_date', '<', $date)
+                    ->where('end_date', '>', $date);
+            })->get();
         });
 
         $tags = $tags->filter(function (self $tag) use ($location) {

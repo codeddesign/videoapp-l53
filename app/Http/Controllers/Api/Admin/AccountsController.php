@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Models\Note;
+use App\Transformers\NoteTransformer;
 use App\Transformers\UserTransformer;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AccountsController extends ApiController
@@ -31,5 +33,18 @@ class AccountsController extends ApiController
         $user->save();
 
         return $this->itemResponse($user, new UserTransformer);
+    }
+
+    public function addNote($id, Request $request)
+    {
+        $user = User::findOrFail($id);
+
+        $note = new Note;
+        $note->user_id = $user->id;
+        $note->creator_id = $this->user->id;
+        $note->content = $request->get('content');
+        $note->save();
+
+        return $this->itemResponse($note, new NoteTransformer);
     }
 }

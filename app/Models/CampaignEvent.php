@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
+use App\Models\Traits\SaveMany;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

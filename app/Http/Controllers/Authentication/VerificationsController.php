@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Services\Nexmo;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
@@ -22,8 +22,11 @@ class VerificationsController extends Controller
 
     public function postVerifyPhone(Request $request)
     {
+        $user = app('auth')->user();
         try {
             $response = Nexmo::verifyNumber($request->get('phone'));
+            $user->phone_number = $request->get('phone');
+            $user->save();
 
             return redirect()
                 ->route('verify.phone')
