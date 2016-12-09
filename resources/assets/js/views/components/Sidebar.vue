@@ -63,7 +63,7 @@
             </li>
           </router-link>
 
-          <router-link :to="{ name: 'admin.accounts'}">
+          <router-link :to="{ name: 'admin.reports'}">
             <li>
               <span>REPORTS</span>
             </li>
@@ -75,7 +75,7 @@
             </li>
           </router-link>
 
-          <router-link :to="{ name: 'admin.accounts'}">
+          <router-link :to="{ name: 'admin.settings'}">
             <li>
               <span>SETTINGS</span>
             </li>
@@ -88,27 +88,31 @@
 </template>
 
 <style lang="scss">
-.sidebar-wpbutton {
-  float: left;
-  width: 160px;
-  height: 44px;
-  text-align: center;
-  line-height: 43px;
-  color: #FFFFFF;
-  font-size: 12px;
-  background: #02A3DE;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  margin-left: 13px;
-  margin-top: 40px;
-  cursor: pointer;
-  letter-spacing: 0.3px;
+  .sidebar-wpbutton {
+    float: left;
+    width: 160px;
+    height: 44px;
+    text-align: center;
+    line-height: 43px;
+    color: #FFFFFF;
+    font-size: 12px;
+    background: #02A3DE;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    margin-left: 13px;
+    margin-top: 40px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
 
-  :hover {
-    background: #0090C6;
+    :hover {
+      background: #0090C6;
+    }
   }
-}
+
+  a.active li {
+    background: #6F6BA2;
+  }
 </style>
 
 <script>

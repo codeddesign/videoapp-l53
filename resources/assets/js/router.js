@@ -13,12 +13,14 @@ import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 import Logout from './views/components/Logout.vue'
 
-// Admin Componentes
+// Admin Components
 import Admin from './views/admin/Admin.vue'
 import AdminDashboard from './views/admin/Dashboard.vue'
 import AdminAccounts from './views/admin/Accounts.vue'
 import AccountInfo from './views/admin/AccountInfo.vue'
 import TagManagement from './views/admin/tags/TagManagement.vue'
+import Reports from './views/admin/Reports.vue'
+import Settings from './views/admin/Settings.vue'
 
 export default new Router({
   mode: 'history',
@@ -112,6 +114,22 @@ export default new Router({
           component: TagManagement,
           meta: {
             title: 'Manage Tags'
+          }
+        },
+        {
+          path: 'reports',
+          name: 'admin.reports',
+          component: Reports,
+          meta: {
+            title: 'Reports'
+          }
+        },
+        {
+          path: 'settings',
+          name: 'admin.settings',
+          component: Settings,
+          meta: {
+            title: 'Settings'
           }
         }
       ]

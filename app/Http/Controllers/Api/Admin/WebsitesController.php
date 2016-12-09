@@ -20,6 +20,16 @@ class WebsitesController extends ApiController
         return $this->collectionResponse($pendingWebsites, new WordpressSiteTransformer);
     }
 
+    public function activate($id, Request $request)
+    {
+        $website = WordpressSite::findOrFail($id);
+
+        $website->approved = $request->get('status');
+        $website->save();
+
+        return $this->itemResponse($website, new WordpressSiteTransformer);
+    }
+
     public function stats(Request $request)
     {
         $userId = $request->get('user_id');

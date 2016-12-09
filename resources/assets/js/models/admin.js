@@ -31,6 +31,15 @@ export default {
     })
   },
 
+  activateWebsite(id, status) {
+    return axios.post('/admin/websites/' + id + '/activate', {
+      status: status
+    })
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   updateGlobalOptions(options) {
     return axios.put('/admin/globalOptions', options)
     .then((response) => {

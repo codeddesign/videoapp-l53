@@ -22,6 +22,13 @@ export default {
       })
   },
 
+  loadChart(id) {
+    return axios.get('/admin/charts/all?time=today&user=' + id)
+      .then((response) => {
+        return response.data
+      })
+  },
+
   loadWebsiteStats(id) {
     return axios.get('/admin/websites/stats?user_id=' + id)
       .then((response) => {

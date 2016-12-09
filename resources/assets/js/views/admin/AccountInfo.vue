@@ -68,12 +68,7 @@
         </ul>
       </div>
       <div class="userinfo-graphright">
-        <ul class="taggraph-selection" style="margin-top:16px;">
-          <li class="selected">Requests</li>
-          <li class="selected">Fill</li>
-          <li>Impressions</li>
-          <li>Errors</li>
-        </ul>
+        <account-chart :chart-data="chartData"></account-chart>
 
         <div class="userinfo-addtllinkswrap">
           <ul class="userinfo-addtllinks">
@@ -126,8 +121,8 @@
                   </div>
                   <div class="dashboard-statslist3">
                     <div class="dashboard-switch">
-                      <input id="1" type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange">
-                      <label for="1" class="cmn-labelchange"></label>
+                      <input v-bind:id="website.id" type="checkbox" v-on:change="activateWebsite(website.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" v-bind:checked="website.approved">
+                      <label v-bind:for="website.id" class="cmn-labelchange"></label>
                     </div>
                   </div>
                 </li>
@@ -195,6 +190,9 @@
 <script>
   import _ from 'lodash'
   import stats from '../../services/stats'
+  import User from '../../models/user'
+  import Admin from '../../models/admin'
+  import AccountChart from './AccountChart.vue'
 
   export default {
     name: 'AccountInfo',
@@ -203,11 +201,17 @@
       return {
         showBankInfo: false,
         note: '',
-        websites: []
+        websites: [],
+        stats: [],
+        chartData: []
       }
     },
 
     methods: {
+      activateWebsite(id, event) {
+        Admin.activateWebsite(id, event.target.checked)
+      },
+
       goBack() {
         this.$router.push({ name: 'admin.accounts' })
       },
@@ -232,6 +236,11 @@
           }
         }
 
+        User.loadChart(account.id)
+          .then(chartData => {
+            this.chartData = chartData
+          })
+
         this.$store.dispatch('loadWebsitesStats', account)
         return account
       },
@@ -241,7 +250,8 @@
       }
     },
 
-    mounted() {
+    components: {
+      AccountChart
     }
   }
 </script>

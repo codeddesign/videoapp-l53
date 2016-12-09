@@ -13,7 +13,7 @@
           <div class="dashboard-secondarytitle">WEBSITE ACTIVATION</div>
           <div class="dashboard-secondarytitletwo">{{ site.domain }}</div>
           <div class="dashboard-secondarydelete"></div>
-          <div class="dashboard-secondaryviewaccount">VIEW ACCOUNT</div>
+          <div @click="viewAccount(site.user_id)" class="dashboard-secondaryviewaccount">VIEW ACCOUNT</div>
         </div>
       </div>
 
@@ -209,6 +209,10 @@
     },
 
     methods: {
+      viewAccount(userId) {
+        this.$router.push({ name: 'admin.accounts.info', params: { accountId: userId }})
+      },
+
       fetchStats() {
         http.get('/admin/stats/all?time=realtime')
           .then((response) => {
