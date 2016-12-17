@@ -14,16 +14,16 @@ module.exports = {
     loaders: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         exclude: /node_modules/,
       },
       {
         test: /\.(png|jpg|gif|svg|woff2?|eot|ttf)(\?v=[0-9\.]+)?$/,
-        loader: 'file',
+        loader: 'file-loader',
         query: {
           limit: 10000,
           name: '[name].[ext]?[hash:7]'
@@ -46,10 +46,15 @@ module.exports = {
       poll: true
     }
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  performance: {
+    hints: false
+  }
 }
 
 if (process.env.NODE_ENV === 'production') {
+  module.exports.performance.hints = true,
+
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
