@@ -2769,6 +2769,12 @@ ul.taggraph-textlist li:last-child .taggraph-listnumber {
     cursor: pointer;
 }
 
+.tagcreate-editpagetopcancel {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-right: 20px;
+}
+
 .tagcreate-toptestpage {
     float: right;
     width: 134px;
@@ -3941,4 +3947,108 @@ ul.userinfo-statslist li .dashboard-statslist3 {
 }
 .userbankclose:hover {
     background: url('/images/userbankclose.png') 0 -22px;
+}
+
+.adminreports-deletebutton {
+    float: left;
+    background: #262C3A;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: #FFFFFF;
+    font-size: 11px;
+    margin-right: 10px;
+    margin-left: 20px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.adminreports-editbutton {
+    float: left;
+    background: #262C3A;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: #FFFFFF;
+    font-size: 11px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.adminreports-statslist1 {
+    width: 80% !important;
+    cursor: pointer;
+}
+
+.adminreports-statslist2 {
+    width: 20% !important;
+    cursor: pointer;
+}
+
+.adminreports-statslist1 .tagcreate-checkwrap [type="checkbox"]:not(:checked) + label:before, .dashboard-tagscompare .tagcreate-checkwrap [type="checkbox"]:checked + label:before {
+    left: 0;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #485268;
+}
+
+.adminreports-statslist1 .tagcreate-checkwrap {
+    float: left;
+    margin-top: -8px;
+}
+
+ul.singlereportspurple li, ul.singlereportsblue li {
+    width: 33.33%;
+}
+
+ul.singlereportspurple li:nth-child(2), ul.singlereportspurple li:nth-child(3), ul.singlereportsblue li:nth-child(2), ul.singlereportsblue li:nth-child(3) {
+    width: calc(33.33% - 1px);
+}
+
+ul.singlereportsblue li div:nth-child(2) {
+    color: #009ED8;
+}
+
+.dashreports-scrollwrapper {
+    width: 100%;
+    float: left;
+    overflow-x: scroll;
+}
+
+.dashreports-scrollarea {
+    float: left;
+    width: 12500px;
+}
+
+ul.dashreports-titlewidth, ul.dashreports-width {
+    width: auto;
+}
+
+ul.dashreports-titlewidth li {
+    width: 180px;
+}
+
+ul.dashreports-titlewidth li:nth-child(2) {
+    width: 220px;
+}
+
+ul.dashreports-width li div {
+    width: 180px;
+    border-right: 1px solid #EEEEEE;
+}
+
+ul.dashreports-width li div:nth-child(2) {
+    width: 220px;
+}
+
+ul.dashreports-width li div:nth-child(5n) {
+    color: #666666 !important;
+    font-weight: 500 !important;
+}
+
+ul.dashreports-width li:hover div {
+    color: #DDDDDD !important;
 }
