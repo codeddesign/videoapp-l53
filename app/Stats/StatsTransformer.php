@@ -17,8 +17,6 @@ class StatsTransformer
             $data[$stat] = 0;
         }
 
-        dd($stats);
-
         return $stats;
     }
 
@@ -175,10 +173,23 @@ class StatsTransformer
                 $events = $stats->get($key);
 
                 foreach (self::$allStats as $stat) {
+                    if ($stat === 'revenue') {
+                        continue;
+                    }
+
                     if ($events->where('name', $stat)->isEmpty()) {
                         $data[$stat][] = [$timestamp, 0];
                     } else {
                         $count = $events->where('name', $stat)->sum('count');
+
+                        if ($stat === 'impressions') {
+                            $revenue = 0;
+                            $events->where('name', $stat)->map(function ($impressions) use (&$revenue) {
+                                $revenue += $this->calculateRevenue($impressions->count, $impressions->tag->ecpm);
+                            });
+                            $data['revenue'][] = [$timestamp, $revenue];
+                        }
+
                         $data[$stat][] = [$timestamp, $count];
                     }
                 }

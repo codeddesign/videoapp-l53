@@ -19,7 +19,7 @@
           <stats title="impressions" :value="impressions"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="revenue" color="#1aa74f"></stats>
+          <stats title="revenue" :value="presentRevenue" color="#1aa74f"></stats>
         </li>
         <li>
           <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
@@ -89,6 +89,7 @@
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
+  import accounting from 'accounting'
   import _ from 'lodash'
 
   export default {
@@ -111,6 +112,7 @@
 
         requests: 0,
         impressions: 0,
+        revenue: 0,
 
         fills: 0,
         fillErrors: 0,
@@ -132,14 +134,10 @@
         return this.$store.state.users.currentUser
       },
 
-      revenue() {
-        return this.calculateRevenue(this.impressions)
-      },
-
       ecpm() {
         // we calculate the revenue again to get the raw
         // value instead of the formatted currency
-        return this.calculateEcpm(this.impressions, this.calculateRevenue(this.impressions, false))
+        return this.calculateEcpm(this.impressions, this.revenue)
       },
 
       fillRate() {
@@ -152,6 +150,10 @@
 
       useRate() {
         return this.calculateUseRate(this.impressions, this.fills)
+      },
+
+      presentRevenue() {
+        return accounting.formatMoney(this.revenue)
       }
     },
     mounted() {
@@ -173,6 +175,7 @@
             .then((response) => {
               this.requests = parseInt(response.data.requests)
               this.impressions = parseInt(response.data.impressions)
+              this.revenue = parseFloat(response.data.revenue)
               this.fills = parseInt(response.data.fills)
               this.adErrors = parseInt(response.data.adErrors)
               this.fillErrors = parseInt(response.data.fillErrors)
@@ -217,6 +220,7 @@
                     break
                   case 'impression':
                     this.impressions++
+                    this.revenue += (e.tag.ecpm) / 1000
                     break
                   case 'fill':
                     this.fills++

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="chart" class="chart">
-      
+
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@
           yAxis: [
             { // Primary yAxis
               labels: {
-                format: '${value}',
+                format: '${value:.2f}',
                 style: {
                   color: '#989898',
                   fontWeight: 'bold',
@@ -138,15 +138,16 @@
         let shift = seriesLength > 30
 
         _.mapKeys(this.chartData, (value, time) => {
+          let timestamp = time
           time = this.roundToNearestSecond(time)
 
           if (_.has(this.seriesMap, time)) {
             impressions.data[this.seriesMap[time]].update({ y: value }, false)
-            revenue.data[this.seriesMap[time]].update({ y: (value / 1000) * 4 }, false)
+            revenue.data[this.seriesMap[time]].update({ y: parseFloat(this.revenueData[timestamp].toFixed(2)) }, false)
           } else {
             this.seriesMap[time] = seriesLength
             impressions.addPoint([time, value], false, shift)
-            revenue.addPoint([time, (value / 1000) * 4], false, shift)
+            revenue.addPoint([time, parseFloat(this.revenueData[timestamp].toFixed(2))], false, shift)
 
             if (shift) {
               let newSeriesMap = {}
@@ -156,6 +157,7 @@
                   newSeriesMap[key] = value - 1
                 } else {
                   delete this.chartData[key]
+                  delete this.revenueData[key]
                 }
               })
 
@@ -174,6 +176,7 @@
       this.$nextTick(function() {
         this.chart = Highcharts.chart('chart', this.options)
         this.chartData = {}
+        this.revenueData = {}
         this.seriesMap = {}
 
         let that = this
@@ -203,8 +206,10 @@
 
                 if (_.has(this.chartData, eventTimestamp)) {
                   this.chartData[eventTimestamp] += 1
+                  this.revenueData[eventTimestamp] += (e.tag.ecpm) / 1000
                 } else {
                   this.chartData[eventTimestamp] = 1
+                  this.revenueData[eventTimestamp] = ((e.tag.ecpm) / 1000)
                 }
               })
         } else {

@@ -34,26 +34,18 @@ class ChartsController extends ApiController
             ->with('tag')
             ->get()
             ->groupBy(function ($item) use ($keyFormat) {
-                return $item->name.'-'.$item->created_at->format($keyFormat);
+                return $item->created_at->format($keyFormat);
             });
 
-        $transformer = new StatsTransformer;
-        $requests    = $transformer->transformHighcharts('requests', $userStats, $keyFormat, $range);
-        $impressions = $transformer->transformHighcharts('impressions', $userStats, $keyFormat, $range);
+        $stats = (new StatsTransformer)->highcharts($userStats, $keyFormat, $range);
 
-        $revenue     = collect($impressions)->map(function ($value) {
-            return [$value[0], (4 * $value[1]) / 1000];
-        });
-
-        return [
-            'requests'    => $requests,
-            'impressions' => $impressions,
-            'revenue'     => $revenue,
-        ];
+        return $stats;
     }
 
     /**
      * Return an array of the impressions count, ordered by the days of the month.
+     *
+     * @param \App\Stats\StatsTransformer $statsTransformer
      *
      * @return array
      */
