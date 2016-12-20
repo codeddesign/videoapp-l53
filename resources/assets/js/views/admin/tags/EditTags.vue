@@ -3,7 +3,7 @@
     <input name="tagmanage-tabbed" id="tagmanage-tabbed1" type="radio">
     <section>
       <h1>
-        <label for="tagmanage-tabbed1">EDIT TAGS</label>
+        <label for="tagmanage-tabbed1">MANAGE TAGS</label>
       </h1>
       <div>
         <tag-form v-if="formShowStatus"></tag-form>
