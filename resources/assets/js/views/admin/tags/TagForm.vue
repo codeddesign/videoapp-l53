@@ -10,7 +10,7 @@
 
       <div class="tagcreate-formbg">
         <div class="tagcreate-fullinnertitle">AD TAG</div>
-        <input name="url" ref="url" v-model="tag['url']" v-validate data-rules="required" placeholder="http://a3m.io/a/h/xxx?cb=[CACHE_BREAKER]&pageUrl=[REFERRER_URL]&eov=eov" class="tagcreate-longinput">
+        <input name="url" ref="url" v-model="tag['url']" v-validate data-vv-rules="required" placeholder="http://a3m.io/a/h/xxx?cb=[CACHE_BREAKER]&pageUrl=[REFERRER_URL]&eov=eov" class="tagcreate-longinput">
         <ul class="tagcreate-macrolist">
           <li v-for="macro in macros" @click="insertAtCaret(macro)">
            {{ macro }}
@@ -22,11 +22,11 @@
       <div class="tagcreate-formbg">
         <div class="tagcreate-halfinnerwrap">
           <div class="tagcreate-fullinnertitle">ADVERTISER NAME</div>
-          <input class="tagcreate-longinput" v-model="tag['advertiser']" placeholder="A3M" name="advertiser" v-validate data-rules="required">
+          <input class="tagcreate-longinput" v-model="tag['advertiser']" placeholder="A3M" name="advertiser" v-validate data-vv-rules="required">
         </div>
         <div class="tagcreate-halfinnerwrap">
           <div class="tagcreate-fullinnertitle">TAG DESCRIPTION NAME</div>
-          <input class="tagcreate-longinput tagcreate-uppercase" v-model="tag['description']" placeholder="A3M_DESKTOP_OUTSTREAM" name="description" v-validate data-rules="required">
+          <input class="tagcreate-longinput tagcreate-uppercase" v-model="tag['description']" placeholder="A3M_DESKTOP_OUTSTREAM" name="description" v-validate data-vv-rules="required">
         </div>
       </div>
 
@@ -126,7 +126,7 @@
         </div>
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">eCPM</div>
-          <input class="tagcreate-longinput" v-model="tag['ecpm']" placeholder="0" name="ecpm" v-validate data-rules="required|not_in:0">
+          <input class="tagcreate-longinput" v-model="tag['ecpm']" placeholder="0" name="ecpm" v-validate data-vv-rules="required|not_in:0">
         </div>
       </div>
 
