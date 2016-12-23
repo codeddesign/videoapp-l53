@@ -26,7 +26,7 @@ class TagsController extends ApiController
 
         if ($compareRange) {
             $stats->timeRange($compareRange);
-            $dateRange = call_user_func(DateRange::class.'::'.$compareRange);
+            $dateRange = DateRange::byName($compareRange);
             $days = $dateRange->days();
         }
 

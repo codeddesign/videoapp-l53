@@ -2838,6 +2838,7 @@ ul.taggraph-textlist li:last-child .taggraph-listnumber {
     color: #373F52;
     margin-bottom: 10px;
     font-weight: 600;
+    height: 17px;
 }
 
 .tagcreate-longinput {
@@ -4051,4 +4052,42 @@ ul.dashreports-width li div:nth-child(5n) {
 
 ul.dashreports-width li:hover div {
     color: #DDDDDD !important;
+}
+
+.reportsquery-datedrop, .reportsquery-datedrop input {
+    width: 200px;
+}
+.reportsquery-datedroptwo {
+    width: 200px;
+    margin-left: -70px;
+}
+.reportsquery-datedroptwo input {
+    width: 200px;
+}
+.tagcreate-dateformto {
+    float: left;
+    font-size: 11px;
+    color: #373F52;
+    height: 62px;
+    line-height: 90px;
+    margin-left: -47px;
+    font-weight: 600;
+}
+.reportquery-fullinnertitle {
+    float:  left;
+    font-size: 12px;
+    color: #7772A6;
+    margin-top: 3px;
+    margin-bottom: 9px;
+    width: 100%;
+    font-weight: 500;
+}
+ul.userinfo-websitelist li .dashboard-statslist1 {
+    width: calc(100% - 279px);
+}
+ul.userinfo-websitelistheader li:first-child {
+    border-right: none;
+}
+ul.userinfo-websitelistheader li:last-child {
+    width: 160px;
 }

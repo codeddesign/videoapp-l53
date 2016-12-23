@@ -36,6 +36,7 @@ use App\Services\Youtube;
  * Relationships
  *
  * @property Collection $campaigns
+ * @property Collection $reports
  * @property Collection $notes
  * @property Collection $wordpressSites
  */
@@ -122,6 +123,16 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function campaigns()
     {
         return $this->hasMany(Campaign::class);
+    }
+
+    /**
+     * A user may have many reports.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
     }
 
     /**

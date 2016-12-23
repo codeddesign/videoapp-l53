@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\PersistEvents;
+use App\Console\Commands\ProcessReports;
 use App\Geolite\ImportCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         PersistEvents::class,
         ImportCommand::class,
+        ProcessReports::class,
     ];
 
     /**
@@ -27,7 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('video:persist-events')->hourly();
+        $schedule->command('ad3:persist-events')->hourly();
     }
 
     /**

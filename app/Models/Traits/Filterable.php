@@ -14,7 +14,7 @@ trait Filterable
      */
     public function scopeTimeRange($query, $timeRange)
     {
-        $dateRange = call_user_func(DateRange::class.'::'.$timeRange);
+        $dateRange = DateRange::byName($timeRange);
 
         return $query->where('created_at', '>=', $dateRange->from)
                      ->where('created_at', '<=', $dateRange->to);

@@ -28,6 +28,6 @@ class CreateGlobalOptionsTable extends Migration
      */
     public function down()
     {
-        Schema:drop('global_options');
+        Schema::drop('global_options');
     }
 }

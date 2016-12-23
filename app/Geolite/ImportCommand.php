@@ -11,14 +11,14 @@ class ImportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'video:import-geolite';
+    protected $signature = 'ad3:import-geolite';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import ip ranges and locations from storage (.csv)';
+    protected $description = 'Import IP ranges and locations from storage (.csv)';
 
     /**
      * Create a new command instance.
@@ -43,10 +43,10 @@ class ImportCommand extends Command
             return false;
         }
 
-        $this->info('Creating ip ranges..');
+        $this->info('Creating IP ranges..');
         $import->ranges();
 
-        $this->info('Creating ip locations..');
+        $this->info('Creating IP locations..');
         $import->locations();
     }
 }

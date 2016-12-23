@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Transformers\Spreadsheet\SpreadsheetTransformer;
 use Box\Spout\Common\Type;
 use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Writer\WriterInterface;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 
 class Spreadsheet
@@ -19,36 +21,59 @@ class Spreadsheet
     /**
      * Create an XLSX (Excel) file.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param object                                $transformer
+     * @param Collection             $collection
+     * @param SpreadsheetTransformer $transformer
+     * @param array                  $extraHeaderRows
      *
      * @return \Symfony\Component\HttpFoundation\File\File
      */
-    public function xlsxFile($query, $transformer)
+    public function xlsxFile($collection, $transformer, $extraHeaderRows = [])
     {
         $writer = $this->getWriterFactory()->create(Type::XLSX);
 
-        return $this->file($query, $transformer, $writer);
+        return $this->file($collection, $transformer, $writer, $extraHeaderRows);
+    }
+
+    /**
+     * Create an CSV file.
+     *
+     * @param Collection             $collection
+     * @param SpreadsheetTransformer $transformer
+     * @param array                  $extraHeaderRows
+     *
+     * @return \Symfony\Component\HttpFoundation\File\File
+     */
+    public function csvFile($collection, $transformer, $extraHeaderRows = [])
+    {
+        $writer = $this->getWriterFactory()->create(Type::CSV);
+
+        return $this->file($collection, $transformer, $writer, $extraHeaderRows);
     }
 
     /**
      * Generate a spreadsheet.
      *
-     * @param string                                $path
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param object                                $transformer
-     * @param \Box\Spout\Writer\WriterInterface     $writer
+     * @param string                 $path
+     * @param Collection             $collection
+     * @param SpreadsheetTransformer $transformer
+     * @param WriterInterface        $writer
+     * @param array                  $extraHeaderRows
      *
      * @return \Symfony\Component\HttpFoundation\File\File
      */
-    protected function generate($path, $query, $transformer, WriterInterface $writer)
+    protected function generate($path, $collection, $transformer, WriterInterface $writer, $extraHeaderRows)
     {
         $writer->openToFile($path);
+
+        foreach ($extraHeaderRows as $row) {
+            $writer->addRow($row);
+        }
+
         $writer->addRow($transformer->header());
 
-        $query->chunk(200, function ($models) use ($writer, $transformer) {
-            foreach ($models as $model) {
-                $writer->addRow($transformer->transform($model));
+        $collection->chunk(50)->each(function ($objects) use ($writer, $transformer) {
+            foreach ($objects as $object) {
+                $writer->addRow($transformer->transform($object));
             }
         });
 
@@ -58,17 +83,18 @@ class Spreadsheet
     /**
      * Generate a file.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param object                                $transformer
-     * @param \Box\Spout\Writer\WriterInterface     $writer
+     * @param Collection             $collection
+     * @param SpreadsheetTransformer $transformer
+     * @param WriterInterface        $writer
+     * @param array                  $extraHeaderRows
      *
      * @return \Symfony\Component\HttpFoundation\File\File
      */
-    protected function file($query, $transformer, WriterInterface $writer)
+    protected function file($collection, $transformer, WriterInterface $writer, $extraHeaderRows)
     {
         $path = $this->tmpFilePath();
 
-        $this->generate($path, $query, $transformer, $writer);
+        $this->generate($path, $collection, $transformer, $writer, $extraHeaderRows);
 
         return new File($path);
     }

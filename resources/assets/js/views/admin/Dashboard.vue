@@ -21,7 +21,7 @@
         <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
           <span>( LIVE STATS FROM {{ currentTime.clone().startOf('hour').format('hh:mm a') }} UP TO {{ currentTime.format('hh:mm a') }} )</span>
         </div>
-        <router-link :to="{ name: 'campaigns.create'}">
+        <router-link :to="{ name: 'admin.reports.create'}">
           <div class="currentcamp-createbutton">GENERATE REPORT</div>
         </router-link>
       </div>

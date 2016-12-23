@@ -20,7 +20,6 @@ Route::get('register', 'Authentication\RegistrationController@showRegistrationFo
 Route::post('register', 'Authentication\RegistrationController@register');
 
 // Password Reset Routes.
-// @todo fix this.
 Route::get('password/reset', 'Authentication\ForgotPasswordController@showLinkRequestForm');
 Route::post('password/email', 'Authentication\ForgotPasswordController@sendResetLinkEmail');
 Route::get('password/reset/{token}', 'Authentication\ResetPasswordController@showResetForm');

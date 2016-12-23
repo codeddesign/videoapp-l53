@@ -20,6 +20,7 @@ import AdminAccounts from './views/admin/Accounts.vue'
 import AccountInfo from './views/admin/AccountInfo.vue'
 import TagManagement from './views/admin/tags/TagManagement.vue'
 import Reports from './views/admin/Reports.vue'
+import CreateReport from './views/admin/CreateReport.vue'
 import Settings from './views/admin/Settings.vue'
 
 export default new Router({
@@ -122,6 +123,14 @@ export default new Router({
           component: Reports,
           meta: {
             title: 'Reports'
+          }
+        },
+        {
+          path: 'reports/create',
+          name: 'admin.reports.create',
+          component: CreateReport,
+          meta: {
+            title: 'Create Report'
           }
         },
         {

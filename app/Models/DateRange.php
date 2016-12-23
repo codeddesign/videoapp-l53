@@ -39,6 +39,11 @@ class DateRange
         return (int) ceil($this->to->diffInHours($this->from) / 24);
     }
 
+    public static function byName($name)
+    {
+        return call_user_func(static::class.'::'.$name);
+    }
+
     public static function today()
     {
         $from = Carbon::now()->startOfDay();
@@ -137,6 +142,14 @@ class DateRange
     {
         $from = Carbon::now()->subDays(10)->startOfDay();
         $to   = Carbon::now()->endOfDay();
+
+        return new static($from, $to);
+    }
+
+    public static function thisWeek()
+    {
+        $from = Carbon::now()->startOfWeek();
+        $to   = Carbon::now();
 
         return new static($from, $to);
     }

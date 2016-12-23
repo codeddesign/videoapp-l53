@@ -12,7 +12,7 @@ class PersistEvents extends Command
      *
      * @var string
      */
-    protected $signature = 'video:persist-events';
+    protected $signature = 'ad3:persist-events';
 
     /**
      * The console command description.

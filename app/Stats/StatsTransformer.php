@@ -31,7 +31,7 @@ class StatsTransformer
      */
     public function transform(Collection $stats, $range)
     {
-        $dateRange = call_user_func(DateRange::class.'::'.$range);
+        $dateRange = DateRange::byName($range);
 
         $data = [];
 
@@ -131,33 +131,9 @@ class StatsTransformer
         return $data;
     }
 
-    //TODO: Refactor so we just use the highcharts() function
-    public function transformHighcharts($type, Collection $stats, $format, $range, $step = null)
-    {
-        $dateRange = call_user_func(DateRange::class.'::'.$range);
-
-        $data = [];
-
-        foreach ($dateRange->arrayByStep($step) as $period) {
-            // The array key format is type-mm/dd/YYYY
-            // Example: requests-10/31/2016
-            $key = $period->format($format);
-            $timestamp = $period->timestamp * 1000;
-
-            if ($stats->has($key)) {
-                $count = $stats->get($key)->sum('count');
-                $data[] = [$timestamp, $count];
-            } else {
-                $data[] = [$timestamp, 0];
-            }
-        }
-
-        return $data;
-    }
-
     public function highcharts(Collection $stats, $format, $range, $step = null)
     {
-        $dateRange = call_user_func(DateRange::class.'::'.$range);
+        $dateRange = DateRange::byName($range);
 
         $data = [];
 
