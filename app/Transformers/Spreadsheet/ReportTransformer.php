@@ -7,9 +7,12 @@ class ReportTransformer
     public function header()
     {
         return [
-            'Tag Name',
-            'Tag ID',
-            'Total Impressions',
+            'Advertiser',
+            'Description',
+            'Requests',
+            'Impressions',
+            'Fills',
+            'Revenue',
         ];
     }
 

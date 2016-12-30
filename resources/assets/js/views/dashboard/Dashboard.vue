@@ -70,7 +70,7 @@
         <li v-for="(stat, date) in dailyStats">
           <div class="dashboard-statslist1">{{ date }}</div>
           <div class="dashboard-statslist2">{{ stat.requests }}</div>
-          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.requests) }}%</div>
+          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.requests) }}</div>
           <div class="dashboard-statslist2">
             {{ calculateEcpm(stat.impressions, calculateRevenue(stat.impressions, false)) }}
           </div>

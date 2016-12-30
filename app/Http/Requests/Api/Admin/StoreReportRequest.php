@@ -31,6 +31,7 @@ class StoreReportRequest extends Request
             'title'      => $this->get('title'),
             'recipient'  => $this->get('recipient'),
             'schedule'   => $this->get('schedule'),
+            'filter'     => $this->get('filter'),
             'sort_by'    => $this->get('sort_by'),
             'date_range' => $this->get('date_range'),
             'start_date' => $this->get('start_date') ? Carbon::parse($this->get('start_date')) : null,

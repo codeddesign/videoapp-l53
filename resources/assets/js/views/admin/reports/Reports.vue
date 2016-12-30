@@ -44,8 +44,8 @@
 </template>
 
 <script>
-  import http from '../../services/http'
-  import Pagination from '../../services/pagination'
+  import http from '../../../services/http'
+  import Pagination from '../../../services/pagination'
 
   export default {
     name: 'Reports',

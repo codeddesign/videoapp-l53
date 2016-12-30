@@ -73,7 +73,7 @@ class CampaignEvent extends Model
 
     public function scopeUserStats($query, $timeRange)
     {
-        return $this->whereHas('campaign', function ($query) use ($query) {
+        return $this->whereHas('campaign', function ($query) {
             $query->user_id = auth()->user()->id;
         })->timeRange($timeRange);
     }
@@ -88,7 +88,7 @@ class CampaignEvent extends Model
      */
     public function scopeRequests($query, $request)
     {
-        return $this->whereHas('campaign', function ($query) use ($query) {
+        return $this->whereHas('campaign', function ($query) {
             $query->user_id = auth()->user()->id;
         })->where('name', 'requests')->timeRange($request);
         // timeRange: is found in App\Models\Filterable trait as a query scope.
@@ -104,7 +104,7 @@ class CampaignEvent extends Model
      */
     public function scopeImpressions($query, $request)
     {
-        return $this->whereHas('campaign', function ($query) use ($query) {
+        return $this->whereHas('campaign', function ($query) {
             $query->user_id = auth()->user()->id;
         })->where('name', 'impressions')->timeRange($request);
         // timeRange: is found in App\Models\Filterable trait as a query scope.
@@ -119,7 +119,7 @@ class CampaignEvent extends Model
      */
     public function scopeRequestsStats($query)
     {
-        return $this->whereHas('campaign', function ($query) use ($query) {
+        return $this->whereHas('campaign', function ($query) {
             $query->user_id = auth()->user()->id;
         })->where('created_at', '>=', Carbon::today()->startOfMonth())
             ->where('name', 'requests')
@@ -137,7 +137,7 @@ class CampaignEvent extends Model
      */
     public function scopeImpressionsStats($query)
     {
-        return $this->whereHas('campaign', function ($query) use ($query) {
+        return $this->whereHas('campaign', function ($query) {
             $query->user_id = auth()->user()->id;
         })->where('created_at', '>=', Carbon::today()->startOfMonth())
             ->where('name', 'impressions')

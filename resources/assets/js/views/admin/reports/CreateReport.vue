@@ -85,7 +85,7 @@
             <div class="tagcreate-fullinnertitle">SORT BY DIMENSION</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.sort_by">
-                <option value="`">Advertiser</option>
+                <option value="advertiser">Advertiser</option>
                 <option value="tagName">Tag Name</option>
                 <option value="platformType">Platform Type</option>
                 <option value="adType">Ad Type</option>
@@ -96,9 +96,9 @@
                 <option value="postalCode">Postal Code</option>
                 <option value="date">Date</option>
                 <option value="dayOfWeek">Day of Week</option>
-                <option value="Hour">Hour</option>
-                <option value="Month">Month</option>
-                <option value="Week">Week</option>
+                <option value="hour">Hour</option>
+                <option value="month">Month</option>
+                <option value="week">Week</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
             </div>
@@ -384,6 +384,8 @@
 </template>
 
 <script>
+  import admin from '../../../models/admin'
+
   export default {
     name: 'CreateReport',
 
@@ -425,7 +427,10 @@
 
           window.alert(errorMsg)
         } else {
-          window.alert('all good')
+          admin.createReport(this.report)
+              .then(newReport => {
+                alert('Report created.')
+              })
         }
       }
     }

@@ -117,6 +117,7 @@ class StatsTransformer
             }
         }
 
+
         return $data;
     }
 

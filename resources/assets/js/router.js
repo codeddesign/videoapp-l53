@@ -19,8 +19,8 @@ import AdminDashboard from './views/admin/Dashboard.vue'
 import AdminAccounts from './views/admin/Accounts.vue'
 import AccountInfo from './views/admin/AccountInfo.vue'
 import TagManagement from './views/admin/tags/TagManagement.vue'
-import Reports from './views/admin/Reports.vue'
-import CreateReport from './views/admin/CreateReport.vue'
+import Reports from './views/admin/reports/Reports.vue'
+import CreateReport from './views/admin/reports/CreateReport.vue'
 import Settings from './views/admin/Settings.vue'
 
 export default new Router({

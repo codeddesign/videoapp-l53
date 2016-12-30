@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Mail\ScheduledReport;
 use App\Models\CampaignEvent;
 use App\Models\Report;
+use App\Stats\StatsTransformer;
 use App\Transformers\Spreadsheet\ReportTransformer;
 use Carbon\Carbon;
 use Illuminate\Mail\Mailer;
@@ -20,11 +21,33 @@ class Reports
 
     public function stats(Report $report)
     {
-        $stats = CampaignEvent::query()->with('tag');
+        $events = $this->campaignEvents($report)->groupBy(function ($item) {
+            return $item->tag_id;
+        });
 
-        $stats = $report->filterQuery($stats);
+        $stats = new Collection();
 
-        return $stats->get();
+        $statsTransformer = new StatsTransformer();
+
+        foreach ($events as $tagEvents) {
+            $parsedStats = $statsTransformer->transformSumAll($tagEvents);
+
+            $tagStats = [
+                'advertiser'    => $tagEvents->first()->tag->advertiser,
+                'description'   => $tagEvents->first()->tag->description,
+                'ad_type'       => $tagEvents->first()->tag->ad_type,
+                'platform_type' => $tagEvents->first()->tag->platform_type,
+                'impressions'   => $parsedStats['impressions'],
+                'requests'      => $parsedStats['requests'],
+                'cpm'           => $parsedStats['cpm'],
+                'fills'         => $parsedStats['fills'],
+                'revenue'       => $parsedStats['revenue'],
+            ];
+
+            $stats->push($tagStats);
+        }
+
+        return $stats;
     }
 
     /**
@@ -34,14 +57,7 @@ class Reports
      */
     public function generateXls(Report $report)
     {
-        $stats = new Collection();
-        foreach (range(0, 100) as $item) {
-            $stats->push([
-                mt_rand(100, 1000),
-                mt_rand(100, 1000),
-                mt_rand(100, 1000),
-            ]);
-        }
+        $stats = $this->stats($report);
 
         $extraHeaderRows = [
             ['Report Name', $report->title],
@@ -65,5 +81,23 @@ class Reports
         $mailer = app(Mailer::class);
 
         $mailer->to($report->recipient)->send(new ScheduledReport($report, $file));
+    }
+
+    /**
+     * @param \App\Models\Report $report
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function campaignEvents(Report $report)
+    {
+        $stats = CampaignEvent::query()->with('tag');
+
+        $stats = $report->filterQuery($stats);
+
+        $dateRange = $report->dateRange();
+        $stats     = $stats->where('created_at', '>=', $dateRange->from)
+            ->where('created_at', '<=', $dateRange->to);
+
+        return $stats->get();
     }
 }

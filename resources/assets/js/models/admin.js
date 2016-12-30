@@ -45,5 +45,12 @@ export default {
     .then((response) => {
       return response.data.data
     })
+  },
+
+  createReport(report) {
+    return axios.post('/admin/reports', report)
+    .then((response) => {
+      return response.data.data
+    })
   }
 }
