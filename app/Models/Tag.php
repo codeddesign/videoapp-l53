@@ -6,6 +6,7 @@ use App\Models\Traits\Filterable;
 use Carbon\Carbon;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Redis\Database as Redis;
 
 /**
  * Database Columns
@@ -68,8 +69,8 @@ class Tag extends Model
                 $date = Carbon::now();
 
                 return $query->where('date_range', false)
-                    ->orWhere('start_date', '<', $date)
-                    ->where('end_date', '>', $date);
+                    ->orWhere('start_date', '<=', $date)
+                    ->where('end_date', '>=', $date);
             })->get();
         });
 
@@ -104,7 +105,22 @@ class Tag extends Model
             return true;
         });
 
+        foreach($tags as $tag) {
+            $tag->guaranteed_count = $tag->requestCount();
+        }
+
         return $tags;
+    }
+
+    public function requestCount()
+    {
+        $redis = app(Redis::class);
+
+        $redisRequests = $redis->hget('tag_requests', $this->id);
+
+        $databaseRequests = CampaignEvent::where('tag_id', $this->id)->where('name', 'requests')->sum('count');
+
+        return $redisRequests + $databaseRequests;
     }
 
     public static function compareLocations($userLocation, $location)

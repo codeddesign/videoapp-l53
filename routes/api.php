@@ -44,12 +44,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('tags/{id}/activate', 'TagsController@activate');
 
     Route::get('reports', 'ReportsController@index');
+    Route::get('reports/{id}', 'ReportsController@show');
     Route::post('reports', 'ReportsController@store');
-    Route::get('reports/test', function() {
-       $r = \App\Models\Report::find(2);
-       $service = new \App\Services\Reports;
-       return $service->stats($r);
-    });
 
     Route::get('locations', 'LocationsController@index');
     Route::post('locations/expand', 'LocationsController@show');

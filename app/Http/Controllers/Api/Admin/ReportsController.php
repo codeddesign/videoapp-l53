@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\Admin\StoreReportRequest;
 use App\Models\Report;
+use App\Services\Reports;
 use App\Transformers\ReportTransformer;
 
 class ReportsController extends ApiController
@@ -16,6 +17,18 @@ class ReportsController extends ApiController
         return $this->collectionResponse($reports, new ReportTransformer);
     }
 
+    public function stats($id)
+    {
+        $report = Report::where('id', $id)->where('user_id', $this->user->id)->first();
+
+        $reportsService = new Reports;
+
+        $tagStats = $reportsService->stats($report);
+
+
+        return $this->itemResponse($report, new ReportTransformer);
+    }
+
     public function store(StoreReportRequest $request)
     {
         $report = new Report($request->transform());
@@ -24,6 +37,6 @@ class ReportsController extends ApiController
 
         $report->save();
 
-        return $this->jsonResponse(['ok' => true]);
+        return $this->itemResponse($report, new ReportTransformer);
     }
 }

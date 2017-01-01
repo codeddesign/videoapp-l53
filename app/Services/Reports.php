@@ -25,23 +25,25 @@ class Reports
             return $item->tag_id;
         });
 
-        $stats = new Collection();
-
-        $statsTransformer = new StatsTransformer();
+        $stats = new Collection;
+        $statsTransformer = new StatsTransformer;
 
         foreach ($events as $tagEvents) {
             $parsedStats = $statsTransformer->transformSumAll($tagEvents);
 
+            $tag = $tagEvents->first()->tag;
+
             $tagStats = [
-                'advertiser'    => $tagEvents->first()->tag->advertiser,
-                'description'   => $tagEvents->first()->tag->description,
-                'ad_type'       => $tagEvents->first()->tag->ad_type,
-                'platform_type' => $tagEvents->first()->tag->platform_type,
+                'advertiser'    => $tag->advertiser,
+                'description'   => $tag->description,
+                'ad_type'       => $tag->ad_type,
+                'platform_type' => $tag->platform_type,
                 'impressions'   => $parsedStats['impressions'],
                 'requests'      => $parsedStats['requests'],
-                'cpm'           => $parsedStats['cpm'],
+                'ecpm'          => $tag->ecpm / 100.0,
                 'fills'         => $parsedStats['fills'],
                 'revenue'       => $parsedStats['revenue'],
+                'errors'        => $parsedStats['fillErrors'] + $parsedStats['adErrors'],
             ];
 
             $stats->push($tagStats);

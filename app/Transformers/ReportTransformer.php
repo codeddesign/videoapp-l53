@@ -8,10 +8,12 @@ class ReportTransformer extends Transformer
 {
     public function transform(Report $report)
     {
-        return [
+        $transformedReport = [
             'id'       => $report->id,
             'title'    => $report->title,
             'schedule' => $report->schedule,
         ];
+
+        return $transformedReport;
     }
 }

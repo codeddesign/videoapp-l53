@@ -148,6 +148,8 @@ class CampaignEvents
 
         $value = "source:{$data['source']}:status:{$data['status']}";
 
+        $this->saveTagRequests($data);
+
         if (array_get($data, 'tag') !== null) {
             $value .= ":tag:{$data['tag']}";
         }
@@ -161,6 +163,15 @@ class CampaignEvents
         }
 
         $redis->hincrby("campaign:{$data['campaign']}", $value, 1);
+    }
+
+    protected function saveTagRequests($data)
+    {
+        $redis = $this->getRedis();
+
+        if (array_get($data, 'tag') !== null && $data['source'] === 'app' && $data['status'] == 200) {
+            $redis->hincrby('tag_requests', $data['tag'], 1);
+        }
     }
 
     /**
