@@ -27,6 +27,8 @@ class CreateCampaignEventsTable extends Migration
 
             $table->string('name')->index();
 
+            $table->integer('status');
+
             $table->integer('count');
 
             $table->timestamps();

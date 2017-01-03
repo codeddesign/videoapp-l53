@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\SaveMany;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string     $schedule
  * @property string     $recipient
  * @property array      $filter
+ * @property array      $included_metrics
  * @property int        $user_id
  * @property Carbon     $last_generated_at
  * @property Carbon     $created_at
@@ -30,7 +32,11 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class Report extends Model
 {
-    protected $fillable = ['title', 'date_range', 'sort_by', 'schedule', 'recipient', 'filter'];
+    use SaveMany;
+
+    public static $fixedSpreadsheetHeader = ['advertiser', 'description'];
+
+    protected $fillable = ['title', 'date_range', 'sort_by', 'schedule', 'recipient', 'filter', 'included_metrics'];
 
     protected $dates = [
         'start_date',
@@ -39,7 +45,8 @@ class Report extends Model
     ];
 
     protected $casts = [
-        'filter' => 'array',
+        'filter'           => 'array',
+        'included_metrics' => 'array',
     ];
 
     public function user()
@@ -50,6 +57,37 @@ class Report extends Model
     public function jobs()
     {
         return $this->hasMany(ReportJob::class);
+    }
+
+    public function spreadsheetHeader()
+    {
+        $header = collect([
+            'advertiser'    => 'Advertiser',
+            'description'   => 'Description',
+            'ad_type'       => 'Ad Type',
+            'platform_type' => 'Platform Type',
+            'requests'      => 'Ad Requests',
+            'impressions'   => 'Impressions',
+            'fills'         => 'Fills',
+            'fill_rate'     => 'Fill Rate',
+            'revenue'       => 'Revenue',
+            'ecpm'          => 'eCPM',
+            'errors'        => 'Total Errors',
+            'error_rate'    => 'Error Rate',
+        ]);
+
+        $errorCodes = CampaignEvent::$errors;
+        $errors     = [];
+
+        foreach ($errorCodes as $code) {
+            $errors["error{$code}"] = "Error {$code}";
+        }
+
+        $header = $header->merge($errors)->filter(function ($value, $key) {
+            return in_array($key, array_merge($this->included_metrics, static::$fixedSpreadsheetHeader));
+        });
+
+        return $header->values();
     }
 
     /**
@@ -79,7 +117,7 @@ class Report extends Model
 
         // campaign_type is json, so it should be handled
         // with the appropriate PG json functions.
-        if($type === 'campaignType') {
+        if ($type === 'campaignType') {
             return $query->whereHas('tag', function ($query) use ($type, $operator, $value, $tagFilters) {
                 $query->whereRaw("{$operator}({$tagFilters[$type]}, {$value})");
             });
@@ -98,10 +136,12 @@ class Report extends Model
     {
         $filter = $this->filter['filter'];
 
-        if($this->filter['type'] === 'campaignType' && $filter === 'contains') {
+        if ($this->filter['type'] === 'campaignType' && $filter === 'contains') {
             return 'jsonb_exists_any';
-        } else if ($this->filter['type'] === 'campaignType' && $filter === 'is') {
-            return 'jsonb_eq';
+        } else {
+            if ($this->filter['type'] === 'campaignType' && $filter === 'is') {
+                return 'jsonb_eq';
+            }
         }
 
         $operator = null;
@@ -130,16 +170,17 @@ class Report extends Model
         $value  = $this->filter['value'];
 
         // the campaign_types column is json encoded
-        if($this->filter['type'] === 'campaignType' && $filter === 'contains') {
+        if ($this->filter['type'] === 'campaignType' && $filter === 'contains') {
             return "array['{$value}']";
-        } else if($this->filter['type'] === 'campaignType' && $filter === 'is') {
-            return "to_jsonb(array['{$value}'])";
+        } else {
+            if ($this->filter['type'] === 'campaignType' && $filter === 'is') {
+                return "to_jsonb(array['{$value}'])";
+            }
         }
 
         if ($filter === 'doesNotcontain' || $filter === 'contains') {
             $value = "%{$value}%";
         }
-
 
         return $value;
     }
@@ -148,7 +189,7 @@ class Report extends Model
     {
         $now = Carbon::now();
 
-        return "{$now->format('m/d/Y')} - {$this->title}.xlsx";
+        return "{$now->format('mdY')} - {$this->title}.xlsx";
     }
 
     public function dateRange()

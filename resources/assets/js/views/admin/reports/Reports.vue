@@ -19,7 +19,9 @@
               <input type="checkbox" v-bind:id="report.id">
               <label v-bind:for="report.id"></label>
             </div>
-            {{ report.title }}
+            <div @click="showReport(report)">
+              {{ report.title }}
+            </div>
           </div>
           <div class="dashboard-statslist2 adminreports-statslist2">{{ report.schedule }}</div>
         </li>
@@ -44,32 +46,32 @@
 </template>
 
 <script>
-  import http from '../../../services/http'
   import Pagination from '../../../services/pagination'
 
   export default {
     name: 'Reports',
     data() {
       return {
-        reports: [],
-
         pagination: new Pagination()
       }
     },
 
+    methods: {
+      showReport(report) {
+        this.$router.push({ name: 'admin.reports.show', params: { reportId: report.id }})
+      }
+    },
+
     computed: {
-      showReports() {
-        this.pagination.data = this.reports
+      reports() {
+        this.pagination.data = this.$store.state.admin.reports
 
         return this.pagination.getData()
       }
     },
 
     mounted() {
-      http.get('/admin/reports')
-            .then((response) => {
-              this.reports = response.data.data
-            })
+      this.$store.dispatch('loadReports')
     }
   }
 </script>

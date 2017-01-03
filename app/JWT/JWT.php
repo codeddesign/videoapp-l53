@@ -27,12 +27,17 @@ class JWT
 
     public function getPayloadFromRequest(Request $request)
     {
-        $token = $this->parseHeader($request);
+        $token = $this->parseHeader($request) ?: $this->parseParameter($request);
 
         if (! $token) {
             return;
         }
 
+        return $this->decodeJwt($token);
+    }
+
+    public function decodeJwt($token)
+    {
         $payload = null;
         try {
             $payload = (array) FirebaseJWT::decode($token, $this->secret, ['HS256']);
@@ -50,5 +55,12 @@ class JWT
         if ($header && stripos($header, $this->prefix) === 0) {
             return trim(str_ireplace($this->prefix, '', $header));
         }
+    }
+
+    protected function parseParameter(Request $request)
+    {
+        $token = $request->get('jwt');
+
+        return $token;
     }
 }

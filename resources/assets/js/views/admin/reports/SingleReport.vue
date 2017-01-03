@@ -1,50 +1,58 @@
 <template>
   <div>
     <div class="display-dashboardtoparea">
-      <div class="dashboard-livedatestamp">REPORT QUERY: <span>YESTERDAY</span></div>
-      <div class="currentcamp-createbutton">EXPORT TO XLS</div>
+      <div class="dashboard-livedatestamp">REPORT QUERY: <span>{{ report.title }}</span></div>
+      <div class="currentcamp-createbutton" @click="downloadXls()">EXPORT TO XLS</div>
     </div>
 
     <!-- ANALYTICS STATS -->
     <!-- TOP ANALYTICS -->
-    <ul class="campaignstats-row singlereportspurple" :graphStats='graphStats'>
+    <ul class="campaignstats-row singlereportspurple">
       <li>
         <div class="campaignstats-title">REQUESTS</div>
-        <div class="campaignstats-digit">60,551</div>
+        <div class="campaignstats-digit">{{ stats.allStats.requests }}</div>
         <div class="campaignstats-digit"><span id="graph_month"></span></div>
       </li>
       <li>
         <div class="campaignstats-title">IMPRESSIONS</div>
-        <div class="campaignstats-digit">3,762</div>
+        <div class="campaignstats-digit">{{ stats.allStats.impressions }}</div>
         <div class="campaignstats-digit"><span id="graph_day"></span></div>
       </li>
       <li>
         <div class="campaignstats-title">FILLS</div>
-        <div class="campaignstats-digit">60,551</div>
+        <div class="campaignstats-digit">{{ stats.allStats.fills }}</div>
         <div class="campaignstats-digit"><span id="graph_month_r"></span></div>
       </li>
     </ul>
     <!-- BOTTOM ANALYTICS -->
-    <ul class="campaignstats-row singlereportsblue" :graphStats='graphStats'>
+    <ul class="campaignstats-row singlereportsblue">
       <li>
         <div class="campaignstats-title">FILL-RATE</div>
-        <div class="campaignstats-digit">37%</div>
+        <div class="campaignstats-digit">
+          {{ calculateFillRate(stats.allStats.impressions, stats.allStats.requests) }}
+        </div>
         <div class="campaignstats-digit"><span id="graph_month"></span></div>
       </li>
       <li>
         <div class="campaignstats-title">ERROR-RATE</div>
-        <div class="campaignstats-digit">1%</div>
+        <div class="campaignstats-digit">
+          {{ calculateErrorRate(stats.allStats.impressions, stats.allStats.ad_errors) }}
+        </div>
         <div class="campaignstats-digit"><span id="graph_day"></span></div>
       </li>
       <li>
         <div class="campaignstats-title">USE-RATE</div>
-        <div class="campaignstats-digit">90%</div>
+        <div class="campaignstats-digit">
+          {{ calculateUseRate(stats.allStats.impressions, stats.allStats.fills) }}
+        </div>
         <div class="campaignstats-digit"><span id="graph_month_r"></span></div>
       </li>
     </ul>
 
     <div class="dashstats-graphwrapper">
-      <div class="dashstats-graph"></div>
+      <div id="chart" class="chart">
+
+      </div>
     </div>
 
     <!-- CAMPAIGN SELECTION AREA -->
@@ -110,75 +118,75 @@
           <li>ERROR 901</li>
         </ul>
         <ul class="dashboard-dailystatslist dashreports-width">
-          <li>
-            <div class="dashboard-statslist1">AOL</div>
-            <div class="dashboard-statslist2">AOL_OUTSTREAM_DESKTOP</div>
-            <div class="dashboard-statslist2">DESKTOP</div>
-            <div class="dashboard-statslist2">OUTSTREAM</div>
-            <div class="dashboard-statslist2">3,792</div>
-            <div class="dashboard-statslist2">102,472</div>
-            <div class="dashboard-statslist2">5,224</div>
-            <div class="dashboard-statslist2">27%</div>
-            <div class="dashboard-statslist2">151</div>
-            <div class="dashboard-statslist2">4%</div>
-            <div class="dashboard-statslist2">$5.50</div>
-            <div class="dashboard-statslist2">$920.50</div>
-            <div class="dashboard-statslist2">1,792</div>
-            <div class="dashboard-statslist2">65%</div>
-            <div class="dashboard-statslist2">92</div>
-            <div class="dashboard-statslist2">744</div>
-            <div class="dashboard-statslist2">45%</div>
-            <div class="dashboard-statslist2">37</div>
-            <div class="dashboard-statslist2">1,126</div>
-            <div class="dashboard-statslist2">944</div>
-            <div class="dashboard-statslist2">901</div>
-            <div class="dashboard-statslist2">731</div>
-            <div class="dashboard-statslist2">390</div>
-            <div class="dashboard-statslist2">14%</div>
-            <div class="dashboard-statslist2">72.05%</div>
-            <div class="dashboard-statslist2">21.62</div>
-            <div class="dashboard-statslist2">0:30</div>
-            <div class="dashboard-statslist2">20,746</div>
-            <div class="dashboard-statslist2">21</div>
-            <div class="dashboard-statslist2">54</div>
-            <div class="dashboard-statslist2">87</div>
-            <div class="dashboard-statslist2">45</div>
-            <div class="dashboard-statslist2">78</div>
-            <div class="dashboard-statslist2">3</div>
-            <div class="dashboard-statslist2">35</div>
-            <div class="dashboard-statslist2">90</div>
-            <div class="dashboard-statslist2">34</div>
-            <div class="dashboard-statslist2">576</div>
-            <div class="dashboard-statslist2">34</div>
-            <div class="dashboard-statslist2">21</div>
-            <div class="dashboard-statslist2">54</div>
-            <div class="dashboard-statslist2">87</div>
-            <div class="dashboard-statslist2">45</div>
-            <div class="dashboard-statslist2">78</div>
-            <div class="dashboard-statslist2">3</div>
-            <div class="dashboard-statslist2">35</div>
-            <div class="dashboard-statslist2">90</div>
-            <div class="dashboard-statslist2">34</div>
-            <div class="dashboard-statslist2">576</div>
-            <div class="dashboard-statslist2">34</div>
-            <div class="dashboard-statslist2">90</div>
-            <div class="dashboard-statslist2">34</div>
-            <div class="dashboard-statslist2">576</div>
-            <div class="dashboard-statslist2">34</div>
-            <div class="dashboard-statslist2">176</div>
+          <li v-for="tag in stats.tagStats">
+            <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
+            <div class="dashboard-statslist2">{{ tag.description }}</div>
+            <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
+            <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
+            <div class="dashboard-statslist2">{{ tag.impressions }}</div>
+            <div class="dashboard-statslist2">{{ tag.requests }}</div>
+            <div class="dashboard-statslist2">{{ tag.fills }}</div>
+            <div class="dashboard-statslist2">{{ tag.fill_rate }}%</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">${{ tag.ecpm }}</div>
+            <div class="dashboard-statslist2">${{ tag.revenue }}</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">{{ tag.errors }}</div>
+            <div class="dashboard-statslist2">{{ tag.error_rate }}%</div>
+            <div class="dashboard-statslist2">{{ tag.error101 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error102 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error200 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error201 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error202 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error203 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error300 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error301 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error302 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error303 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error400 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error401 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error402 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error403 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error405 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error500 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error501 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error502 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error503 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error600 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error601 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error602 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error603 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error604 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error900 }}</div>
+            <div class="dashboard-statslist2">{{ tag.error901 }}</div>
           </li>
         </ul>
       </div><!-- END .dashreports-scrollarea -->
     </div><!-- END .dashreports-scrollwrapper -->
     <div class="understatlist-wrapper">
       <div class="dashpagination-wrapper">
-        <div class="dashpag-left"></div>
-        <div class="dashpag-numbers">1 of 12</div>
-        <div class="dashpag-right"></div>
+        <div @click="pagination.previousPage()" class="dashpag-left"></div>
+        <div class="dashpag-numbers">{{ pagination.currentPage() }} of {{ pagination.totalPages() }}</div>
+        <div @click="pagination.nextPage()" class="dashpag-right"></div>
       </div>
       <div class="dashpagerows-wrapper">
         <div class="dashpagerows-title">Display Rows:</div>
-        <select>
+        <select v-model="pagination['perPage']">
           <option value="10">10</option>
           <option value="25">25</option>
           <option value="50">50</option>
@@ -190,7 +198,113 @@
 </template>
 
 <script>
+  import Highcharts from 'highcharts'
+  import Pagination from '../../../services/pagination'
+  import _ from 'lodash'
+  import http from '../../../services/http'
+  import stats from '../../../services/stats'
+
   export default {
     name: 'SingleReport',
+    data() {
+      return {
+        stats: {
+          allStats: {},
+          tagStats: {}
+        },
+        pagination: new Pagination()
+      }
+    },
+
+    methods: {
+      fetchStats(report) {
+        http.get('/admin/reports/' + report.id + '/stats')
+            .then((response) => {
+              this.stats = response.data
+              this.showChart()
+            })
+      },
+
+      downloadXls() {
+        http.get('/user/token').then((response) => {
+          let token = response.data
+          window.open('/api/admin/reports/' + this.report.id + '/xls?jwt=' + token, '_self')
+        })
+      },
+
+      showChart() {
+        let categories = []
+        let chartStats = {
+          impressions: [],
+          fills: [],
+          errors: []
+        }
+
+        _.each(this.stats.tagStats, tag => {
+          categories.push(tag.description)
+          chartStats.impressions.push(tag.impressions)
+          chartStats.fills.push(tag.fills)
+          chartStats.errors.push(tag.errors)
+        })
+
+        this.chart = Highcharts.chart('chart', {
+          credits: {
+            enabled: false
+          },
+          chart: {
+            type: 'column',
+            backgroundColor: 'transparent'
+          },
+          shadow: false,
+          title: false,
+          xAxis: {
+            categories: categories
+          },
+          legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            floating: true
+          },
+          series: [
+            {
+              name: 'Impressions',
+              color: '#00a2d9',
+              data: chartStats.impressions
+            }, {
+              name: 'Fills',
+              color: '#468c01',
+              data: chartStats.fills
+            }, {
+              name: 'Errors',
+              color: '#ff4001',
+              data: chartStats.errors
+            }
+          ]
+        })
+      },
+      ...stats
+    },
+
+    computed: {
+      report() {
+        let report = _.find(this.$store.state.admin.reports, { 'id': parseInt(this.$route.params.reportId) })
+
+        if (report === undefined) {
+          this.$store.dispatch('loadReports')
+          return {}
+        }
+
+        this.fetchStats(report)
+
+        return report
+      }
+    },
+
+    mounted() {
+      this.$nextTick(function() {
+
+      })
+    }
   }
 </script>

@@ -109,248 +109,48 @@
             <div class="tagcreate-fullinnertitle">INCLUDE METRICS</div>
             <div class="reportquery-fullinnertitle">VIDEO</div>
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-preroll">
-              <label for="check-preroll">All Video</label>
+              <input type="checkbox" id="all_video" @click="includeAll('video', $event)">
+              <label for="all_video">All Video</label>
             </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Ad Type</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Platform Type</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-onscroll">
-              <label for="check-onscroll">Impressions</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Unfilled Impressions</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Ads Requests</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Clicks</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Revenue</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">CPM</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Fills</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Fill %</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Errors</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Error Rate %</label>
+            <div class="tagcreate-checkwrap" v-for="(key, metric) in metrics.video">
+              <input type="checkbox" v-bind:id="key" v-bind:value="key" v-model="report.included_metrics">
+              <label v-bind:for="key">{{ metric }}</label>
             </div>
           </div><!-- END VIDEO -->
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
             <div class="tagcreate-fullinnertitle"></div>
             <div class="reportquery-fullinnertitle">TOTALS</div>
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-preroll">
-              <label for="check-preroll">All Totals</label>
+              <input type="checkbox" id="all_totals" @click="includeAll('total', $event)">
+              <label for="all_totals">All Totals</label>
             </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Total Ad Type %</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Total Platform Type %</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Total Campaign Type %</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Total Platform Type Errors</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Total Ad Type Errors</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Total Campaign Type Errors</label>
+            <div class="tagcreate-checkwrap" v-for="(key, metric) in metrics.total">
+              <input type="checkbox" v-bind:id="key" v-bind:value="key" v-model="report.included_metrics">
+              <label v-bind:for="key">{{ metric }}</label>
             </div>
           </div><!-- END TOTALS -->
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
             <div class="tagcreate-fullinnertitle"></div>
             <div class="reportquery-fullinnertitle">VIEWERSHIP</div>
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-preroll">
-              <label for="check-preroll">All Viewership</label>
+              <input type="checkbox" id="all_viewership" @click="includeAll('viewership', $event)">
+              <label for="all_viewership">All Viewership</label>
             </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Start</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">First Quartile</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Midpoint</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Third Quartile</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Completed</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Average View Rate</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Average View Time</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Completion Rate</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">Video Length</label>
+            <div class="tagcreate-checkwrap" v-for="(key, metric) in metrics.viewership">
+              <input type="checkbox" v-bind:id="key" v-bind:value="key" v-model="report.included_metrics">
+              <label v-bind:for="key">{{ metric }}</label>
             </div>
           </div><!-- END VIEWERSHIP -->
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
             <div class="tagcreate-fullinnertitle"></div>
             <div class="reportquery-fullinnertitle">ERRORS</div>
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-preroll">
-              <label for="check-preroll">All Errors</label>
+              <input type="checkbox" id="all_errors" @click="includeAll('errors', $event)">
+              <label for="all_errors">All Errors</label>
             </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">101</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">102</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">200</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">201</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">202</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">203</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">300</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">300</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">301</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">302</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">303</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">400</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">401</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">402</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">403</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">405</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">500</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">501</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">502</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">503</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">600</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">601</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">602</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">603</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">604</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">900</label>
-            </div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-infinity">
-              <label for="check-infinity">901</label>
+            <div class="tagcreate-checkwrap" v-for="(key, metric) in metrics.errors">
+              <input type="checkbox" v-bind:id="key" v-bind:value="key" v-model="report.included_metrics">
+              <label v-bind:for="key">{{ metric }}</label>
             </div>
           </div><!-- END ERRORS -->
         </div><!-- END .tagcreate-formbg -->
@@ -384,6 +184,7 @@
 </template>
 
 <script>
+  import _ from 'lodash'
   import admin from '../../../models/admin'
 
   export default {
@@ -391,6 +192,69 @@
 
     data() {
       return {
+        metrics: {
+          video: {
+            'Ad Type': 'ad_type',
+            'Platform Type': 'platform_type',
+            'Impressions': 'impressions',
+            'Unfilled Impressions': 'unfilled_impressions',
+            'Ads Requests': 'ads_requests',
+            'Clicks': 'clicks',
+            'Revenue': 'revenue',
+            'CPM': 'cpm',
+            'Fills': 'fills',
+            'Fill %': 'fill_rate',
+            'Errors': 'errors',
+            'Error %': 'error_rate'
+          },
+          total: {
+            'Total Ad Type %': 'total_ad_type_percent',
+            'Total Platform Type %': 'total_platform_type_percent',
+            'Total Campaign Type %': 'total_campaign_type_percent',
+            'Total Platform Type Errors': 'total_platform_type_errors',
+            'Total Ad Type Errors': 'total_ad_type_errors',
+            'Total Campaign Type Errors': 'total_campaign_type_errors'
+          },
+          viewership: {
+            'Start': 'start',
+            'First Quartile': 'first_quartile',
+            'Midpoint': 'midpoint',
+            'Third Quartile': 'third:_quartile',
+            'Completed': 'completed',
+            'Average View Rate': 'average_view_rate',
+            'Average View Time': 'average_view_time',
+            'Completion Rate': 'completion_rate',
+            'Video Length': 'view_length'
+          },
+          errors: {
+            '101': 'error101',
+            '102': 'error102',
+            '200': 'error200',
+            '201': 'error201',
+            '202': 'error202',
+            '203': 'error203',
+            '300': 'error300',
+            '301': 'error301',
+            '302': 'error302',
+            '303': 'error303',
+            '400': 'error400',
+            '401': 'error401',
+            '402': 'error402',
+            '403': 'error403',
+            '405': 'error505',
+            '500': 'error500',
+            '501': 'error501',
+            '502': 'error502',
+            '503': 'error503',
+            '600': 'error600',
+            '601': 'error601',
+            '602': 'error602',
+            '603': 'error603',
+            '604': 'error604',
+            '900': 'error900',
+            '901': 'error901'
+          }
+        },
         report: {
           title: '',
           date_range: 'today',
@@ -399,6 +263,7 @@
             filter: 'doesNotContain',
             value: ''
           },
+          included_metrics: [],
           sort_by: 'advertiser',
           schedule: 'once',
           recipient: ''
@@ -429,8 +294,24 @@
         } else {
           admin.createReport(this.report)
               .then(newReport => {
-                alert('Report created.')
+                window.alert('Report created.')
               })
+        }
+      },
+
+      includeAll(type, e) {
+        var metrics = this.metrics[type]
+
+        if (e.target.checked) {
+          _.values(metrics).forEach(metric => {
+            if (this.report.included_metrics.indexOf(metric) === -1) {
+              this.report.included_metrics.push(metric)
+            }
+          })
+        } else {
+          this.report.included_metrics = _.filter(this.report.included_metrics, metric => {
+            return _.values(metrics).indexOf(metric) === -1
+          })
         }
       }
     }

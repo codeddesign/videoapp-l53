@@ -18,6 +18,7 @@ Route::get('charts/impressions', 'ChartsController@impressions');
 Route::get('charts/all', 'ChartsController@stats');
 
 Route::get('user', 'UsersController@user');
+Route::get('user/token', 'UsersController@token'); // temporary token
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
     Route::get('/', function () {
@@ -44,8 +45,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('tags/{id}/activate', 'TagsController@activate');
 
     Route::get('reports', 'ReportsController@index');
-    Route::get('reports/{id}', 'ReportsController@show');
     Route::post('reports', 'ReportsController@store');
+    Route::get('reports/{id}/stats', 'ReportsController@stats');
+    Route::get('reports/{id}/xls', 'ReportsController@xls');
 
     Route::get('locations', 'LocationsController@index');
     Route::post('locations/expand', 'LocationsController@show');

@@ -23,15 +23,15 @@ class Spreadsheet
      *
      * @param Collection             $collection
      * @param SpreadsheetTransformer $transformer
-     * @param array                  $extraHeaderRows
+     * @param array                  $headerRows
      *
      * @return \Symfony\Component\HttpFoundation\File\File
      */
-    public function xlsxFile($collection, $transformer, $extraHeaderRows = [])
+    public function xlsxFile($collection, $transformer, $headerRows = [])
     {
         $writer = $this->getWriterFactory()->create(Type::XLSX);
 
-        return $this->file($collection, $transformer, $writer, $extraHeaderRows);
+        return $this->file($collection, $transformer, $writer, $headerRows);
     }
 
     /**
@@ -39,15 +39,15 @@ class Spreadsheet
      *
      * @param Collection             $collection
      * @param SpreadsheetTransformer $transformer
-     * @param array                  $extraHeaderRows
+     * @param array                  $headerRows
      *
      * @return \Symfony\Component\HttpFoundation\File\File
      */
-    public function csvFile($collection, $transformer, $extraHeaderRows = [])
+    public function csvFile($collection, $transformer, $headerRows = [])
     {
         $writer = $this->getWriterFactory()->create(Type::CSV);
 
-        return $this->file($collection, $transformer, $writer, $extraHeaderRows);
+        return $this->file($collection, $transformer, $writer, $headerRows);
     }
 
     /**
@@ -57,19 +57,19 @@ class Spreadsheet
      * @param Collection             $collection
      * @param SpreadsheetTransformer $transformer
      * @param WriterInterface        $writer
-     * @param array                  $extraHeaderRows
+     * @param array                  $headerRows
      *
      * @return \Symfony\Component\HttpFoundation\File\File
      */
-    protected function generate($path, $collection, $transformer, WriterInterface $writer, $extraHeaderRows)
+    protected function generate($path, $collection, $transformer, WriterInterface $writer, $headerRows)
     {
         $writer->openToFile($path);
 
-        foreach ($extraHeaderRows as $row) {
+        foreach ($headerRows as $row) {
             $writer->addRow($row);
         }
 
-        $writer->addRow($transformer->header());
+        //$writer->addRow($transformer->header());
 
         $collection->chunk(50)->each(function ($objects) use ($writer, $transformer) {
             foreach ($objects as $object) {

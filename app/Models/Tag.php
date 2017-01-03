@@ -105,7 +105,7 @@ class Tag extends Model
             return true;
         });
 
-        foreach($tags as $tag) {
+        foreach ($tags as $tag) {
             $tag->guaranteed_count = $tag->requestCount();
         }
 

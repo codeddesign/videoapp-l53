@@ -74,6 +74,7 @@ class RedisStats
         if ($status == 200) {
             $stats->push([
                 'name'       => 'requests',
+                'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,
                 'website_id' => $website,
@@ -88,6 +89,7 @@ class RedisStats
         if ($status == 0) {
             $stats->push([
                 'name'       => 'fills',
+                'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,
                 'website_id' => $website,
@@ -95,6 +97,7 @@ class RedisStats
         } else {
             $stats->push([
                 'name'       => 'fillErrors',
+                'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,
                 'website_id' => $website,
@@ -109,6 +112,7 @@ class RedisStats
         if ($status < 100) {
             $stats->push([
                 'name'       => 'impressions',
+                'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,
                 'website_id' => $website,
@@ -116,6 +120,7 @@ class RedisStats
         } else {
             $stats->push([
                 'name'       => 'adErrors',
+                'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,
                 'website_id' => $website,

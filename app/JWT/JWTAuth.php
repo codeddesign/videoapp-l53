@@ -2,6 +2,7 @@
 
 namespace App\JWT;
 
+use Carbon\Carbon;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -47,11 +48,15 @@ class JWTAuth implements Guard
         }
     }
 
-    public function fromUser(Authenticatable $user)
+    public function fromUser(Authenticatable $user, $expireIn = null)
     {
         $payload = [
             'uid' => $user->getAuthIdentifier(),
         ];
+
+        if (! is_null($expireIn)) {
+            $payload['exp'] = Carbon::now()->addMinutes($expireIn)->timestamp;
+        }
 
         $this->setUser($user);
 

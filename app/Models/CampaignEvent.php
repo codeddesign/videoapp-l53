@@ -41,6 +41,8 @@ class CampaignEvent extends Model
      */
     protected $hidden = ['updated_at', 'deleted_at'];
 
+    public static $errors = [101,102,200,201,202,203,300,301,302,303,400,401,402,403,405,500,501,502,503,600,601,602,603,604,900,901];
+
     /**
      * A campaign event belongs to a campaign.
      *

@@ -30,11 +30,5 @@ Route::get('/campaign/{id}', 'CampaignsController@campaign');
 Route::get('/track', 'TrackController@index');
 Route::get('/plugin', 'PluginController@CampaignAdd');
 
-Route::group(['prefix' => '/public/api', 'namespace' => 'Client'], function () {
-    Route::get('/campaign/{id}', 'CampaignsController')->middleware('cors');
-    Route::get('/track', 'TrackingController@index');
-    Route::get('/plugin', 'PluginController@CampaignAdd');
-});
-
 // Vue app.
 Route::get('/app/{vue?}', ['as' => 'app', 'uses' => 'PagesController@index'])->where('vue', '[\/\w\.-]*');

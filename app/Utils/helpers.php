@@ -142,6 +142,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
     $time = 0;
     $tags = Tag::all()->pluck('id');
     $faker = Faker\Factory::create();
+    $adErrors = collect(CampaignEvent::$errors);
 
     do {
         $repeat = mt_rand($min, $max);
@@ -200,7 +201,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
                     $campaignEvents->handle([
                         'campaign' => $campaign,
                         'source' => 'ad',
-                        'status' => 300,
+                        'status' => $adErrors->random(),
                         'tag' => $tag,
                         'referrer' => $referrer,
                     ]);

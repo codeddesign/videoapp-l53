@@ -52,5 +52,12 @@ export default {
     .then((response) => {
       return response.data.data
     })
+  },
+
+  loadReports() {
+    return axios.get('/admin/reports')
+    .then((response) => {
+      return response.data.data
+    })
   }
 }

@@ -19,14 +19,38 @@ class ReportsController extends ApiController
 
     public function stats($id)
     {
-        $report = Report::where('id', $id)->where('user_id', $this->user->id)->first();
+        $report = $this->user->reports()->where('id', $id)->firstOrFail();
 
         $reportsService = new Reports;
 
-        $tagStats = $reportsService->stats($report);
+        $tagStats = $reportsService->stats($report, false);
 
+        $allStats = [
+            'requests'    => 0,
+            'impressions' => 0,
+            'fills'       => 0,
+            'ad_errors'   => 0,
+        ];
 
-        return $this->itemResponse($report, new ReportTransformer);
+        foreach ($tagStats as $tag) {
+            $allStats['requests'] += $tag['requests'];
+            $allStats['impressions'] += $tag['impressions'];
+            $allStats['fills'] += $tag['fills'];
+            $allStats['ad_errors'] += $tag['errors'];
+        }
+
+        return $this->jsonResponse(compact('allStats', 'tagStats'));
+    }
+
+    public function xls($id)
+    {
+        $report = $this->user->reports()->where('id', $id)->firstOrFail();
+
+        $reportsService = new Reports;
+
+        $xlsFile = $reportsService->generateXls($report);
+
+        return response()->download($xlsFile, $report->friendlyFilename());
     }
 
     public function store(StoreReportRequest $request)

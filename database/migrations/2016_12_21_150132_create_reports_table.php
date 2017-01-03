@@ -24,6 +24,7 @@ class CreateReportsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->jsonb('filter')->nullable();
+            $table->jsonb('included_metrics')->nullable();
             $table->string('sort_by');
             $table->string('schedule');
             $table->string('recipient');

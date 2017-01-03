@@ -12,7 +12,8 @@ import {
   ADD_NOTE,
   LOAD_WEBSITE_STATS,
   LOAD_GLOBAL_OPTIONS,
-  UPDATE_GLOBAL_OPTIONS
+  UPDATE_GLOBAL_OPTIONS,
+  LOAD_REPORTS
 } from '../mutation-types'
 
 import User from '../../models/user'
@@ -26,6 +27,7 @@ const state = {
   accounts: [],
   tags: [],
   tagsToCompare: [],
+  reports: [],
   showTagForm: false,
   currentTag: Tag.default(),
   locations: {
@@ -122,6 +124,12 @@ const actions = {
   updateGlobalOptions({ commit }, globalOptions) {
     Admin.updateGlobalOptions(globalOptions).then(globalOptions => {
       commit(UPDATE_GLOBAL_OPTIONS, globalOptions)
+    })
+  },
+
+  loadReports({ commit }) {
+    Admin.loadReports().then(reports => {
+      commit(LOAD_REPORTS, reports)
     })
   }
 }
@@ -221,6 +229,10 @@ const mutations = {
 
   [UPDATE_GLOBAL_OPTIONS](state, globalOptions) {
     state.globalOptions = globalOptions
+  },
+
+  [LOAD_REPORTS](state, reports) {
+    state.reports = reports
   }
 }
 

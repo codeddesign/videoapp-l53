@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CleanTemporaryFiles;
 use App\Console\Commands\PersistEvents;
 use App\Console\Commands\ProcessReports;
 use App\Geolite\ImportCommand;
@@ -19,17 +20,21 @@ class Kernel extends ConsoleKernel
         PersistEvents::class,
         ImportCommand::class,
         ProcessReports::class,
+        CleanTemporaryFiles::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('ad3:persist-events')->hourly();
+        $schedule->command('ad3:process-reports')->daily();
+        $schedule->command('ad3:clean-temporary-files')->daily();
     }
 
     /**
