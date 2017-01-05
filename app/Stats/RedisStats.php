@@ -109,9 +109,17 @@ class RedisStats
 
     protected function handleAdStats($stats, $value, $status, $tag, $website)
     {
-        if ($status < 100) {
+        if ($status === 0) {
             $stats->push([
                 'name'       => 'impressions',
+                'status'     => $status,
+                'count'      => $value,
+                'tag_id'     => $tag,
+                'website_id' => $website,
+            ]);
+        } else if($status < 100) {
+            $stats->push([
+                'name'       => 'info',
                 'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,
