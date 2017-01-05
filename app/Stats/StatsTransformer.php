@@ -78,28 +78,28 @@ class StatsTransformer
 
         if ($tagStats) {
             $data['tags'] = [
-                'mobile' => [
-                    'preroll' => [
-                        'requests' => 0,
+                'mobile'  => [
+                    'preroll'   => [
+                        'requests'    => 0,
                         'impressions' => 0,
-                        'errors' => 0,
+                        'errors'      => 0,
                     ],
                     'outstream' => [
-                        'requests' => 0,
+                        'requests'    => 0,
                         'impressions' => 0,
-                        'errors' => 0,
+                        'errors'      => 0,
                     ],
                 ],
                 'desktop' => [
-                    'preroll' => [
-                        'requests' => 0,
+                    'preroll'   => [
+                        'requests'    => 0,
                         'impressions' => 0,
-                        'errors' => 0,
+                        'errors'      => 0,
                     ],
                     'outstream' => [
-                        'requests' => 0,
+                        'requests'    => 0,
                         'impressions' => 0,
-                        'errors' => 0,
+                        'errors'      => 0,
                     ],
                 ],
             ];
@@ -142,7 +142,7 @@ class StatsTransformer
         }
 
         foreach ($dateRange->arrayByStep($step) as $period) {
-            $key = $period->format($format);
+            $key       = $period->format($format);
             $timestamp = $period->timestamp * 1000;
 
             if ($stats->has($key)) {
@@ -187,11 +187,11 @@ class StatsTransformer
             $statName = 'errors';
         }
 
-        $tag = $stat->tag;
-
-        if(!$tag) {
+        if (! isset($stat->tag)) {
             return;
         }
+
+        $tag = $stat->tag;
 
         if (isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
             $data['tags'][$tag->platform_type][$tag->ad_type][$statName] += $stat->count;
