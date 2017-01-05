@@ -31,6 +31,10 @@ class Reports
         foreach ($events as $tagEvents) {
             $parsedStats = $statsTransformer->transformSumAll($tagEvents);
 
+            if(! isset($tagEvents->first()->tag) || $parsedStats['impressions'] === 0) {
+                continue;
+            }
+
             $tag = $tagEvents->first()->tag;
 
             $tagStats = collect([
@@ -38,10 +42,10 @@ class Reports
                 'description'   => $tag->description,
                 'ad_type'       => $tag->ad_type,
                 'platform_type' => $tag->platform_type,
-                'requests'      => $parsedStats['requests'],
+                'requests'      => $parsedStats['impressions'] + $parsedStats['fillErrors'],
                 'impressions'   => $parsedStats['impressions'],
                 'fills'         => $parsedStats['fills'],
-                'fill_rate'     => number_format(($parsedStats['impressions'] / $parsedStats['requests'] * 100), 2),
+                'fill_rate'     => number_format(($parsedStats['impressions'] / ($parsedStats['impressions'] + $parsedStats['fillErrors']) * 100), 2),
                 'revenue'       => number_format($parsedStats['revenue'], 2),
                 'ecpm'          => $tag->ecpm / 100.0,
                 'errors'        => $parsedStats['adErrors'],
