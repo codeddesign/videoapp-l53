@@ -12,11 +12,11 @@ export default {
   },
 
   isImpression(event) {
-    return event.source === 'ad' && event.status === 0
+    return event.source === 'ad' && event.status === 3
   },
 
   isAdError(event) {
-    return event.source === 'ad' && event.status !== 0
+    return event.source === 'ad' && event.status >= 100
   },
 
   type(event) {

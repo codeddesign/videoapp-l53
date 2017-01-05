@@ -11,13 +11,19 @@ class RedisStats
 
     protected $redis;
 
-    public function fetchStatusForCampaign($campaignId)
+    public function fetchStatusForCampaign($campaignId, $daily = false)
     {
         $redis = $this->getRedis();
 
+        $campaignKey = "campaign:{$campaignId}";
+
+        if($daily) {
+            $campaignKey = "daily-{$campaignKey}";
+        }
+
         $regex = '/source:(\w*):status:(\d*)(?::tag:(\w*))?(?::website:(\d*))?/';
 
-        $data = $redis->hgetall("campaign:{$campaignId}");
+        $data = $redis->hgetall($campaignKey);
 
         $stats = new Collection();
 
@@ -109,7 +115,7 @@ class RedisStats
 
     protected function handleAdStats($stats, $value, $status, $tag, $website)
     {
-        if ($status === 0) {
+        if ($status === 3) {
             $stats->push([
                 'name'       => 'impressions',
                 'status'     => $status,
@@ -119,7 +125,7 @@ class RedisStats
             ]);
         } else if($status < 100) {
             $stats->push([
-                'name'       => 'info',
+                'name'       => 'viewership',
                 'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,

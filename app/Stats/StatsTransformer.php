@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class StatsTransformer
 {
-    protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors', 'revenue', 'info'];
+    protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors', 'revenue'];
 
     public function transformRealtime($stats)
     {
@@ -185,7 +185,7 @@ class StatsTransformer
     {
         $statName = $stat->name;
 
-        if ($statName === 'fillErrors' || $statName === 'adErrors') {
+        if ($statName === 'fillErrors') {
             $statName = 'errors';
         }
 
@@ -195,6 +195,7 @@ class StatsTransformer
 
         $tag = $stat->tag;
 
+        // tag requests = tag fills + tag errors
         if($statName === 'errors' || $statName === 'fills') {
             if(isset($data['tags'][$tag->platform_type][$tag->ad_type]['requests'])) {
                 $data['tags'][$tag->platform_type][$tag->ad_type]['requests'] += $stat->count;

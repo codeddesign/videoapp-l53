@@ -19,7 +19,7 @@
 
       <div class="display-dashboardtoparea">
         <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
-          <span>( LIVE STATS FROM {{ currentTime.clone().startOf('hour').format('hh:mm a') }} UP TO {{ currentTime.format('hh:mm a') }} )</span>
+          <span>( LIVE STATS UP TO {{ currentTime.format('hh:mm a') }} )</span>
         </div>
         <router-link :to="{ name: 'admin.reports.create'}">
           <div class="currentcamp-createbutton">GENERATE REPORT</div>
@@ -29,7 +29,7 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="request" :value="requests"></stats>
+            <stats title="requests" :value="requests"></stats>
         </li>
         <li>
           <stats title="impressions" :value="impressions"></stats>
@@ -216,12 +216,12 @@
       fetchStats() {
         http.get('/admin/stats/all?time=realtime')
           .then((response) => {
-            this.requests = parseInt(response.data.requests)
             this.impressions = parseInt(response.data.impressions)
             this.fills = parseInt(response.data.fills)
             this.revenue = parseFloat(response.data.revenue)
             this.adErrors = parseInt(response.data.adErrors)
             this.fillErrors = parseInt(response.data.fillErrors)
+            this.requests = this.fills + this.fillErrors
             this.tags = response.data.tags
           })
           .catch((error) => {
@@ -280,7 +280,7 @@
 
                 switch (events.type(e)) {
                   case 'request':
-                    this.requests++
+                    //we don't need campaign requests here
                     break
                   case 'impression':
                     tags.forEach((tag) => {
@@ -290,20 +290,25 @@
                     this.revenue += (e.tag.ecpm) / 1000
                     break
                   case 'fill':
+                    this.requests++
                     this.fills++
                     tags.forEach((tag) => {
                       tag.requests++
                     })
                     break
                   case 'tag-error':
+                    this.requests++
+                    this.fillErrors++
                     tags.forEach((tag) => {
                       tag.requests++
                       tag.errors++
                     })
-                    this.fillErrors++
                     break
                   case 'ad-error':
                     this.adErrors++
+                    tags.forEach((tag) => {
+                      tag.errors++
+                    })
                     break
                 }
               })

@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Models\WordpressSite;
 use App\Stats\RedisStats;
 use Carbon\Carbon;
+use Illuminate\Log\Writer as Log;
 use Illuminate\Redis\Database as Redis;
 use Illuminate\Support\Collection;
 
@@ -27,28 +28,36 @@ class CampaignEvents
 
         $userId = $this->getUserForCampaign($data['campaign']);
 
+        $data = $this->handleUnknownErrors($data);
+
         $this->broadcastEvent($data, $userId);
 
         $this->saveOnRedis($data);
     }
 
-    public function fetchAllCampaigns()
+    public function fetchAllCampaigns($daily = false)
     {
         $redis = $this->getRedis();
 
-        $ids = collect($redis->keys('campaign:*'))->map(function ($key) {
+        $campaignsKey = 'campaign:*';
+
+        if($daily) {
+            $campaignsKey = "daily-{$campaignsKey}";
+        }
+
+        $ids = collect($redis->keys($campaignsKey))->map(function ($key) {
             return explode(':', $key)[1];
         })->toArray();
 
-        return $this->fetchMultipleCampaigns($ids);
+        return $this->fetchMultipleCampaigns($ids, $daily);
     }
 
-    public function fetchMultipleCampaigns(array $ids)
+    public function fetchMultipleCampaigns(array $ids, $daily = false)
     {
         $data = new Collection();
 
         foreach ($ids as $id) {
-            $this->fetchStatusForCampaign($id)->map(function ($stat) use ($data) {
+            $this->fetchStatusForCampaign($id, $daily)->map(function ($stat) use ($data) {
                 $data->push((object) $stat);
             });
         }
@@ -68,11 +77,11 @@ class CampaignEvents
         return $data;
     }
 
-    public function fetchStatusForCampaign($campaignId)
+    public function fetchStatusForCampaign($campaignId, $daily = false)
     {
         $redisStats = new RedisStats;
 
-        return $redisStats->fetchStatusForCampaign($campaignId);
+        return $redisStats->fetchStatusForCampaign($campaignId, $daily);
     }
 
     public function persistRedisData()
@@ -92,12 +101,28 @@ class CampaignEvents
                 $events->push($event);
             }
 
+            $this->storeDailyData($id);
+
             $redis->del([$key]);
         }
 
         CampaignEvent::saveMany($events);
 
         return $events;
+    }
+
+    protected function storeDailyData($id)
+    {
+        $redis = $this->getRedis();
+
+        $campaignKey = "campaign:{$id}";
+
+        $data = $redis->hgetall($campaignKey);
+
+        foreach($data as $key => $value)
+        {
+            $redis->hincrby("daily-{$campaignKey}", $key, $value);
+        }
     }
 
     protected function processTags($campaignId, $data, $tags)
@@ -162,6 +187,7 @@ class CampaignEvents
             }
         }
 
+        $redis->hincrby("daily-campaign:{$data['campaign']}", $value, 1);
         $redis->hincrby("campaign:{$data['campaign']}", $value, 1);
     }
 
@@ -172,6 +198,21 @@ class CampaignEvents
         if (array_get($data, 'tag') !== null && $data['source'] === 'app' && $data['status'] == 200) {
             $redis->hincrby('tag_requests', $data['tag'], 1);
         }
+    }
+
+    protected function handleUnknownErrors($data)
+    {
+        if(is_numeric($data['status'])) {
+            return;
+        }
+
+        /** @var Log $logger */
+        $logger = app(Log::class);
+        $logger->alert("Unknown ad error: {$data['status']}");
+
+        $data['status'] = 901;
+
+        return $data;
     }
 
     /**

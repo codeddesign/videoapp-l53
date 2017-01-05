@@ -30,7 +30,7 @@ class StatsController extends ApiController
 
     protected function fetchRealTimeData()
     {
-        $stats = (new CampaignEvents)->fetchAllCampaigns();
+        $stats = (new CampaignEvents)->fetchAllCampaigns(true);
 
         return (new StatsTransformer)->transformSumAll($stats, true);
     }

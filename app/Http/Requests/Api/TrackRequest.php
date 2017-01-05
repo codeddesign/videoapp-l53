@@ -27,7 +27,7 @@ class TrackRequest extends FormRequest
         return [
             'campaign' => (int) $this->get('campaign'),
             'source'   => $this->get('source'),
-            'status'   => (int) $this->get('status'),
+            'status'   => $this->get('status'),
             'tag'      => $tag,
             'referrer' => $this->get('referrer'),
         ];
