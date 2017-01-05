@@ -189,6 +189,10 @@ class StatsTransformer
 
         $tag = $stat->tag;
 
+        if(!$tag) {
+            return;
+        }
+
         if (isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
             $data['tags'][$tag->platform_type][$tag->ad_type][$statName] += $stat->count;
         }
