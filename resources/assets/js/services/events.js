@@ -1,18 +1,18 @@
 export default {
   isRequest(event) {
-    return event.source === 'app' && event.status === 200
+    return event.source === 'campaign' && event.status === 200
+  },
+
+  isFill(event) {
+    return event.source === 'tag' && event.status === 200
+  },
+
+  isTagError(event) {
+    return event.source === 'tag' && event.status !== 200
   },
 
   isImpression(event) {
     return event.source === 'ad' && event.status === 0
-  },
-
-  isFill(event) {
-    return event.source === 'tag' && event.status === 0
-  },
-
-  isTagError(event) {
-    return event.source === 'tag' && event.status !== 0
   },
 
   isAdError(event) {

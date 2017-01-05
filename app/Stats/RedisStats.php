@@ -86,7 +86,7 @@ class RedisStats
 
     protected function handleTagStats($stats, $value, $status, $tag, $website)
     {
-        if ($status == 0) {
+        if ($status == 200) {
             $stats->push([
                 'name'       => 'fills',
                 'status'     => $status,

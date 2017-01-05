@@ -273,7 +273,12 @@
         if (echo) {
           echo.private('user.' + this.currentUser.id)
               .listen('CampaignEventReceived', (e) => {
-                let tags = this.getTagStats(e.tag)
+
+                let tags = []
+                if (e.tag) {
+                  let tags = this.getTagStats(e.tag)
+                }
+
                 switch (events.type(e)) {
                   case 'request':
                     this.requests++
