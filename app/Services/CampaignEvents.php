@@ -203,7 +203,7 @@ class CampaignEvents
     protected function handleUnknownErrors($data)
     {
         if(is_numeric($data['status'])) {
-            return;
+            return $data;
         }
 
         /** @var Log $logger */

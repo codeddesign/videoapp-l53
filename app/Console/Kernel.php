@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CleanDailyStats;
 use App\Console\Commands\CleanTemporaryFiles;
 use App\Console\Commands\PersistEvents;
 use App\Console\Commands\ProcessReports;
@@ -21,6 +22,7 @@ class Kernel extends ConsoleKernel
         ImportCommand::class,
         ProcessReports::class,
         CleanTemporaryFiles::class,
+        CleanDailyStats::class,
     ];
 
     /**
@@ -35,6 +37,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('ad3:persist-events')->hourly();
         $schedule->command('ad3:process-reports')->daily();
         $schedule->command('ad3:clean-temporary-files')->daily();
+        $schedule->command('ad3:clean-daily-stats')->daily();
     }
 
     /**
