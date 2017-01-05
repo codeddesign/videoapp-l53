@@ -108,7 +108,7 @@ class StatsTransformer
         foreach ($stats as $stat) {
             $data[$stat->name] += $stat->count;
 
-            if ($stat->name === 'impressions') {
+            if ($stat->name === 'impressions' && isset($stat->tag)) {
                 $data['revenue'] += $this->calculateRevenue($stat->count, $stat->tag->ecpm);
             }
 
@@ -183,7 +183,7 @@ class StatsTransformer
     {
         $statName = $stat->name;
 
-        if ($statName === 'adErrors' || $statName === 'fillErrors') {
+        if ($statName === 'fillErrors') {
             $statName = 'errors';
         }
 
@@ -193,11 +193,25 @@ class StatsTransformer
 
         $tag = $stat->tag;
 
+        if($statName === 'errors' || $statName === 'fills') {
+            if(isset($data['tags'][$tag->platform_type][$tag->ad_type]['requests'])) {
+                $data['tags'][$tag->platform_type][$tag->ad_type]['requests'] += $stat->count;
+            }
+        }
+
+        // Sum the ad_type (instream/outstream)
         if (isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
             $data['tags'][$tag->platform_type][$tag->ad_type][$statName] += $stat->count;
         }
 
+        // Sum the campaign_type (preroll/onscroll/etc)
         foreach ($tag->campaign_types as $type) {
+            if($statName === 'errors' || $statName === 'fills') {
+                if(isset($data['tags'][$tag->platform_type][$type]['requests'])) {
+                    $data['tags'][$tag->platform_type][$type]['requests'] += $stat->count;
+                }
+            }
+
             if (isset($data['tags'][$tag->platform_type][$type][$statName])) {
                 $data['tags'][$tag->platform_type][$type][$statName] += $stat->count;
             }

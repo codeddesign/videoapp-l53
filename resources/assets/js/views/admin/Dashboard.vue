@@ -268,23 +268,19 @@
       },
 
       setupSocket() {
-        console.log('setting up socket')
+        console.log('Setting up socket')
         let echo = socket.connection()
         if (echo) {
           echo.private('user.' + this.currentUser.id)
               .listen('CampaignEventReceived', (e) => {
-
                 let tags = []
                 if (e.tag) {
-                  let tags = this.getTagStats(e.tag)
+                  tags = this.getTagStats(e.tag)
                 }
 
                 switch (events.type(e)) {
                   case 'request':
                     this.requests++
-                    tags.forEach((tag) => {
-                      tag.requests++
-                    })
                     break
                   case 'impression':
                     tags.forEach((tag) => {
@@ -295,9 +291,13 @@
                     break
                   case 'fill':
                     this.fills++
+                    tags.forEach((tag) => {
+                      tag.requests++
+                    })
                     break
                   case 'tag-error':
                     tags.forEach((tag) => {
+                      tag.requests++
                       tag.errors++
                     })
                     this.fillErrors++
