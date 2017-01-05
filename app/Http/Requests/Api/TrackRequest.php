@@ -18,11 +18,17 @@ class TrackRequest extends FormRequest
 
     public function transform()
     {
+        if($this->get('tag') === null || $this->get('tag') === 'false') {
+            $tag = null;
+        } else {
+            $tag = $this->get('tag');
+        }
+
         return [
             'campaign' => (int) $this->get('campaign'),
             'source'   => $this->get('source'),
             'status'   => (int) $this->get('status'),
-            'tag'      => $this->get('tag'),
+            'tag'      => $tag,
             'referrer' => $this->get('referrer'),
         ];
     }

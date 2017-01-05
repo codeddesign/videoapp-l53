@@ -39,7 +39,7 @@ class CampaignEventReceived implements ShouldBroadcast
         $this->timestamp  = $time->timestamp * 1000;
         $this->status     = $status;
 
-        if($this->tag !== null && $this->tag !== 'false') {
+        if($tag !== null) {
            $this->tag = (new TagTransformer)->transform(Tag::find($tag));
         }
     }
