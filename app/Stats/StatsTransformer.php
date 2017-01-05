@@ -161,7 +161,9 @@ class StatsTransformer
                         if ($stat === 'impressions') {
                             $revenue = 0;
                             $events->where('name', $stat)->map(function ($impressions) use (&$revenue) {
-                                $revenue += $this->calculateRevenue($impressions->count, $impressions->tag->ecpm);
+                                if(isset($impressions->tag)) {
+                                    $revenue += $this->calculateRevenue($impressions->count, $impressions->tag->ecpm);
+                                }
                             });
                             $data['revenue'][] = [$timestamp, $revenue];
                         }
