@@ -183,7 +183,7 @@ class StatsTransformer
     {
         $statName = $stat->name;
 
-        if ($statName === 'fillErrors') {
+        if ($statName === 'fillErrors' || $statName === 'adErrors') {
             $statName = 'errors';
         }
 

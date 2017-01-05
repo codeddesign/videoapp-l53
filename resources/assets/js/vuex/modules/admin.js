@@ -13,7 +13,8 @@ import {
   LOAD_WEBSITE_STATS,
   LOAD_GLOBAL_OPTIONS,
   UPDATE_GLOBAL_OPTIONS,
-  LOAD_REPORTS
+  LOAD_REPORTS,
+  DELETE_REPORTS
 } from '../mutation-types'
 
 import User from '../../models/user'
@@ -131,6 +132,12 @@ const actions = {
     Admin.loadReports().then(reports => {
       commit(LOAD_REPORTS, reports)
     })
+  },
+
+  deleteReports({ commit }, reports) {
+    Admin.deleteReports(reports).then(reportsDeleted => {
+      commit(DELETE_REPORTS, reportsDeleted)
+    })
   }
 }
 
@@ -233,6 +240,13 @@ const mutations = {
 
   [LOAD_REPORTS](state, reports) {
     state.reports = reports
+  },
+
+  [DELETE_REPORTS](state, reports) {
+    state.reports = _.filter(state.reports, report => {
+      console.log(reports.indexOf(report.id))
+      return reports.indexOf(report.id) === -1
+    })
   }
 }
 

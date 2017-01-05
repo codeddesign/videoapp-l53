@@ -1,8 +1,7 @@
-3<template>
+<template>
   <div>
     <div class="page-index">
-      <div class="adminreports-deletebutton">DELETE</div>
-      <div class="adminreports-editbutton">EDIT</div>
+      <div class="adminreports-deletebutton" @click="deleteReports()">DELETE</div>
       <router-link :to="{ name: 'admin.reports.create'}">
         <div class="tagcreate-topcancel tagcreate-editpagetopcancel">CREATE NEW QUERY</div>
       </router-link>
@@ -16,7 +15,7 @@
         <li v-for="report in reports">
           <div class="dashboard-statslist1 adminreports-statslist1">
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" v-bind:id="report.id">
+              <input type="checkbox" v-bind:id="report.id" v-bind:value="report.id" v-model="selectedReports">
               <label v-bind:for="report.id"></label>
             </div>
             <div @click="showReport(report)">
@@ -46,12 +45,14 @@
 </template>
 
 <script>
+  import Admin from '../../../models/admin'
   import Pagination from '../../../services/pagination'
 
   export default {
     name: 'Reports',
     data() {
       return {
+        selectedReports: [],
         pagination: new Pagination()
       }
     },
@@ -59,6 +60,10 @@
     methods: {
       showReport(report) {
         this.$router.push({ name: 'admin.reports.show', params: { reportId: report.id }})
+      },
+
+      deleteReports() {
+        this.$store.dispatch('deleteReports', this.selectedReports)
       }
     },
 

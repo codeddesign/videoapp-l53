@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Admin\StoreReportRequest;
 use App\Models\Report;
 use App\Services\Reports;
 use App\Transformers\ReportTransformer;
+use Illuminate\Http\Request;
 
 class ReportsController extends ApiController
 {
@@ -62,5 +63,14 @@ class ReportsController extends ApiController
         $report->save();
 
         return $this->itemResponse($report, new ReportTransformer);
+    }
+
+    public function destroy(Request $request)
+    {
+        $ids = $request->get('reports');
+
+        $this->user->reports()->whereIn('id', $ids)->delete();
+
+        return $this->jsonResponse(['deleted_reports' => $ids]);
     }
 }

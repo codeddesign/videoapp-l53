@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
 
     Route::get('reports', 'ReportsController@index');
     Route::post('reports', 'ReportsController@store');
+    Route::post('reports/delete', 'ReportsController@destroy');
     Route::get('reports/{id}/stats', 'ReportsController@stats');
     Route::get('reports/{id}/xls', 'ReportsController@xls');
 

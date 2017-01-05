@@ -59,5 +59,14 @@ export default {
     .then((response) => {
       return response.data.data
     })
+  },
+
+  deleteReports(reports) {
+    return axios.post('/admin/reports/delete', {
+      reports: reports
+    })
+    .then((response) => {
+      return response.data.deleted_reports
+    })
   }
 }
