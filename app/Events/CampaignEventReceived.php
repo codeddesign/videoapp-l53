@@ -36,9 +36,12 @@ class CampaignEventReceived implements ShouldBroadcast
         $this->userId     = $userId;
         $this->campaignId = $campaignId;
         $this->source     = $source;
-        $this->tag        = (new TagTransformer)->transform(Tag::find($tag));
         $this->timestamp  = $time->timestamp * 1000;
         $this->status     = $status;
+
+        if($this->tag !== null && $this->tag !== 'false') {
+           $this->tag = (new TagTransformer)->transform(Tag::find($tag));
+        }
     }
 
     /**

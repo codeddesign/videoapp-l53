@@ -155,7 +155,7 @@ function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10
 
             $campaignEvents->handle([
                 'campaign' => $campaign,
-                'source' => 'app',
+                'source' => 'campaign',
                 'status' => 200,
                 'tag' => $tag,
                 'referrer' => $referrer,

@@ -33,7 +33,7 @@ class RedisStats
                 $website = array_get($matches, 4) ? intval(array_get($matches, 4)) : null;
 
                 switch ($source) {
-                    case 'app':
+                    case 'campaign':
                         $stats = $this->handleAppStats($stats, $value, $status, $tag, $website);
                         break;
 

@@ -150,7 +150,7 @@ class CampaignEvents
 
         $this->saveTagRequests($data);
 
-        if (array_get($data, 'tag') !== null) {
+        if (array_get($data, 'tag') !== null && array_get($data, 'tag') !== 'false') {
             $value .= ":tag:{$data['tag']}";
         }
 
