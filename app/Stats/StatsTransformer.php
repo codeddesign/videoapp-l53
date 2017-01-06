@@ -181,42 +181,55 @@ class StatsTransformer
         return $data;
     }
 
-    protected function parseTagStats(&$data, $stat)
+    protected function parseTagStats(&$data, $event)
     {
-        $statName = $stat->name;
-
-        if ($statName === 'fillErrors') {
-            $statName = 'errors';
-        }
-
-        if (! isset($stat->tag)) {
+        if (! isset($event->tag)) {
             return;
         }
 
-        $tag = $stat->tag;
+        $tag = $event->tag;
 
-        // tag requests = tag fills + tag errors
-        if($statName === 'errors' || $statName === 'fills') {
-            if(isset($data['tags'][$tag->platform_type][$tag->ad_type]['requests'])) {
-                $data['tags'][$tag->platform_type][$tag->ad_type]['requests'] += $stat->count;
-            }
+        if($tag->platform_type === 'all') {
+            $platforms = ['desktop', 'mobile'];
+        } else {
+            $platforms = [$tag->platform_type];
         }
 
-        // Sum the ad_type (instream/outstream)
-        if (isset($data['tags'][$tag->platform_type][$tag->ad_type][$statName])) {
-            $data['tags'][$tag->platform_type][$tag->ad_type][$statName] += $stat->count;
+        $keys = $tag->campaign_types;
+
+        if($tag->ad_type === 'all') {
+            $keys[] = 'instream';
+            $keys[] = 'outstream';
+        } else {
+            $keys[] = $tag->ad_type;
         }
 
-        // Sum the campaign_type (preroll/onscroll/etc)
-        foreach ($tag->campaign_types as $type) {
-            if($statName === 'errors' || $statName === 'fills') {
-                if(isset($data['tags'][$tag->platform_type][$type]['requests'])) {
-                    $data['tags'][$tag->platform_type][$type]['requests'] += $stat->count;
+        // $stats contains the keys that will be increased
+        $stats = [];
+        switch ($event->name) {
+            case 'impressions':
+                $stats = ['impressions'];
+                break;
+            case 'fills':
+                $stats = ['requests'];
+                break;
+            case 'fillErrors':
+                $stats = ['requests', 'errors'];
+                break;
+            case 'adErrors':
+                $stats = ['errors'];
+                break;
+        }
+
+        foreach($platforms as $platform)
+        {
+            foreach($keys as $key) {
+                foreach($stats as $stat)
+                {
+                    if(isset($data['tags'][$platform][$key][$stat])) {
+                        $data['tags'][$platform][$key][$stat] += $event->count;
+                    }
                 }
-            }
-
-            if (isset($data['tags'][$tag->platform_type][$type][$statName])) {
-                $data['tags'][$tag->platform_type][$type][$statName] += $stat->count;
             }
         }
     }

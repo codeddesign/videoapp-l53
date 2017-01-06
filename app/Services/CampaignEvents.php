@@ -202,9 +202,14 @@ class CampaignEvents
 
     protected function handleUnknownErrors($data)
     {
+        // If status is a number, cast it to an int
         if(is_numeric($data['status'])) {
+            $data['status'] = intval($data['status']);
             return $data;
         }
+
+        // Otherwise, log the string status and
+        // set the error status code to 901
 
         /** @var Log $logger */
         $logger = app(Log::class);

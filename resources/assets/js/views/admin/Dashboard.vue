@@ -250,19 +250,38 @@
       },
 
       getTagStats(tag) {
-        let types = _.map(tag.campaign_types, (value, type) => {
+        let arrayKeys = _.map(tag.campaign_types, (value, type) => {
           if (value === true) {
             return type
           }
         }).filter((type) => { return type !== undefined })
 
-        let tagStats = types.map(type => {
-          return this.tags[tag.platform_type][type]
-        }).filter((tag) => { return tag !== undefined })
+        let platforms = []
 
-        if (this.tags[tag.platform_type][tag.ad_type] !== undefined) {
-          tagStats.push(this.tags[tag.platform_type][tag.ad_type])
+        if(tag.platform_type === 'all') {
+          platforms.push(this.tags['desktop'])
+          platforms.push(this.tags['mobile'])
+        } else {
+          platforms.push(this.tags[tag.platform_type])
         }
+
+        if(tag.ad_type === 'all')
+        {
+          arrayKeys.push('instream')
+          arrayKeys.push('outstream')
+        } else {
+          arrayKeys.push(tag.ad_type)
+        }
+
+        let tagStats = []
+
+        platforms.forEach(platform => {
+          arrayKeys.forEach(key => {
+            tagStats.push(platform[key])
+          })
+        })
+
+        tagStats = tagStats.filter((tag) => { return tag !== undefined })
 
         return tagStats
       },
