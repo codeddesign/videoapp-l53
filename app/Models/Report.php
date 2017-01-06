@@ -94,7 +94,7 @@ class Report extends Model
         $orderedHeader = [];
 
         if(count($stats) === 0) {
-            return $header->values();
+            return $header->values()->toArray();
         }
 
         foreach ($stats[0] as $key => $value) {

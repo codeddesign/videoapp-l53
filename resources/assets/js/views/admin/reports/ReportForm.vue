@@ -192,6 +192,21 @@
 
     data() {
       return {
+        reportData: {
+          id: 0,
+          title: '',
+          date_range: 'today',
+          filter: {
+            type: 'advertiser',
+            filter: 'doesNotContain',
+            value: ''
+          },
+          included_metrics: [],
+          sort_by: 'advertiser',
+          schedule: 'once',
+          recipient: ''
+        },
+
         metrics: {
           video: {
             'Ad Type': 'ad_type',
@@ -255,19 +270,6 @@
             '901': 'error901'
           }
         },
-        report: {
-          title: '',
-          date_range: 'today',
-          filter: {
-            type: 'advertiser',
-            filter: 'doesNotContain',
-            value: ''
-          },
-          included_metrics: [],
-          sort_by: 'advertiser',
-          schedule: 'once',
-          recipient: ''
-        },
 
         timeRangeOptions: [
           { text: 'Today', value: 'today' },
@@ -292,9 +294,10 @@
 
           window.alert(errorMsg)
         } else {
-          admin.createReport(this.report)
+          admin.saveReport(this.report)
               .then(newReport => {
-                window.alert('Report created.')
+                this.$store.dispatch('loadReports')
+                this.$router.push({ name: 'admin.reports.show', params: { reportId: newReport.id }})
               })
         }
       },
@@ -314,7 +317,29 @@
           })
         }
       }
+    },
+
+    computed: {
+      report() {
+        if (!this.$route.params.reportId) {
+          return this.reportData
+        }
+
+        let report = _.find(this.$store.state.admin.reports, { 'id': parseInt(this.$route.params.reportId) })
+
+        if (report === undefined) {
+          this.$store.dispatch('loadReports')
+          return {
+            filter: {}
+          }
+        }
+
+        this.reportData = _.cloneDeep(report)
+
+        return this.reportData
+      }
     }
+
   }
 </script>
 

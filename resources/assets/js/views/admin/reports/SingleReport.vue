@@ -3,6 +3,7 @@
     <div class="display-dashboardtoparea">
       <div class="dashboard-livedatestamp">REPORT QUERY: <span>{{ report.title }}</span></div>
       <div class="currentcamp-createbutton" @click="downloadXls()">EXPORT TO XLS</div>
+      <div class="currentcamp-createbutton" @click="edit()">EDIT</div>
     </div>
 
     <!-- ANALYTICS STATS -->
@@ -208,6 +209,7 @@
     name: 'SingleReport',
     data() {
       return {
+        chart: null,
         stats: {
           allStats: {},
           tagStats: {}
@@ -223,6 +225,11 @@
               this.stats = response.data
               this.showChart()
             })
+      },
+
+      edit() {
+        this.chart.destroy()
+        this.$router.push({ name: 'admin.reports.edit', params: { reportId: this.report.id }})
       },
 
       downloadXls() {

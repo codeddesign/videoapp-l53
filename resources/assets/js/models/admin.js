@@ -47,8 +47,23 @@ export default {
     })
   },
 
+  saveReport(report) {
+    if (report.id === 0) {
+      return this.createReport(report)
+    } else {
+      return this.updateReport(report)
+    }
+  },
+
   createReport(report) {
     return axios.post('/admin/reports', report)
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
+  updateReport(report) {
+    return axios.patch('/admin/reports/' + report.id, report)
     .then((response) => {
       return response.data.data
     })

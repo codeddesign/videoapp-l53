@@ -69,6 +69,19 @@ class ReportsController extends ApiController
         return $this->itemResponse($report, new ReportTransformer);
     }
 
+    public function update($id, StoreReportRequest $request)
+    {
+        $report = $this->user->reports()->where('id', $id)->firstOrFail();
+
+        $report->update($request->transform());
+
+        if($report->schedule === 'once') {
+            (new Reports)->process($report);
+        }
+
+        return $this->itemResponse($report, new ReportTransformer);
+    }
+
     public function destroy(Request $request)
     {
         $ids = $request->get('reports');
