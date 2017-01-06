@@ -106,6 +106,11 @@ class StatsTransformer
         }
 
         foreach ($stats as $stat) {
+
+            if(! isset($data[$stat->name])) {
+                continue;
+            }
+
             $data[$stat->name] += $stat->count;
 
             if ($stat->name === 'impressions' && isset($stat->tag)) {
