@@ -215,6 +215,7 @@
             'Unfilled Impressions': 'unfilled_impressions',
             'Ads Requests': 'requests',
             'Clicks': 'click',
+            'CTR': 'ctr',
             'Revenue': 'revenue',
             'CPM': 'cpm',
             'Fills': 'fills',

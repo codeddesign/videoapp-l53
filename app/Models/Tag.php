@@ -63,7 +63,7 @@ class Tag extends Model
         'excluded_websites'  => 'array',
     ];
 
-    public static function forRequest(array $location, $referrer)
+    public static function forRequest(array $location, $referer)
     {
         $cache = app(Repository::class);
 
@@ -79,7 +79,7 @@ class Tag extends Model
                 })->get();
         });
 
-        $websiteId = WordpressSite::idByLink($referrer);
+        $websiteId = WordpressSite::idByLink($referer);
 
         // Filter websites
         $tags = $tags->filter(function ($tag) use ($websiteId) {

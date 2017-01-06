@@ -52,7 +52,7 @@ class Reports
                 'error_rate'    => number_format(($parsedStats['adErrors'] / $parsedStats['impressions'] * 100), 2),
             ]);
 
-            $tagStats = $tagStats->merge($this->parseViewership($tagEvents));
+            $tagStats = $tagStats->merge($this->parseViewership($tagEvents, $tagStats));
             $tagStats = $tagStats->merge($this->parseErrors($tagEvents));
 
             if ($filterMetrics && $report->included_metrics) {
@@ -148,7 +148,7 @@ class Reports
         return $errors;
     }
 
-    protected function parseViewership($events)
+    protected function parseViewership($events, $tagStats)
     {
         $viewershipCodes = collect(CampaignEvent::$viewership);
         $viewership      = new Collection;
@@ -164,6 +164,9 @@ class Reports
                 }
             }
         }
+
+        $viewership['ctr'] = number_format(($viewership['click'] / $tagStats['impressions']) * 100, 2);
+        $viewership['completion_rate'] = number_format(($viewership['complete'] / $tagStats['impressions']) * 100, 2);
 
         return $viewership;
     }

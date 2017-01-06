@@ -62,24 +62,26 @@ class Report extends Model
     public function spreadsheetHeader($stats)
     {
         $header = collect([
-            'advertiser'    => 'Advertiser',
-            'description'   => 'Description',
-            'ad_type'       => 'Ad Type',
-            'platform_type' => 'Platform Type',
-            'requests'      => 'Ad Requests',
-            'impressions'   => 'Impressions',
-            'fills'         => 'Fills',
-            'fill_rate'     => 'Fill Rate',
-            'revenue'       => 'Revenue',
-            'ecpm'          => 'eCPM',
-            'click'         => 'Clicks',
-            'start'         => 'Start',
-            'firstquartile' => 'First Quartile',
-            'midpoint'      => 'Midpoint',
-            'thirdquartile' => 'Third Quartile',
-            'complete'      => 'Completed',
-            'errors'        => 'Total Errors',
-            'error_rate'    => 'Error Rate',
+            'advertiser'      => 'Advertiser',
+            'description'     => 'Description',
+            'ad_type'         => 'Ad Type',
+            'platform_type'   => 'Platform Type',
+            'requests'        => 'Ad Requests',
+            'impressions'     => 'Impressions',
+            'fills'           => 'Fills',
+            'fill_rate'       => 'Fill Rate',
+            'revenue'         => 'Revenue',
+            'ecpm'            => 'eCPM',
+            'click'           => 'Clicks',
+            'start'           => 'Start',
+            'firstquartile'   => 'First Quartile',
+            'midpoint'        => 'Midpoint',
+            'thirdquartile'   => 'Third Quartile',
+            'complete'        => 'Completed',
+            'ctr'             => 'CTR',
+            'completion_rate' => 'Completion Rate',
+            'errors'          => 'Total Errors',
+            'error_rate'      => 'Error Rate',
         ]);
 
         $errorCodes = CampaignEvent::$errors;
@@ -93,12 +95,12 @@ class Report extends Model
 
         $orderedHeader = [];
 
-        if(count($stats) === 0) {
+        if (count($stats) === 0) {
             return $header->values()->toArray();
         }
 
         foreach ($stats[0] as $key => $value) {
-            $orderedHeader[] = $header->get($key);
+            $orderedHeader[] = $header->get($key) ?? $key;
         }
 
         return $orderedHeader;

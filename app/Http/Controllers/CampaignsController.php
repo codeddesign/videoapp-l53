@@ -30,12 +30,14 @@ class CampaignsController extends Controller
             return response(['message' => 'Campaign does not exist.'], 404);
         }
 
-        $referrer = request()->get('referrer');
-        $ip       = request()->get('ip') ?? ipUtil();
+        $request = request();
+
+        $referer = $request->get('referrer') ?? $request->server('HTTP_REFERER');
+        $ip      = $request->get('ip') ?? ipUtil();
 
         $location = Location::byIp($ip);
 
-        $tags = Tag::forRequest($location, $referrer);
+        $tags = Tag::forRequest($location, $referer);
 
         return response(array_merge($campaign, [
             'tags'     => $tags,
