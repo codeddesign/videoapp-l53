@@ -68,5 +68,12 @@ export default {
     .then((response) => {
       return response.data.deleted_reports
     })
+  },
+
+  loadWebsites() {
+    return axios.get('/admin/websites')
+    .then((response) => {
+      return response.data.data
+    })
   }
 }

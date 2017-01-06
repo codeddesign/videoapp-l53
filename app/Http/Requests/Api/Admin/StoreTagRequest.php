@@ -59,9 +59,26 @@ class StoreTagRequest extends Request
             'priority_count'      => (int) $this->get('priority_count'),
             'timeout_limit'       => (int) $this->get('timeout_limit'),
             'wrapper_limit'       => (int) $this->get('wrapper_limit'),
+            'included_websites'   => $this->parseWebsites($this->get('included_websites')),
+            'excluded_websites'   => $this->parseWebsites($this->get('excluded_websites')),
             'included_locations'  => $this->flattenLocations($this->get('included_locations')),
             'excluded_locations'  => $this->flattenLocations($this->get('excluded_locations')),
         ];
+    }
+
+    private function parseWebsites($websites)
+    {
+        if ($websites === null) {
+            return [];
+        }
+
+        $websiteIds = [];
+
+        foreach ($websites as $website) {
+            $websiteIds[] = $website['id'];
+        }
+
+        return $websiteIds;
     }
 
     private function flattenLocations($locations)

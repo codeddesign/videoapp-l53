@@ -18,6 +18,7 @@ class CampaignsController extends Controller
 
     /**
      * @param int $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function campaign($id = 0)
@@ -29,15 +30,16 @@ class CampaignsController extends Controller
             return response(['message' => 'Campaign does not exist.'], 404);
         }
 
-        $ip = request()->get('ip') ?? ipUtil();
+        $referrer = request()->get('referrer');
+        $ip       = request()->get('ip') ?? ipUtil();
 
         $location = Location::byIp($ip);
 
-        $tags = Tag::forLocation($location);
+        $tags = Tag::forRequest($location, $referrer);
 
         return response(array_merge($campaign, [
-            'tags' => $tags,
-            'ip' => $ip,
+            'tags'     => $tags,
+            'ip'       => $ip,
             'location' => $location,
         ]), 200);
     }

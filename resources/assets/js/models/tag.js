@@ -64,6 +64,8 @@ export default {
       },
       included_locations: [],
       excluded_locations: [],
+      included_websites: [],
+      excluded_websites: [],
       timeout_limit: '',
       daily_request_limit: '',
       wrapper_limit: '',

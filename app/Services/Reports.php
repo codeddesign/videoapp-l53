@@ -31,7 +31,7 @@ class Reports
         foreach ($events as $tagEvents) {
             $parsedStats = $statsTransformer->transformSumAll($tagEvents);
 
-            if(! isset($tagEvents->first()->tag) || $parsedStats['impressions'] === 0) {
+            if (! isset($tagEvents->first()->tag) || $parsedStats['impressions'] === 0) {
                 continue;
             }
 

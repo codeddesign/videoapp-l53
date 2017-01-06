@@ -9,6 +9,7 @@ use App\Models\DateRange;
 use App\Models\Tag;
 use App\Stats\StatsTransformer;
 use App\Transformers\TagTransformer;
+use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -27,7 +28,7 @@ class TagsController extends ApiController
         if ($compareRange) {
             $stats->timeRange($compareRange);
             $dateRange = DateRange::byName($compareRange);
-            $days = $dateRange->days();
+            $days      = $dateRange->days();
         }
 
         // When using "today" as the range, the
@@ -53,6 +54,8 @@ class TagsController extends ApiController
 
         $tags = Tag::all();
 
+        $this->clearTagsCache();
+
         return $this->collectionResponse($tags, new TagTransformer);
     }
 
@@ -64,6 +67,8 @@ class TagsController extends ApiController
 
         $tags = Tag::all()->sortBy('id');
 
+        $this->clearTagsCache();
+
         return $this->collectionResponse($tags, new TagTransformer);
     }
 
@@ -74,6 +79,15 @@ class TagsController extends ApiController
         $tag->active = $request->get('status');
         $tag->save();
 
+        $this->clearTagsCache();
+
         return $this->itemResponse($tag, new TagTransformer);
+    }
+
+    protected function clearTagsCache()
+    {
+        $cache = app(Repository::class);
+
+        $cache->forget('tags.all');
     }
 }

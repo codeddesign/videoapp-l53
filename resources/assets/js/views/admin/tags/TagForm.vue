@@ -165,11 +165,12 @@
         <div class="tagcreate-targetwrap">
           <div class="tagcreate-targetleftsidebar">
             <ul class="tagcreate-targetlist">
-              <li class="active">GEOGRAPHY</li>
+              <li @click="setAdTargeting('geo')">GEOGRAPHY</li>
+              <li @click="setAdTargeting('websites')">WEBSITES</li>
               <li>DEVICES</li>
             </ul>
           </div>
-          <div class="tagcreate-targetcenterarea">
+          <div class="tagcreate-targetcenterarea" v-if="adTargeting === 'geo'">
             <div class="tabmanage-headerbar"></div>
             <div class="tagmanage-tabbed tagmanage-targeting">
               <div>
@@ -192,11 +193,11 @@
                           {{ location.name }}
                           <span>{{ location.type }}</span>
                         </div>
-                        <div class="tagcreate-geodropbutton" @click="toggleGeoInclude()">
+                        <div class="tagcreate-geodropbutton" @click="toggleInclude()">
                           <div class="adtargetdrop"></div>
                         </div>
-                        <div class="tagcreate-geoinclude" v-show="!geoInclude" @click="excludeLocation(location)">exclude</div>
-                        <div class="tagcreate-geoinclude" v-show="geoInclude" @click="includeLocation(location)">include</div>
+                        <div class="tagcreate-geoinclude" v-show="!include" @click="excludeLocation(location)">exclude</div>
+                        <div class="tagcreate-geoinclude" v-show="include" @click="includeLocation(location)">include</div>
                       </li>
                     </ul>
                   </div>
@@ -212,10 +213,43 @@
                 </section>
               </div>
             </div>
-          </div><!-- end tabs area -->
+          </div>
+          <div class="tagcreate-targetcenterarea" v-if="adTargeting === 'websites'">
+            <div class="tabmanage-headerbar"></div>
+            <div class="tagmanage-tabbed tagmanage-targeting">
+              <div>
+                <input name="tagmanage-targeting" id="tagmanage-tabbed10" type="radio" checked>
+                <section>
+                  <h1>
+                    <label for="tagmanage-tabbed10">SEARCH / BROWSER</label>
+                  </h1>
+                  <div>
+                    <div class="tabcreate-searchwrap">
+                      <input v-model="geoFilter" class="tagcreate-tabsearch" placeholder="SEARCH WEBSITES..">
+                      <div class="tagcreate-tabsearchsubmit">
+                        <div class="tagcreate-searchsubmiticon"></div>
+                      </div>
+                    </div>
+                    <ul class="tagcreate-geolist">
+                      <li v-for="website in websites">
+                        <div class="tagcreate-geotitle">
+                          {{ website.domain }}
+                          <span>WEBSITE</span>
+                        </div>
+                        <div class="tagcreate-geodropbutton" @click="toggleInclude()">
+                          <div class="adtargetdrop"></div>
+                        </div>
+                        <div class="tagcreate-geoinclude" v-show="!include" @click="targetWebsite(website, 'exclude')">exclude</div>
+                        <div class="tagcreate-geoinclude" v-show="include" @click="targetWebsite(website, 'include')">include</div>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
           <div class="tagcreate-targetrightsidebar">
             <div class="tagcreate-criteriaheader">SELECTED CRITERIA</div>
-
             <!-- GEOGRAPHY DROPDOWN -->
             <div class="tagcreate-criteriatitle createcriteriatitle">
               GEOGRAPHY (INCLUDED)
@@ -224,8 +258,8 @@
             <ul class="tagcreate-criterialist creategeolistdrop">
               <li v-for="criteria in tag.included_locations">
                 <div class="tagcreate-criteriaradius"></div>
-                <div class="tagcreate-criteriainner"><span>{{ _.capitalize(criteria.type) }}:</span> {{ criteria.name }}</div>
-                <div class="tagcreate-criteriadelete" @click="deleteInclude(criteria)"></div>
+                <div class="tagcreate-criteriainner"><span>{{ capitalize(criteria.type) }}:</span> {{ criteria.name }}</div>
+                <div class="tagcreate-criteriadelete" @click="deleteInclude(criteria, 'geo')"></div>
               </li>
             </ul>
 
@@ -236,14 +270,27 @@
             <ul class="tagcreate-criterialist creategeolistdrop">
               <li v-for="criteria in tag.excluded_locations">
                 <div class="tagcreate-criteriaradius"></div>
-                <div class="tagcreate-criteriainner"><span>{{ _.capitalize(criteria.type) }}:</span> {{ criteria.name }}</div>
-                <div class="tagcreate-criteriadelete" @click="deleteExclude(criteria)"></div>
+                <div class="tagcreate-criteriainner"><span>{{ capitalize(criteria.type) }}:</span> {{ criteria.name }}</div>
+                <div class="tagcreate-criteriadelete" @click="deleteExclude(criteria, 'geo')"></div>
               </li>
             </ul>
-            <!-- END GEOGRAPHY DROPDOWN -->
-            <!-- DEVICES DROPDOWN -->
+            <div class="tagcreate-criteriatitle">WEBSITES (INCLUDED)<span></span></div>
+            <ul class="tagcreate-criterialist creategeolistdrop">
+              <li v-for="criteria in tag.included_websites">
+                <div class="tagcreate-criteriaradius"></div>
+                <div class="tagcreate-criteriainner"><span></span> {{ capitalize(criteria.domain) }}</div>
+                <div class="tagcreate-criteriadelete" @click="deleteInclude(criteria, 'website')"></div>
+              </li>
+            </ul>
+            <div class="tagcreate-criteriatitle">WEBSITES (EXCLUDED)<span></span></div>
+            <ul class="tagcreate-criterialist creategeolistdrop">
+              <li v-for="criteria in tag.excluded_websites">
+                <div class="tagcreate-criteriaradius"></div>
+                <div class="tagcreate-criteriainner"><span></span> {{ capitalize(criteria.domain) }}</div>
+                <div class="tagcreate-criteriadelete" @click="deleteExclude(criteria, 'website')"></div>
+              </li>
+            </ul>
             <div class="tagcreate-criteriatitle">DEVICES <span></span></div>
-            <!-- END DEVICES DROPDOWN -->
           </div>
         </div>
       </div>
@@ -367,8 +414,9 @@
           'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE'
         ],
         geoFilter: '',
-        geoInclude: true,
-        submitting: false
+        include: true,
+        submitting: false,
+        adTargeting: 'geo'
       }
     },
 
@@ -411,6 +459,10 @@
         }
       },
 
+      setAdTargeting(newTarget) {
+        this.adTargeting = newTarget
+      },
+
       geoBack() {
         this.$store.dispatch('locationBack')
         this.geoFilter = ''
@@ -427,6 +479,20 @@
             this.geoFilter = ''
           }
         })
+      },
+
+      targetWebsite(website, status) {
+        if (this.checkWebsiteExistance(website)) {
+          return
+        }
+
+        let key = status === 'include' ? 'included_websites' : 'excluded_websites'
+
+        if (!this.tag[key]) {
+          this.$set(this.tag, key, [website])
+        } else {
+          this.tag[key].push(website)
+        }
       },
 
       includeLocation(location) {
@@ -467,12 +533,34 @@
         return false
       },
 
-      deleteInclude(location) {
-        this.tag.included_locations = this.tag.included_locations.filter(item => item !== location)
+      checkWebsiteExistance(website) {
+        if (_.findIndex(this.tag.included_websites, website) !== -1) {
+          window.alert(website.domain + ' is already included.')
+          return true
+        }
+
+        if (_.findIndex(this.tag.excluded_websites, website) !== -1) {
+          window.alert(website.domain + ' is already excluded.')
+          return true
+        }
+
+        return false
       },
 
-      deleteExclude(location) {
-        this.tag.excluded_locations = this.tag.excluded_locations.filter(item => item !== location)
+      deleteInclude(criteria, type) {
+        if (type === 'geo') {
+          this.tag.included_locations = this.tag.included_locations.filter(item => item !== criteria)
+        } else {
+          this.tag.included_websites = this.tag.included_websites.filter(item => item.id !== criteria.id)
+        }
+      },
+
+      deleteExclude(criteria, type) {
+        if (type === 'geo') {
+          this.tag.excluded_locations = this.tag.excluded_locations.filter(item => item !== criteria)
+        } else {
+          this.tag.excluded_websites = this.tag.excluded_websites.filter(item => item.id !== criteria.id)
+        }
       },
 
       hideForm() {
@@ -495,8 +583,12 @@
         this.$set(this.tag, 'url', field.value)
       },
 
-      toggleGeoInclude() {
-        this.geoInclude = !this.geoInclude
+      toggleInclude() {
+        this.include = !this.include
+      },
+
+      capitalize(string) {
+        return _.capitalize(string)
       }
     },
 
@@ -507,6 +599,10 @@
             return true
           }
         })
+      },
+
+      websites() {
+        return this.$store.state.admin.websites
       },
 
       showLocations() {

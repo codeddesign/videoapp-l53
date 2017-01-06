@@ -258,15 +258,14 @@
 
         let platforms = []
 
-        if(tag.platform_type === 'all') {
+        if (tag.platform_type === 'all') {
           platforms.push(this.tags['desktop'])
           platforms.push(this.tags['mobile'])
         } else {
           platforms.push(this.tags[tag.platform_type])
         }
 
-        if(tag.ad_type === 'all')
-        {
+        if (tag.ad_type === 'all') {
           arrayKeys.push('instream')
           arrayKeys.push('outstream')
         } else {
@@ -299,7 +298,7 @@
 
                 switch (events.type(e)) {
                   case 'request':
-                    //we don't need campaign requests here
+                    // we don't need campaign requests here
                     break
                   case 'impression':
                     tags.forEach((tag) => {

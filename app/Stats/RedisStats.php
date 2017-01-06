@@ -17,7 +17,7 @@ class RedisStats
 
         $campaignKey = "campaign:{$campaignId}";
 
-        if($daily) {
+        if ($daily) {
             $campaignKey = "daily-{$campaignKey}";
         }
 
@@ -123,7 +123,7 @@ class RedisStats
                 'tag_id'     => $tag,
                 'website_id' => $website,
             ]);
-        } else if($status < 100) {
+        } elseif ($status < 100) {
             $stats->push([
                 'name'       => 'viewership',
                 'status'     => $status,

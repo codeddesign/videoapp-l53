@@ -161,7 +161,7 @@ class StatsTransformer
                         if ($stat === 'impressions') {
                             $revenue = 0;
                             $events->where('name', $stat)->map(function ($impressions) use (&$revenue) {
-                                if(isset($impressions->tag)) {
+                                if (isset($impressions->tag)) {
                                     $revenue += $this->calculateRevenue($impressions->count, $impressions->tag->ecpm);
                                 }
                             });
@@ -189,7 +189,7 @@ class StatsTransformer
 
         $tag = $event->tag;
 
-        if($tag->platform_type === 'all') {
+        if ($tag->platform_type === 'all') {
             $platforms = ['desktop', 'mobile'];
         } else {
             $platforms = [$tag->platform_type];
@@ -197,7 +197,7 @@ class StatsTransformer
 
         $keys = $tag->campaign_types;
 
-        if($tag->ad_type === 'all') {
+        if ($tag->ad_type === 'all') {
             $keys[] = 'instream';
             $keys[] = 'outstream';
         } else {
@@ -221,12 +221,10 @@ class StatsTransformer
                 break;
         }
 
-        foreach($platforms as $platform)
-        {
-            foreach($keys as $key) {
-                foreach($stats as $stat)
-                {
-                    if(isset($data['tags'][$platform][$key][$stat])) {
+        foreach ($platforms as $platform) {
+            foreach ($keys as $key) {
+                foreach ($stats as $stat) {
+                    if (isset($data['tags'][$platform][$key][$stat])) {
                         $data['tags'][$platform][$key][$stat] += $event->count;
                     }
                 }

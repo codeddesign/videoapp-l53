@@ -14,7 +14,8 @@ import {
   LOAD_GLOBAL_OPTIONS,
   UPDATE_GLOBAL_OPTIONS,
   LOAD_REPORTS,
-  DELETE_REPORTS
+  DELETE_REPORTS,
+  LOAD_WEBSITES
 } from '../mutation-types'
 
 import User from '../../models/user'
@@ -138,6 +139,12 @@ const actions = {
     Admin.deleteReports(reports).then(reportsDeleted => {
       commit(DELETE_REPORTS, reportsDeleted)
     })
+  },
+
+  loadWebsites({ commit }, websites) {
+    Admin.loadWebsites().then(websites => {
+      commit(LOAD_WEBSITES, websites)
+    })
   }
 }
 
@@ -247,6 +254,10 @@ const mutations = {
       console.log(reports.indexOf(report.id))
       return reports.indexOf(report.id) === -1
     })
+  },
+
+  [LOAD_WEBSITES](state, websites) {
+    state.websites = websites
   }
 }
 

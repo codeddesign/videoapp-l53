@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Tag;
+use App\Models\WordpressSite;
 
 class TagTransformer extends Transformer
 {
@@ -28,6 +29,8 @@ class TagTransformer extends Transformer
             'priority_count'      => (int) $tag->priority_count,
             'timeout_limit'       => (int) $tag->timeout_limit,
             'wrapper_limit'       => (int) $tag->wrapper_limit,
+            'included_websites'   => $this->parseWebsites($tag->included_websites),
+            'excluded_websites'   => $this->parseWebsites($tag->excluded_websites),
             'included_locations'  => $this->parseLocations($tag->included_locations),
             'excluded_locations'  => $this->parseLocations($tag->excluded_locations),
             'active'              => (boolean) $tag->active,
@@ -40,6 +43,20 @@ class TagTransformer extends Transformer
         }
 
         return $transformedTag;
+    }
+
+    protected function parseWebsites($websites)
+    {
+        $websites = WordpressSite::whereIn('id', $websites)->get();
+
+        $transformedWebsites = [];
+        $websiteTransformer = new WordpressSiteTransformer;
+
+        foreach ($websites as $website) {
+            $transformedWebsites[] = $websiteTransformer->transform($website);
+        }
+
+        return $transformedWebsites;
     }
 
     protected function fillCampaignTypes($types)

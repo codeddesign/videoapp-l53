@@ -13,6 +13,13 @@ use Illuminate\Support\Collection;
 
 class WebsitesController extends ApiController
 {
+    public function index()
+    {
+        $websites = WordpressSite::all();
+
+        return $this->collectionResponse($websites, new WordpressSiteTransformer);
+    }
+
     public function pending()
     {
         $pendingWebsites = WordpressSite::where('approved', false)->get();

@@ -23,7 +23,6 @@ class CleanDailyStats extends Command
 
     /**
      * Create a new command instance.
-     *
      */
     public function __construct()
     {
@@ -44,6 +43,6 @@ class CleanDailyStats extends Command
 
         $redis->del($keys);
 
-        $this->info('Deleted ' . count($keys) . ' Redis daily stats.');
+        $this->info('Deleted '.count($keys).' Redis daily stats.');
     }
 }

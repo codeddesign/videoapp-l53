@@ -41,7 +41,7 @@ class CampaignEvents
 
         $campaignsKey = 'campaign:*';
 
-        if($daily) {
+        if ($daily) {
             $campaignsKey = "daily-{$campaignsKey}";
         }
 
@@ -119,8 +119,7 @@ class CampaignEvents
 
         $data = $redis->hgetall($campaignKey);
 
-        foreach($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $redis->hincrby("daily-{$campaignKey}", $key, $value);
         }
     }
@@ -203,8 +202,9 @@ class CampaignEvents
     protected function handleUnknownErrors($data)
     {
         // If status is a number, cast it to an int
-        if(is_numeric($data['status'])) {
+        if (is_numeric($data['status'])) {
             $data['status'] = intval($data['status']);
+
             return $data;
         }
 

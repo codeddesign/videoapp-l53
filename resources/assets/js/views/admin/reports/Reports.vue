@@ -45,7 +45,6 @@
 </template>
 
 <script>
-  import Admin from '../../../models/admin'
   import Pagination from '../../../services/pagination'
 
   export default {
