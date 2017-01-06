@@ -8,20 +8,20 @@
       <div>
         <!-- START CHART TIME RANGE -->
         <div class="display-dashboardtoparea">
-            <div class="display-dashboardtimewrap">
-                <div class="dashmaintime-title">Time Range</div>
-                <div class="dashboard-mainselect">
-                  <select v-model="timeRange">
-                    <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
-                      {{ timeRange.text }}
-                    </option>
-                  </select>
-                <div class="dashmain-selectarrow"></div>
-                </div>
+          <div class="display-dashboardtimewrap">
+              <div class="dashmaintime-title">Time Range</div>
+              <div class="dashboard-mainselect">
+                <select v-model="timeRange">
+                  <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
+                    {{ timeRange.text }}
+                  </option>
+                </select>
+              <div class="dashmain-selectarrow"></div>
               </div>
-            <a href="/campaign">
+            </div>
+            <router-link :to="{ name: 'admin.reports.create'}">
               <div class="currentcamp-createbutton">GENERATE REPORT</div>
-          </a>
+            </router-link>
           </div>
           <!-- END CHART TIME FRAME -->
         <!-- TAG GRAPH AREA -->
