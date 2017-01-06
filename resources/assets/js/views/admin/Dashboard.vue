@@ -103,16 +103,6 @@
         // used for the Time Range Select.
         currentTime: moment(),
 
-        timeRange: 'realtime',
-        timeRangeOptions: [
-          { text: 'Real-time', value: 'realtime' },
-          { text: 'Today', value: 'today' },
-          { text: 'Yesterday', value: 'yesterday' },
-          { text: 'Last 7 Days', value: 'sevenDays' },
-          { text: 'This Month', value: 'thisMonth' },
-          { text: 'Last Month', value: 'lastMonth' }
-        ],
-
         tags: {
           mobile: {
             preroll: {
@@ -153,9 +143,7 @@
 
         adErrors: 0,
 
-        useRate: 0,
-
-        dailyStats: []
+        useRate: 0
       }
     },
 
@@ -197,7 +185,6 @@
     mounted() {
       this.$nextTick(function() {
         this.fetchStats()
-        this.fetchChart()
         this.$store.dispatch('loadPendingWebsites')
 
         // if the user is loaded, set up the socket
@@ -226,26 +213,6 @@
           })
           .catch((error) => {
             console.error('Error fetching the stats count.')
-          })
-
-        http.get('/admin/stats/all?time=tenDays')
-          .then((response) => {
-            this.dailyStats = response.data
-          })
-          .catch((error) => {
-            console.error('Error fetching the stats count.')
-          })
-      },
-
-      fetchChart() {
-        http.get('/charts/all?time=' + this.timeRange)
-          .then((response) => {
-            this.revenueChartData = response.data.revenue
-            this.impressionsChartData = response.data.impressions
-            this.requestsChartData = response.data.requests
-          })
-          .catch((error) => {
-            console.error('Error fetching the charts data.')
           })
       },
 
@@ -343,10 +310,6 @@
     },
 
     watch: {
-      timeRange(newTimeRange) {
-        this.fetchChart()
-      },
-
       currentUser() {
         this.setupSocket()
       }
