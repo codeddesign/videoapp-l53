@@ -65,10 +65,11 @@ class Tag extends Model
 
     public static function forRequest(array $location, $referer)
     {
+        /** @var Repository $cache */
         $cache = app(Repository::class);
 
         // Cache the tags
-        $tags = $cache->remember('tags.all', 5, function () {
+        $tags = $cache->tags(['tags'])->remember('tags.all', 5, function () {
             return Tag::where('active', true)
                 ->where(function ($query) {
                     $date = Carbon::now();
@@ -81,22 +82,23 @@ class Tag extends Model
 
         $websiteId = WordpressSite::idByLink($referer);
 
-        // Filter websites
-        $tags = $tags->filter(function ($tag) use ($websiteId) {
-            // If there's no targeting, all websites are allowed
-            if (count($tag->included_websites) === 0 && count($tag->excluded_websites) === 0) {
-                return true;
-            }
-
-            if (count($tag->excluded_websites) > 0) {
-                if (in_array($websiteId, $tag->excluded_websites)) {
-                    return false;
+        $tags = $cache->tags(['tags'])->remember("tags.website.{$websiteId}", 60, function() use ($tags, $websiteId) {
+            return $tags->filter(function ($tag) use ($websiteId) {
+                // If there's no targeting, all websites are allowed
+                if (count($tag->included_websites) === 0 && count($tag->excluded_websites) === 0) {
+                    return true;
                 }
-            }
 
-            if (count($tag->included_websites) > 0) {
-                return in_array($websiteId, $tag->included_websites);
-            }
+                if (count($tag->excluded_websites) > 0) {
+                    if (in_array($websiteId, $tag->excluded_websites)) {
+                        return false;
+                    }
+                }
+
+                if (count($tag->included_websites) > 0) {
+                    return in_array($websiteId, $tag->included_websites);
+                }
+            });
         });
 
         // Filter locations

@@ -88,6 +88,6 @@ class TagsController extends ApiController
     {
         $cache = app(Repository::class);
 
-        $cache->forget('tags.all');
+        $cache->tags(['tags'])->flush();
     }
 }
