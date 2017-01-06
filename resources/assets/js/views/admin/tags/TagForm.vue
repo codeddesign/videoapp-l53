@@ -12,7 +12,7 @@
         <div class="tagcreate-fullinnertitle">AD TAG</div>
         <input name="url" ref="url" v-model="tag['url']" v-validate data-vv-rules="required" placeholder="http://a3m.io/a/h/xxx?cb=[CACHE_BREAKER]&pageUrl=[REFERRER_URL]&eov=eov" class="tagcreate-longinput">
         <ul class="tagcreate-macrolist">
-          <li v-for="macro in macros" @click="insertAtCaret(macro)">
+          <li v-for="macro in macros" @click="insertMacro(macro)">
            {{ macro }}
           </li>
         </ul>
@@ -567,7 +567,9 @@
         this.$store.dispatch('setShowTagForm', false)
       },
 
-      insertAtCaret(value) {
+      insertMacro(value) {
+        value = '[' + value + ']'
+
         var field = this.$refs.url
         var scrollPos = field.scrollTop
         var caretPos = field.selectionStart
