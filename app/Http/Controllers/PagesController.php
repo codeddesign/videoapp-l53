@@ -11,10 +11,12 @@ class PagesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index() : View
+    public function index(): View
     {
-        $webpack = config('view.webpack');
+        $webpack    = config('view.webpack');
+        $socketIoIp = config('app.socket_io_ip');
+        $apiDomain  = config('app.url');
 
-        return view('pages.app', ['webpack' => $webpack]);
+        return view('pages.app', compact('webpack', 'socketIoIp', 'apiDomain'));
     }
 }

@@ -20,7 +20,7 @@ return [
     ],
 
     'ses' => [
-        'key' => env('SES_KEY'),
+        'key'    => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
         'region' => 'us-east-1',
     ],
@@ -30,9 +30,15 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\Models\User::class,
-        'key' => env('STRIPE_KEY'),
+        'model'  => App\Models\User::class,
+        'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+    ],
+
+    'nexmo' => [
+        'key'    => env('NEXMO_KEY'),
+        'secret' => env('NEXMO_SECRET'),
+        'brand'  => env('NEXMO_BRAND'),
     ],
 
 ];

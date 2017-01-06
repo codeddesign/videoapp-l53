@@ -53,6 +53,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'socket_io_ip' => env('SOCKET_IO_IP'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

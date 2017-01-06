@@ -55,9 +55,9 @@ class Nexmo
      */
     public static function verifyNumber($number)
     {
-        $key    = env('NEXMO_KEY');
-        $secret = env('NEXMO_SECRET');
-        $brand  = env('NEXMO_BRAND');
+        $key    = config('services.nexmo.key');
+        $secret = config('services.nexmo.secret');
+        $brand  = config('services.nexmo.brand');
 
         $nexmo = new self(compact('key', 'secret', 'brand'), compact('number'), 'number');
         $nexmo->request();
