@@ -411,7 +411,7 @@
         tag: _.cloneDeep(this.$store.state.admin.currentTag),
         macros: [
           'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
-          'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE'
+          'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE', 'MEDIA_ID'
         ],
         geoFilter: '',
         include: true,
