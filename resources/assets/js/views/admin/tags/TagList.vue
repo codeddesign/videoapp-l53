@@ -176,6 +176,10 @@
           percent = Number.POSITIVE_INFINITY
         }
 
+        if (percent === Number.POSITIVE_INFINITY) {
+          return ''
+        }
+
         if (percent >= 0) {
           return '<span class="up">(+ ' + percent + ' %)</span>'
         } else {
