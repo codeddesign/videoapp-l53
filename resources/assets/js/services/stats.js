@@ -32,12 +32,12 @@ export default {
     return accounting.formatMoney(ecpm)
   },
 
-  calculateErrorRate(impressions, adErrors) {
-    // adErrors / impressions
+  calculateErrorRate(requests, adErrors) {
+    // adErrors / requests
     let errorRate = 0
 
-    if (impressions !== 0) {
-      errorRate = ((adErrors / impressions) * 100)
+    if (requests !== 0) {
+      errorRate = ((adErrors / requests) * 100)
     }
 
     return errorRate.toFixed(2) + '%'

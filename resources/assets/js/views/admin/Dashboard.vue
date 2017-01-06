@@ -52,11 +52,11 @@
         </li>
         <li>
           <stats title="desktop pre-roll errors"
-          :value="calculateErrorRate(tags.desktop.preroll.impressions, tags.desktop.preroll.errors)"></stats>
+          :value="calculateErrorRate(tags.desktop.preroll.requests, tags.desktop.preroll.errors)"></stats>
         </li>
         <li>
           <stats title="mobile pre-roll errors"
-          :value="calculateErrorRate(tags.mobile.preroll.impressions, tags.mobile.preroll.errors)"></stats>
+          :value="calculateErrorRate(tags.mobile.preroll.requests, tags.mobile.preroll.errors)"></stats>
         </li>
       </ul>
       <ul class="campaignstats-row">
@@ -70,11 +70,11 @@
         </li>
         <li>
           <stats title="desktop outstream errors"
-          :value="calculateErrorRate(tags.desktop.outstream.impressions, tags.desktop.outstream.errors)"></stats>
+          :value="calculateErrorRate(tags.desktop.outstream.requests, tags.desktop.outstream.errors)"></stats>
         </li>
         <li>
           <stats title="mobile outstream errors"
-          :value="calculateErrorRate(tags.mobile.outstream.impressions, tags.mobile.outstream.errors)"></stats>
+          :value="calculateErrorRate(tags.mobile.outstream.requests, tags.mobile.outstream.errors)"></stats>
         </li>
       </ul>
 
