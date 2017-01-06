@@ -52,6 +52,7 @@ class Reports
                 'error_rate'    => number_format(($parsedStats['adErrors'] / $parsedStats['impressions'] * 100), 2),
             ]);
 
+            $tagStats = $tagStats->merge($this->parseViewership($tagEvents));
             $tagStats = $tagStats->merge($this->parseErrors($tagEvents));
 
             if ($filterMetrics && $report->included_metrics) {
@@ -85,7 +86,7 @@ class Reports
             ['Report Name', $report->title],
             ['Generated At', Carbon::now()->format('F j, Y g:i A e')],
             ['Date Range', "{$report->dateRange()->from->toFormattedDateString()} - {$report->dateRange()->to->toFormattedDateString()}"],
-            $report->spreadsheetHeader()->toArray(),
+            $report->spreadsheetHeader($stats),
         ];
 
         $spreadsheet = new Spreadsheet;
@@ -145,5 +146,25 @@ class Reports
         }
 
         return $errors;
+    }
+
+    protected function parseViewership($events)
+    {
+        $viewershipCodes = collect(CampaignEvent::$viewership);
+        $viewership      = new Collection;
+
+        foreach ($viewershipCodes as $code => $name) {
+            $viewership->put($name, 0);
+        }
+
+        foreach ($events as $event) {
+            if ($event->name === 'viewership') {
+                if($viewershipCodes->has($event->status)) {
+                    $viewership[$viewershipCodes[$event->status]] += $event->count;
+                }
+            }
+        }
+
+        return $viewership;
     }
 }

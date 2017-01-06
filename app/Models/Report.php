@@ -59,7 +59,7 @@ class Report extends Model
         return $this->hasMany(ReportJob::class);
     }
 
-    public function spreadsheetHeader()
+    public function spreadsheetHeader($stats)
     {
         $header = collect([
             'advertiser'    => 'Advertiser',
@@ -72,6 +72,12 @@ class Report extends Model
             'fill_rate'     => 'Fill Rate',
             'revenue'       => 'Revenue',
             'ecpm'          => 'eCPM',
+            'click'         => 'Clicks',
+            'start'         => 'Start',
+            'firstquartile' => 'First Quartile',
+            'midpoint'      => 'Midpoint',
+            'thirdquartile' => 'Third Quartile',
+            'complete'      => 'Completed',
             'errors'        => 'Total Errors',
             'error_rate'    => 'Error Rate',
         ]);
@@ -83,11 +89,19 @@ class Report extends Model
             $errors["error{$code}"] = "Error {$code}";
         }
 
-        $header = $header->merge($errors)->filter(function ($value, $key) {
-            return in_array($key, array_merge($this->included_metrics, static::$fixedSpreadsheetHeader));
-        });
+        $header = $header->merge($errors);
 
-        return $header->values();
+        $orderedHeader = [];
+
+        if(count($stats) === 0) {
+            return $header->values();
+        }
+
+        foreach ($stats[0] as $key => $value) {
+            $orderedHeader[] = $header->get($key);
+        }
+
+        return $orderedHeader;
     }
 
     /**

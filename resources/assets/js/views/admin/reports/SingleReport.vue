@@ -127,7 +127,7 @@
             <div class="dashboard-statslist2">{{ tag.requests }}</div>
             <div class="dashboard-statslist2">{{ tag.fills }}</div>
             <div class="dashboard-statslist2">{{ tag.fill_rate }}%</div>
-            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">{{ tag.clicks }}</div>
             <div class="dashboard-statslist2">TBD</div>
             <div class="dashboard-statslist2">${{ tag.ecpm }}</div>
             <div class="dashboard-statslist2">${{ tag.revenue }}</div>
@@ -137,11 +137,11 @@
             <div class="dashboard-statslist2">TBD</div>
             <div class="dashboard-statslist2">TBD</div>
             <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
+            <div class="dashboard-statslist2">{{ tag.start }}</div>
+            <div class="dashboard-statslist2">{{ tag.firstquartile }}</div>
+            <div class="dashboard-statslist2">{{ tag.midpoint }}</div>
+            <div class="dashboard-statslist2">{{ tag.thirdquartile }}</div>
+            <div class="dashboard-statslist2">{{ tag.complete }}</div>
             <div class="dashboard-statslist2">TBD</div>
             <div class="dashboard-statslist2">TBD</div>
             <div class="dashboard-statslist2">TBD</div>
