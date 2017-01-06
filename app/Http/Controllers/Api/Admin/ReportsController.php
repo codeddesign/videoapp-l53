@@ -62,6 +62,10 @@ class ReportsController extends ApiController
 
         $report->save();
 
+        if($report->schedule === 'once') {
+            (new Reports)->process($report);
+        }
+
         return $this->itemResponse($report, new ReportTransformer);
     }
 
