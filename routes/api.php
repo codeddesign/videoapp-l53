@@ -21,10 +21,6 @@ Route::get('user', 'UsersController@user');
 Route::get('user/token', 'UsersController@token'); // temporary token
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
-    Route::get('/', function () {
-        return 'You\'re an admin.';
-    });
-
     Route::get('globalOptions', 'GlobalOptionsController@index');
     Route::put('globalOptions', 'GlobalOptionsController@update');
 
