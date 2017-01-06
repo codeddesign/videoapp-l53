@@ -30,8 +30,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
     }
 
@@ -46,7 +44,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapApiRoutes();
 
-        //
+        $this->mapPlayerRoutes();
     }
 
     /**
@@ -81,6 +79,16 @@ class RouteServiceProvider extends ServiceProvider
             'prefix' => 'api',
         ], function ($router) {
             require base_path('routes/api.php');
+        });
+    }
+
+    protected function mapPlayerRoutes()
+    {
+        Route::group([
+            'middleware' => 'player',
+            'namespace' => $this->namespace,
+        ], function ($router) {
+            require base_path('routes/player.php');
         });
     }
 }

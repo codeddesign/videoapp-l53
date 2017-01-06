@@ -38,6 +38,8 @@ class Kernel extends HttpKernel
             'bindings',
             'auth:api',
         ],
+
+        'player' => []
     ];
 
     /**
