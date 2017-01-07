@@ -68,7 +68,7 @@
             <span v-html="showComparePercent(tag, 'fillRate')"></span>
           </div>
           <div class="dashboard-statslist2">
-            {{ calculateErrorRate(tag.stats.impressions, tag.stats.adErrors) }}
+            {{ calculateErrorRate((tag.stats.fills + tag.stats.fillErrors), tag.stats.adErrors) }}
             <span v-html="showComparePercent(tag, 'errorRate')"></span>
           </div>
           <div class="dashboard-statslist2">
@@ -155,8 +155,8 @@
             compareValue = this.calculateFillRate(compareTag.stats.impressions, (compareTag.stats.fills + tag.stats.fillErrors))
             break
           case 'errorRate':
-            tagValue = this.calculateErrorRate(tag.stats.impressions, tag.stats.adErrors)
-            compareValue = this.calculateErrorRate(compareTag.stats.impressions, compareTag.stats.adErrors)
+            tagValue = this.calculateErrorRate((tag.stats.fills + tag.stats.fillErrors), tag.stats.adErrors)
+            compareValue = this.calculateErrorRate((tag.stats.fills + tag.stats.fillErrors), compareTag.stats.adErrors)
             break
           case 'tagDisplay':
             tagValue = this.calculateTagDisplayPercent(tag.stats.impressions, this.totalTagImpressions(this.tags))
