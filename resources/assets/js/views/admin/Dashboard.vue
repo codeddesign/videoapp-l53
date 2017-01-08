@@ -77,6 +77,18 @@
           :value="calculateErrorRate(tags.mobile.outstream.requests, tags.mobile.outstream.errors)"></stats>
         </li>
       </ul>
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="desktop fill"
+          :value="calculateFillRate(tags.desktop.impressions, tags.desktop.requests)"></stats>
+        </li>
+        <li>
+          <stats title="mobile fill"
+          :value="calculateFillRate(tags.mobile.impressions, tags.mobile.requests)"></stats>
+        </li>
+        <li></li>
+        <li></li>
+      </ul>
 
       <tag-list></tag-list>
     </div>

@@ -79,6 +79,10 @@ class StatsTransformer
         if ($tagStats) {
             $data['tags'] = [
                 'mobile'  => [
+                    'requests'    => 0,
+                    'impressions' => 0,
+                    'errors'      => 0,
+
                     'preroll'   => [
                         'requests'    => 0,
                         'impressions' => 0,
@@ -91,6 +95,10 @@ class StatsTransformer
                     ],
                 ],
                 'desktop' => [
+                    'requests'    => 0,
+                    'impressions' => 0,
+                    'errors'      => 0,
+
                     'preroll'   => [
                         'requests'    => 0,
                         'impressions' => 0,
@@ -156,7 +164,7 @@ class StatsTransformer
                 $events = $stats->get($key);
 
                 foreach ($statsToTrack as $stat) {
-                    if($stat === 'revenue') {
+                    if ($stat === 'revenue') {
                         continue;
                     }
 
@@ -186,8 +194,7 @@ class StatsTransformer
         }
 
         // Requests = fills + fillErrors
-        foreach($data['fills'] as $key => $fills)
-        {
+        foreach ($data['fills'] as $key => $fills) {
             $data['requests'][] = [$fills[0], $fills[1] + $data['fillErrors'][$key][1]];
         }
 
@@ -235,8 +242,12 @@ class StatsTransformer
         }
 
         foreach ($platforms as $platform) {
-            foreach ($keys as $key) {
-                foreach ($stats as $stat) {
+            foreach ($stats as $stat) {
+                if (isset($data['tags'][$platform][$stat])) {
+                    $data['tags'][$platform][$stat] += $event->count;
+                }
+                
+                foreach ($keys as $key) {
                     if (isset($data['tags'][$platform][$key][$stat])) {
                         $data['tags'][$platform][$key][$stat] += $event->count;
                     }
