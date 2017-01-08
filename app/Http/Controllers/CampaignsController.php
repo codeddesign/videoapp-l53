@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Geolite\Location;
 use App\Models\Campaign;
 use App\Models\Tag;
+use App\Models\WordpressSite;
 
 class CampaignsController extends Controller
 {
@@ -35,14 +36,17 @@ class CampaignsController extends Controller
         $referer = $request->get('referrer') ?? $request->server('HTTP_REFERER');
         $ip      = $request->get('ip') ?? ipUtil();
 
+        $websiteId = WordpressSite::idByLink($referer);
+
         $location = Location::byIp($ip);
 
         $tags = Tag::forRequest($location, $referer);
 
         return response(array_merge($campaign, [
-            'tags'     => $tags,
-            'ip'       => $ip,
-            'location' => $location,
+            'tags'       => $tags,
+            'ip'         => $ip,
+            'location'   => $location,
+            'website_id' => $websiteId,
         ]), 200);
     }
 }

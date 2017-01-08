@@ -97,6 +97,11 @@ class WordpressSite extends Model
         return self::whereDomain(self::linkDomain($link))->first();
     }
 
+    /**
+     * @param $link
+     *
+     * @return int|null Website ID
+     */
     public static function idByLink($link)
     {
         /** @var Client $redis */
@@ -105,14 +110,14 @@ class WordpressSite extends Model
         $domain = self::linkDomain($link);
 
         if (! $domain) {
-            return;
+            return null;
         }
 
         if (is_null($websiteId = $redis->hget('domain_website', $domain))) {
             $website = self::whereDomain($domain)->first();
 
             if (! $website) {
-                return;
+                return null;
             }
 
             $redis->hset('domain_website', $domain, $website->id);
