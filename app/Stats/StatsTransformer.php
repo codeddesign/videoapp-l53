@@ -107,7 +107,7 @@ class StatsTransformer
 
         foreach ($stats as $stat) {
 
-            if(! isset($data[$stat->name])) {
+            if (! isset($data[$stat->name])) {
                 continue;
             }
 
@@ -142,7 +142,9 @@ class StatsTransformer
 
         $data = [];
 
-        foreach (self::$allStats as $stat) {
+        $statsToTrack = ['impressions', 'fills', 'fillErrors', 'revenue'];
+
+        foreach ($statsToTrack as $stat) {
             $data[$stat] = [];
         }
 
@@ -153,8 +155,8 @@ class StatsTransformer
             if ($stats->has($key)) {
                 $events = $stats->get($key);
 
-                foreach (self::$allStats as $stat) {
-                    if ($stat === 'revenue') {
+                foreach ($statsToTrack as $stat) {
+                    if($stat === 'revenue') {
                         continue;
                     }
 
@@ -177,10 +179,16 @@ class StatsTransformer
                     }
                 }
             } else {
-                foreach (self::$allStats as $stat) {
+                foreach ($statsToTrack as $stat) {
                     $data[$stat][] = [$timestamp, 0];
                 }
             }
+        }
+
+        // Requests = fills + fillErrors
+        foreach($data['fills'] as $key => $fills)
+        {
+            $data['requests'][] = [$fills[0], $fills[1] + $data['fillErrors'][$key][1]];
         }
 
         return $data;

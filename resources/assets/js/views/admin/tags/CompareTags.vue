@@ -39,7 +39,7 @@
               <ul class="taggraph-textlist">
                 <li>
                   <div class="taggraph-listtitle">REQUESTS:</div>
-                  <div class="taggraph-listnumber">{{ requests }}</div>
+                  <div class="taggraph-listnumber">{{ fills + fillErrors }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">FILLS:</div>
@@ -149,7 +149,7 @@
       },
 
       fillRate() {
-        return this.calculateFillRate(this.impressions, this.requests)
+        return this.calculateFillRate(this.impressions, (this.fills + this.fillErrors))
       },
 
       errorRate() {
