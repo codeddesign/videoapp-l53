@@ -311,8 +311,9 @@
               })
           let that = this
           setInterval(function() {
+            that.fetchStats()
             that.currentTime = moment()
-          }, 5000) // every 5 seconds
+          }, 2000) // every 5 seconds
         } else {
           console.error('Couldn\'t connect to web socket')
         }
