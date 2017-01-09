@@ -80,11 +80,11 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop fill"
-          :value="calculateFillRate(tags.desktop.impressions, tags.desktop.requests)"></stats>
+          :value="tags.desktop.fills"></stats>
         </li>
         <li>
           <stats title="mobile fill"
-          :value="calculateFillRate(tags.mobile.impressions, tags.mobile.requests)"></stats>
+          :value="tags.mobile.fills"></stats>
         </li>
         <li></li>
         <li></li>
