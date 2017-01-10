@@ -41,11 +41,11 @@ class Reports
                 'requests'      => $parsedStats['tagRequests'],
                 'impressions'   => $parsedStats['impressions'],
                 'fills'         => $parsedStats['fills'],
-                'fill_rate'     => number_format(($parsedStats['fills'] / $parsedStats['tagRequests'] * 100), 2),
+                'fill_rate'     => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
                 'revenue'       => number_format($parsedStats['revenue'], 2),
                 'ecpm'          => $tag->ecpm / 100.0,
                 'errors'        => $parsedStats['adErrors'],
-                'error_rate'    => number_format(($parsedStats['adErrors'] / $parsedStats['tagRequests'] * 100), 2),
+                'error_rate'    => $this->calculatePercentage($parsedStats['adErrors'], $parsedStats['tagRequests']),
             ]);
 
             $tagStats = $tagStats->merge($this->parseViewership($tagEvents, $tagStats));
@@ -156,19 +156,28 @@ class Reports
 
         foreach ($events as $event) {
             if ($event->name === 'viewership') {
-                if($viewershipCodes->has($event->status)) {
+                if ($viewershipCodes->has($event->status)) {
                     $viewership[$viewershipCodes[$event->status]] += $event->count;
                 }
             }
         }
-        if($tagStats['impressions'] !== 0) {
-            $viewership['ctr'] = number_format(($viewership['click'] / $tagStats['impressions']) * 100, 2);
+        if ($tagStats['impressions'] !== 0) {
+            $viewership['ctr']             = number_format(($viewership['click'] / $tagStats['impressions']) * 100, 2);
             $viewership['completion_rate'] = number_format(($viewership['complete'] / $tagStats['impressions']) * 100, 2);
         } else {
-            $viewership['ctr'] = 0.0;
+            $viewership['ctr']             = 0.0;
             $viewership['completion_rate'] = 0.0;
         }
 
         return $viewership;
+    }
+
+    protected function calculatePercentage($dividend, $divisor)
+    {
+        if ($divisor === 0) {
+            return '0.00';
+        }
+
+        return number_format(($dividend / $divisor * 100), 2);
     }
 }
