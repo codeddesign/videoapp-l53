@@ -76,7 +76,7 @@ class Reports
      */
     public function generateXls(Report $report)
     {
-        $stats = $this->stats($report);
+        $stats = collect($this->stats($report));
 
         $headerRows = [
             ['Report Name', $report->title],
