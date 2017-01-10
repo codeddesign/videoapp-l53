@@ -39,7 +39,7 @@
               <ul class="taggraph-textlist">
                 <li>
                   <div class="taggraph-listtitle">REQUESTS:</div>
-                  <div class="taggraph-listnumber">{{ fills + fillErrors }}</div>
+                  <div class="taggraph-listnumber">{{ requests }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">FILLS:</div>
@@ -59,7 +59,7 @@
                 </li>
                 <li>
                   <div class="taggraph-listtitle">ERRORS:</div>
-                  <div class="taggraph-listnumber">{{ adErrors + fillErrors }}</div>
+                  <div class="taggraph-listnumber">{{ adErrors }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">REVENUE:</div>
@@ -117,7 +117,7 @@
       fetchStats() {
         http.get('/admin/stats/all?time=' + this.timeRange)
             .then((response) => {
-              this.requests = parseInt(response.data.requests)
+              this.requests = parseInt(response.data.tagRequests)
               this.impressions = parseInt(response.data.impressions)
               this.fills = parseInt(response.data.fills)
               this.adErrors = parseInt(response.data.adErrors)
@@ -149,11 +149,11 @@
       },
 
       fillRate() {
-        return this.calculateFillRate(this.impressions, (this.fills + this.fillErrors))
+        return this.calculateFillRate(this.fills, this.requests)
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.impressions, this.adErrors)
+        return this.calculateErrorRate(this.requests, this.adErrors)
       },
 
       useRate() {

@@ -11,12 +11,12 @@ export default {
     }
   },
 
-  calculateFillRate(impressions, requests) {
-    // Fill Rate: impressions/requests
+  calculateFillRate(fills, requests) {
+    // Fill Rate: fills/requests
     let fillRate = 0
 
     if (requests !== 0) {
-      fillRate = ((impressions / requests) * 100)
+      fillRate = ((fills / requests) * 100)
     }
 
     return fillRate.toFixed(2) + '%'
