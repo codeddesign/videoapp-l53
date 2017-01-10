@@ -21,7 +21,7 @@ class TagsController extends ApiController
 
         $compareRange = $request->get('compareRange');
 
-        $stats = CampaignEvent::query()->with('tag');
+        $stats = CampaignEvent::query()->with('tag')->where('tag_id', '!=', null);
 
         $days = 1;
 
