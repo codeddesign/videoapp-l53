@@ -56,7 +56,7 @@
           <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
           <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
           <div class="dashboard-statslist2">
-            {{ tag.stats.fills + tag.stats.fillErrors }}
+            {{ tag.stats.tagRequests }}
             <span v-html="showComparePercent(tag, 'requests')"></span>
           </div>
           <div class="dashboard-statslist2">
@@ -64,11 +64,11 @@
             <span v-html="showComparePercent(tag, 'impressions')"></span>
           </div>
           <div class="dashboard-statslist2">
-            {{ calculateFillRate(tag.stats.impressions, (tag.stats.fills + tag.stats.fillErrors)) }}
+            {{ calculateFillRate(tag.stats.impressions, tag.stats.tagRequests) }}
             <span v-html="showComparePercent(tag, 'fillRate')"></span>
           </div>
           <div class="dashboard-statslist2">
-            {{ calculateErrorRate((tag.stats.fills + tag.stats.fillErrors), tag.stats.adErrors) }}
+            {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.adErrors) }}
             <span v-html="showComparePercent(tag, 'errorRate')"></span>
           </div>
           <div class="dashboard-statslist2">
@@ -143,20 +143,20 @@
 
         switch (stat) {
           case 'requests':
-            tagValue = tag.stats.fills + tag.stats.fillErrors
-            compareValue = compareTag.stats.fills + compareTag.stats.fillErrors
+            tagValue = tag.stats.tagRequests
+            compareValue = compareTag.stats.tagRequests
             break
           case 'impressions':
             tagValue = tag.stats.impressions
             compareValue = compareTag.stats.impressions
             break
           case 'fillRate':
-            tagValue = this.calculateFillRate(tag.stats.impressions, (tag.stats.fills + tag.stats.fillErrors))
-            compareValue = this.calculateFillRate(compareTag.stats.impressions, (compareTag.stats.fills + tag.stats.fillErrors))
+            tagValue = this.calculateFillRate(tag.stats.impressions, tag.stats.tagRequests)
+            compareValue = this.calculateFillRate(compareTag.stats.impressions, compareTag.stats.tagRequests)
             break
           case 'errorRate':
-            tagValue = this.calculateErrorRate((tag.stats.fills + tag.stats.fillErrors), tag.stats.adErrors)
-            compareValue = this.calculateErrorRate((tag.stats.fills + tag.stats.fillErrors), compareTag.stats.adErrors)
+            tagValue = this.calculateErrorRate(tag.stats.tagRequests, tag.stats.adErrors)
+            compareValue = this.calculateErrorRate(tag.stats.tagRequests, compareTag.stats.adErrors)
             break
           case 'tagDisplay':
             tagValue = this.calculateTagDisplayPercent(tag.stats.impressions, this.totalTagImpressions(this.tags))

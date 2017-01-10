@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class StatsTransformer
 {
-    protected static $allStats = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors', 'revenue'];
+    protected static $allStats = ['tagRequests', 'impressions', 'fills', 'adErrors', 'revenue'];
 
     public function transformRealtime($stats)
     {
@@ -146,9 +146,7 @@ class StatsTransformer
 
         $data = [];
 
-        $statsToTrack = ['impressions', 'fills', 'fillErrors', 'revenue'];
-
-        foreach ($statsToTrack as $stat) {
+        foreach (self::$allStats as $stat) {
             $data[$stat] = [];
         }
 
@@ -159,7 +157,7 @@ class StatsTransformer
             if ($stats->has($key)) {
                 $events = $stats->get($key);
 
-                foreach ($statsToTrack as $stat) {
+                foreach (self::$allStats as $stat) {
                     if ($stat === 'revenue') {
                         continue;
                     }
@@ -183,15 +181,10 @@ class StatsTransformer
                     }
                 }
             } else {
-                foreach ($statsToTrack as $stat) {
+                foreach (self::$allStats as $stat) {
                     $data[$stat][] = [$timestamp, 0];
                 }
             }
-        }
-
-        // Requests = fills + fillErrors
-        foreach ($data['fills'] as $key => $fills) {
-            $data['requests'][] = [$fills[0], $fills[1] + $data['fillErrors'][$key][1]];
         }
 
         return $data;
@@ -227,10 +220,10 @@ class StatsTransformer
                 $stats = ['impressions'];
                 break;
             case 'fills':
-                $stats = ['requests'];
+                $stats = ['fills'];
                 break;
-            case 'fillErrors':
-                $stats = ['requests', 'errors'];
+            case 'tagRequests':
+                $stats = ['requests'];
                 break;
             case 'adErrors':
                 $stats = ['errors'];
@@ -243,7 +236,7 @@ class StatsTransformer
                     $data['tags'][$platform]['fills'] += $event->count;
                 }
             }
-            
+
             foreach ($keys as $key) {
                 foreach ($stats as $stat) {
                     if (isset($data['tags'][$platform][$key][$stat])) {

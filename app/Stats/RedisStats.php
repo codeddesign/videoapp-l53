@@ -77,22 +77,33 @@ class RedisStats
 
     protected function handleAppStats(Collection $stats, $value, $status, $tag = null, $website = null)
     {
-        if ($status == 200) {
-            $stats->push([
-                'name'       => 'requests',
-                'status'     => $status,
-                'count'      => $value,
-                'tag_id'     => $tag,
-                'website_id' => $website,
-            ]);
-        }
+        $stats->push([
+            'name'       => 'campaignRequests',
+            'status'     => $status,
+            'count'      => $value,
+            'tag_id'     => $tag,
+            'website_id' => $website,
+        ]);
 
         return $stats;
     }
 
     protected function handleTagStats($stats, $value, $status, $tag, $website)
     {
-        if ($status == 200) {
+        $stats->push([
+            'name'       => 'tagRequests',
+            'status'     => $status,
+            'count'      => $value,
+            'tag_id'     => $tag,
+            'website_id' => $website,
+        ]);
+
+        return $stats;
+    }
+
+    protected function handleAdStats($stats, $value, $status, $tag, $website)
+    {
+        if ($status === 0) {
             $stats->push([
                 'name'       => 'fills',
                 'status'     => $status,
@@ -100,22 +111,7 @@ class RedisStats
                 'tag_id'     => $tag,
                 'website_id' => $website,
             ]);
-        } else {
-            $stats->push([
-                'name'       => 'fillErrors',
-                'status'     => $status,
-                'count'      => $value,
-                'tag_id'     => $tag,
-                'website_id' => $website,
-            ]);
-        }
-
-        return $stats;
-    }
-
-    protected function handleAdStats($stats, $value, $status, $tag, $website)
-    {
-        if ($status === 3) {
+        } elseif ($status === 3) {
             $stats->push([
                 'name'       => 'impressions',
                 'status'     => $status,

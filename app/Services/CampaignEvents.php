@@ -101,27 +101,12 @@ class CampaignEvents
                 $events->push($event);
             }
 
-            $this->storeDailyData($id);
-
             $redis->del([$key]);
         }
 
         CampaignEvent::saveMany($events);
 
         return $events;
-    }
-
-    protected function storeDailyData($id)
-    {
-        $redis = $this->getRedis();
-
-        $campaignKey = "campaign:{$id}";
-
-        $data = $redis->hgetall($campaignKey);
-
-        foreach ($data as $key => $value) {
-            $redis->hincrby("daily-{$campaignKey}", $key, $value);
-        }
     }
 
     protected function processTags($campaignId, $data, $tags)
