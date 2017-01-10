@@ -26,11 +26,11 @@ class CampaignEvents
             return;
         }
 
-        $userId = $this->getUserForCampaign($data['campaign']);
+        //$userId = $this->getUserForCampaign($data['campaign']);
+
+        //$this->broadcastEvent($data, $userId);
 
         $data = $this->handleUnknownErrors($data);
-
-        $this->broadcastEvent($data, $userId);
 
         $this->saveOnRedis($data);
     }
