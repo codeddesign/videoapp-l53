@@ -29,10 +29,10 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="requests" :value="requests"></stats>
+            <stats title="requests" :value="presentNumber(requests)"></stats>
         </li>
         <li>
-          <stats title="impressions" :value="impressions"></stats>
+          <stats title="impressions" :value="presentNumber(impressions)"></stats>
         </li>
         <li>
           <stats title="revenue" :value="presentRevenue" color="#1aa74f"></stats>
@@ -80,11 +80,11 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop fill"
-          :value="tags.desktop.fills"></stats>
+          :value="presentNumber(tags.desktop.fills)"></stats>
         </li>
         <li>
           <stats title="mobile fill"
-          :value="tags.mobile.fills"></stats>
+          :value="presentNumber(tags.mobile.fills)"></stats>
         </li>
         <li></li>
         <li></li>
@@ -105,6 +105,7 @@
   import http from '../../services/http'
   import moment from 'moment'
   import accounting from 'accounting'
+  import numeral from 'numeral'
   import _ from 'lodash'
 
   export default {
@@ -151,7 +152,6 @@
         revenue: 0,
 
         fills: 0,
-        fillErrors: 0,
 
         adErrors: 0,
 
@@ -208,6 +208,10 @@
     },
 
     methods: {
+      presentNumber(number) {
+        return numeral(number).format('0,0')
+      },
+
       viewAccount(userId) {
         this.$router.push({ name: 'admin.accounts.info', params: { accountId: userId }})
       },
@@ -219,8 +223,7 @@
             this.fills = parseInt(response.data.fills)
             this.revenue = parseFloat(response.data.revenue)
             this.adErrors = parseInt(response.data.adErrors)
-            this.fillErrors = parseInt(response.data.fillErrors)
-            this.requests = this.fills + this.fillErrors
+            this.requests = parseInt(response.data.tagRequests)
             this.tags = response.data.tags
           })
           .catch((error) => {
@@ -277,7 +280,7 @@
 
                 switch (events.type(e)) {
                   case 'request':
-                    // we don't need campaign requests here
+                    this.requests++
                     break
                   case 'impression':
                     tags.forEach((tag) => {
@@ -287,18 +290,9 @@
                     this.revenue += (e.tag.ecpm) / 1000
                     break
                   case 'fill':
-                    this.requests++
                     this.fills++
                     tags.forEach((tag) => {
-                      tag.requests++
-                    })
-                    break
-                  case 'tag-error':
-                    this.requests++
-                    this.fillErrors++
-                    tags.forEach((tag) => {
-                      tag.requests++
-                      tag.errors++
+                      tag.fills++
                     })
                     break
                   case 'ad-error':
