@@ -42,14 +42,14 @@ class Reports
                 'description'   => $tag->description,
                 'ad_type'       => $tag->ad_type,
                 'platform_type' => $tag->platform_type,
-                'requests'      => $parsedStats['impressions'] + $parsedStats['fillErrors'],
+                'requests'      => $parsedStats['tagRequests'],
                 'impressions'   => $parsedStats['impressions'],
                 'fills'         => $parsedStats['fills'],
-                'fill_rate'     => number_format(($parsedStats['impressions'] / ($parsedStats['impressions'] + $parsedStats['fillErrors']) * 100), 2),
+                'fill_rate'     => number_format(($parsedStats['fills'] / $parsedStats['tagRequests']) * 100, 2),
                 'revenue'       => number_format($parsedStats['revenue'], 2),
                 'ecpm'          => $tag->ecpm / 100.0,
                 'errors'        => $parsedStats['adErrors'],
-                'error_rate'    => number_format(($parsedStats['adErrors'] / $parsedStats['impressions'] * 100), 2),
+                'error_rate'    => number_format(($parsedStats['adErrors'] / $parsedStats['tagRequests'] * 100), 2),
             ]);
 
             $tagStats = $tagStats->merge($this->parseViewership($tagEvents, $tagStats));
