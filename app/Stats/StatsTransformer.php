@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class StatsTransformer
 {
-    protected static $allStats = ['tagRequests', 'impressions', 'fills', 'adErrors', 'revenue'];
+    protected static $allStats = ['campaignRequests', 'tagRequests', 'impressions', 'fills', 'adErrors', 'revenue'];
 
     public function transformRealtime($stats)
     {
