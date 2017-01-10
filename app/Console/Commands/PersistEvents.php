@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Services\CampaignEvents;
-use Illuminate\Console\Command;
 
 class PersistEvents extends Command
 {
@@ -40,6 +39,9 @@ class PersistEvents extends Command
 
         $events = $campaignEvents->persistRedisData();
 
-        $this->info("{$events->sum('count')} events saved");
+        $message = "{$events->sum('count')} events saved.";
+
+        $this->log($message);
+        $this->info($message);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Report;
 use App\Services\Reports;
-use Illuminate\Console\Command;
 
 class ProcessReports extends Command
 {
@@ -57,5 +56,7 @@ class ProcessReports extends Command
 
         $this->line(''); // New line after the progress bar
         $this->info("All done. {$pendingReports->count()} reports sent in {$timeElapsed} seconds.");
+
+        $this->log("{$pendingReports->count()} reports sent in {$timeElapsed} seconds.");
     }
 }

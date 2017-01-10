@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Redis\Database as Redis;
 
 class CleanDailyStats extends Command
@@ -39,10 +38,13 @@ class CleanDailyStats extends Command
         $this->info('Cleaning Redis daily stats...');
 
         $redis = app(Redis::class);
-        $keys = $redis->keys('daily-campaign:*');
+        $keys  = $redis->keys('daily-campaign:*');
 
         $redis->del($keys);
 
-        $this->info('Deleted '.count($keys).' Redis daily stats.');
+        $message = 'Deleted '.count($keys).' Redis daily stats.';
+
+        $this->info($message);
+        $this->log($message);
     }
 }
