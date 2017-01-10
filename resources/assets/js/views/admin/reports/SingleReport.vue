@@ -30,14 +30,14 @@
       <li>
         <div class="campaignstats-title">FILL-RATE</div>
         <div class="campaignstats-digit">
-          {{ calculateFillRate(stats.allStats.impressions, stats.allStats.requests) }}
+          {{ calculateFillRate(stats.allStats.fills, stats.allStats.requests) }}
         </div>
         <div class="campaignstats-digit"><span id="graph_month"></span></div>
       </li>
       <li>
         <div class="campaignstats-title">ERROR-RATE</div>
         <div class="campaignstats-digit">
-          {{ calculateErrorRate(stats.allStats.impressions, stats.allStats.ad_errors) }}
+          {{ calculateErrorRate(stats.allStats.requests, stats.allStats.ad_errors) }}
         </div>
         <div class="campaignstats-digit"><span id="graph_day"></span></div>
       </li>
@@ -119,7 +119,7 @@
           <li>ERROR 901</li>
         </ul>
         <ul class="dashboard-dailystatslist dashreports-width">
-          <li v-for="tag in stats.tagStats">
+          <li v-for="tag in paginatedStats">
             <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
             <div class="dashboard-statslist2">{{ tag.description }}</div>
             <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
@@ -305,6 +305,12 @@
         this.fetchStats(report)
 
         return report
+      },
+
+      paginatedStats() {
+        this.pagination.data = this.stats.tagStats
+        console.log(this.stats.tagStats)
+        return this.pagination.getData()
       }
     },
 

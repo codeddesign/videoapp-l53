@@ -31,10 +31,6 @@ class Reports
         foreach ($events as $tagEvents) {
             $parsedStats = $statsTransformer->transformSumAll($tagEvents);
 
-            if (! isset($tagEvents->first()->tag) || $parsedStats['impressions'] === 0) {
-                continue;
-            }
-
             $tag = $tagEvents->first()->tag;
 
             $tagStats = collect([
@@ -45,7 +41,7 @@ class Reports
                 'requests'      => $parsedStats['tagRequests'],
                 'impressions'   => $parsedStats['impressions'],
                 'fills'         => $parsedStats['fills'],
-                'fill_rate'     => number_format(($parsedStats['fills'] / $parsedStats['tagRequests']) * 100, 2),
+                'fill_rate'     => number_format(($parsedStats['fills'] / $parsedStats['tagRequests'] * 100), 2),
                 'revenue'       => number_format($parsedStats['revenue'], 2),
                 'ecpm'          => $tag->ecpm / 100.0,
                 'errors'        => $parsedStats['adErrors'],
@@ -70,7 +66,7 @@ class Reports
 
         $stats = $stats->sortBy($report->sort_by);
 
-        return $stats;
+        return $stats->values()->toArray();
     }
 
     /**
@@ -120,7 +116,8 @@ class Reports
 
         $dateRange = $report->dateRange();
         $stats     = $stats->where('created_at', '>=', $dateRange->from)
-            ->where('created_at', '<=', $dateRange->to);
+            ->where('created_at', '<=', $dateRange->to)
+            ->where('tag_id', '!=', null);
 
         return $stats->get();
     }
@@ -164,9 +161,13 @@ class Reports
                 }
             }
         }
-
-        $viewership['ctr'] = number_format(($viewership['click'] / $tagStats['impressions']) * 100, 2);
-        $viewership['completion_rate'] = number_format(($viewership['complete'] / $tagStats['impressions']) * 100, 2);
+        if($tagStats['impressions'] !== 0) {
+            $viewership['ctr'] = number_format(($viewership['click'] / $tagStats['impressions']) * 100, 2);
+            $viewership['completion_rate'] = number_format(($viewership['complete'] / $tagStats['impressions']) * 100, 2);
+        } else {
+            $viewership['ctr'] = 0.0;
+            $viewership['completion_rate'] = 0.0;
+        }
 
         return $viewership;
     }
