@@ -44,11 +44,11 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop pre-roll fill"
-          :value="calculateFillRate(tags.desktop.preroll.impressions, tags.desktop.preroll.requests)"></stats>
+          :value="calculateFillRate(tags.desktop.preroll.fills, tags.desktop.preroll.requests)"></stats>
         </li>
         <li>
           <stats title="mobile pre-roll fill"
-          :value="calculateFillRate(tags.mobile.preroll.impressions, tags.mobile.preroll.requests)"></stats>
+          :value="calculateFillRate(tags.mobile.preroll.fills, tags.mobile.preroll.requests)"></stats>
         </li>
         <li>
           <stats title="desktop pre-roll errors"
@@ -62,11 +62,11 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop outstream fill"
-          :value="calculateFillRate(tags.desktop.outstream.impressions, tags.desktop.outstream.requests)"></stats>
+          :value="calculateFillRate(tags.desktop.outstream.fills, tags.desktop.outstream.requests)"></stats>
         </li>
         <li>
           <stats title="mobile outstream fill"
-          :value="calculateFillRate(tags.mobile.outstream.impressions, tags.mobile.outstream.requests)"></stats>
+          :value="calculateFillRate(tags.mobile.outstream.fills, tags.mobile.outstream.requests)"></stats>
         </li>
         <li>
           <stats title="desktop outstream errors"
@@ -79,15 +79,19 @@
       </ul>
       <ul class="campaignstats-row">
         <li>
-          <stats title="desktop fill"
-          :value="presentNumber(tags.desktop.fills)"></stats>
+          <stats title="desktop fill" :value="presentNumber(tags.desktop.fills)"></stats>
         </li>
         <li>
-          <stats title="mobile fill"
-          :value="presentNumber(tags.mobile.fills)"></stats>
+          <stats title="mobile fill" :value="presentNumber(tags.mobile.fills)"></stats>
         </li>
-        <li></li>
-        <li></li>
+        <li>
+          <stats title="desktop use-rate"
+          :value="calculateUseRate(tags.desktop.impressions, tags.desktop.fills)"></stats>
+        </li>
+        <li>
+          <stats title="mobile use-rate"
+          :value="calculateUseRate(tags.mobile.impressions, tags.mobile.fills)"></stats>
+        </li>
       </ul>
 
       <tag-list></tag-list>
@@ -118,28 +122,38 @@
 
         tags: {
           mobile: {
+            fills: 0,
+            impressions: 0,
+
             preroll: {
               requests: 0,
+              fills: 0,
               impressions: 0,
               errors: 0
             },
 
             outstream: {
               requests: 0,
+              fills: 0,
               impressions: 0,
               errors: 0
             }
           },
 
           desktop: {
+            fills: 0,
+            impressions: 0,
+
             preroll: {
               requests: 0,
+              fills: 0,
               impressions: 0,
               errors: 0
             },
 
             outstream: {
               requests: 0,
+              fills: 0,
               impressions: 0,
               errors: 0
             }

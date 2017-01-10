@@ -79,29 +79,35 @@ class StatsTransformer
         if ($tagStats) {
             $data['tags'] = [
                 'mobile'  => [
-                    'fills' => 0,
+                    'fills'       => 0,
+                    'impressions' => 0,
 
                     'preroll'   => [
                         'requests'    => 0,
+                        'fills'       => 0,
                         'impressions' => 0,
                         'errors'      => 0,
                     ],
                     'outstream' => [
                         'requests'    => 0,
+                        'fills'       => 0,
                         'impressions' => 0,
                         'errors'      => 0,
                     ],
                 ],
                 'desktop' => [
-                    'fills' => 0,
+                    'fills'       => 0,
+                    'impressions' => 0,
 
                     'preroll'   => [
                         'requests'    => 0,
+                        'fills'       => 0,
                         'impressions' => 0,
                         'errors'      => 0,
                     ],
                     'outstream' => [
                         'requests'    => 0,
+                        'fills'       => 0,
                         'impressions' => 0,
                         'errors'      => 0,
                     ],
@@ -231,10 +237,8 @@ class StatsTransformer
         }
 
         foreach ($platforms as $platform) {
-            if($event->name === 'fills') {
-                if (isset($data['tags'][$platform]['fills'])) {
-                    $data['tags'][$platform]['fills'] += $event->count;
-                }
+            if (isset($data['tags'][$platform][$event->name])) {
+                $data['tags'][$platform][$event->name] += $event->count;
             }
 
             foreach ($keys as $key) {
