@@ -138,7 +138,9 @@ class Reports
 
         foreach ($events as $event) {
             if ($event->name === 'adErrors') {
-                $errors["error{$event->status}"] += $event->count;
+                if(isset($errors["error{$event->status}"])) {
+                    $errors["error{$event->status}"] += $event->count;
+                }
             }
         }
 
