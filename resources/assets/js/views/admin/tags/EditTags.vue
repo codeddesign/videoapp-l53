@@ -47,7 +47,7 @@
           <ul class="admindashboard-dailystatslist dashboard-tagsedit">
             <li v-for="tag in tags">
               <div @click="showForm(tag)">
-                <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
+                <div class="dashboard-statslist1">{{ tag.advertiser }} ({{tag.priority_count}})</div>
                 <div class="dashboard-statslist2">{{ tag.description }}</div>
                 <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
                 <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
