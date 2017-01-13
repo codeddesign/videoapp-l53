@@ -62,7 +62,7 @@ class ReportsController extends ApiController
 
         $report->save();
 
-        if($report->schedule === 'once') {
+        if ($report->schedule === 'once') {
             (new Reports)->process($report);
         }
 
@@ -75,7 +75,7 @@ class ReportsController extends ApiController
 
         $report->update($request->transform());
 
-        if($report->schedule === 'once') {
+        if ($report->schedule === 'once') {
             (new Reports)->process($report);
         }
 

@@ -82,7 +82,7 @@ class Tag extends Model
 
         $websiteId = WordpressSite::idByLink($referer);
 
-        $tags = $cache->tags(['tags'])->remember("tags.website.{$websiteId}", 60, function() use ($tags, $websiteId) {
+        $tags = $cache->tags(['tags'])->remember("tags.website.{$websiteId}", 60, function () use ($tags, $websiteId) {
             return $tags->filter(function ($tag) use ($websiteId) {
                 // If there's no targeting, all websites are allowed
                 if (count($tag->included_websites) === 0 && count($tag->excluded_websites) === 0) {

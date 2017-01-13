@@ -116,7 +116,6 @@ class StatsTransformer
         }
 
         foreach ($stats as $stat) {
-
             if (! isset($data[$stat->name])) {
                 continue;
             }

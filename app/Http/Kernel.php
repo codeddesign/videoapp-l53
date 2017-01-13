@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             'auth:api',
         ],
 
-        'player' => []
+        'player' => [],
     ];
 
     /**
