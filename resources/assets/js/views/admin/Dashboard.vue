@@ -29,13 +29,13 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="requests" :value="requests" :animated="true"></stats>
+          <stats title="requests" :value="requests" :animated="true"></stats>
         </li>
         <li>
-          <stats title="impressions" :value="presentNumber(impressions)"></stats>
+          <stats title="impressions" :value="impressions" :animated="true"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="presentRevenue" color="#1aa74f"></stats>
+          <stats title="revenue" :value="revenue" :animated="true" type="money" color="#1aa74f"></stats>
         </li>
         <li>
           <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
@@ -79,10 +79,10 @@
       </ul>
       <ul class="campaignstats-row">
         <li>
-          <stats title="desktop fill" :value="presentNumber(tags.desktop.fills)"></stats>
+          <stats title="desktop fill" :value="tags.desktop.fills" :animated="true"></stats>
         </li>
         <li>
-          <stats title="mobile fill" :value="presentNumber(tags.mobile.fills)"></stats>
+          <stats title="mobile fill" :value="tags.mobile.fills" :animated="true"></stats>
         </li>
         <li>
           <stats title="desktop use-rate"
@@ -108,8 +108,6 @@
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
-  import accounting from 'accounting'
-  import numeral from 'numeral'
   import _ from 'lodash'
 
   export default {
@@ -178,10 +176,6 @@
         return this.$store.state.users.currentUser
       },
 
-      presentRevenue() {
-        return accounting.formatMoney(this.revenue)
-      },
-
       alerts() {
         return this.pendingWebsites.length
       },
@@ -222,10 +216,6 @@
     },
 
     methods: {
-      presentNumber(number) {
-        return numeral(number).format('0,0')
-      },
-
       viewAccount(userId) {
         this.$router.push({ name: 'admin.accounts.info', params: { accountId: userId }})
       },

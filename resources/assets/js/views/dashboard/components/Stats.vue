@@ -3,7 +3,7 @@
     <div class="campaignstats-title">{{ title | uppercase }}</div>
     <div class="campaignstats-digit" v-bind:style="{'color': color}">
       <div v-if="animated">
-        <animated-number :number="value"></animated-number>
+        <animated-number :type="type" :number="value"></animated-number>
       </div>
       <div v-else>
         {{ value }}
@@ -40,7 +40,10 @@
       animated: {
         type: Boolean,
         default: false
-      }
+      },
+      type: {
+        default: ''
+      },
     },
 
     mounted() {

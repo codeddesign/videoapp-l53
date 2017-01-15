@@ -1,24 +1,30 @@
 import Vue from 'vue'
 import numeral from 'numeral'
+import accounting from 'accounting'
 
 Vue.component('animated-number', {
   render: function (createElement) {
     return createElement(
       'div',
-      this.presentNumber(this.displayNumber)
+      this.present(this.displayNumber)
     )
   },
 
   props: {
     'number': {
       default: 0
+    },
+    'type': {
+      default: 'number'
     }
   },
 
   data: () => {
     return {
       displayNumber: 0,
-      interval: false
+      interval: false,
+      ajaxDelay: 1500,
+      increment: 0,
     }
   },
 
@@ -27,8 +33,20 @@ Vue.component('animated-number', {
   },
 
   methods: {
+    present(number) {
+      if(this.type === 'money') {
+        return this.presentRevenue(number)
+      }
+
+      return this.presentNumber(number)
+    },
+
     presentNumber(number) {
       return numeral(number).format('0,0')
+    },
+
+    presentRevenue(number) {
+      return accounting.formatMoney(number)
     }
   },
 
@@ -36,17 +54,15 @@ Vue.component('animated-number', {
     number: function () {
       clearInterval(this.interval)
 
-      if (this.number === this.displayNumber) {
-        return
-      }
+      this.increment = (this.number - this.displayNumber) / 100;
 
       this.interval = window.setInterval(function() {
-        if (this.displayNumber !== this.number) {
-          var change = (this.number - this.displayNumber) / 10
-          change = change >= 0 ? Math.ceil(change) : Math.floor(change)
-          this.displayNumber = this.displayNumber + change
+        if (+(this.number.toFixed(2)) > +(this.displayNumber.toFixed(2))) {
+          this.displayNumber += this.increment
+        } else {
+          clearInterval(this.interval)
         }
-      }.bind(this), 20)
+      }.bind(this), this.ajaxDelay / 100)
     }
   }
 })
