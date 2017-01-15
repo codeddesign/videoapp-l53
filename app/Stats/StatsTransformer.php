@@ -252,6 +252,6 @@ class StatsTransformer
 
     protected function calculateRevenue($impressions, $ecpm)
     {
-        return ($impressions / 1000) * ($ecpm / 100);
+        return floatval(number_format(($impressions / 1000) * ($ecpm / 100), 2, '.', ''));
     }
 }
