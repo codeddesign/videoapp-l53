@@ -1,8 +1,13 @@
 <template>
   <div>
     <div class="campaignstats-title">{{ title | uppercase }}</div>
-    <div class="campaignstats-digit" id="currentMonthViews" v-bind:style="{'color': color}">
-      {{ value }}
+    <div class="campaignstats-digit" v-bind:style="{'color': color}">
+      <div v-if="animated">
+        <animated-number :number="value"></animated-number>
+      </div>
+      <div v-else>
+        {{ value }}
+      </div>
     </div>
     <div class="campaignstats-digit"><span v-bind:id="title"></span></div>
   </div>
@@ -10,6 +15,7 @@
 
 <script>
   import Sparkline from 'jquery-sparkline' // eslint-disable-line no-unused-vars
+  import AnimatedNumber from '../../../components/animated-number.js' // eslint-disable-line no-unused-vars
 
   export default {
     name: 'Stats',
@@ -30,6 +36,10 @@
       },
       chartData: {
         default: () => []
+      },
+      animated: {
+        type: Boolean,
+        default: false
       }
     },
 
