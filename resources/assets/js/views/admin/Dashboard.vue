@@ -29,7 +29,7 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="requests" :value="presentNumber(requests)" :animated="true"></stats>
+            <stats title="requests" :value="requests" :animated="true"></stats>
         </li>
         <li>
           <stats title="impressions" :value="presentNumber(impressions)"></stats>

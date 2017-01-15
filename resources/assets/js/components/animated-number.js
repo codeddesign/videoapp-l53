@@ -1,10 +1,11 @@
 import Vue from 'vue'
+import numeral from 'numeral'
 
 Vue.component('animated-number', {
   render: function (createElement) {
     return createElement(
       'div',
-      this.displayNumber
+      this.presentNumber(this.displayNumber)
     )
   },
 
@@ -23,6 +24,12 @@ Vue.component('animated-number', {
 
   ready: () => {
     this.displayNumber = this.number ? this.number : 0
+  },
+
+  methods: {
+    presentNumber(number) {
+      return numeral(number).format('0,0')
+    }
   },
 
   watch: {
