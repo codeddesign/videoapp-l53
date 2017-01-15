@@ -39,9 +39,24 @@ class DateRange
         return (int) ceil($this->to->diffInHours($this->from) / 24);
     }
 
-    public static function byName($name)
+    /**
+     * @param     $name  Name of the DateRange function
+     * @param int $delay How many seconds to delay the "from" date.
+     *                   Defaults to 5 as the data is usually saved
+     *                   2 seconds into the next hour.
+     *
+     * @return \App\Models\DateRange
+     */
+    public static function byName($name, int $delay = 5)
     {
-        return call_user_func(static::class.'::'.$name);
+        /** @var DateRange $dateRange */
+        $dateRange = call_user_func(static::class.'::'.$name);
+
+        if ($delay !== 0) {
+            $dateRange->from->addSeconds($delay);
+        }
+
+        return $dateRange;
     }
 
     public static function today()
