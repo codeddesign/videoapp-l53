@@ -17,7 +17,7 @@ class TagsController extends ApiController
 {
     public function index(Request $request)
     {
-        $tags = Tag::all()->sortByDesc('priority_count');
+        $tags = Tag::all()->sortBy('priority_count');
 
         $compareRange = $request->get('compareRange');
 
