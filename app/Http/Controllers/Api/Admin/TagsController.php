@@ -84,6 +84,17 @@ class TagsController extends ApiController
         return $this->itemResponse($tag, new TagTransformer);
     }
 
+    public function destroy($id)
+    {
+        Tag::findOrFail($id)->delete();
+
+        $this->clearTagsCache();
+
+        $tags = Tag::all()->sortBy('id');
+
+        return $this->collectionResponse($tags, new TagTransformer);
+    }
+
     protected function clearTagsCache()
     {
         $cache = app(Repository::class);

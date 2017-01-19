@@ -24,7 +24,7 @@ Vue.component('animated-number', {
       displayNumber: 0,
       interval: false,
       ajaxDelay: 1500,
-      increment: 0,
+      increment: 0
     }
   },
 
@@ -34,7 +34,7 @@ Vue.component('animated-number', {
 
   methods: {
     present(number) {
-      if(this.type === 'money') {
+      if (this.type === 'money') {
         return this.presentRevenue(number)
       }
 
@@ -54,7 +54,7 @@ Vue.component('animated-number', {
     number: function () {
       clearInterval(this.interval)
 
-      this.increment = (this.number - this.displayNumber) / 100;
+      this.increment = (this.number - this.displayNumber) / 100
 
       this.interval = window.setInterval(function() {
         if (+(this.number.toFixed(2)) > +(this.displayNumber.toFixed(2))) {

@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::get('tags', 'TagsController@index');
     Route::post('tags', 'TagsController@store');
     Route::patch('tags/{id}', 'TagsController@update');
+    Route::delete('tags/{id}', 'TagsController@destroy');
     Route::post('tags/{id}/activate', 'TagsController@activate');
 
     Route::get('reports', 'ReportsController@index');

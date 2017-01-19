@@ -28,6 +28,13 @@ export default {
       })
   },
 
+  delete(tag) {
+    return axios.delete('/admin/tags/' + tag.id)
+      .then((response) => {
+        return response.data
+      })
+  },
+
   save(tag) {
     if (tag.id === 0) {
       return this.create(tag)

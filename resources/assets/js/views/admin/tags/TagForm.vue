@@ -2,6 +2,7 @@
 <!-- CREATE & EDIT TAGS -->
   <div class="tagmanage-tagcreationwrapper">
     <div class="tagcreate-topbuttonswrap">
+      <div v-show="tag.id !== 0" class="tagcreate-topcancel" @click="deleteTag">DELETE TAG</div>
       <div class="tagcreate-topcancel" @click="hideForm">CANCEL EDIT</div>
       <div class="tagcreate-toptestpage">LOAD TEST PAGE</div>
     </div>
@@ -395,6 +396,10 @@
   .tagcreate-geolist li {
     position: relative;
   }
+
+  .tagcreate-topcancel {
+    margin-right: 5px;
+  }
 </style>
 
 <script>
@@ -565,6 +570,14 @@
 
       hideForm() {
         this.$store.dispatch('setShowTagForm', false)
+      },
+
+      deleteTag() {
+        let confirmed = window.confirm('Are you sure you want to delete this tag?')
+
+        if (confirmed) {
+          this.$store.dispatch('deleteCurrentTag')
+        }
       },
 
       insertMacro(value) {

@@ -6,6 +6,7 @@ import {
   ACTIVATE_TAG,
   SET_CURRENT_TAG,
   SAVE_CURRENT_TAG,
+  DELETE_CURRENT_TAG,
   LOAD_TAGS,
   LOAD_LOCATIONS,
   LOCATION_BACK,
@@ -86,6 +87,12 @@ const actions = {
   saveCurrentTag({ commit }) {
     Tag.save(state.currentTag).then((tags) => {
       commit(SAVE_CURRENT_TAG, tags.data)
+    })
+  },
+
+  deleteCurrentTag({ commit }) {
+    Tag.delete(state.currentTag).then((tags) => {
+      commit(DELETE_CURRENT_TAG, tags.data)
     })
   },
 
@@ -183,6 +190,12 @@ const mutations = {
   },
 
   [SAVE_CURRENT_TAG](state, tags) {
+    state.tags = tags
+    state.currentTag = Tag.default()
+    state.showTagForm = false
+  },
+
+  [DELETE_CURRENT_TAG](state, tags) {
     state.tags = tags
     state.currentTag = Tag.default()
     state.showTagForm = false

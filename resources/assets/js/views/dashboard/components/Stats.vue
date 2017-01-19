@@ -43,7 +43,7 @@
       },
       type: {
         default: ''
-      },
+      }
     },
 
     mounted() {

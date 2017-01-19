@@ -6,6 +6,7 @@ use App\Models\Traits\Filterable;
 use Carbon\Carbon;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Redis\Database as Redis;
 
 /**
@@ -37,10 +38,11 @@ use Illuminate\Redis\Database as Redis;
  * @property array  $excluded_websites
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property Carbon $deleted_at
  */
 class Tag extends Model
 {
-    use Filterable;
+    use Filterable, SoftDeletes;
 
     protected $fillable = [
         'url', 'advertiser', 'description', 'platform_type', 'campaign_types',
@@ -53,6 +55,7 @@ class Tag extends Model
     protected $dates = [
         'start_date',
         'end_date',
+        'deleted_at',
     ];
 
     protected $casts = [
