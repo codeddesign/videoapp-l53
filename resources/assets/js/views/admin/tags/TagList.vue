@@ -11,6 +11,17 @@
       <div class="edittagsselect-selectarrow" style="margin-left:118px;"></div>
     </div>
 
+    <!-- EDIT TAGS ACTIVE SELECT -->
+    <div class="edittagsselect-wrapper comparetagsselect-wrapper" style="margin-right:20px;">
+      <div class="edittagsselect-title">Active:</div>
+      <select v-model="filters['active']">
+        <option value="all">All</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+      <div class="edittagsselect-selectarrow" style="margin-left: 128px;"></div>
+    </div>
+
     <!-- EDIT TAGS TYPE SELECT -->
     <div class="edittagsselect-wrapper comparetagsselect-wrapper" style="margin-right:20px;">
       <div class="edittagsselect-title">Platform:</div>
@@ -121,7 +132,8 @@
 
         filters: {
           platform: 'all',
-          type: 'all'
+          type: 'all',
+          active: 'all'
         },
 
         tags: [],
@@ -221,6 +233,13 @@
         if (this.filters.platform !== 'all') {
           tags = tags.filter((tag) => {
             return tag.platform_type === this.filters.platform
+          })
+        }
+
+        if (this.filters.active !== 'all') {
+          let activeFilter = this.filters.active === 'true'
+          tags = tags.filter((tag) => {
+            return tag.active === activeFilter
           })
         }
 
