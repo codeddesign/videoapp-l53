@@ -22,14 +22,18 @@ export default {
     return fillRate.toFixed(2) + '%'
   },
 
-  calculateEcpm(impressions, revenue) {
+  calculateEcpm(impressions, revenue, format = true) {
     let ecpm = revenue / (impressions / 1000)
 
     if (isNaN(ecpm)) {
       ecpm = 0
     }
 
-    return accounting.formatMoney(ecpm)
+    if (format) {
+      return accounting.formatMoney(ecpm)
+    } else {
+      return ecpm
+    }
   },
 
   calculateErrorRate(requests, adErrors) {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 60%;">
     <div class="campaignstats-title">{{ title | uppercase }}</div>
     <div class="campaignstats-digit" v-bind:style="{'color': color}">
       <div v-if="animated">
@@ -9,7 +9,6 @@
         {{ value }}
       </div>
     </div>
-    <div class="campaignstats-digit"><span v-bind:id="title"></span></div>
   </div>
 </template>
 

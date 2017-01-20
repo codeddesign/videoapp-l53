@@ -30,15 +30,19 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="requests" :value="requests" :animated="true"></stats>
+          <spark-chart id="requests-chart" :chartData="chartData.tagRequests" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="impressions" :value="impressions" :animated="true"></stats>
+          <spark-chart id="impressions-chart" :chartData="chartData.impressions" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="revenue" :value="revenue" :animated="true" type="money" color="#1aa74f"></stats>
+          <spark-chart id="revenue-chart" :chartData="chartData.revenue" color="#1aa74f"></spark-chart>
         </li>
         <li>
           <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
+          <spark-chart id="ecpm-chart" :chartData="ecpmSpark" color="#1aa74f"></spark-chart>
         </li>
       </ul>
       <ul class="campaignstats-row">
@@ -103,6 +107,7 @@
   import TagList from './tags/TagList.vue'
   import Stats from '../dashboard/components/Stats.vue'
   import LineBarChart from '../dashboard/components/LineBarChart.vue'
+  import SparkChart from './SparkChart.vue'
   import socket from '../../services/socket'
   import events from '../../services/events'
   import stats from '../../services/stats'
@@ -167,7 +172,8 @@
 
         adErrors: 0,
 
-        useRate: 0
+        useRate: 0,
+        chartData: {}
       }
     },
 
@@ -190,6 +196,14 @@
         return this.calculateEcpm(this.impressions, this.revenue)
       },
 
+      ecpmSpark() {
+        if (!this.chartData.impressions) return []
+
+        return this.chartData.impressions.map((item, index) => {
+          return [item[0], this.calculateEcpm(item[2], this.chartData.revenue[index][2], false)]
+        })
+      },
+
       fillRate() {
         return this.calculateFillRate(this.impressions, this.requests)
       },
@@ -205,6 +219,7 @@
     mounted() {
       this.$nextTick(function() {
         this.fetchStats()
+        this.fetchCharts()
         this.$store.dispatch('loadPendingWebsites')
 
         // if the user is loaded, set up the socket
@@ -232,6 +247,16 @@
           })
           .catch((error) => {
             console.error('Error fetching the stats count.')
+          })
+      },
+
+      fetchCharts() {
+        http.get('/admin/charts/all')
+          .then((response) => {
+            this.chartData = response.data
+          })
+          .catch((error) => {
+            console.error('Error fetching the charts.')
           })
       },
 
@@ -329,7 +354,8 @@
     components: {
       Stats,
       LineBarChart,
-      TagList
+      TagList,
+      SparkChart
     }
   }
 </script>
