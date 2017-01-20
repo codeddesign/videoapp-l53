@@ -79,8 +79,9 @@ class StatsTransformer
         if ($tagStats) {
             $data['tags'] = [
                 'mobile'  => [
-                    'fills'       => 0,
-                    'impressions' => 0,
+                    'fills'            => 0,
+                    'impressions'      => 0,
+                    'campaignRequests' => 0,
 
                     'preroll'   => [
                         'requests'    => 0,
@@ -96,8 +97,9 @@ class StatsTransformer
                     ],
                 ],
                 'desktop' => [
-                    'fills'       => 0,
-                    'impressions' => 0,
+                    'fills'            => 0,
+                    'impressions'      => 0,
+                    'campaignRequests' => 0,
 
                     'preroll'   => [
                         'requests'    => 0,
@@ -167,20 +169,20 @@ class StatsTransformer
                         continue;
                     }
 
+                    if ($stat === 'impressions') {
+                        $revenue = 0;
+                        $events->where('name', $stat)->map(function ($impressions) use (&$revenue) {
+                            if (isset($impressions->tag)) {
+                                $revenue += $this->calculateRevenue($impressions->count, $impressions->tag->ecpm);
+                            }
+                        });
+                        $data['revenue'][] = [$timestamp, $revenue];
+                    }
+
                     if ($events->where('name', $stat)->isEmpty()) {
                         $data[$stat][] = [$timestamp, 0];
                     } else {
                         $count = $events->where('name', $stat)->sum('count');
-
-                        if ($stat === 'impressions') {
-                            $revenue = 0;
-                            $events->where('name', $stat)->map(function ($impressions) use (&$revenue) {
-                                if (isset($impressions->tag)) {
-                                    $revenue += $this->calculateRevenue($impressions->count, $impressions->tag->ecpm);
-                                }
-                            });
-                            $data['revenue'][] = [$timestamp, $revenue];
-                        }
 
                         $data[$stat][] = [$timestamp, $count];
                     }
