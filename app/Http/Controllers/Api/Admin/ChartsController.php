@@ -21,7 +21,7 @@ class ChartsController extends ApiController
         $range = $request->get('time') ?? 'today';
         $user = $request->get('user');
 
-        if ($range === 'today' || $range === 'yesterday') {
+        if ($range === 'today' || $range === 'yesterday' || $range === 'lastTwentyFourHours') {
             $step = CarbonInterval::hour();
             $keyFormat = 'm/d/Y H';
         } else {

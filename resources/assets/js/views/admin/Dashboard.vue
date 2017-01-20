@@ -252,7 +252,7 @@
       },
 
       fetchCharts() {
-        http.get('/admin/charts/all')
+        http.get('/admin/charts/all?time=lastTwentyFourHours')
           .then((response) => {
             this.chartData = response.data
           })

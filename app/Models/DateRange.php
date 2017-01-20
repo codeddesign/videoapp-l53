@@ -59,6 +59,14 @@ class DateRange
         return $dateRange;
     }
 
+    public static function lastTwentyFourHours()
+    {
+        $from = Carbon::now()->subHours(24);
+        $to   = Carbon::now();
+
+        return new static($from, $to);
+    }
+
     public static function today()
     {
         $from = Carbon::now()->startOfDay();
