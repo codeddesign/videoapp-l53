@@ -200,7 +200,8 @@
         if (!this.chartData.impressions) return []
 
         return this.chartData.impressions.map((item, index) => {
-          return [item[0], this.calculateEcpm(item[2], this.chartData.revenue[index][2], false)]
+          let ecpm = this.calculateEcpm(item[1], this.chartData.revenue[index][1], false)
+          return [item[0], +ecpm.toFixed(2)]
         })
       },
 

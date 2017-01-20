@@ -40,7 +40,6 @@
 
     methods: {
       renderChart() {
-        console.log(this.chartData)
         Highcharts.chart(this.id, {
           chart: {
             backgroundColor: 'transparent',
