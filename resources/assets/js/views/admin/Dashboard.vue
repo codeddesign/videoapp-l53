@@ -172,7 +172,6 @@
 
         errors: 0,
 
-        useRate: 0,
         chartData: {}
       }
     },
