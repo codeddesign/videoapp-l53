@@ -42,8 +42,13 @@ class Location extends Model
             return 0;
         }
 
-        $result = Range::where('ip_start', '>=', self::ipAton($ip))
+        $ip_aton = self::ipAton($ip);
+
+        $result = Range::where('ip_start', '<=', $ip_aton)
+            ->where('ip_end', '>=', $ip_aton)
+            ->orderBy('ip_start', 'DESC')
             ->limit(1)
+            ->get()
             ->first();
 
         return (new self)->byGeonameId($result->geoname_id, $keys_only);
