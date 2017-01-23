@@ -17,7 +17,7 @@
         window.socketIoIp = '{{ $socketIoIp }}';
         window.apiDomain = '{{ $apiDomain }}';
     </script>
-    <script src="//{{ $socketIoIp }}:3000/socket.io/socket.io.js"></script>
+    <!--<script src="//{{ $socketIoIp }}:3000/socket.io/socket.io.js"></script>-->
     @if($webpack)
         <script src="http://192.168.10.10:8080/js/app.js"></script>
     @else

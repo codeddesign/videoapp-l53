@@ -51,7 +51,7 @@ class ChartsController extends ApiController
             });
 
         $transformer = new StatsTransformer;
-        $requests    = $transformer->highcharts($stats, $keyFormat, $range, $step);
+        $requests    = $transformer->highcharts($stats, $keyFormat, $range, $step, $range === 'lastTwentyFourHours');
 
         return $this->jsonResponse($requests);
     }

@@ -47,13 +47,14 @@ class DateRange
      *
      * @return \App\Models\DateRange
      */
-    public static function byName($name, int $delay = 5)
+    public static function byName($name, $delay = 5)
     {
         /** @var DateRange $dateRange */
         $dateRange = call_user_func(static::class.'::'.$name);
 
         if ($delay !== 0) {
             $dateRange->from->addSeconds($delay);
+            $dateRange->to->addSeconds($delay);
         }
 
         return $dateRange;
@@ -61,8 +62,8 @@ class DateRange
 
     public static function lastTwentyFourHours()
     {
-        $from = Carbon::now()->subHours(24);
-        $to   = Carbon::now();
+        $from = Carbon::now()->subHours(24)->minute(0)->second(0);
+        $to   = Carbon::now()->minute(0)->second(0);
 
         return new static($from, $to);
     }

@@ -49,52 +49,64 @@
         <li>
           <stats title="desktop pre-roll fill"
           :value="calculateFillRate(tags.desktop.preroll.fills, tags.desktop.preroll.tagRequests)"></stats>
+          <spark-chart id="desktop-preroll-fill-chart" :chartData="chartData.desktopPrerollFill" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile pre-roll fill"
           :value="calculateFillRate(tags.mobile.preroll.fills, tags.mobile.preroll.tagRequests)"></stats>
+          <spark-chart id="mobile-preroll-fill-chart" :chartData="chartData.mobilePrerollFill" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="desktop pre-roll errors"
           :value="calculateErrorRate(tags.desktop.preroll.tagRequests, tags.desktop.preroll.errors)"></stats>
+          <spark-chart id="desktop-preroll-errors-chart" :chartData="chartData.desktopPrerollErrors" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile pre-roll errors"
           :value="calculateErrorRate(tags.mobile.preroll.tagRequests, tags.mobile.preroll.errors)"></stats>
+          <spark-chart id="mobile-preroll-errors-chart" :chartData="chartData.mobilePrerollErrors" color="#7772a7"></spark-chart>
         </li>
       </ul>
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop outstream fill"
           :value="calculateFillRate(tags.desktop.outstream.fills, tags.desktop.outstream.tagRequests)"></stats>
+          <spark-chart id="desktop-outstream-fill-chart" :chartData="chartData.desktopOutstreamFill" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile outstream fill"
           :value="calculateFillRate(tags.mobile.outstream.fills, tags.mobile.outstream.tagRequests)"></stats>
+          <spark-chart id="mobile-outstream-fill-chart" :chartData="chartData.mobileOutstreamFill" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="desktop outstream errors"
           :value="calculateErrorRate(tags.desktop.outstream.tagRequests, tags.desktop.outstream.errors)"></stats>
+          <spark-chart id="desktop-outstream-errors-chart" :chartData="chartData.desktopOutstreamErrors" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile outstream errors"
           :value="calculateErrorRate(tags.mobile.outstream.tagRequests, tags.mobile.outstream.errors)"></stats>
+          <spark-chart id="mobile-outstream-errors-chart" :chartData="chartData.mobileOutstreamErrors" color="#7772a7"></spark-chart>
         </li>
       </ul>
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop fill" :value="tags.desktop.fills" :animated="true"></stats>
+          <spark-chart id="desktop-fill-chart" :chartData="chartData.desktopFill" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile fill" :value="tags.mobile.fills" :animated="true"></stats>
+          <spark-chart id="mobile-fill-chart" :chartData="chartData.mobileFill" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="desktop use-rate"
           :value="calculateUseRate(tags.desktop.impressions, tags.desktop.fills)"></stats>
+          <spark-chart id="desktop-use-rate-chart" :chartData="chartData.desktopUserate" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile use-rate"
           :value="calculateUseRate(tags.mobile.impressions, tags.mobile.fills)"></stats>
+          <spark-chart id="mobile-use-rate-chart" :chartData="chartData.mobileUserate" color="#7772a7"></spark-chart>
         </li>
       </ul>
 
@@ -108,8 +120,6 @@
   import Stats from '../dashboard/components/Stats.vue'
   import LineBarChart from '../dashboard/components/LineBarChart.vue'
   import SparkChart from './SparkChart.vue'
-  import socket from '../../services/socket'
-  import events from '../../services/events'
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
@@ -172,7 +182,9 @@
 
         errors: 0,
 
-        chartData: {}
+        chartData: {},
+
+        autoUpdateInterval: null
       }
     },
 
@@ -216,18 +228,23 @@
         return this.calculateUseRate(this.impressions, this.fills)
       }
     },
+
     mounted() {
       this.$nextTick(function() {
         this.fetchStats()
         this.fetchCharts()
         this.$store.dispatch('loadPendingWebsites')
 
-        // if the user is loaded, set up the socket
-        // if not, the socket will be set by the watcher
-        if (!_.isEmpty(this.currentUser)) {
-          this.setupSocket()
-        }
+        let that = this
+        this.autoUpdateInterval = setInterval(function() {
+          that.fetchStats()
+          that.currentTime = moment()
+        }, 2000)
       })
+    },
+
+    destroyed() {
+      window.clearInterval(this.autoUpdateInterval)
     },
 
     methods: {
@@ -296,59 +313,7 @@
         return tagStats
       },
 
-      setupSocket() {
-        console.log('Setting up socket')
-        let echo = socket.connection()
-        if (echo) {
-          echo.private('user.' + this.currentUser.id)
-              .listen('CampaignEventReceived', (e) => {
-                let tags = []
-                if (e.tag) {
-                  tags = this.getTagStats(e.tag)
-                }
-
-                switch (events.type(e)) {
-                  case 'request':
-                    this.requests++
-                    break
-                  case 'impression':
-                    tags.forEach((tag) => {
-                      tag.impressions++
-                    })
-                    this.impressions++
-                    this.revenue += (e.tag.ecpm) / 1000
-                    break
-                  case 'fill':
-                    this.fills++
-                    tags.forEach((tag) => {
-                      tag.fills++
-                    })
-                    break
-                  case 'ad-error':
-                    this.errors++
-                    tags.forEach((tag) => {
-                      tag.errors++
-                    })
-                    break
-                }
-              })
-          let that = this
-          setInterval(function() {
-            that.fetchStats()
-            that.currentTime = moment()
-          }, 2000) // every 5 seconds
-        } else {
-          console.error('Couldn\'t connect to web socket')
-        }
-      },
-
       ...stats
-    },
-
-    watch: {
-      currentUser() {
-        this.setupSocket()
-      }
     },
 
     components: {

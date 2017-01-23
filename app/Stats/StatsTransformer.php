@@ -10,6 +10,12 @@ class StatsTransformer
 {
     protected static $allStats = ['campaignRequests', 'tagRequests', 'impressions', 'fills', 'errors', 'revenue'];
 
+    protected static $tagChartStats = [
+        'desktopPrerollFill', 'mobilePrerollFill', 'desktopPrerollErrors', 'mobilePrerollErrors',
+        'desktopOutstreamFill', 'mobileOutstreamFill', 'desktopOutstreamErrors', 'mobileOutstreamErrors',
+        'desktopFill', 'mobileFill', 'desktopUserate', 'mobileUserate',
+    ];
+
     public function transformRealtime($stats)
     {
         $data = [];
@@ -78,42 +84,7 @@ class StatsTransformer
         }
 
         if ($tagStats) {
-            $data['tags'] = [
-                'mobile'  => [
-                    'fills'       => 0,
-                    'impressions' => 0,
-
-                    'preroll'   => [
-                        'tagRequests' => 0,
-                        'fills'       => 0,
-                        'impressions' => 0,
-                        'errors'      => 0,
-                    ],
-                    'outstream' => [
-                        'tagRequests' => 0,
-                        'fills'       => 0,
-                        'impressions' => 0,
-                        'errors'      => 0,
-                    ],
-                ],
-                'desktop' => [
-                    'fills'       => 0,
-                    'impressions' => 0,
-
-                    'preroll'   => [
-                        'tagRequests' => 0,
-                        'fills'       => 0,
-                        'impressions' => 0,
-                        'errors'      => 0,
-                    ],
-                    'outstream' => [
-                        'tagRequests' => 0,
-                        'fills'       => 0,
-                        'impressions' => 0,
-                        'errors'      => 0,
-                    ],
-                ],
-            ];
+            $data['tags'] = $this->tagStats();
         }
 
         foreach ($stats as $stat) {
@@ -128,7 +99,7 @@ class StatsTransformer
             }
 
             if ($tagStats) {
-                $this->parseTagStats($data, $stat);
+                $this->parseTagStats($data['tags'], $stat);
             }
         }
 
@@ -165,6 +136,10 @@ class StatsTransformer
             if ($stats->has($key)) {
                 $events = $stats->get($key);
 
+                if ($tagStats) {
+                    $this->parseTagChart($data, $events, $timestamp);
+                }
+
                 //Sum all the desired stats. ('revenue' is inferred through impressions)
                 foreach (array_diff(self::$allStats, ['revenue']) as $stat) {
                     if ($events->where('name', $stat)->isEmpty()) {
@@ -186,14 +161,38 @@ class StatsTransformer
                 foreach (self::$allStats as $stat) {
                     $data[$stat][] = [$timestamp, 0];
                 }
+
+                if ($tagStats) {
+                    foreach (self::$tagChartStats as $stat) {
+                        $data[$stat][] = [$timestamp, 0];
+                    }
+                }
             }
         }
 
         return $data;
     }
 
-    public function highchartsTagStats()
+    public function parseTagChart(&$data, $events, $timestamp)
     {
+        $tagStats = $this->tagStats();
+
+        foreach ($events as $event) {
+            $this->parseTagStats($tagStats, $event);
+        }
+
+        $data['desktopPrerollFill'][]     = $this->calculateFillRate($tagStats['desktop']['preroll'], $timestamp);
+        $data['mobilePrerollFill'][]      = $this->calculateFillRate($tagStats['mobile']['preroll'], $timestamp);
+        $data['desktopPrerollErrors'][]   = $this->calculateErrorRate($tagStats['desktop']['preroll'], $timestamp);
+        $data['mobilePrerollErrors'][]    = $this->calculateErrorRate($tagStats['mobile']['preroll'], $timestamp);
+        $data['desktopOutstreamFill'][]   = $this->calculateFillRate($tagStats['desktop']['outstream'], $timestamp);
+        $data['mobileOutstreamFill'][]    = $this->calculateFillRate($tagStats['mobile']['outstream'], $timestamp);
+        $data['desktopOutstreamErrors'][] = $this->calculateErrorRate($tagStats['desktop']['outstream'], $timestamp);
+        $data['mobileOutstreamErrors'][]  = $this->calculateErrorRate($tagStats['mobile']['outstream'], $timestamp);
+        $data['desktopFill'][]             = [$timestamp, $tagStats['desktop']['fills']];
+        $data['mobileFill'][]              = [$timestamp, $tagStats['mobile']['fills']];
+        $data['desktopUserate'][]          = $this->calculateUseRate($tagStats['desktop']['outstream'], $timestamp);
+        $data['mobileUserate'][]           = $this->calculateUseRate($tagStats['mobile']['outstream'], $timestamp);
     }
 
     protected function parseTagStats(&$data, $event)
@@ -220,16 +219,89 @@ class StatsTransformer
         }
 
         foreach ($platforms as $platform) {
-            if (isset($data['tags'][$platform][$event->name])) {
-                $data['tags'][$platform][$event->name] += $event->count;
+            if (isset($data[$platform][$event->name])) {
+                $data[$platform][$event->name] += $event->count;
             }
 
             foreach ($keys as $key) {
-                if (isset($data['tags'][$platform][$key][$event->name])) {
-                    $data['tags'][$platform][$key][$event->name] += $event->count;
+                if (isset($data[$platform][$key][$event->name])) {
+                    $data[$platform][$key][$event->name] += $event->count;
                 }
             }
         }
+    }
+
+    protected function tagStats()
+    {
+        return [
+            'mobile'  => [
+                'fills'       => 0,
+                'impressions' => 0,
+
+                'preroll'   => [
+                    'tagRequests' => 0,
+                    'fills'       => 0,
+                    'impressions' => 0,
+                    'errors'      => 0,
+                ],
+                'outstream' => [
+                    'tagRequests' => 0,
+                    'fills'       => 0,
+                    'impressions' => 0,
+                    'errors'      => 0,
+                ],
+            ],
+            'desktop' => [
+                'fills'       => 0,
+                'impressions' => 0,
+
+                'preroll'   => [
+                    'tagRequests' => 0,
+                    'fills'       => 0,
+                    'impressions' => 0,
+                    'errors'      => 0,
+                ],
+                'outstream' => [
+                    'tagRequests' => 0,
+                    'fills'       => 0,
+                    'impressions' => 0,
+                    'errors'      => 0,
+                ],
+            ],
+        ];
+    }
+
+    protected function calculateFillRate($tagStats, $timestamp)
+    {
+        return [
+            $timestamp,
+            Calculator::fillRate(
+                $tagStats['fills'],
+                $tagStats['tagRequests']
+            ),
+        ];
+    }
+
+    protected function calculateErrorRate($tagStats, $timestamp)
+    {
+        return [
+            $timestamp,
+            Calculator::errorRate(
+                $tagStats['errors'],
+                $tagStats['tagRequests']
+            ),
+        ];
+    }
+
+    protected function calculateUseRate($tagStats, $timestamp)
+    {
+        return [
+            $timestamp,
+            Calculator::useRate(
+                $tagStats['impressions'],
+                $tagStats['fills']
+            ),
+        ];
     }
 
     protected function calculateRevenue($impressions, $tag)
@@ -238,6 +310,6 @@ class StatsTransformer
             return 0;
         }
 
-        return floatval(number_format(($impressions / 1000) * ($tag->ecpm / 100), 2, '.', ''));
+        return Calculator::decimals(($impressions / 1000) * ($tag->ecpm / 100));
     }
 }
