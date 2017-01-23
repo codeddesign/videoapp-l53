@@ -7,6 +7,7 @@ use App\Models\CampaignEvent;
 use App\Services\CampaignEvents;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StatsController extends ApiController
 {
@@ -38,8 +39,11 @@ class StatsController extends ApiController
     protected function fetchHistoricalData($timespan)
     {
         $statsByCampaign = CampaignEvent::query()
-            ->timeRange($timespan)
             ->with('tag')
+            ->select('name', 'tag_id', DB::raw('SUM(count) as count'))
+            ->where('name', '!=', 'viewership') //viewership data isn't charted
+            ->groupBy('name', 'tag_id')
+            ->timeRange($timespan)
             ->get();
 
         $stats = (new StatsTransformer)->transformSumAll($statsByCampaign);
