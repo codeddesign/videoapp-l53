@@ -59,7 +59,7 @@
                 </li>
                 <li>
                   <div class="taggraph-listtitle">ERRORS:</div>
-                  <div class="taggraph-listnumber">{{ adErrors }}</div>
+                  <div class="taggraph-listnumber">{{ errors }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">REVENUE:</div>
@@ -106,8 +106,7 @@
         impressions: 0,
         revenue: 0,
         fills: 0,
-        fillErrors: 0,
-        adErrors: 0,
+        errors: 0,
 
         chartData: []
       }
@@ -120,8 +119,7 @@
               this.requests = parseInt(response.data.tagRequests)
               this.impressions = parseInt(response.data.impressions)
               this.fills = parseInt(response.data.fills)
-              this.adErrors = parseInt(response.data.adErrors)
-              this.fillErrors = parseInt(response.data.fillErrors)
+              this.errors = parseInt(response.data.errors)
               this.revenue = parseFloat(response.data.revenue)
             })
             .catch((error) => {
@@ -153,7 +151,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.requests, this.adErrors)
+        return this.calculateErrorRate(this.requests, this.errors)
       },
 
       useRate() {

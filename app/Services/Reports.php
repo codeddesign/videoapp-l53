@@ -44,8 +44,8 @@ class Reports
                 'fill_rate'     => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
                 'revenue'       => number_format($parsedStats['revenue'], 2),
                 'ecpm'          => $tag->ecpm / 100.0,
-                'errors'        => $parsedStats['adErrors'],
-                'error_rate'    => $this->calculatePercentage($parsedStats['adErrors'], $parsedStats['tagRequests']),
+                'errors'        => $parsedStats['errors'],
+                'error_rate'    => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
             ]);
 
             $tagStats = $tagStats->merge($this->parseViewership($tagEvents, $tagStats));
@@ -137,7 +137,7 @@ class Reports
         }
 
         foreach ($events as $event) {
-            if ($event->name === 'adErrors') {
+            if ($event->name === 'errors') {
                 if (isset($errors["error{$event->status}"])) {
                     $errors["error{$event->status}"] += $event->count;
                 }

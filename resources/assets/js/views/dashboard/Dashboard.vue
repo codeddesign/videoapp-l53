@@ -117,7 +117,7 @@
         fills: 0,
         fillErrors: 0,
 
-        adErrors: 0,
+        errors: 0,
 
         useRate: 0,
 
@@ -145,7 +145,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.impressions, this.adErrors)
+        return this.calculateErrorRate(this.impressions, this.errors)
       },
 
       useRate() {
@@ -177,7 +177,7 @@
               this.impressions = parseInt(response.data.impressions)
               this.revenue = parseFloat(response.data.revenue)
               this.fills = parseInt(response.data.fills)
-              this.adErrors = parseInt(response.data.adErrors)
+              this.errors = parseInt(response.data.errors)
               this.fillErrors = parseInt(response.data.fillErrors)
             })
             .catch((error) => {
@@ -229,7 +229,7 @@
                     this.fillErrors++
                     break
                   case 'ad-error':
-                    this.adErrors++
+                    this.errors++
                     break
                 }
               })

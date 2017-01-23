@@ -115,7 +115,7 @@
                       {{ calculateFillRate(website.stats.impressions, website.stats.requests) }}
                     </div>
                     <div class="dashboard-statslist2">
-                      {{ calculateErrorRate(website.stats.impressions, website.stats.adErrors) }}
+                      {{ calculateErrorRate(website.stats.impressions, website.stats.errors) }}
                     </div>
                     <div class="dashboard-statslist2">17%</div>
                   </div>

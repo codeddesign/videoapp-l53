@@ -36,12 +36,12 @@ export default {
     }
   },
 
-  calculateErrorRate(requests, adErrors) {
-    // adErrors / requests
+  calculateErrorRate(requests, errors) {
+    // errors / requests
     let errorRate = 0
 
     if (requests !== 0) {
-      errorRate = ((adErrors / requests) * 100)
+      errorRate = ((errors / requests) * 100)
     }
 
     return errorRate.toFixed(2) + '%'

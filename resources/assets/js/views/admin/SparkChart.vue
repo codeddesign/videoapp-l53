@@ -15,7 +15,7 @@
 
   .spark-chart {
     margin: 0 auto;
-    width: 60%;
+    width: 70%;
     height: 100%;
   }
 </style>

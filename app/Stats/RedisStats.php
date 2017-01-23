@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 class RedisStats
 {
-    protected $keys = ['requests', 'impressions', 'fills', 'fillErrors', 'adErrors'];
+    protected $keys = ['requests', 'impressions', 'fills', 'errors'];
 
     protected $redis;
 
@@ -129,7 +129,7 @@ class RedisStats
             ]);
         } else {
             $stats->push([
-                'name'       => 'adErrors',
+                'name'       => 'errors',
                 'status'     => $status,
                 'count'      => $value,
                 'tag_id'     => $tag,

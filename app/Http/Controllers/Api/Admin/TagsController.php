@@ -12,6 +12,7 @@ use App\Transformers\TagTransformer;
 use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class TagsController extends ApiController
 {
@@ -21,28 +22,23 @@ class TagsController extends ApiController
 
         $compareRange = $request->get('compareRange');
 
-        $stats = CampaignEvent::query()->with('tag')->where('tag_id', '!=', null);
-
-        $days = 1;
-
         if ($compareRange) {
-            $stats->timeRange($compareRange);
-            $dateRange = DateRange::byName($compareRange);
-            $days      = $dateRange->days();
-        }
+            $stats = CampaignEvent::query()
+                ->select('name', 'tag_id', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
+                ->where('tag_id', '!=', null)
+                ->where('name', '!=', 'viewership')
+                ->groupBy('name', 'tag_id', DB::raw('created_at::date'))
+                ->timeRange($compareRange)
+                ->get()
+                ->groupBy('tag_id');
 
-        // When using "today" as the range, the
-        // days count is 0 when it should be 1
-        if ($days === 0) {
-            $days = 1;
-        }
+            $days  = DateRange::byName($compareRange)->days() ?: 1;
 
-        $stats = $stats->get()->groupBy('tag_id');
+            $statsTransformer = new StatsTransformer;
 
-        $statsTransformer = new StatsTransformer;
-
-        foreach ($tags as $tag) {
-            $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days);
+            foreach ($tags as $tag) {
+                $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days);
+            }
         }
 
         return $this->collectionResponse($tags, new TagTransformer);
@@ -87,8 +83,6 @@ class TagsController extends ApiController
     public function destroy($id)
     {
         Tag::findOrFail($id)->delete();
-
-        $this->clearTagsCache();
 
         $tags = Tag::all()->sortBy('id');
 

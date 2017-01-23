@@ -48,37 +48,37 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop pre-roll fill"
-          :value="calculateFillRate(tags.desktop.preroll.fills, tags.desktop.preroll.requests)"></stats>
+          :value="calculateFillRate(tags.desktop.preroll.fills, tags.desktop.preroll.tagRequests)"></stats>
         </li>
         <li>
           <stats title="mobile pre-roll fill"
-          :value="calculateFillRate(tags.mobile.preroll.fills, tags.mobile.preroll.requests)"></stats>
+          :value="calculateFillRate(tags.mobile.preroll.fills, tags.mobile.preroll.tagRequests)"></stats>
         </li>
         <li>
           <stats title="desktop pre-roll errors"
-          :value="calculateErrorRate(tags.desktop.preroll.requests, tags.desktop.preroll.errors)"></stats>
+          :value="calculateErrorRate(tags.desktop.preroll.tagRequests, tags.desktop.preroll.errors)"></stats>
         </li>
         <li>
           <stats title="mobile pre-roll errors"
-          :value="calculateErrorRate(tags.mobile.preroll.requests, tags.mobile.preroll.errors)"></stats>
+          :value="calculateErrorRate(tags.mobile.preroll.tagRequests, tags.mobile.preroll.errors)"></stats>
         </li>
       </ul>
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop outstream fill"
-          :value="calculateFillRate(tags.desktop.outstream.fills, tags.desktop.outstream.requests)"></stats>
+          :value="calculateFillRate(tags.desktop.outstream.fills, tags.desktop.outstream.tagRequests)"></stats>
         </li>
         <li>
           <stats title="mobile outstream fill"
-          :value="calculateFillRate(tags.mobile.outstream.fills, tags.mobile.outstream.requests)"></stats>
+          :value="calculateFillRate(tags.mobile.outstream.fills, tags.mobile.outstream.tagRequests)"></stats>
         </li>
         <li>
           <stats title="desktop outstream errors"
-          :value="calculateErrorRate(tags.desktop.outstream.requests, tags.desktop.outstream.errors)"></stats>
+          :value="calculateErrorRate(tags.desktop.outstream.tagRequests, tags.desktop.outstream.errors)"></stats>
         </li>
         <li>
           <stats title="mobile outstream errors"
-          :value="calculateErrorRate(tags.mobile.outstream.requests, tags.mobile.outstream.errors)"></stats>
+          :value="calculateErrorRate(tags.mobile.outstream.tagRequests, tags.mobile.outstream.errors)"></stats>
         </li>
       </ul>
       <ul class="campaignstats-row">
@@ -129,14 +129,14 @@
             impressions: 0,
 
             preroll: {
-              requests: 0,
+              tagRequests: 0,
               fills: 0,
               impressions: 0,
               errors: 0
             },
 
             outstream: {
-              requests: 0,
+              tagRequests: 0,
               fills: 0,
               impressions: 0,
               errors: 0
@@ -148,14 +148,14 @@
             impressions: 0,
 
             preroll: {
-              requests: 0,
+              tagRequests: 0,
               fills: 0,
               impressions: 0,
               errors: 0
             },
 
             outstream: {
-              requests: 0,
+              tagRequests: 0,
               fills: 0,
               impressions: 0,
               errors: 0
@@ -170,7 +170,7 @@
 
         fills: 0,
 
-        adErrors: 0,
+        errors: 0,
 
         useRate: 0,
         chartData: {}
@@ -210,7 +210,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.impressions, this.adErrors)
+        return this.calculateErrorRate(this.impressions, this.errors)
       },
 
       useRate() {
@@ -242,7 +242,7 @@
             this.impressions = parseInt(response.data.impressions)
             this.fills = parseInt(response.data.fills)
             this.revenue = parseFloat(response.data.revenue)
-            this.adErrors = parseInt(response.data.adErrors)
+            this.errors = parseInt(response.data.errors)
             this.requests = parseInt(response.data.tagRequests)
             this.tags = response.data.tags
           })
@@ -326,7 +326,7 @@
                     })
                     break
                   case 'ad-error':
-                    this.adErrors++
+                    this.errors++
                     tags.forEach((tag) => {
                       tag.errors++
                     })

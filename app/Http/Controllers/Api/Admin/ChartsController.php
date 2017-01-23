@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Stats\StatsTransformer;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ChartsController extends ApiController
 {
@@ -19,18 +20,23 @@ class ChartsController extends ApiController
     public function stats(Request $request)
     {
         $range = $request->get('time') ?? 'today';
-        $user = $request->get('user');
+        $user  = $request->get('user');
 
         if ($range === 'today' || $range === 'yesterday' || $range === 'lastTwentyFourHours') {
-            $step = CarbonInterval::hour();
+            $step      = CarbonInterval::hour();
             $keyFormat = 'm/d/Y H';
+            $createdAtFormat = 'created_at';
         } else {
-            $step = CarbonInterval::day();
+            $step      = CarbonInterval::day();
             $keyFormat = 'm/d/Y';
+            $createdAtFormat = 'created_at::date';
         }
 
         $stats = CampaignEvent::query()
+            ->select('name', 'tag_id', DB::raw($createdAtFormat), DB::raw('SUM(count) as count'))
             ->with('tag', 'website')
+            ->where('name', '!=', 'viewership') //viewership data isn't charted
+            ->groupBy('name', 'tag_id', DB::raw($createdAtFormat))
             ->timeRange($range);
 
         if ($user) {
@@ -38,6 +44,7 @@ class ChartsController extends ApiController
             $stats->whereIn('website_id', $websites);
         }
 
+        //stats contains all events grouped by hour/day
         $stats = $stats->get()
             ->groupBy(function ($item) use ($keyFormat) {
                 return $item->created_at->format($keyFormat);

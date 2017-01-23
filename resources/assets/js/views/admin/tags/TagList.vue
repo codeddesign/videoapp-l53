@@ -79,7 +79,7 @@
             <span v-html="showComparePercent(tag, 'fillRate')"></span>
           </div>
           <div class="dashboard-statslist2">
-            {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.adErrors) }}
+            {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
             <span v-html="showComparePercent(tag, 'errorRate')"></span>
           </div>
           <div class="dashboard-statslist2">
@@ -167,8 +167,8 @@
             compareValue = this.calculateFillRate(compareTag.stats.fills, compareTag.stats.tagRequests)
             break
           case 'errorRate':
-            tagValue = this.calculateErrorRate(tag.stats.tagRequests, tag.stats.adErrors)
-            compareValue = this.calculateErrorRate(tag.stats.tagRequests, compareTag.stats.adErrors)
+            tagValue = this.calculateErrorRate(tag.stats.tagRequests, tag.stats.errors)
+            compareValue = this.calculateErrorRate(tag.stats.tagRequests, compareTag.stats.errors)
             break
           case 'tagDisplay':
             tagValue = this.calculateTagDisplayPercent(tag.stats.impressions, this.totalTagImpressions(this.tags))
@@ -200,7 +200,7 @@
       },
 
       fetchCompareTags() {
-        http.get('/admin/tags/?compareRange=today')
+        http.get('/admin/tags?compareRange=today')
           .then((response) => {
             this.tags = response.data.data
           })
@@ -208,7 +208,7 @@
             console.error('Error fetching the tags stats.')
           })
 
-        http.get('/admin/tags/?compareRange=' + this.compareTagsRange)
+        http.get('/admin/tags?compareRange=' + this.compareTagsRange)
           .then((response) => {
             this.compareTags = response.data.data
           })
