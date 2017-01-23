@@ -43,7 +43,8 @@ module.exports = {
     inline: true,
     host: "0.0.0.0",
     watchOptions: {
-      poll: true
+      aggregateTimeout: 300,
+      poll: 1000
     }
   },
   devtool: '#eval-source-map',
@@ -53,7 +54,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.performance.hints = true,
+  module.exports.performance.hints = "warning",
 
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
