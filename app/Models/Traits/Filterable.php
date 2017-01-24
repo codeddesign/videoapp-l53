@@ -10,15 +10,14 @@ trait Filterable
      * @param      $query
      * @param      $timeRange
      *
-     * @param null $delay
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeTimeRange($query, $timeRange, $delay = null)
+    public function scopeTimeRange($query, $timeRange)
     {
-        $dateRange = DateRange::byName($timeRange, $delay);
+        $dateRange = DateRange::byName($timeRange);
 
         return $query->where('created_at', '>=', $dateRange->from)
-                     ->where('created_at', '<=', $dateRange->to);
+            ->where('created_at', '<=', $dateRange->to);
     }
 }

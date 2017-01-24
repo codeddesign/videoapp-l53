@@ -28,7 +28,14 @@ class DateRange
         $range = new Collection;
 
         foreach ($dateRange as $period) {
-            $range->push(new Carbon($period));
+            $date = new Carbon($period);
+
+            //if the time is delayed, use the next hour
+            if($date->second !== 0) {
+                $date->addHour()->second(0);
+            }
+
+            $range->push($date);
         }
 
         return $range;
@@ -41,7 +48,7 @@ class DateRange
 
     /**
      * @param     $name  Name of the DateRange function
-     * @param int $delay How many seconds to delay the "from" date.
+     * @param int $delay How many seconds to delay the dates.
      *                   Defaults to 5 as the data is usually saved
      *                   2 seconds into the next hour.
      *
