@@ -33,6 +33,12 @@ class Reports
 
             $tag = $tagEvents->first()->tag;
 
+            //The tag may have been deleted
+            if(! $tag)
+            {
+                continue;
+            }
+
             $tagStats = collect([
                 'advertiser'    => $tag->advertiser,
                 'description'   => $tag->description,

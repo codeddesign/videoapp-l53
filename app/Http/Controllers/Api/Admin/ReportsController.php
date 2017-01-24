@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\Admin\StoreReportRequest;
+use App\Jobs\ProcessReport;
 use App\Models\Report;
 use App\Services\Reports;
 use App\Transformers\ReportTransformer;
@@ -63,7 +64,7 @@ class ReportsController extends ApiController
         $report->save();
 
         if ($report->schedule === 'once') {
-            (new Reports)->process($report);
+            dispatch(new ProcessReport($report));
         }
 
         return $this->itemResponse($report, new ReportTransformer);
@@ -76,7 +77,7 @@ class ReportsController extends ApiController
         $report->update($request->transform());
 
         if ($report->schedule === 'once') {
-            (new Reports)->process($report);
+            dispatch(new ProcessReport($report));
         }
 
         return $this->itemResponse($report, new ReportTransformer);
