@@ -37,8 +37,11 @@ class CleanDailyStats extends Command
     {
         $this->info('Cleaning Redis daily stats...');
 
-        $redis = app(Redis::class);
-        $keys  = $redis->keys('daily-campaign:*');
+        $redis        = app(Redis::class);
+        $campaignKeys = $redis->keys('daily-campaign:*');
+        $websitesKeys = $redis->keys('daily-website:*');
+
+        $keys = array_merge($campaignKeys, $websitesKeys);
 
         $redis->del($keys);
 
