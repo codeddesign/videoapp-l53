@@ -29,7 +29,7 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-          <stats title="requests" :value="requests" :animated="true"></stats>
+          <stats title="requests" :value="tagRequests" :animated="true"></stats>
           <spark-chart id="requests-chart" :chartData="chartData.tagRequests" color="#7772a7"></spark-chart>
         </li>
         <li>
@@ -109,6 +109,18 @@
           <spark-chart id="mobile-use-rate-chart" :chartData="chartData.mobileUserate" color="#7772a7"></spark-chart>
         </li>
       </ul>
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="desktop pageviews" :value="desktopPageviews" :animated="true"></stats>
+        </li>
+        <li>
+          <stats title="mobile pageviews" :value="mobilePageviews" :animated="true"></stats>
+        </li>
+        <li>
+        </li>
+        <li>
+        </li>
+      </ul>
 
       <tag-list></tag-list>
     </div>
@@ -173,14 +185,13 @@
           }
         },
 
-        requests: 0,
+        tagRequests: 0,
         impressions: 0,
-
         revenue: 0,
-
         fills: 0,
-
         errors: 0,
+        mobilePageviews: 0,
+        desktopPageviews: 0,
 
         chartData: {},
 
@@ -217,7 +228,7 @@
       },
 
       fillRate() {
-        return this.calculateFillRate(this.impressions, this.requests)
+        return this.calculateFillRate(this.impressions, this.tagRequests)
       },
 
       errorRate() {
@@ -259,7 +270,10 @@
             this.fills = parseInt(response.data.fills)
             this.revenue = parseFloat(response.data.revenue)
             this.errors = parseInt(response.data.errors)
-            this.requests = parseInt(response.data.tagRequests)
+            this.tagRequests = parseInt(response.data.tagRequests)
+            this.mobilePageviews = parseInt(response.data.mobilePageviews)
+            this.desktopPageviews = parseInt(response.data.desktopPageviews)
+            this.tagRequests = parseInt(response.data.tagRequests)
             this.tags = response.data.tags
           })
           .catch((error) => {

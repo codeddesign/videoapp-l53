@@ -56,6 +56,10 @@ class StatsTransformer
                 $events = $stats->get($key);
 
                 foreach ($events as $event) {
+                    if (! isset($data[$key][$event->name])) {
+                        continue;
+                    }
+
                     $data[$key][$event->name] += $event->count;
                 }
             }
@@ -189,10 +193,10 @@ class StatsTransformer
         $data['mobileOutstreamFill'][]    = $this->calculateFillRate($tagStats['mobile']['outstream'], $timestamp);
         $data['desktopOutstreamErrors'][] = $this->calculateErrorRate($tagStats['desktop']['outstream'], $timestamp);
         $data['mobileOutstreamErrors'][]  = $this->calculateErrorRate($tagStats['mobile']['outstream'], $timestamp);
-        $data['desktopFill'][]             = [$timestamp, $tagStats['desktop']['fills']];
-        $data['mobileFill'][]              = [$timestamp, $tagStats['mobile']['fills']];
-        $data['desktopUserate'][]          = $this->calculateUseRate($tagStats['desktop']['outstream'], $timestamp);
-        $data['mobileUserate'][]           = $this->calculateUseRate($tagStats['mobile']['outstream'], $timestamp);
+        $data['desktopFill'][]            = [$timestamp, $tagStats['desktop']['fills']];
+        $data['mobileFill'][]             = [$timestamp, $tagStats['mobile']['fills']];
+        $data['desktopUserate'][]         = $this->calculateUseRate($tagStats['desktop']['outstream'], $timestamp);
+        $data['mobileUserate'][]          = $this->calculateUseRate($tagStats['mobile']['outstream'], $timestamp);
     }
 
     protected function parseTagStats(&$data, $event)

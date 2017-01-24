@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
+use App\Services\AnalyticsEvents;
 use App\Services\CampaignEvents;
+use App\Stats\AnalyticsTransformer;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,9 +33,13 @@ class StatsController extends ApiController
 
     protected function fetchRealTimeData()
     {
-        $stats = (new CampaignEvents)->fetchAllCampaigns(true);
+        $campaignEvents  = (new CampaignEvents)->fetchAllCampaigns(true);
+        $analyticsEvents = (new AnalyticsEvents)->fetchAllAnalytics(true);
 
-        return (new StatsTransformer)->transformSumAll($stats, true);
+        $campaignStats = (new StatsTransformer)->transformSumAll($campaignEvents, true);
+        $websiteStats  = (new AnalyticsTransformer)->transformSumAll($analyticsEvents);
+
+        return array_merge($campaignStats, $websiteStats);
     }
 
     protected function fetchHistoricalData($timespan)
@@ -41,7 +47,7 @@ class StatsController extends ApiController
         $statsByCampaign = CampaignEvent::query()
             ->with('tag')
             ->select('name', 'tag_id', DB::raw('SUM(count) as count'))
-            ->where('name', '!=', 'viewership') //viewership data isn't charted
+            ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id')
             ->timeRange($timespan)
             ->get();

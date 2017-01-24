@@ -11,6 +11,33 @@ class RedisStats
 
     protected $redis;
 
+    public function fetchStatusForWebsite($websiteId, $daily = false)
+    {
+        $redis = $this->getRedis();
+
+        $websiteKey = "website:{$websiteId}";
+
+        if ($daily) {
+            $websiteKey = "daily-{$websiteKey}";
+        }
+
+        $data = $redis->hgetall($websiteKey);
+
+        $stats = [
+            'mobile-pageviews'  => 0,
+            'desktop-pageviews' => 0,
+        ];
+
+        if (count($data) === 0) {
+            return $stats;
+        }
+
+        $stats['mobile-pageviews']  = (int) array_get($data, 'platform:mobile', 0);
+        $stats['desktop-pageviews'] = (int) array_get($data, 'platform:desktop', 0);
+
+        return $stats;
+    }
+
     public function fetchStatusForCampaign($campaignId, $daily = false)
     {
         $redis = $this->getRedis();
