@@ -2,11 +2,11 @@
 
 namespace App\Transformers;
 
-use App\Models\WordpressSite;
+use App\Models\Website;
 
-class WordpressSiteTransformer extends Transformer
+class WebsiteTransformer extends Transformer
 {
-    public function transform(WordpressSite $site)
+    public function transform(Website $site)
     {
         $transformedSite = [
             'id'         => (int) $site->id,

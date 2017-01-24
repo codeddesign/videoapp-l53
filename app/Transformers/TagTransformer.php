@@ -3,7 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Tag;
-use App\Models\WordpressSite;
+use App\Models\Website;
 
 class TagTransformer extends Transformer
 {
@@ -47,10 +47,10 @@ class TagTransformer extends Transformer
 
     protected function parseWebsites($websites)
     {
-        $websites = WordpressSite::whereIn('id', $websites)->get();
+        $websites = Website::whereIn('id', $websites)->get();
 
         $transformedWebsites = [];
-        $websiteTransformer = new WordpressSiteTransformer;
+        $websiteTransformer = new WebsiteTransformer;
 
         foreach ($websites as $website) {
             $transformedWebsites[] = $websiteTransformer->transform($website);

@@ -83,7 +83,7 @@ class Tag extends Model
                 })->get();
         });
 
-        $websiteId = WordpressSite::idByLink($referer);
+        $websiteId = Website::idByLink($referer);
 
         $tags = $cache->tags(['tags'])->remember("tags.website.{$websiteId}", 60, function () use ($tags, $websiteId) {
             return $tags->filter(function ($tag) use ($websiteId) {

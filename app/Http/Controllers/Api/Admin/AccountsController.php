@@ -20,7 +20,7 @@ class AccountsController extends ApiController
 
     public function show($id)
     {
-        $account = User::where('id', $id)->with('wordpressSites');
+        $account = User::where('id', $id)->with('websites');
 
         return $account;
     }

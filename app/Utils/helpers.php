@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Tag;
-use App\Models\WordpressSite;
+use App\Models\Website;
 
 /**
  *  Echo's the provided css $class if the current route is matched.
@@ -138,7 +138,7 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
 function sendTestEvents($campaign = 1, $min = 100, $max = 200, $failPercent = 10, $seconds = 10)
 {
     $campaignEvents = new \App\Services\CampaignEvents();
-    $sites = WordpressSite::all()->pluck('domain');
+    $sites = Website::all()->pluck('domain');
     $time = 0;
     $tags = Tag::all()->pluck('id');
     $faker = Faker\Factory::create();

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WordpressRequest extends FormRequest
+class WebsiteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class WordpressRequest extends FormRequest
     public function rules()
     {
         return [
-            'domain' => 'required|unique:wordpress_sites',
+            'domain' => 'required|unique:websites',
         ];
     }
 }

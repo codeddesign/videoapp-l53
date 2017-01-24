@@ -40,9 +40,9 @@ class UserTransformer extends Transformer
 
     public function includeWebsites(User $user)
     {
-        $websites = $user->wordpressSites;
+        $websites = $user->websites;
 
-        return $this->collection($websites, new WordpressSiteTransformer);
+        return $this->collection($websites, new WebsiteTransformer);
     }
 
     public function includeNotes(User $user)

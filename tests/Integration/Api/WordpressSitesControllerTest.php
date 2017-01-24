@@ -2,7 +2,7 @@
 
 namespace Integration\Api;
 
-use App\Models\WordpressSite;
+use App\Models\Website;
 use App\Testing\DatabaseTransactions;
 use App\Testing\TestCase;
 use App\Models\User;
@@ -19,7 +19,7 @@ class WordpressSitesControllerTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-        $this->sites = factory(WordpressSite::class, 3)->create(['user_id' => $this->user->id]);
+        $this->sites = factory(Website::class, 3)->create(['user_id' => $this->user->id]);
     }
 
     /** @test */

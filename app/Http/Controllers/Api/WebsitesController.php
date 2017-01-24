@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\WordpressRequest;
-use App\Transformers\WordpressSiteTransformer;
+use App\Http\Requests\WebsiteRequest;
+use App\Transformers\WebsiteTransformer;
 
-class WordpressSitesController extends ApiController
+class WebsitesController extends ApiController
 {
     /**
-     * Show the list of wordpress sites belonging to a user.
+     * Show the list of websites belonging to a user.
      */
     public function index()
     {
-        $sites = $this->user->wordpressSites;
+        $sites = $this->user->websites;
 
-        return $this->collectionResponse($sites, new WordpressSiteTransformer);
+        return $this->collectionResponse($sites, new WebsiteTransformer);
     }
 
     /**
-     * Store a new wordpress site.
+     * Store a new website.
      *
-     * @param WordpressRequest $request
+     * @param WebsiteRequest $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(WordpressRequest $request)
+    public function store(WebsiteRequest $request)
     {
-        $site = $this->user->wordpressSites()->create($request->all());
+        $site = $this->user->websites()->create($request->all());
 
         return $this->jsonResponse([
             'message' => 'Successfully added a website.',
@@ -41,7 +41,7 @@ class WordpressSitesController extends ApiController
      */
     public function destroy($id)
     {
-        $site = $this->user->wordpressSites()->findOrFail($id);
+        $site = $this->user->websites()->findOrFail($id);
 
         $site->delete();
 

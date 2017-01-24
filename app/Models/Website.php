@@ -8,30 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Database Columns
  *
- * @property int     $id
- * @property int     $user_id
- * @property string  $domain
- * @property bool $approved
- * @property Carbon  $created_at
- * @property Carbon  $updated_at
+ * @property int    $id
+ * @property int    $user_id
+ * @property string $domain
+ * @property bool   $approved
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * Relationships
  *
- * @property User    $user
+ * @property User   $user
  *
  * Accessors
  *
- * @property string  $link
+ * @property string $link
  */
-class WordpressSite extends Model
+class Website extends Model
 {
-    /**
-     * The table name.
-     *
-     * @var string
-     */
-    protected $table = 'wordpress_sites';
-
     /**
      * The allowed fields.
      *
@@ -47,7 +40,7 @@ class WordpressSite extends Model
     protected $appends = ['link'];
 
     /**
-     * A wordpress site belongs to a user.
+     * A website belongs to a user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -90,7 +83,7 @@ class WordpressSite extends Model
     /**
      * @param string $link
      *
-     * @return null|WordpressSite
+     * @return null|Website
      */
     public static function byLink($link)
     {

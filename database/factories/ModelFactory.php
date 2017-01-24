@@ -48,7 +48,7 @@ $factory->define(App\Models\Campaign::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\WordpressSite::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Website::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function () {
             return factory(App\Models\User::class)->create()->id;

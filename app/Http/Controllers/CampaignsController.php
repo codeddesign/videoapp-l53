@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Geolite\Location;
 use App\Models\Campaign;
 use App\Models\Tag;
-use App\Models\WordpressSite;
+use App\Models\Website;
 
 class CampaignsController extends Controller
 {
@@ -36,7 +36,7 @@ class CampaignsController extends Controller
         $referer = $request->get('referrer') ?? $request->server('HTTP_REFERER');
         $ip      = $request->get('ip') ?? ipUtil();
 
-        $websiteId = WordpressSite::idByLink($referer);
+        $websiteId = Website::idByLink($referer);
 
         $location = Location::byIp($ip);
 

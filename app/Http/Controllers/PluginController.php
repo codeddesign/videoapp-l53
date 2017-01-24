@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\WordpressSite;
+use App\Models\Website;
 use App\Models\User;
 
 class PluginController extends Controller
@@ -25,7 +25,7 @@ class PluginController extends Controller
      */
     public function campaignAdd(Request $request)
     {
-        $site = WordpressSite::byLink(refererUtil());
+        $site = Website::byLink(refererUtil());
         if (! $site) {
             return response(['error' => 'This site is not approved. Contact your admin.']);
         }

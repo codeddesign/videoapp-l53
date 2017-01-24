@@ -40,7 +40,7 @@ class ChartsController extends ApiController
             ->timeRange($range);
 
         if ($user) {
-            $websites = User::with('wordpressSites')->find($user)->wordpressSites->pluck('id');
+            $websites = User::with('websites')->find($user)->websites->pluck('id');
             $stats->whereIn('website_id', $websites);
         }
 

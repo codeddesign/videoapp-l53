@@ -38,7 +38,7 @@ use App\Services\Youtube;
  * @property Collection $campaigns
  * @property Collection $reports
  * @property Collection $notes
- * @property Collection $wordpressSites
+ * @property Collection $websites
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -136,13 +136,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     /**
-     * A user may have many wordpress sites.
+     * A user may have many websites.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function wordpressSites()
+    public function websites()
     {
-        return $this->hasMany(WordpressSite::class);
+        return $this->hasMany(Website::class);
     }
 
     /**

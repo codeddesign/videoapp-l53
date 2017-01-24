@@ -81,7 +81,7 @@ class CampaignEvent extends Model
      */
     public function website()
     {
-        return $this->belongsTo(WordpressSite::class, 'website_id');
+        return $this->belongsTo(Website::class, 'website_id');
     }
 
     public function scopeUserStats($query, $timeRange)

@@ -8,7 +8,7 @@ Route::get('/video-sizes', 'VideosizesController@index');
 Route::resource('campaigns', 'CampaignsController');
 Route::post('/campaigns/store/preview', ['uses' => 'CampaignsController@storePreviewLink', 'as' => 'campaigns.store.preview']);
 
-Route::resource('wordpress', 'WordpressSitesController', ['except' => ['show', 'create', 'edit', 'update']]);
+Route::resource('wordpress', 'WebsitesController', ['except' => ['show', 'create', 'edit', 'update']]);
 
 Route::get('stats/all', 'StatsController@all');
 

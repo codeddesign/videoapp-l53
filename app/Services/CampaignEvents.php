@@ -6,7 +6,7 @@ use App\Events\CampaignEventReceived;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Models\Tag;
-use App\Models\WordpressSite;
+use App\Models\Website;
 use App\Stats\RedisStats;
 use Carbon\Carbon;
 use Illuminate\Log\Writer as Log;
@@ -164,7 +164,7 @@ class CampaignEvents
         }
 
         if (array_get($data, 'referrer') !== null) {
-            $websiteId = WordpressSite::idByLink($data['referrer']);
+            $websiteId = Website::idByLink($data['referrer']);
 
             if ($websiteId) {
                 $value .= ":website:{$websiteId}";

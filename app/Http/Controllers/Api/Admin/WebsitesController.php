@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
 use App\Models\User;
-use App\Models\WordpressSite;
+use App\Models\Website;
 use App\Stats\StatsTransformer;
-use App\Transformers\WordpressSiteTransformer;
+use App\Transformers\WebsiteTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -15,34 +15,34 @@ class WebsitesController extends ApiController
 {
     public function index()
     {
-        $websites = WordpressSite::all();
+        $websites = Website::all();
 
-        return $this->collectionResponse($websites, new WordpressSiteTransformer);
+        return $this->collectionResponse($websites, new WebsiteTransformer);
     }
 
     public function pending()
     {
-        $pendingWebsites = WordpressSite::where('approved', false)->get();
+        $pendingWebsites = Website::where('approved', false)->get();
 
-        return $this->collectionResponse($pendingWebsites, new WordpressSiteTransformer);
+        return $this->collectionResponse($pendingWebsites, new WebsiteTransformer);
     }
 
     public function activate($id, Request $request)
     {
-        $website = WordpressSite::findOrFail($id);
+        $website = Website::findOrFail($id);
 
         $website->approved = $request->get('status');
         $website->save();
 
-        return $this->itemResponse($website, new WordpressSiteTransformer);
+        return $this->itemResponse($website, new WebsiteTransformer);
     }
 
     public function stats(Request $request)
     {
         $userId = $request->get('user_id');
-        $user = User::with('wordpressSites')->findOrFail($userId);
+        $user = User::with('websites')->findOrFail($userId);
 
-        $sites = $user->wordpressSites;
+        $sites = $user->websites;
 
         $stats = CampaignEvent::with('website', 'tag')
             ->whereIn('website_id', $sites->pluck('id'))
@@ -56,6 +56,6 @@ class WebsitesController extends ApiController
             $site->stats = $statsTransformer->transformSumAll($stats->get($site->id) ?? new Collection());
         }
 
-        return $this->collectionResponse($sites, new WordpressSiteTransformer);
+        return $this->collectionResponse($sites, new WebsiteTransformer);
     }
 }
