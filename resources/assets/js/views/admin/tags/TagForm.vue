@@ -4,7 +4,7 @@
     <div class="tagcreate-topbuttonswrap">
       <div v-show="tag.id !== 0" class="tagcreate-topcancel" @click="deleteTag">DELETE TAG</div>
       <div class="tagcreate-topcancel" @click="hideForm">CANCEL EDIT</div>
-      <div class="tagcreate-toptestpage">LOAD TEST PAGE</div>
+      <div v-bind:style="tag.id === 0 ? 'background: grey' : ''" class="tagcreate-toptestpage" @click="loadTestPage">LOAD TEST PAGE</div>
     </div>
     <div class="tagcreate-formwrapper">
       <div class="tagcreate-fullheadertitle">TAG CREATION / EDITING</div>
@@ -451,6 +451,15 @@
         } else {
           this.$store.dispatch('saveCurrentTag')
         }
+      },
+
+      loadTestPage() {
+        if (this.tag.id === 0) {
+          window.alert('Please save the tag first')
+          return
+        }
+
+        window.open('http://104.131.39.217/demo.php?_tid=' + this.tag.id)
       },
 
       changedType() {
