@@ -169,6 +169,9 @@
             if (option === 'campaigns') {
               value = account[option].data.length
             }
+            if (option === 'revenue') {
+              value = account.revenue
+            }
 
             if (max) {
               return value >= min && value <= max
