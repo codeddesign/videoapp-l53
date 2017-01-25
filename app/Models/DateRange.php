@@ -169,6 +169,14 @@ class DateRange
         return new static($from, $to);
     }
 
+    public static function thirtyDays()
+    {
+        $from = Carbon::now()->subDays(30)->startOfDay();
+        $to   = Carbon::now()->endOfDay();
+
+        return new static($from, $to);
+    }
+
     public static function tenDays()
     {
         $from = Carbon::now()->subDays(10)->startOfDay();

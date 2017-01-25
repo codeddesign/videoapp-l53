@@ -15,7 +15,7 @@ class UserTransformer extends Transformer
 
     public function transform(User $user)
     {
-        return [
+        $transformedUser = [
             'id'                => (int) $user->id,
             'first_name'        => $user->first_name,
             'last_name'         => $user->last_name,
@@ -29,6 +29,14 @@ class UserTransformer extends Transformer
             'created_at'        => $user->created_at->getTimestamp(),
             'created_at_humans' => $user->created_at->diffForHumans(),
         ];
+
+        if ($user->revenue !== null) {
+            $transformedUser = array_merge($transformedUser, [
+                'revenue' => $user->revenue,
+            ]);
+        }
+
+        return $transformedUser;
     }
 
     public function includeCampaigns(User $user)

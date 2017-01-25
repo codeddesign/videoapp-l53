@@ -324,10 +324,6 @@ class StatsTransformer
 
     protected function calculateRevenue($impressions, $tag)
     {
-        if (! $tag) {
-            return 0;
-        }
-
-        return Calculator::decimals(($impressions / 1000) * ($tag->ecpm / 100));
+        return Calculator::revenue($impressions, $tag);
     }
 }

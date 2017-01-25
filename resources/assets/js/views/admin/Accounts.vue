@@ -70,7 +70,7 @@
           <div class="dashboard-statslist2">{{ account.last_name }}</div>
           <div class="dashboard-statslist2">{{ account.created_at_humans }}</div>
           <div class="dashboard-statslist2">{{ account.campaigns.data.length }}</div>
-          <div class="dashboard-statslist2">$117,880</div>
+          <div class="dashboard-statslist2">{{ accounting.formatMoney(account.revenue) }}</div>
         </div>
         <div class="dashboard-statslist2">
           <div class="dashboard-switch">
@@ -102,6 +102,7 @@
 <script>
   import Fuse from 'fuse.js'
   import _ from 'lodash'
+  import accounting from 'accounting'
   import Pagination from '../../services/pagination'
 
   export default {
@@ -122,6 +123,8 @@
             max: ''
           }
         ],
+
+        accounting: accounting,
 
         pagination: new Pagination(),
 
