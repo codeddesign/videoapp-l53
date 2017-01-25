@@ -119,8 +119,14 @@
           <spark-chart id="mobile-pageviews-chart" :chartData="chartData.mobilePageviews" color="#7772a7"></spark-chart>
         </li>
         <li>
+          <stats title="desktop pageviews fill"
+          :value="calculateFillRate(tags.desktop.fills, desktopPageviews)"></stats>
+          <spark-chart id="desktop-pageviews-fill-chart" :chartData="chartData.desktopPageviewsFill" color="#7772a7"></spark-chart>
         </li>
         <li>
+          <stats title="mobile pageviews fill"
+            :value="calculateFillRate(tags.mobile.fills, mobilePageviews)"></stats>
+          <spark-chart id="mobile-pageviews-fill-chart" :chartData="chartData.mobilePageviewsFill" color="#7772a7"></spark-chart>
         </li>
       </ul>
 

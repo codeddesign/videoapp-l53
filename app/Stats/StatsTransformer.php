@@ -143,19 +143,10 @@ class StatsTransformer
             if ($stats->has($key)) {
                 $events = $stats->get($key);
 
-                if ($tagStats) {
-                    $this->parseTagChart($data, $events, $timestamp);
-                }
-
                 //Sum all the desired stats. ('revenue' is inferred through impressions)
                 foreach (array_diff(self::$allStats, ['revenue']) as $stat) {
-                    if ($events->where('name', $stat)->isEmpty()) {
-                        $data[$stat][] = [$timestamp, 0];
-                    } else {
-                        $count = $events->where('name', $stat)->sum('count');
-
-                        $data[$stat][] = [$timestamp, $count];
-                    }
+                    $count         = $events->where('name', $stat)->sum('count');
+                    $data[$stat][] = [$timestamp, $count];
 
                     if ($stat === 'impressions') {
                         $revenue           = $events->where('name', $stat)->sum(function ($impressions) {
@@ -163,6 +154,10 @@ class StatsTransformer
                         });
                         $data['revenue'][] = [$timestamp, $revenue];
                     }
+                }
+
+                if ($tagStats) {
+                    $this->parseTagChart($data, $events, $timestamp);
                 }
             } else {
                 foreach (self::$allStats as $stat) {
@@ -187,6 +182,22 @@ class StatsTransformer
         foreach ($events as $event) {
             $this->parseTagStats($tagStats, $event);
         }
+
+        $data['desktopPageviewsFill'][] = [
+            $timestamp,
+            Calculator::fillRate(
+                $tagStats['desktop']['fills'],
+                $events->where('name', 'desktopPageviews')->sum('count')
+            ),
+        ];
+
+        $data['mobilePageviewsFill'][] = [
+            $timestamp,
+            Calculator::fillRate(
+                $tagStats['mobile']['fills'],
+                $events->where('name', 'mobilePageviews')->sum('count')
+            ),
+        ];
 
         $data['desktopPrerollFill'][]     = $this->calculateFillRate($tagStats['desktop']['preroll'], $timestamp);
         $data['mobilePrerollFill'][]      = $this->calculateFillRate($tagStats['mobile']['preroll'], $timestamp);
