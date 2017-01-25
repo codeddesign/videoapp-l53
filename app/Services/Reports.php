@@ -34,8 +34,7 @@ class Reports
             $tag = $tagEvents->first()->tag;
 
             //The tag may have been deleted
-            if(! $tag)
-            {
+            if (! $tag) {
                 continue;
             }
 

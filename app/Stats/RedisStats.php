@@ -23,17 +23,21 @@ class RedisStats
 
         $data = $redis->hgetall($websiteKey);
 
-        $stats = [
-            'mobile-pageviews'  => 0,
-            'desktop-pageviews' => 0,
-        ];
+        $stats = new Collection;
 
-        if (count($data) === 0) {
-            return $stats;
-        }
+        $stats->push([
+            'name'       => 'mobilePageviews',
+            'status'     => 0,
+            'count'      => (int) array_get($data, 'platform:mobile', 0),
+            'website_id' => $websiteId,
+        ]);
 
-        $stats['mobile-pageviews']  = (int) array_get($data, 'platform:mobile', 0);
-        $stats['desktop-pageviews'] = (int) array_get($data, 'platform:desktop', 0);
+        $stats->push([
+            'name'       => 'desktopPageviews',
+            'status'     => 0,
+            'count'      => (int) array_get($data, 'platform:desktop', 0),
+            'website_id' => $websiteId,
+        ]);
 
         return $stats;
     }

@@ -9,8 +9,12 @@ class AnalyticsTransformer
     public function transformSumAll(Collection $stats)
     {
         return [
-            'mobilePageviews'  => $stats->sum('mobile-pageviews'),
-            'desktopPageviews' => $stats->sum('desktop-pageviews'),
+            'mobilePageviews'  => $stats->sum(function ($stat) {
+                return $stat->where('name', 'mobilePageviews')->sum('count');
+            }),
+            'desktopPageviews' => $stats->sum(function ($stat) {
+                return $stat->where('name', 'desktopPageviews')->sum('count');
+            }),
         ];
     }
 }

@@ -31,7 +31,7 @@ class DateRange
             $date = new Carbon($period);
 
             //if the time is delayed, use the next hour
-            if($date->second !== 0) {
+            if ($date->second !== 0) {
                 $date->addHour()->second(0);
             }
 

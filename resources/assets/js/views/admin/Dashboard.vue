@@ -112,9 +112,11 @@
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop pageviews" :value="desktopPageviews" :animated="true"></stats>
+          <spark-chart id="desktop-pageviews-chart" :chartData="chartData.desktopPageviews" color="#7772a7"></spark-chart>
         </li>
         <li>
           <stats title="mobile pageviews" :value="mobilePageviews" :animated="true"></stats>
+          <spark-chart id="mobile-pageviews-chart" :chartData="chartData.mobilePageviews" color="#7772a7"></spark-chart>
         </li>
         <li>
         </li>

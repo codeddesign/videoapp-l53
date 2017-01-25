@@ -8,7 +8,10 @@ use Illuminate\Support\Collection;
 
 class StatsTransformer
 {
-    protected static $allStats = ['campaignRequests', 'tagRequests', 'impressions', 'fills', 'errors', 'revenue'];
+    protected static $allStats = [
+        'campaignRequests', 'tagRequests', 'impressions', 'fills', 'errors', 'revenue',
+        'desktopPageviews', 'mobilePageviews',
+    ];
 
     protected static $tagChartStats = [
         'desktopPrerollFill', 'mobilePrerollFill', 'desktopPrerollErrors', 'mobilePrerollErrors',

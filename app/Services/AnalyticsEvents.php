@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\CampaignEvent;
 use App\Stats\RedisStats;
 use Illuminate\Redis\Database as Redis;
 use Illuminate\Support\Collection;
@@ -12,6 +13,31 @@ class AnalyticsEvents
      * @var Redis
      */
     private $redis;
+
+    public function persistRedisData()
+    {
+        $redis = $this->getRedis();
+
+        $keys = $redis->keys('website:*');
+
+        $events = new Collection();
+
+        foreach ($keys as $key) {
+            $id = explode(':', $key)[1];
+
+            $data = $this->fetchAnalyticsForWebsite($id);
+
+            foreach ($data as $event) {
+                $events->push($event);
+            }
+
+            $redis->del([$key]);
+        }
+
+        CampaignEvent::saveMany($events);
+
+        return $events;
+    }
 
     public function fetchAllAnalytics($daily = false)
     {
