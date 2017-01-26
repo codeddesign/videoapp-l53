@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Redis\Database as Redis;
+use Illuminate\Redis\RedisManager;
 
 /**
  * Database Columns
@@ -145,7 +145,7 @@ class Tag extends Model
 
     public function requestCount()
     {
-        $redis = app(Redis::class);
+        $redis = app(RedisManager::class);
 
         $redisRequests = $redis->hget('tag_requests', $this->id);
 
