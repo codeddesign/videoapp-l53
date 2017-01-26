@@ -2,7 +2,7 @@
 
 namespace App\Stats;
 
-use Illuminate\Redis\Database as Redis;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 
 class RedisStats
@@ -187,7 +187,7 @@ class RedisStats
     protected function getRedis()
     {
         if (! $this->redis) {
-            $this->redis = app(Redis::class);
+            $this->redis = app(RedisManager::class);
         }
 
         return $this->redis->connection();

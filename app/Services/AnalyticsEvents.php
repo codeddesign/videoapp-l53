@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\CampaignEvent;
 use App\Stats\RedisStats;
-use Illuminate\Redis\Database as Redis;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 
 class AnalyticsEvents
@@ -77,7 +77,7 @@ class AnalyticsEvents
     protected function getRedis()
     {
         if (! $this->redis) {
-            $this->redis = app(Redis::class);
+            $this->redis = app(RedisManager::class);
         }
 
         return $this->redis->connection();

@@ -10,7 +10,7 @@ use App\Models\Website;
 use App\Stats\RedisStats;
 use Carbon\Carbon;
 use Illuminate\Log\Writer as Log;
-use Illuminate\Redis\Database as Redis;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 
 class CampaignEvents
@@ -228,7 +228,7 @@ class CampaignEvents
     protected function getRedis()
     {
         if (! $this->redis) {
-            $this->redis = app(Redis::class);
+            $this->redis = app(RedisManager::class);
         }
 
         return $this->redis->connection();
