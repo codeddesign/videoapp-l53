@@ -16,7 +16,7 @@ class StatsTransformer
     protected static $tagChartStats = [
         'desktopPrerollFill', 'mobilePrerollFill', 'desktopPrerollErrors', 'mobilePrerollErrors',
         'desktopOutstreamFill', 'mobileOutstreamFill', 'desktopOutstreamErrors', 'mobileOutstreamErrors',
-        'desktopFill', 'mobileFill', 'desktopUserate', 'mobileUserate',
+        'desktopFill', 'mobileFill', 'desktopUserate', 'mobileUserate', 'desktopPageviewsFill', 'mobilePageviewsFill',
     ];
 
     public function transformRealtime($stats)
