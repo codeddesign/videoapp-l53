@@ -37,7 +37,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('ad3:persist-events')->hourly();
         $schedule->command('ad3:process-reports')->daily();
         $schedule->command('ad3:clean-temporary-files')->daily();
-        $schedule->command('ad3:clean-daily-stats')->daily();
     }
 
     /**
