@@ -11,11 +11,13 @@ class DateRange
 {
     public $from;
     public $to;
+    public $timezone;
 
-    public function __construct(Carbon $from, Carbon $to)
+    public function __construct($from, $to, $timezone = 'UTC')
     {
-        $this->from = $from;
-        $this->to   = $to;
+        $this->from     = new Carbon($from, $timezone);
+        $this->to       = new Carbon($to, $timezone);
+        $this->timezone = $timezone;
     }
 
     public function arrayByStep(CarbonInterval $step = null)
@@ -47,17 +49,19 @@ class DateRange
     }
 
     /**
-     * @param     $name  Name of the DateRange function
-     * @param int $delay How many seconds to delay the dates.
-     *                   Defaults to 5 as the data is usually saved
-     *                   2 seconds into the next hour.
+     * @param     $name     Name of the DateRange function
+     * @param     $timezone DateRange's timezone
+     * @param int $delay    How many seconds to delay the dates.
+     *                      Defaults to 5 as the data is usually saved
+     *                      2 seconds into the next hour.
      *
      * @return \App\Models\DateRange
      */
-    public static function byName($name, $delay = 5)
+    public static function byName($name, $timezone = null, $delay = 5)
     {
         /** @var DateRange $dateRange */
-        $dateRange = call_user_func(static::class.'::'.$name);
+        $dateRange = new self(null, null, $timezone);
+        $dateRange->{$name}();
 
         if ($delay !== 0) {
             $dateRange->from->addSeconds($delay);
@@ -67,52 +71,52 @@ class DateRange
         return $dateRange;
     }
 
-    public static function lastTwentyFourHours()
+    public function lastTwentyFourHours()
     {
-        $from = Carbon::now()->subHours(24)->minute(0)->second(0);
-        $to   = Carbon::now()->minute(0)->second(0);
+        $this->from = $this->now()->subHours(24)->minute(0)->second(0);
+        $this->to   = $this->now()->minute(0)->second(0);
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function today()
+    public function today()
     {
-        $from = Carbon::now()->startOfDay();
-        $to   = Carbon::now();
+        $this->from = $this->now()->startOfDay();
+        $this->to   = $this->now();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function yesterday()
+    public function yesterday()
     {
-        $from = Carbon::now()->subDay()->startOfDay();
-        $to   = Carbon::now()->subDay()->endOfDay();
+        $this->from = $this->now()->subDay()->startOfDay();
+        $this->to   = $this->now()->subDay()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function twoDaysAgo()
+    public function twoDaysAgo()
     {
-        $from = Carbon::now()->subDays(2)->startOfDay();
-        $to   = Carbon::now()->subDays(2)->endOfDay();
+        $this->from = $this->now()->subDays(2)->startOfDay();
+        $this->to   = $this->now()->subDays(2)->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function threeDaysAgo()
+    public function threeDaysAgo()
     {
-        $from = Carbon::now()->subDays(3)->startOfDay();
-        $to   = Carbon::now()->subDays(3)->endOfDay();
+        $this->from = $this->now()->subDays(3)->startOfDay();
+        $this->to   = $this->now()->subDays(3)->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function oneWeekAgo()
+    public function oneWeekAgo()
     {
-        $from = Carbon::now()->subWeek()->startOfDay();
-        $to   = Carbon::now()->subWeek()->endOfDay();
+        $this->from = $this->now()->subWeek()->startOfDay();
+        $this->to   = $this->now()->subWeek()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
     /**
@@ -121,98 +125,103 @@ class DateRange
      *
      * Used for comparisons with today
      */
-    public static function lastTwoDays()
+    public function lastTwoDays()
     {
-        $from = Carbon::now()->subDays(2)->startOfDay();
-        $to   = Carbon::now()->subDays(1)->endOfDay();
+        $this->from = $this->now()->subDays(2)->startOfDay();
+        $this->to   = $this->now()->subDays(1)->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function lastThreeDays()
+    public function lastThreeDays()
     {
-        $from = Carbon::now()->subDays(3)->startOfDay();
-        $to   = Carbon::now()->subDays(1)->endOfDay();
+        $this->from = $this->now()->subDays(3)->startOfDay();
+        $this->to   = $this->now()->subDays(1)->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function lastSevenDays()
+    public function lastSevenDays()
     {
-        $from = Carbon::now()->subDays(7)->startOfDay();
-        $to   = Carbon::now()->subDays(1)->endOfDay();
+        $this->from = $this->now()->subDays(7)->startOfDay();
+        $this->to   = $this->now()->subDays(1)->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function twoDays()
+    public function twoDays()
     {
-        $from = Carbon::now()->subDays(2)->startOfDay();
-        $to   = Carbon::now()->endOfDay();
+        $this->from = $this->now()->subDays(2)->startOfDay();
+        $this->to   = $this->now()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function threeDays()
+    public function threeDays()
     {
-        $from = Carbon::now()->subDays(3)->startOfDay();
-        $to   = Carbon::now()->endOfDay();
+        $this->from = $this->now()->subDays(3)->startOfDay();
+        $this->to   = $this->now()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function sevenDays()
+    public function sevenDays()
     {
-        $from = Carbon::now()->subDays(7)->startOfDay();
-        $to   = Carbon::now()->endOfDay();
+        $this->from = $this->now()->subDays(7)->startOfDay();
+        $this->to   = $this->now()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function thirtyDays()
+    public function thirtyDays()
     {
-        $from = Carbon::now()->subDays(30)->startOfDay();
-        $to   = Carbon::now()->endOfDay();
+        $this->from = $this->now()->subDays(30)->startOfDay();
+        $this->to   = $this->now()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function tenDays()
+    public function tenDays()
     {
-        $from = Carbon::now()->subDays(10)->startOfDay();
-        $to   = Carbon::now()->endOfDay();
+        $this->from = $this->now()->startOfDay();
+        $this->to   = $this->now()->endOfDay();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function thisWeek()
+    public function thisWeek()
     {
-        $from = Carbon::now()->startOfWeek();
-        $to   = Carbon::now();
+        $this->from = $this->now()->startOfWeek();
+        $this->to   = $this->now();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function thisMonth()
+    public function thisMonth()
     {
-        $from = Carbon::now()->startOfMonth();
-        $to   = Carbon::now();
+        $this->from = $this->now()->startOfMonth();
+        $this->to   = $this->now();
 
-        return new static($from, $to);
+        return $this;
     }
 
-    public static function lastMonth()
+    public function lastMonth()
     {
         // subMonth() just subtracts 30 days
         // subMonthNoOverflow() actually returns the previous month
-        $from = Carbon::now()->subMonthNoOverflow()->startOfMonth();
-        $to   = Carbon::now()->subMonthNoOverflow()->endOfMonth();
+        $this->from = $this->now()->subMonthNoOverflow()->startOfMonth();
+        $this->to   = $this->now()->subMonthNoOverflow()->endOfMonth();
 
-        return new static($from, $to);
+        return $this;
+    }
+
+    protected function now()
+    {
+        return new Carbon('now', $this->timezone);
     }
 
     protected function defaultStep()
     {
-        return CarbonInterval::day();
+        return $this->days() > 1 ? CarbonInterval::day() : CarbonInterval::hour();
     }
 }

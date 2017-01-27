@@ -13,7 +13,9 @@
 </style>
 
 <script>
+  import moment from 'moment-timezone'
   import Highcharts from 'highcharts'
+  window.moment = moment
 
   export default {
     name: 'TagChart',
@@ -100,6 +102,11 @@
 
     mounted() {
       this.$nextTick(function() {
+        Highcharts.setOptions({
+          global: {
+            timezone: this.$store.state.users.currentUser.timezone
+          }
+        })
         this.renderChart()
       })
     },

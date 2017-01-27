@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Filterable;
 use App\Models\Traits\SaveMany;
+use App\Models\Traits\TimeRange;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Database Columns
@@ -29,7 +26,7 @@ use Illuminate\Support\Facades\DB;
  */
 class CampaignEvent extends Model
 {
-    use SoftDeletes, Filterable, SaveMany;
+    use SoftDeletes, TimeRange, SaveMany;
 
     /**
      * @var array
@@ -86,76 +83,10 @@ class CampaignEvent extends Model
 
     public function scopeUserStats($query, $timeRange)
     {
-        return $this->whereHas('campaign', function ($query) {
-            $query->user_id = auth()->user()->id;
-        })->timeRange($timeRange);
-    }
+        $user = auth()->user();
 
-    /**
-     * Fetch the requests, filtered by a range of time.
-     *
-     * @param $query
-     * @param $request
-     *
-     * @return Builder
-     */
-    public function scopeRequests($query, $request)
-    {
-        return $this->whereHas('campaign', function ($query) {
+        return $this->whereHas('campaign', function ($query) use ($user) {
             $query->user_id = auth()->user()->id;
-        })->where('name', 'requests')->timeRange($request);
-        // timeRange: is found in App\Models\Filterable trait as a query scope.
-    }
-
-    /**
-     * Fetch the impressions, filtered by a range of time.
-     *
-     * @param $query
-     * @param $request
-     *
-     * @return Builder
-     */
-    public function scopeImpressions($query, $request)
-    {
-        return $this->whereHas('campaign', function ($query) {
-            $query->user_id = auth()->user()->id;
-        })->where('name', 'impressions')->timeRange($request);
-        // timeRange: is found in App\Models\Filterable trait as a query scope.
-    }
-
-    /**
-     * return the daily count of the requests per month.
-     *
-     * @param $query
-     *
-     * @return Collection
-     */
-    public function scopeRequestsStats($query)
-    {
-        return $this->whereHas('campaign', function ($query) {
-            $query->user_id = auth()->user()->id;
-        })->where('created_at', '>=', Carbon::today()->startOfMonth())
-            ->where('name', 'requests')
-            ->groupBy('date')
-            ->orderBy('date', 'DESC')
-            ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "requests"')]);
-    }
-
-    /**
-     * Return the daily count of the impressions per month.
-     *
-     * @param $query
-     *
-     * @return Collection
-     */
-    public function scopeImpressionsStats($query)
-    {
-        return $this->whereHas('campaign', function ($query) {
-            $query->user_id = auth()->user()->id;
-        })->where('created_at', '>=', Carbon::today()->startOfMonth())
-            ->where('name', 'impressions')
-            ->groupBy('date')
-            ->orderBy('date', 'DESC')
-            ->get([DB::raw('Date(created_at) as date'), DB::raw('count(*) as "impressions"')]);
+        })->timeRange($timeRange, $user->timezone);
     }
 }

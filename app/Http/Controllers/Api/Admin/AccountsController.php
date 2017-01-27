@@ -23,7 +23,7 @@ class AccountsController extends ApiController
             ->where('name', 'impressions')
             ->where('tag_id', '!=', null)
             ->where('campaign_id', '!=', null)
-            ->timeRange('thirtyDays')
+            ->timeRange('thirtyDays', $this->user->timezone)
             ->groupBy('campaign_id', 'tag_id')
             ->get()
             ->groupBy('campaign_id');

@@ -33,27 +33,32 @@ class StatsController extends ApiController
 
     protected function fetchRealTimeData()
     {
-        $campaignEvents  = (new CampaignEvents)->fetchAllCampaigns(true);
-        $analyticsEvents = (new AnalyticsEvents)->fetchAllAnalytics(true);
+        $campaignEvents  = (new CampaignEvents)->fetchAllCampaigns();
+        $analyticsEvents = (new AnalyticsEvents)->fetchAllAnalytics();
 
-        $campaignStats = (new StatsTransformer)->transformSumAll($campaignEvents, true);
-        $websiteStats  = (new AnalyticsTransformer)->transformSumAll($analyticsEvents);
+        $events = $campaignEvents->merge($analyticsEvents);
+        $events = $events->merge($this->campaignEvents('today'));
 
-        return array_merge($campaignStats, $websiteStats);
+        return (new StatsTransformer)->transformSumAll($events, true);
     }
 
     protected function fetchHistoricalData($timespan)
     {
-        $statsByCampaign = CampaignEvent::query()
+        $statsByCampaign = $this->campaignEvents($timespan);
+
+        $stats = (new StatsTransformer)->transformSumAll($statsByCampaign, true);
+
+        return $stats;
+    }
+
+    protected function campaignEvents($timespan)
+    {
+        return CampaignEvent::query()
             ->with('tag')
             ->select('name', 'tag_id', DB::raw('SUM(count) as count'))
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id')
-            ->timeRange($timespan)
+            ->timeRange($timespan, $this->user->timezone)
             ->get();
-
-        $stats = (new StatsTransformer)->transformSumAll($statsByCampaign);
-
-        return $stats;
     }
 }

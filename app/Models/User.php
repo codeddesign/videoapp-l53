@@ -30,6 +30,7 @@ use App\Services\Youtube;
  * @property bool       $verified_email
  * @property bool       $admin
  * @property bool       $active
+ * @property string     $timezone
  * @property \DateTime  $created_at
  * @property \DateTime  $updated_at
  *

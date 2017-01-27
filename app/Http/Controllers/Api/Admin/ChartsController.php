@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
+use App\Models\DateRange;
 use App\Models\User;
 use App\Stats\StatsTransformer;
 use Carbon\CarbonInterval;
@@ -22,22 +23,22 @@ class ChartsController extends ApiController
         $range = $request->get('time') ?? 'today';
         $user  = $request->get('user');
 
-        if ($range === 'today' || $range === 'yesterday' || $range === 'lastTwentyFourHours') {
-            $step      = CarbonInterval::hour();
-            $keyFormat = 'm/d/Y H';
-            $createdAtFormat = 'created_at';
-        } else {
-            $step      = CarbonInterval::day();
-            $keyFormat = 'm/d/Y';
+        $dateRange = DateRange::byName($range, $this->user->timezone);
+
+        if ($dateRange->days() > 1) {
+            $keyFormat       = 'm/d/Y';
             $createdAtFormat = 'created_at::date';
+        } else {
+            $keyFormat       = 'm/d/Y H';
+            $createdAtFormat = 'created_at';
         }
 
         $stats = CampaignEvent::query()
             ->select('name', 'tag_id', DB::raw($createdAtFormat), DB::raw('SUM(count) as count'))
             ->with('tag', 'website')
-            ->where('name', '!=', 'viewership') //viewership data isn't charted
+            ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', DB::raw($createdAtFormat))
-            ->timeRange($range);
+            ->timeRange($dateRange);
 
         if ($user) {
             $websites = User::with('websites')->find($user)->websites->pluck('id');
@@ -51,7 +52,7 @@ class ChartsController extends ApiController
             });
 
         $transformer = new StatsTransformer;
-        $requests    = $transformer->highcharts($stats, $keyFormat, $range, $step, $range === 'lastTwentyFourHours');
+        $requests    = $transformer->highcharts($stats, $keyFormat, $dateRange, $range === 'lastTwentyFourHours');
 
         return $this->jsonResponse($requests);
     }

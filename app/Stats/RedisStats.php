@@ -11,15 +11,11 @@ class RedisStats
 
     protected $redis;
 
-    public function fetchStatusForWebsite($websiteId, $daily = false)
+    public function fetchStatusForWebsite($websiteId)
     {
         $redis = $this->getRedis();
 
         $websiteKey = "website:{$websiteId}";
-
-        if ($daily) {
-            $websiteKey = "daily-{$websiteKey}";
-        }
 
         $data = $redis->hgetall($websiteKey);
 
@@ -42,15 +38,11 @@ class RedisStats
         return $stats;
     }
 
-    public function fetchStatusForCampaign($campaignId, $daily = false)
+    public function fetchStatusForCampaign($campaignId)
     {
         $redis = $this->getRedis();
 
         $campaignKey = "campaign:{$campaignId}";
-
-        if ($daily) {
-            $campaignKey = "daily-{$campaignKey}";
-        }
 
         $regex = '/source:(\w*):status:(\d*)(?::tag:(\w*))?(?::website:(\d*))?/';
 

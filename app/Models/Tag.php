@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Filterable;
+use App\Models\Traits\TimeRange;
 use Carbon\Carbon;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +42,7 @@ use Illuminate\Redis\RedisManager;
  */
 class Tag extends Model
 {
-    use Filterable, SoftDeletes;
+    use TimeRange, SoftDeletes;
 
     protected $fillable = [
         'url', 'advertiser', 'description', 'platform_type', 'campaign_types',

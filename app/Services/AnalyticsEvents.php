@@ -39,39 +39,37 @@ class AnalyticsEvents
         return $events;
     }
 
-    public function fetchAllAnalytics($daily = false)
+    public function fetchAllAnalytics()
     {
         $redis = $this->getRedis();
 
         $websitesKey = 'website:*';
 
-        if ($daily) {
-            $websitesKey = "daily-{$websitesKey}";
-        }
-
         $ids = collect($redis->keys($websitesKey))->map(function ($key) {
             return explode(':', $key)[1];
         })->toArray();
 
-        return $this->fetchMultipleAnalytics($ids, $daily);
+        return $this->fetchMultipleAnalytics($ids);
     }
 
-    public function fetchMultipleAnalytics(array $ids, $daily = false)
+    public function fetchMultipleAnalytics(array $ids)
     {
         $data = new Collection();
 
         foreach ($ids as $id) {
-            $data->offsetSet($id, $this->fetchAnalyticsForWebsite($id, $daily));
+            $this->fetchAnalyticsForWebsite($id)->map(function ($stat) use ($data) {
+                $data->push((object) $stat);
+            });
         }
 
         return $data;
     }
 
-    public function fetchAnalyticsForWebsite($websiteId, $daily = false)
+    public function fetchAnalyticsForWebsite($websiteId)
     {
         $redisStats = new RedisStats;
 
-        return $redisStats->fetchStatusForWebsite($websiteId, $daily);
+        return $redisStats->fetchStatusForWebsite($websiteId);
     }
 
     protected function getRedis()

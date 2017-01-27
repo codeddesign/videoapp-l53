@@ -27,12 +27,6 @@
         <!-- TAG GRAPH AREA -->
           <div class="taggraph-wrapper">
             <div class="taggraph-wrapleft">
-              <!-- <ul class="taggraph-selection">
-                <li class="selected">Requests</li>
-                <li class="selected">Fill</li>
-                <li>Impressions</li>
-                <li>Errors</li>
-              </ul>-->
               <tag-chart :chart-data="chartData"></tag-chart>
             </div>
             <div class="taggraph-wrapright">

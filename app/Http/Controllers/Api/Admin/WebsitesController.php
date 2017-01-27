@@ -46,7 +46,7 @@ class WebsitesController extends ApiController
 
         $stats = CampaignEvent::with('website', 'tag')
             ->whereIn('website_id', $sites->pluck('id'))
-            ->timeRange('today')
+            ->timeRange('today', $this->user->timezone)
             ->get()
             ->groupBy('tag_id');
 

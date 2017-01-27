@@ -124,10 +124,8 @@ class StatsTransformer
         return $data;
     }
 
-    public function highcharts(Collection $stats, $format, $range, $step = null, $tagStats = false)
+    public function highcharts(Collection $stats, $format, $dateRange, $tagStats = false)
     {
-        $dateRange = DateRange::byName($range);
-
         $data = [];
 
         //Pre-fill the $data array
@@ -136,7 +134,7 @@ class StatsTransformer
         }
 
         //Loop through all date periods
-        foreach ($dateRange->arrayByStep($step) as $period) {
+        foreach ($dateRange->arrayByStep() as $period) {
             $key       = $period->format($format);
             $timestamp = $period->timestamp * 1000;
 

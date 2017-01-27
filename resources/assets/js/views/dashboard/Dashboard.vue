@@ -119,8 +119,6 @@
 
         errors: 0,
 
-        useRate: 0,
-
         requestsChartData: [],
         impressionsChartData: [],
         revenueChartData: [],

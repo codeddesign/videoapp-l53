@@ -26,6 +26,7 @@ class UserTransformer extends Transformer
             'bank_details'      => $user->bank_details ?? new stdClass(),
             'isAdmin'           => (bool) $user->admin,
             'active'            => (bool) $user->active,
+            'timezone'          => $user->timezone,
             'created_at'        => $user->created_at->getTimestamp(),
             'created_at_humans' => $user->created_at->diffForHumans(),
         ];

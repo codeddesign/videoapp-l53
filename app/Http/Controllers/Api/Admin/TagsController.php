@@ -28,7 +28,7 @@ class TagsController extends ApiController
                 ->where('tag_id', '!=', null)
                 ->where('name', '!=', 'viewership')
                 ->groupBy('name', 'tag_id', DB::raw('created_at::date'))
-                ->timeRange($compareRange)
+                ->timeRange($compareRange, $this->user->timezone)
                 ->get()
                 ->groupBy('tag_id');
 
