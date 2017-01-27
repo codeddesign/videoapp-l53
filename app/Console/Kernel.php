@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel
         ImportCommand::class,
         ProcessReports::class,
         CleanTemporaryFiles::class,
-        CleanDailyStats::class,
     ];
 
     /**
