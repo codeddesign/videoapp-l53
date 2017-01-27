@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Transformers\CampaignTransformer;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\CampaignRequest;
-use Illuminate\Redis\Database as Redis;
 
 class CampaignsController extends ApiController
 {
@@ -70,13 +70,14 @@ class CampaignsController extends ApiController
     /**
      * Store a new campaign.
      *
-     * @param CampaignRequest            $request
+     * @param CampaignRequest                $request
      *
-     * @param \Illuminate\Redis\Database $redis
+     *
+     * @param \Illuminate\Redis\RedisManager $redis
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(CampaignRequest $request, Redis $redis)
+    public function store(CampaignRequest $request, RedisManager $redis)
     {
         // pass the following when POSTing: name, size, type, video
         Session::remove(config('videoad.TEMPORARY_PREVIEW_KEY'));

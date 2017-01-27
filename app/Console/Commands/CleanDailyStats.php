@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Redis\Database as Redis;
+use Illuminate\Redis\RedisManager;
 
 class CleanDailyStats extends Command
 {
@@ -37,7 +37,7 @@ class CleanDailyStats extends Command
     {
         $this->info('Cleaning Redis daily stats...');
 
-        $redis        = app(Redis::class);
+        $redis        = app(RedisManager::class);
         $campaignKeys = $redis->keys('daily-campaign:*');
         $websitesKeys = $redis->keys('daily-website:*');
 
