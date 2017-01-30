@@ -62,7 +62,7 @@ class Nexmo
         $nexmo = new self(compact('key', 'secret', 'brand'), compact('number'), 'number');
         $nexmo->request();
 
-        Session::set(self::SESSION_KEY, $nexmo->response());
+        Session::put(self::SESSION_KEY, $nexmo->response());
 
         return $nexmo->response();
     }
