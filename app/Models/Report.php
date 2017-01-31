@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Carbon     $end_date
  * @property string     $sort_by
  * @property string     $schedule
+ * @property string     $schedule_every
  * @property string     $recipient
  * @property array      $filter
  * @property array      $included_metrics
@@ -36,7 +37,10 @@ class Report extends Model
 
     public static $fixedSpreadsheetHeader = ['advertiser', 'description'];
 
-    protected $fillable = ['title', 'date_range', 'sort_by', 'schedule', 'recipient', 'filter', 'included_metrics'];
+    protected $fillable = [
+        'title', 'date_range', 'sort_by', 'schedule', 'schedule_every',
+        'recipient', 'filter', 'included_metrics',
+    ];
 
     protected $dates = [
         'start_date',
@@ -227,23 +231,23 @@ class Report extends Model
             return false;
         }
 
-        // If there's no last generated report,
-        // it must be pending.
-        if ($this->last_generated_at === null) {
-            return true;
-        }
-
         $now = Carbon::now();
 
         switch ($this->schedule) {
             case 'daily':
-                return $this->last_generated_at->diffInHours($now) >= (24 - 1);
+                return $this->last_generated_at === null || $this->last_generated_at->diffInHours($now) >= (24 - 1);
                 break;
             case 'weekly':
-                return $this->last_generated_at->diffInHours($now) >= ((7 * 24) - 1);
+                return (
+                (
+                    $this->last_generated_at === null ||
+                    $this->last_generated_at->diffInHours($now) >= ((7 * 24) - 1)
+                ) &&
+                    $now->dayOfWeek === (int) $this->schedule_every
+                );
                 break;
             case 'monthly':
-                return $this->last_generated_at->diffInHours($now) >= ((30 * 24) - 1);
+                return $this->monthlyPending();
                 break;
         }
 
@@ -262,5 +266,26 @@ class Report extends Model
         });
 
         return $pendingReports;
+    }
+
+    protected function monthlyPending()
+    {
+        $now = Carbon::now();
+
+        // If this report has been generated less than a
+        // month ago then we shouldn't send it again.
+        if ($this->last_generated_at !== null && $this->last_generated_at->diffInHours($now) <= ((27 * 24) - 1)) {
+            return false;
+        }
+
+        if ($this->schedule_every === 'beginning') {
+            return $now->day === 1;
+        }
+
+        if ($this->schedule_every === 'end') {
+            return $now->day === $now->daysInMonth;
+        }
+
+        return false;
     }
 }

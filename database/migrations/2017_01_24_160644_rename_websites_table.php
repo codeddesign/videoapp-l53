@@ -31,5 +31,14 @@ class RenameWebsitesTable extends Migration
      */
     public function down()
     {
+        Schema::table('campaign_events', function (Blueprint $table) {
+            $table->dropForeign('campaign_events_website_id_foreign');
+        });
+
+        Schema::rename('websites', 'wordpress_sites');
+
+        Schema::table('campaign_events', function (Blueprint $table) {
+            $table->foreign('website_id')->references('id')->on('wordpress_sites')->onDelete('cascade');
+        });
     }
 }

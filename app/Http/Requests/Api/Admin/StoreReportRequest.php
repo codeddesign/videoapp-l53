@@ -23,6 +23,7 @@ class StoreReportRequest extends Request
             'included_metrics' => '',
             'recipient'        => 'required|email',
             'schedule'         => 'required|in:once,daily,weekly,monthly',
+            'schedule_every'   => 'required_if:schedule,monthly,weekly',
         ];
     }
 
@@ -32,6 +33,7 @@ class StoreReportRequest extends Request
             'title'            => $this->get('title'),
             'recipient'        => $this->get('recipient'),
             'schedule'         => $this->get('schedule'),
+            'schedule_every'   => $this->get('schedule_every'),
             'filter'           => $this->get('filter'),
             'included_metrics' => $this->get('included_metrics'),
             'sort_by'          => $this->get('sort_by'),

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Tag;
-use App\Models\Website;
 
 /**
  *  Echo's the provided css $class if the current route is matched.

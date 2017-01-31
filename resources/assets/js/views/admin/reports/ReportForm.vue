@@ -167,6 +167,31 @@
               <div class="tagcreate-selectarrow"></div>
             </div>
           </div>
+          <div v-show="report.schedule === 'weekly' "class="tagcreate-quarterinnerwrap">
+            <div class="tagcreate-fullinnertitle">EVERY</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="report.weekly_every">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thurdsay</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
+          <div v-show="report.schedule === 'monthly' "class="tagcreate-quarterinnerwrap">
+            <div class="tagcreate-fullinnertitle">EVERY</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="report.monthly_every">
+                <option value="beginning">Beginning of Month</option>
+                <option value="end">End of Month</option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
           <div class="tagcreate-quarterinnerwrap" style="clear:left;margin-left:0;margin-top:25px;width:50%;">
             <div class="tagcreate-fullinnertitle">EMAIL REPORT TO</div>
             <input class="tagcreate-longinput" name="recipient" v-model="report.recipient" v-validate data-vv-rules="required" placeholder="Enter an email address..">
@@ -204,6 +229,8 @@
           included_metrics: [],
           sort_by: 'advertiser',
           schedule: 'once',
+          weekly_every: 'sunday',
+          monthly_every: 'beginning',
           recipient: ''
         },
 
@@ -287,6 +314,15 @@
     methods: {
       save(e) {
         this.$validator.validateAll()
+
+        if (this.report.schedule === 'monthly') {
+          this.report.schedule_every = this.report.monthly_every
+        }
+
+        if (this.report.schedule === 'weekly') {
+          this.report.schedule_every = this.report.weekly_every
+        }
+
         if (this.errors.any()) {
           e.preventDefault()
           var errorMsg = this.errors.errors.map((error) => {
@@ -340,7 +376,6 @@
         return this.reportData
       }
     }
-
   }
 </script>
 

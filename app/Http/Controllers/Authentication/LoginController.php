@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Authentication;
 
+use App\Models\User;
 use Illuminate\Auth\AuthManager;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;

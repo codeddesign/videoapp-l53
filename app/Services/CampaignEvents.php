@@ -2,14 +2,10 @@
 
 namespace App\Services;
 
-use App\Events\CampaignEventReceived;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Models\Tag;
-use App\Models\Website;
 use App\Stats\RedisStats;
-use Carbon\Carbon;
-use Illuminate\Log\Writer as Log;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 

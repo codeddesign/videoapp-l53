@@ -7,7 +7,6 @@ use App\Models\CampaignEvent;
 use App\Models\DateRange;
 use App\Models\User;
 use App\Stats\StatsTransformer;
-use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

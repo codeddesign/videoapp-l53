@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
 use App\Services\AnalyticsEvents;
 use App\Services\CampaignEvents;
-use App\Stats\AnalyticsTransformer;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

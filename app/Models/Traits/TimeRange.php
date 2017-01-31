@@ -15,7 +15,7 @@ trait TimeRange
      */
     public function scopeTimeRange($query, $timeRange, $timezone = 'UTC')
     {
-        if(! $timeRange instanceof DateRange) {
+        if (! $timeRange instanceof DateRange) {
             $timeRange = DateRange::byName($timeRange, $timezone);
         }
 

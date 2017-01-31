@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CleanDailyStats;
 use App\Console\Commands\CleanTemporaryFiles;
 use App\Console\Commands\PersistEvents;
 use App\Console\Commands\ProcessReports;
