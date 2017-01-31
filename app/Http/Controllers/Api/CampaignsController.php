@@ -44,12 +44,13 @@ class CampaignsController extends ApiController
     /**
      * Preview the campaign link.
      *
-     * @param CampaignRequest $request
-     * @param Redis           $redis
+     * @param CampaignRequest                $request
+     *
+     * @param \Illuminate\Redis\RedisManager $redis
      *
      * @return array
      */
-    public function storePreviewLink(CampaignRequest $request, Redis $redis)
+    public function storePreviewLink(CampaignRequest $request, RedisManager $redis)
     {
         // pass the following: name, size, type, video
         $campaign = $this->user->addCampaign($request->all(), $toSession = true);
