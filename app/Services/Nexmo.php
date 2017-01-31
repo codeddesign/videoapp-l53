@@ -74,8 +74,8 @@ class Nexmo
      */
     public static function verifyCode($code)
     {
-        $key    = env('NEXMO_KEY');
-        $secret = env('NEXMO_SECRET');
+        $key    = config('services.nexmo.key');
+        $secret = config('services.nexmo.secret');
 
         $data = Session::get(self::SESSION_KEY);
         if (! $data) {
