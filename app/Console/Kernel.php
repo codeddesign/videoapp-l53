@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CleanTemporaryFiles;
+use App\Console\Commands\ClearAllEvents;
 use App\Console\Commands\PersistEvents;
 use App\Console\Commands\ProcessReports;
 use App\Geolite\ImportCommand;
@@ -21,6 +22,7 @@ class Kernel extends ConsoleKernel
         ImportCommand::class,
         ProcessReports::class,
         CleanTemporaryFiles::class,
+        ClearAllEvents::class,
     ];
 
     /**
