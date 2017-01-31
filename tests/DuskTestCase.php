@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Testing;
+namespace Tests;
 
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Database\DatabaseManager;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Dusk\TestCase as BaseTestCase;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
 
-abstract class TestCase extends BaseTestCase
+abstract class DuskTestCase extends BaseTestCase
 {
+    use CreatesApplication;
+
     /**
      * The list of database tables.
      *
@@ -16,30 +18,14 @@ abstract class TestCase extends BaseTestCase
     protected static $tables = [];
 
     /**
-     * The base URL to use while testing the application.
+     * Prepare for Dusk test execution.
      *
-     * @var string
+     * @beforeClass
+     * @return void
      */
-    protected $baseUrl = 'http://localhost';
-
-    protected function setUp()
+    public static function prepare()
     {
-        parent::setUp();
-        $this->prepareDb();
-    }
-
-    /**
-     * Creates the application.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
-    public function createApplication()
-    {
-        $app = require __DIR__.'/../../bootstrap/app.php';
-
-        $app->make(Kernel::class)->bootstrap();
-
-        return $app;
+        static::startChromeDriver();
     }
 
     public function prepareDb()
@@ -65,5 +51,17 @@ abstract class TestCase extends BaseTestCase
         $this->artisan('migrate');
 
         static::$tables = $db->table('information_schema.tables')->where('table_schema', 'public')->get()->pluck('table_name');
+    }
+
+    /**
+     * Create the RemoteWebDriver instance.
+     *
+     * @return \Facebook\WebDriver\Remote\RemoteWebDriver
+     */
+    protected function driver()
+    {
+        return RemoteWebDriver::create(
+            'http://localhost:9515', DesiredCapabilities::chrome()
+        );
     }
 }
