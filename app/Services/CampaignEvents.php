@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Models\Tag;
+use App\Models\Website;
 use App\Stats\RedisStats;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
@@ -66,13 +67,23 @@ class CampaignEvents
 
         $redisStats = new RedisStats;
 
+        $validIds = [
+            'campaigns' => Campaign::all()->pluck('id'),
+            'websites'  => Website::all()->pluck('id'),
+            'tags'      => Tag::all()->pluck('id'),
+        ];
+
         foreach ($keys as $key) {
             $id = explode(':', $key)[1];
 
             $data = $redisStats->fetchStatusForCampaign($id);
 
             foreach ($data as $event) {
-                $events->push($event);
+                if ($this->validIds($event, $validIds)) {
+                    $events->push($event);
+                } else {
+                    \Log::info("Tried persisting invalid event: ".json_encode($event));
+                }
             }
 
             $redis->del([$key]);
@@ -81,6 +92,22 @@ class CampaignEvents
         CampaignEvent::saveMany($events);
 
         return $events;
+    }
+
+    protected function validIds($event, $validIds)
+    {
+        return $this->validId($event['campaign_id'], $validIds['campaigns']) &&
+            $this->validId($event['tag_id'], $validIds['tags']) &&
+            $this->validId($event['website_id'], $validIds['websites']);
+    }
+
+    protected function validId($id, Collection $validIds)
+    {
+        if ($id !== null && ! $validIds->contains($id)) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function getRedis()
