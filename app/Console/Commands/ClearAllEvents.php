@@ -42,7 +42,7 @@ class ClearAllEvents extends Command
     public function __construct(RedisManager $redis, Database $database)
     {
         parent::__construct();
-        $this->redis = $redis->connection();
+        $this->redis    = $redis->connection();
         $this->database = $database;
     }
 
@@ -74,10 +74,10 @@ class ClearAllEvents extends Command
         $websitesKeys = $this->redis->keys('website:*');
         $keys         = array_merge($campaignKeys, $websitesKeys);
 
-        if(count($keys) > 0) {
+        if (count($keys) > 0) {
             $this->redis->del($keys);
         }
-        
+
         $this->info('Deleted '.count($keys).' Redis keys.');
     }
 }
