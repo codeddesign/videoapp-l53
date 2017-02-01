@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\CampaignEvent;
+use App\Models\Website;
 use App\Stats\RedisStats;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
@@ -22,13 +23,20 @@ class AnalyticsEvents
 
         $events = new Collection();
 
+        $websiteIds = Website::all()->pluck('id');
+
         foreach ($keys as $key) {
             $id = explode(':', $key)[1];
 
             $data = $this->fetchAnalyticsForWebsite($id);
 
             foreach ($data as $event) {
-                $events->push($event);
+                if($event['website_id'] !== null && !$websiteIds->contains($event['website_id'])) {
+                    \Log::info("Tried persisting invalid event: ".json_encode($event));
+                } else {
+                    $events->push($event);
+                }
+
             }
 
             $redis->del([$key]);
