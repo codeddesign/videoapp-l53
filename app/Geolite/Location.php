@@ -32,52 +32,55 @@ class Location extends Model
 
     /**
      * @param string $ip
-     * @param array  $keys_only
+     * @param array  $keysOnly
      *
-     * @return bool|int
+     * @return array
      */
-    public static function byIp($ip, $keys_only = ['country', 'state', 'city'])
+    public static function byIp($ip, array $keysOnly = ['country', 'state', 'city'])
     {
         if ($ip == '::1' or $ip == '127.0.0.1') {
-            return 0;
+            return self::emptyLocation($keysOnly);
         }
 
-        $ip_aton = self::ipAton($ip);
+        $ipAton = self::ipAton($ip);
 
-        $result = Range::where('ip_start', '<=', $ip_aton)
-            ->where('ip_end', '>=', $ip_aton)
+        $result = Range::where('ip_start', '<=', $ipAton)
+            ->where('ip_end', '>=', $ipAton)
             ->orderBy('ip_start', 'DESC')
             ->limit(1)
             ->get()
             ->first();
 
-        return (new self)->byGeonameId($result->geoname_id, $keys_only);
-
-        return ! $result ? false : $result;
+        if ($result) {
+            return (new self)->byGeonameId($result->geoname_id, $keysOnly);
+        } else {
+            return self::emptyLocation($keysOnly);
+        }
     }
 
     /**
-     * @param int|string $geonameId
      *
-     * @return array|bool
+     * @param int|string $geonameId
+     * @param array      $keysOnly
+     *
+     * @return array
      */
-    public function byGeonameId($geonameId, $keys_only)
+    public function byGeonameId($geonameId, array $keysOnly)
     {
         $result = self::whereGeonameId($geonameId)->first();
+
         if ($result) {
-            $result = $result->toArray();
-            $match_keys = count($keys_only);
-            $keys_only = array_flip($keys_only);
-
-            foreach ($result as $key => $value) {
-                if ($match_keys && ! isset($keys_only[$key])) {
-                    unset($result[$key]);
-                }
-            }
-
-            return $result;
+            // Filter keys not contained in $keysOnly
+            return array_filter($result->toArray(), function ($value, $key) use ($keysOnly) {
+                return in_array($key, $keysOnly);
+            }, ARRAY_FILTER_USE_BOTH);
         }
 
-        return false;
+        return self::emptyLocation($keysOnly);
+    }
+
+    protected static function emptyLocation($keys)
+    {
+        return array_fill_keys($keys, '');
     }
 }
