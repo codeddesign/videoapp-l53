@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        if ($this->shouldReport($e) && in_array($this->app->environment(), ['staging', 'production'])) {
+        if ($this->shouldReport($e) && in_array(app()->environment(), ['staging', 'production'])) {
             app('sentry')->captureException($e);
         }
 
