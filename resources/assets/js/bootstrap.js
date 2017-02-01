@@ -14,8 +14,8 @@ http.defaults.baseURL = window.apiDomain + '/api'
 
 // Bootstrap the web socket if
 // a connection is available
-import socket from './services/socket'
-socket.bootstrap('//' + window.socketIoIp + ':3000', jwt)
+// import socket from './services/socket'
+// socket.bootstrap('//' + window.socketIoIp + ':3000', jwt)
 
 // Setup Vue.js and it's dependencies
 import Vue from 'vue'

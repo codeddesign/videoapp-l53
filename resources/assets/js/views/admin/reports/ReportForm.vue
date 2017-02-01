@@ -90,7 +90,7 @@
                 <option value="platformType">Platform Type</option>
                 <option value="adType">Ad Type</option>
                 <option value="campaignType">Campaign Type</option>
-                <option value="country">Counrty</option>
+                <option value="country">Country</option>
                 <option value="state">State</option>
                 <option value="city">City</option>
                 <option value="postalCode">Postal Code</option>
@@ -229,7 +229,7 @@
           included_metrics: [],
           sort_by: 'advertiser',
           schedule: 'once',
-          weekly_every: 'sunday',
+          weekly_every: '0',
           monthly_every: 'beginning',
           recipient: ''
         },

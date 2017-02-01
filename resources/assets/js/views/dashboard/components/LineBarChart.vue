@@ -9,8 +9,6 @@
 <script>
   import Highcharts from 'highcharts'
   import _ from 'lodash'
-  import socket from '../../../services/socket'
-  import events from '../../../services/events'
 
   let now = (Math.ceil(Date.now() / 1000)) * 1000
 
@@ -194,27 +192,19 @@
         this.chart.series[1].setData(this.impressions)
       },
       currentUser() {
-        let echo = socket.connection()
-        if (echo) {
-          echo.private('user.' + this.currentUser.id)
-              .listen('CampaignEventReceived', (e) => {
-                if (!events.isImpression(e) || this.timeRange !== 'realtime') {
-                  return
-                }
-
-                let eventTimestamp = this.roundToNearestSecond(e.timestamp)
-
-                if (_.has(this.chartData, eventTimestamp)) {
-                  this.chartData[eventTimestamp] += 1
-                  this.revenueData[eventTimestamp] += (e.tag.ecpm) / 1000
-                } else {
-                  this.chartData[eventTimestamp] = 1
-                  this.revenueData[eventTimestamp] = ((e.tag.ecpm) / 1000)
-                }
-              })
-        } else {
-          console.error('Couldn\'t connect to web socket')
+        /* if (!events.isImpression(e) || this.timeRange !== 'realtime') {
+          return
         }
+
+        let eventTimestamp = this.roundToNearestSecond(e.timestamp)
+
+        if (_.has(this.chartData, eventTimestamp)) {
+          this.chartData[eventTimestamp] += 1
+          this.revenueData[eventTimestamp] += (e.tag.ecpm) / 1000
+        } else {
+          this.chartData[eventTimestamp] = 1
+          this.revenueData[eventTimestamp] = ((e.tag.ecpm) / 1000)
+        }*/
       }
     }
   }

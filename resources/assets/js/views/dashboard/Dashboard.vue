@@ -84,8 +84,6 @@
 <script>
   import Stats from './components/Stats.vue'
   import LineBarChart from './components/LineBarChart.vue'
-  import socket from '../../services/socket'
-  import events from '../../services/events'
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
@@ -162,7 +160,7 @@
         // if the user is loaded, set up the socket
         // if not, the socket will be set by the watcher
         if (!_.isEmpty(this.currentUser)) {
-          this.setupSocket()
+          this.userLoaded()
         }
       })
     },
@@ -203,41 +201,15 @@
             })
       },
 
-      setupSocket() {
+      userLoaded() {
         if (this.currentUser.isAdmin) {
           this.$router.push({ name: 'admin.dashboard' })
         }
 
-        let echo = socket.connection()
-        if (echo) {
-          echo.private('user.' + this.currentUser.id)
-              .listen('CampaignEventReceived', (e) => {
-                switch (events.type(e)) {
-                  case 'request':
-                    this.requests++
-                    break
-                  case 'impression':
-                    this.impressions++
-                    this.revenue += (e.tag.ecpm) / 1000
-                    break
-                  case 'fill':
-                    this.fills++
-                    break
-                  case 'tag-error':
-                    this.fillErrors++
-                    break
-                  case 'ad-error':
-                    this.errors++
-                    break
-                }
-              })
-          let that = this
-          setInterval(function() {
-            that.currentTime = moment()
-          }, 5000) // every 5 seconds
-        } else {
-          console.error('Couldn\'t connect to web socket')
-        }
+        let that = this
+        setInterval(function() {
+          that.currentTime = moment()
+        }, 5000)
       },
 
       ...stats
@@ -248,7 +220,7 @@
         this.fetchChart()
       },
       currentUser() {
-        this.setupSocket()
+        this.userLoaded()
       }
     },
 
