@@ -181,7 +181,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // Sentry integration
+        // Custom Providers
+        App\Providers\LogEntriesServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
     ],
