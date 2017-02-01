@@ -1,7 +1,7 @@
 # Video App
 
 # Getting Started
-This project uses [Composer](https://getcomposer.org/) and [Yarn](https://yarnpkg.com/) for dependency management and [Vagrant](http://www.vagrantup.com/) for development environment management.
+This project uses [Composer](https://getcomposer.org/) and [NPM](hhttps://www.npmjs.com/) for dependency management and [Vagrant](http://www.vagrantup.com/) for development environment management.
 You should install these tools and familiarize yourself with them.
 
 ## Development Environment Setup
@@ -24,20 +24,18 @@ CREATE DATABASE "videoapp53-testing";
 
 6. Copy `.env.example` to `.env` and edit the file according to your local development environment.
 
-7. Install both PHP and JS dependencies - `composer install` and `yarn install`, respectively.
+7. Install both PHP and JS dependencies - `composer install` and `npm install`, respectively.
 
 8. Migrate and seed your database: `php artisan migrate` and `php artisan db:seed`
 
-9. Start the Webpack Dev Server using `yarn run dev`.
-
-10. Start the Socket.io server using `node socket.js`. Alternatively use [pm2](https://github.com/Unitech/pm2) to run it as a service. 
+9. Start the Webpack Dev Server using `npm run dev`.
 
 
 # Contributing
 
 1. Please make all your changes in a new git branch: `git checkout -b my-new-feature develop`.
 
-2. When you're ready to submit your changes, make sure your code passes all tests (`composer run tests`) and that you're following the code styling guidelines - run `composer run lint` to lint your PHP code and `yarn run lint` to lint your JS code.
+2. When you're ready to submit your changes, make sure your code passes all tests (`composer run tests`) and that you're following the code styling guidelines - run `composer run lint` to lint your PHP code and `npm run lint` to lint your JS code.
 
 3. After making sure your code is ready, push your new branch using: `git push -u origin my-new-feature` (**do not** push to master or develop directly).
 
