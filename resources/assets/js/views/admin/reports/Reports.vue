@@ -14,7 +14,7 @@
     <ul class="admindashboard-dailystatslist">
         <li v-for="report in reports">
           <div class="dashboard-statslist1 adminreports-statslist1">
-            <div class="tagcreate-checkwrap">
+            <div class="tagcreate-checkwrap" v-show="report.deletable">
               <input type="checkbox" v-bind:id="report.id" v-bind:value="report.id" v-model="selectedReports">
               <label v-bind:for="report.id"></label>
             </div>

@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property array      $filter
  * @property array      $included_metrics
  * @property int        $user_id
+ * @property boolean    $deletable
  * @property Carbon     $last_generated_at
  * @property Carbon     $created_at
  * @property Carbon     $updated_at
@@ -39,7 +40,7 @@ class Report extends Model
 
     protected $fillable = [
         'title', 'date_range', 'sort_by', 'schedule', 'schedule_every',
-        'recipient', 'filter', 'included_metrics',
+        'recipient', 'filter', 'included_metrics', 'deletable',
     ];
 
     protected $dates = [
@@ -239,10 +240,10 @@ class Report extends Model
                 break;
             case 'weekly':
                 return (
-                (
-                    $this->last_generated_at === null ||
-                    $this->last_generated_at->diffInHours($now) >= ((7 * 24) - 1)
-                ) &&
+                    (
+                        $this->last_generated_at === null ||
+                        $this->last_generated_at->diffInHours($now) >= ((7 * 24) - 1)
+                    ) &&
                     $now->dayOfWeek === (int) $this->schedule_every
                 );
                 break;
@@ -287,5 +288,19 @@ class Report extends Model
         }
 
         return false;
+    }
+
+    public static function allMetrics()
+    {
+        return [
+            "ad_type", "platform_type", "impressions", "unfilled_impressions", "requests", "click", "ctr", "revenue",
+            "cpm", "fills", "fill_rate", "errors", "error_rate", "total_ad_type_percent", "total_platform_type_percent",
+            "total_campaign_type_percent", "total_platform_type_errors", "total_ad_type_errors", "total_campaign_type_errors",
+            "start", "firstquartile", "midpoint", "thirdquartile", "complete", "average_view_rate", "average_view_time",
+            "completion_rate", "view_length", "error101", "error102", "error200", "error201", "error202", "error203",
+            "error300", "error301", "error302", "error303", "error400", "error401", "error402", "error403", "error505",
+            "error500", "error501", "error502", "error503", "error600", "error601", "error602", "error603", "error604",
+            "error900", "error901",
+        ];
     }
 }

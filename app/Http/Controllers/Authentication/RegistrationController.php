@@ -39,8 +39,8 @@ class RegistrationController extends Controller
         // form request, just to add more clarity.
         $user = $request->register();
 
-        /*$defaultReports = $this->defaultReports($user);
-        Report::saveMany($defaultReports);*/
+        $defaultReports = $this->defaultReports($user);
+        Report::saveMany($defaultReports);
 
         // send verification email and phone.
         event(new AccountCreated($user));
@@ -90,10 +90,17 @@ class RegistrationController extends Controller
 
         $reports = $reports->map(function ($report) use ($user) {
             return array_merge($report, [
-                'user_id'   => $user->id,
-                'recipient' => $user->email,
-                'sort_by'   => 'advertiser',
-                'schedule'  => 'once',
+                'user_id'          => $user->id,
+                'recipient'        => $user->email,
+                'sort_by'          => 'advertiser',
+                'schedule'         => 'once',
+                'deletable'        => false,
+                'included_metrics' => json_encode(Report::allMetrics()),
+                'filter'           => json_encode([
+                    'type'   => '',
+                    'value'  => '',
+                    'filter' => '',
+                ]),
             ]);
         });
 

@@ -18,6 +18,7 @@ class ReportTransformer extends Transformer
             'schedule'         => $report->schedule,
             'schedule_every'   => $report->schedule_every,
             'recipient'        => $report->recipient,
+            'deletable'        => $report->deletable,
         ];
 
         return $transformedReport;
