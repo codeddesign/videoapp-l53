@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Services\Reports;
 use Illuminate\Database\Seeder;
 
 class InitialUserSeeder extends Seeder
@@ -10,7 +11,7 @@ class InitialUserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $user = User::create([
             'first_name'     => 'admin',
             'last_name'      => 'admin',
             'company'        => 'a3m',
@@ -20,5 +21,7 @@ class InitialUserSeeder extends Seeder
             'verified_phone' => true,
             'admin'          => true,
         ]);
+
+        (new Reports)->createDefaultReports($user);
     }
 }

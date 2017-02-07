@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Mail\ScheduledReport;
 use App\Models\CampaignEvent;
 use App\Models\Report;
+use App\Models\User;
 use App\Stats\StatsTransformer;
 use App\Transformers\Spreadsheet\ReportTransformer;
 use Carbon\Carbon;
@@ -106,6 +107,58 @@ class Reports
         $mailer = app(Mailer::class);
 
         $mailer->to($report->recipient)->send(new ScheduledReport($report, $file));
+    }
+
+    public function createDefaultReports(User $user)
+    {
+        $reports = new Collection([
+            [
+                'title'      => 'Today',
+                'date_range' => 'today',
+            ],
+            [
+                'title'      => 'Yesterday',
+                'date_range' => 'yesterday',
+            ],
+            [
+                'title'      => 'Last 3 Days',
+                'date_range' => 'lastThreeDays',
+            ],
+            [
+                'title'      => 'Last 7 Days',
+                'date_range' => 'lastSevenDays',
+            ],
+            [
+                'title'      => 'Last 30 Days',
+                'date_range' => 'lastThirtyDays',
+            ],
+            [
+                'title'      => 'This Month',
+                'date_range' => 'thisMonth',
+            ],
+            [
+                'title'      => 'Last Month',
+                'date_range' => 'lastMonth',
+            ],
+        ]);
+
+        $reports = $reports->map(function ($report) use ($user) {
+            return array_merge($report, [
+                'user_id'          => $user->id,
+                'recipient'        => $user->email,
+                'sort_by'          => 'advertiser',
+                'schedule'         => 'once',
+                'deletable'        => false,
+                'included_metrics' => json_encode(Report::allMetrics()),
+                'filter'           => json_encode([
+                    'type'   => '',
+                    'value'  => '',
+                    'filter' => '',
+                ]),
+            ]);
+        });
+
+        Report::saveMany($reports);
     }
 
     /**
