@@ -82,7 +82,7 @@ class CampaignEvents
                 if ($this->validIds($event, $validIds)) {
                     $events->push($event);
                 } else {
-                    \Log::info("Tried persisting invalid event: ".json_encode($event));
+                    \Log::info('Tried persisting invalid event: '.json_encode($event));
                 }
             }
 

@@ -15,7 +15,7 @@ return [
     */
 
     'logentries' => [
-        'token' => env('LOGENTRIES_TOKEN')
+        'token' => env('LOGENTRIES_TOKEN'),
     ],
 
     'mailgun' => [

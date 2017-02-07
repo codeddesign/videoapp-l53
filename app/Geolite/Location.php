@@ -59,7 +59,6 @@ class Location extends Model
     }
 
     /**
-     *
      * @param int|string $geonameId
      * @param array      $keysOnly
      *
@@ -70,7 +69,7 @@ class Location extends Model
         $result = self::whereGeonameId($geonameId)->first();
 
         if ($result) {
-            return collect($result)->filter(function($value, $key) use ($keysOnly) {
+            return collect($result)->filter(function ($value, $key) use ($keysOnly) {
                 return in_array($key, $keysOnly);
             })->toArray();
         }
