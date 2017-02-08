@@ -8,6 +8,10 @@
 
     <!-- ANALYTICS STATS -->
     <!-- TOP ANALYTICS -->
+    <div v-show="loading" class="report-loading">
+      <bounce-loader :loading="loading" color="#7772a7" size="100px"></bounce-loader>
+    </div>
+    <div v-show="!loading">
     <ul class="campaignstats-row singlereportspurple">
       <li>
         <div class="campaignstats-title">REQUESTS</div>
@@ -49,6 +53,7 @@
         <div class="campaignstats-digit"><span id="graph_month_r"></span></div>
       </li>
     </ul>
+    </div>
 
     <div class="dashstats-graphwrapper">
       <div id="chart" class="chart">
@@ -200,6 +205,7 @@
 
 <script>
   import Highcharts from 'highcharts'
+  import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
   import Pagination from '../../../services/pagination'
   import _ from 'lodash'
   import http from '../../../services/http'
@@ -209,6 +215,7 @@
     name: 'SingleReport',
     data() {
       return {
+        loading: true,
         chart: null,
         stats: {
           allStats: {},
@@ -222,6 +229,7 @@
       fetchStats(report) {
         http.get('/admin/reports/' + report.id + '/stats')
             .then((response) => {
+              this.loading = false
               this.stats = response.data
               this.showChart()
             })
@@ -317,6 +325,25 @@
       this.$nextTick(function() {
 
       })
+    },
+
+    components: {
+      BounceLoader
     }
   }
 </script>
+
+<style lang="scss">
+  .chart {
+    width: 100%;
+  }
+
+  .report-loading {
+    padding-top: 160px;
+    padding-bottom: 40px;
+  }
+
+  .v-bounce {
+    margin: 0 auto;
+  }
+</style>

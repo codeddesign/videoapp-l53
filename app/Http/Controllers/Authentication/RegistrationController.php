@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Events\AccountCreated;
-use App\Models\Report;
 use App\Models\User;
 use App\Services\Reports;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
