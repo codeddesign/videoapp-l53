@@ -23,7 +23,7 @@ class Reports
     public function stats(Report $report, $filterMetrics = true)
     {
         $events = $this->campaignEvents($report)->groupBy(function ($item) {
-            return $item->tag_id;
+            return "{$item->tag_id}-{$item->website_id}";
         });
 
         $stats            = new Collection;
@@ -44,6 +44,7 @@ class Reports
                 'description'   => $tag->description,
                 'ad_type'       => $tag->ad_type,
                 'platform_type' => $tag->platform_type,
+                'website'       => $tagEvents->first()->website->domain ?? 'N/A',
                 'requests'      => $parsedStats['tagRequests'],
                 'impressions'   => $parsedStats['impressions'],
                 'fills'         => $parsedStats['fills'],
@@ -168,7 +169,7 @@ class Reports
      */
     protected function campaignEvents(Report $report)
     {
-        $stats = CampaignEvent::query()->with('tag');
+        $stats = CampaignEvent::query()->with('tag', 'website');
 
         $stats = $report->filterQuery($stats);
 

@@ -86,6 +86,7 @@
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.sort_by">
                 <option value="advertiser">Advertiser</option>
+                <option value="website">Website</option>
                 <option value="tagName">Tag Name</option>
                 <option value="platformType">Platform Type</option>
                 <option value="adType">Ad Type</option>
@@ -238,6 +239,7 @@
           video: {
             'Ad Type': 'ad_type',
             'Platform Type': 'platform_type',
+            'Website': 'website',
             'Impressions': 'impressions',
             'Unfilled Impressions': 'unfilled_impressions',
             'Ads Requests': 'requests',

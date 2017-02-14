@@ -71,6 +71,7 @@ class Report extends Model
             'description'     => 'Description',
             'ad_type'         => 'Ad Type',
             'platform_type'   => 'Platform Type',
+            'website'         => 'Website',
             'requests'        => 'Ad Requests',
             'impressions'     => 'Impressions',
             'fills'           => 'Fills',
@@ -293,7 +294,7 @@ class Report extends Model
     public static function allMetrics()
     {
         return [
-            'ad_type', 'platform_type', 'impressions', 'unfilled_impressions', 'requests', 'click', 'ctr', 'revenue',
+            'ad_type', 'platform_type', 'website', 'impressions', 'unfilled_impressions', 'requests', 'click', 'ctr', 'revenue',
             'cpm', 'fills', 'fill_rate', 'errors', 'error_rate', 'total_ad_type_percent', 'total_platform_type_percent',
             'total_campaign_type_percent', 'total_platform_type_errors', 'total_ad_type_errors', 'total_campaign_type_errors',
             'start', 'firstquartile', 'midpoint', 'thirdquartile', 'complete', 'average_view_rate', 'average_view_time',

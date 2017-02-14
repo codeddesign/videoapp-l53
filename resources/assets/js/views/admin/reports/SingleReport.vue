@@ -69,6 +69,7 @@
         <ul class="dashboard-dailystatstitles dashreports-titlewidth">
           <li>ADVERTISER</li>
           <li>TAG NAME</li>
+          <li>WEBSITE</li>
           <li>PLATFORM</li>
           <li>TYPE</li>
           <li>IMPRESSIONS</li>
@@ -127,6 +128,7 @@
           <li v-for="tag in paginatedStats">
             <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
             <div class="dashboard-statslist2">{{ tag.description }}</div>
+            <div class="dashboard-statslist2">{{ tag.website }}</div>
             <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
             <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
             <div class="dashboard-statslist2">{{ tag.impressions }}</div>
