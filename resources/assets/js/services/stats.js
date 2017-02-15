@@ -1,5 +1,11 @@
 import accounting from 'accounting'
 
+function displayPercentage(number) {
+  number = (number <= 100) ? number : 100
+
+  return number.toFixed(2) + '%'
+}
+
 export default {
   calculateRevenue(impressions, format = true) {
     let revenue = (4 * impressions) / 1000
@@ -19,7 +25,7 @@ export default {
       fillRate = ((fills / requests) * 100)
     }
 
-    return fillRate.toFixed(2) + '%'
+    return displayPercentage(fillRate)
   },
 
   calculateEcpm(impressions, revenue, format = true) {
@@ -44,7 +50,7 @@ export default {
       errorRate = ((errors / requests) * 100)
     }
 
-    return errorRate.toFixed(2) + '%'
+    return displayPercentage(errorRate)
   },
 
   calculateUseRate(impressions, fills) {
@@ -54,7 +60,7 @@ export default {
       useRate = ((impressions / fills) * 100)
     }
 
-    return useRate.toFixed(2) + '%'
+    return displayPercentage(useRate)
   },
 
   calculateTagDisplayPercent(impressions, totalImpressions) {
@@ -64,6 +70,6 @@ export default {
       tagDisplay = ((impressions / totalImpressions) * 100)
     }
 
-    return tagDisplay.toFixed(2) + '%'
+    return displayPercentage(tagDisplay)
   }
 }
