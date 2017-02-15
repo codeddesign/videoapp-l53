@@ -21,6 +21,7 @@ class ChartsController extends ApiController
     {
         $range = $request->get('time') ?? 'today';
         $user  = $request->get('user');
+        $tags = $request->get('tags') ? explode(',', $request->get('tags')) : null;
 
         $dateRange = DateRange::byName($range, $this->user->timezone);
 
@@ -38,6 +39,10 @@ class ChartsController extends ApiController
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', DB::raw($createdAtFormat))
             ->timeRange($dateRange);
+
+        if ($tags) {
+            $stats = $stats->whereIn('tag_id', $tags);
+        }
 
         if ($user) {
             $websites = User::with('websites')->find($user)->websites->pluck('id');

@@ -65,7 +65,7 @@
           <!-- END GRAPH AREA -->
           <!-- START TAGS AREA -->
 
-          <tag-list></tag-list>
+          <tag-list v-on:selectedTags="newSelectedTags"></tag-list>
       </div>
     </section><!-- END COMPARE TAGS -->
   </div>
@@ -102,13 +102,20 @@
         fills: 0,
         errors: 0,
 
+        selectedTags: [],
+
         chartData: []
       }
     },
 
     methods: {
+      newSelectedTags(selectedTags) {
+        this.selectedTags = selectedTags
+        this.fetchStats()
+      },
+
       fetchStats() {
-        http.get('/admin/stats/all?time=' + this.timeRange)
+        http.get('/admin/stats/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
             .then((response) => {
               this.requests = parseInt(response.data.tagRequests)
               this.impressions = parseInt(response.data.impressions)
@@ -120,7 +127,7 @@
               console.error('Error fetching the stats count.')
             })
 
-        http.get('/admin/charts/all?time=' + this.timeRange)
+        http.get('/admin/charts/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
             .then((response) => {
               this.chartData = response.data
             })

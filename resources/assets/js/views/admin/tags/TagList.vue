@@ -59,8 +59,8 @@
         <li v-for="tag in showTags">
           <div class="dashboard-statslist1">
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="check-onscroll">
-              <label for="check-onscroll"></label>
+              <input type="checkbox" v-bind:id="tag.id" v-bind:value="tag.id" v-model="selectedTags">
+              <label v-bind:for="tag.id"></label>
             </div>
             {{ tag.advertiser }}
           </div>
@@ -138,6 +138,8 @@
 
         tags: [],
         compareTags: [],
+
+        selectedTags: [],
 
         pagination: new Pagination()
       }
@@ -264,6 +266,9 @@
     watch: {
       compareTagsRange(newTimeRange) {
         this.fetchCompareTags()
+      },
+      selectedTags(newTags) {
+        this.$emit('selectedTags', newTags)
       }
     }
   }

@@ -20,11 +20,12 @@ class StatsController extends ApiController
     public function all(Request $request)
     {
         $timespan = $request->get('time');
+        $tags = $request->get('tags') ? explode(',', $request->get('tags')) : null;
 
         if (! $timespan || $timespan === 'realtime') {
             $stats = $this->fetchRealTimeData();
         } else {
-            $stats = $this->fetchHistoricalData($timespan);
+            $stats = $this->fetchHistoricalData($timespan, $tags);
         }
 
         return $this->jsonResponse($stats);
@@ -41,23 +42,28 @@ class StatsController extends ApiController
         return (new StatsTransformer)->transformSumAll($events, true);
     }
 
-    protected function fetchHistoricalData($timespan)
+    protected function fetchHistoricalData($timespan, $tags)
     {
-        $statsByCampaign = $this->campaignEvents($timespan);
+        $statsByCampaign = $this->campaignEvents($timespan, $tags);
 
         $stats = (new StatsTransformer)->transformSumAll($statsByCampaign, true);
 
         return $stats;
     }
 
-    protected function campaignEvents($timespan)
+    protected function campaignEvents($timespan, $tags)
     {
-        return CampaignEvent::query()
+        $events = CampaignEvent::query()
             ->with('tag')
             ->select('name', 'tag_id', DB::raw('SUM(count) as count'))
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id')
-            ->timeRange($timespan, $this->user->timezone)
-            ->get();
+            ->timeRange($timespan, $this->user->timezone);
+
+        if ($tags) {
+            $events = $events->whereIn('tag_id', $tags);
+        }
+
+        return $events->get();
     }
 }
