@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('ad3:persist-events')->hourly()->withoutOverlapping();
+        $schedule->command('ad3:persist-events')->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('ad3:process-reports')->daily()->withoutOverlapping();
         $schedule->command('ad3:clean-temporary-files')->daily();
     }
