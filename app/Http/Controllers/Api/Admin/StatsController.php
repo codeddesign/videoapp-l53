@@ -51,7 +51,7 @@ class StatsController extends ApiController
         return $stats;
     }
 
-    protected function campaignEvents($timespan, $tags)
+    protected function campaignEvents($timespan, $tags = null)
     {
         $events = CampaignEvent::query()
             ->with('tag')
