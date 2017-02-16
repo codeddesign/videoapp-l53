@@ -57,8 +57,8 @@
               </div>
               <div class="dashboard-statslist3" >
                 <div class="dashboard-switch">
-                  <input v-bind:id="tag.id" v-on:change="activateTag(tag.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" type="checkbox" v-bind:checked="tag.active">
-                  <label v-bind:for="tag.id" class="cmn-labelchange"></label>
+                  <input v-bind:id="'activate' + tag.id" v-on:change="activateTag(tag.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" type="checkbox" v-bind:checked="tag.active">
+                  <label v-bind:for="'activate' + tag.id" class="cmn-labelchange"></label>
                 </div>
               </div>
             </li>
