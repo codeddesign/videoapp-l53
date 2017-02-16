@@ -211,7 +211,9 @@ class Report extends Model
     {
         $now = Carbon::now();
 
-        return "{$now->format('mdY')} - {$this->title}.xlsx";
+        $name = preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '', $this->title);
+
+        return "{$now->format('mdY')} - {$name}.xlsx";
     }
 
     public function dateRange()
