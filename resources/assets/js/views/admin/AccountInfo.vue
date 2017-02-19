@@ -109,7 +109,7 @@
                 <li v-for="website in websites">
                   <div>
                     <div class="dashboard-statslist1">{{ website.domain }}</div>
-                    <div class="dashboard-statslist2">{{ website.stats.requests }}</div>
+                    <div class="dashboard-statslist2">{{ website.stats.tagRequests }}</div>
                     <div class="dashboard-statslist2">{{ website.stats.impressions }}</div>
                     <div class="dashboard-statslist2">
                       {{ calculateFillRate(website.stats.impressions, website.stats.requests) }}

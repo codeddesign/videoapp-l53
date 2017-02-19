@@ -90,7 +90,7 @@
             {
               name: 'Requests',
               color: '#468c01',
-              data: this.chartData.requests
+              data: this.chartData.tagRequests
             },
             {
               name: 'Fills',
