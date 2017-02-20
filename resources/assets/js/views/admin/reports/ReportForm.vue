@@ -26,7 +26,7 @@
             <div class="tagcreate-quarterinnerwrap">
               <div class="tagcreate-fullinnertitle">CUSTOM RANGE</div>
               <div class="tagcreate-selectwrap reportsquery-datedrop">
-                <input id="starttime-datepicker" v-model="report.start_date" class="tagtime-datepicker hasDatepicker" placeholder="select start date..">
+                <input id="starttime-datepicker" v-datepicker="{ key: 'start_date' }" class="tagtime-datepicker" placeholder="select date..">
                 <div class="tagcreate-selectarrow"></div>
               </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="tagcreate-quarterinnerwrap">
               <div class="tagcreate-fullinnertitle"></div>
               <div class="tagcreate-selectwrap reportsquery-datedroptwo">
-                <input id="endtime-datepicker" v-model="report.end_date" class="tagtime-datepicker hasDatepicker" placeholder="select end date..">
+                <input id="endtime-datepicker" v-datepicker="{ key: 'end_date' }" class="tagtime-datepicker" placeholder="select date..">
                 <div class="tagcreate-selectarrow"></div>
               </div>
             </div>
@@ -210,6 +210,7 @@
 </template>
 
 <script>
+  import $ from 'jquery'
   import _ from 'lodash'
   import admin from '../../../models/admin'
 
@@ -376,6 +377,23 @@
         this.reportData = _.cloneDeep(report)
 
         return this.reportData
+      }
+    },
+
+    directives: {
+      datepicker: {
+        bind: function (el, binding, vnode) {
+          var vm = vnode.context
+          $(el).datepicker({
+            onClose: function (date) {
+              vm.$set(vm.report, binding.value.key, date)
+            }
+          })
+          if (vm.report[binding.value.key]) {
+            let date = moment(vm.report[binding.value.key])
+            $(el).datepicker('setDate', date.format('L'))
+          }
+        }
       }
     }
   }

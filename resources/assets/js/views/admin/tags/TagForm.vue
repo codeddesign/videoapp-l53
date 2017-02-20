@@ -93,7 +93,7 @@
         <div class="tagcreate-sepline"></div>
         <div class="tagcreate-starttimewrap">
           <div class="tagcreate-timetitle">START DATE</div>
-          <input id="starttime-datepicker" v-datepicker="{ key: 'start_date' }" class="tagtime-datepicker" placeholder="select date..">
+          <input id="starttime-datepicker" v-datepicker="{ key: 'start_date' }" class="tagtime-datepicker hasDatepicker" placeholder="select start date..">
         </div>
         <div class="tagcreate-endtimewrap">
           <div class="tagcreate-timetitle">END DATE</div>
