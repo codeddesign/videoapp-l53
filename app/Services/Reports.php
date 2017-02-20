@@ -11,6 +11,7 @@ use App\Transformers\Spreadsheet\ReportTransformer;
 use Carbon\Carbon;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Reports
 {
@@ -172,7 +173,9 @@ class Reports
         $dateRange = $report->dateRange();
 
         $stats = CampaignEvent::query()
+            ->select('name', 'tag_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
             ->with('tag', 'website')
+            ->groupBy('name', 'tag_id', 'website_id', 'status')
             ->timeRange($dateRange, $report->user->timezone);
 
         $stats = $report->filterQuery($stats);
