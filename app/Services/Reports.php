@@ -174,8 +174,7 @@ class Reports
         $stats = $report->filterQuery($stats);
 
         $dateRange = $report->dateRange();
-        $stats     = $stats->where('created_at', '>=', $dateRange->from)
-            ->where('created_at', '<=', $dateRange->to)
+        $stats     = $stats->timeRange($dateRange, auth()->user()->timezone)
             ->where('tag_id', '!=', null);
 
         return $stats->get();
