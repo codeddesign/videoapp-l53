@@ -219,10 +219,10 @@ class Report extends Model
     public function dateRange()
     {
         if ($this->date_range === 'custom') {
-            return new DateRange($this->start_date, $this->end_date);
+            return new DateRange($this->start_date, $this->end_date, $this->user->timezone);
         }
 
-        return DateRange::byName($this->date_range);
+        return DateRange::byName($this->date_range, $this->user->timezone);
     }
 
     /**

@@ -169,13 +169,13 @@ class Reports
      */
     protected function campaignEvents(Report $report)
     {
-        $stats = CampaignEvent::query()->with('tag', 'website');
+        $dateRange = $report->dateRange();
+
+        $stats = CampaignEvent::query()
+            ->with('tag', 'website')
+            ->timeRange($dateRange, $report->user->timezone);
 
         $stats = $report->filterQuery($stats);
-
-        $dateRange = $report->dateRange();
-        $stats     = $stats->timeRange($dateRange, auth()->user()->timezone)
-            ->where('tag_id', '!=', null);
 
         return $stats->get();
     }
