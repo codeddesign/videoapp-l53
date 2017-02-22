@@ -17,7 +17,9 @@
         "jenssegers/agent": "~2.4",
         "doctrine/dbal": "~2.5",
         "laravel/tinker": "~1.0",
-        "laravel/dusk": "~1.0"
+        "laravel/dusk": "~1.0",
+        "datadog/php-datadogstatsd": "^0.4"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

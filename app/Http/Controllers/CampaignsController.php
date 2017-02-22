@@ -6,6 +6,7 @@ use App\Geolite\Location;
 use App\Models\Campaign;
 use App\Models\Tag;
 use App\Models\Website;
+use Datadogstatsd;
 
 class CampaignsController extends Controller
 {
@@ -41,6 +42,8 @@ class CampaignsController extends Controller
         $location = Location::byIp($ip);
 
         $tags = Tag::forRequest($location, $referer);
+
+        Datadogstatsd::increment('video-app.campaign_request', 1);
 
         return response(array_merge($campaign, [
             'tags'       => $tags,
