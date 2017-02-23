@@ -10,6 +10,7 @@ use App\Stats\StatsTransformer;
 use App\Transformers\WebsiteTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class WebsitesController extends ApiController
 {
@@ -32,6 +33,7 @@ class WebsitesController extends ApiController
         $website = Website::findOrFail($id);
 
         $website->approved = $request->get('status');
+        $website->waiting = false;
         $website->save();
 
         return $this->itemResponse($website, new WebsiteTransformer);
@@ -45,10 +47,12 @@ class WebsitesController extends ApiController
         $sites = $user->websites;
 
         $stats = CampaignEvent::with('website', 'tag')
+            ->select('name', 'website_id', 'tag_id', DB::raw('SUM(count) as count'))
             ->whereIn('website_id', $sites->pluck('id'))
             ->timeRange('today', $this->user->timezone)
+            ->groupBy('name', 'website_id', 'tag_id')
             ->get()
-            ->groupBy('tag_id');
+            ->groupBy('website_id');
 
         $statsTransformer = new StatsTransformer;
 

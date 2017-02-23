@@ -90,5 +90,12 @@ export default {
     .then((response) => {
       return response.data.data
     })
+  },
+
+  loadCampaignsStats(userId) {
+    return axios.get('/admin/campaigns/stats?user_id=' + userId)
+      .then((response) => {
+        return response.data.data
+      })
   }
 }

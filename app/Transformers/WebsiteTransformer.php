@@ -13,6 +13,7 @@ class WebsiteTransformer extends Transformer
             'domain'     => $site->domain,
             'link'       => $site->link,
             'approved'   => (boolean) $site->approved,
+            'waiting'    => (boolean) $site->waiting,
             'created_at' => $site->created_at->timestamp,
             'user_id'    => (int) $site->user->id,
         ];

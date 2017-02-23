@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $user_id
  * @property string $domain
  * @property bool   $approved
+ * @property bool   $waiting
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *

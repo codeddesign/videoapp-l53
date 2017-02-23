@@ -41,7 +41,7 @@ class Report extends Model
     protected $fillable = [
         'title', 'date_range', 'sort_by', 'schedule', 'schedule_every',
         'recipient', 'filter', 'included_metrics', 'deletable',
-        'start_date', 'end_date'
+        'start_date', 'end_date',
     ];
 
     protected $dates = [

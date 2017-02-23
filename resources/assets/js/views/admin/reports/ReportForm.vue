@@ -212,6 +212,7 @@
 <script>
   import $ from 'jquery'
   import _ from 'lodash'
+  import moment from 'moment'
   import admin from '../../../models/admin'
 
   export default {

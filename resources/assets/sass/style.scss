@@ -4083,11 +4083,321 @@ ul.dashreports-width li:hover div {
     font-weight: 500;
 }
 ul.userinfo-websitelist li .dashboard-statslist1 {
-    width: calc(100% - 279px);
+    width: calc(100% - 280px);
 }
+
+ul.userinfo-websitelist li .websitedenied {
+    background: #D90000 !important;
+    color: #fff;
+}
+
+ul.userinfo-websitelist li .websitewaiting {
+    background: #FF4000 !important;
+    color: #fff;
+}
+
+ul.userinfo-websitelist li .websiteapproved {
+    background: #468C00 !important;
+    color: #fff;
+}
+
 ul.userinfo-websitelistheader li:first-child {
-    border-right: none;
+    width: calc(100% - 280px);
 }
+
 ul.userinfo-websitelistheader li:last-child {
     width: 160px;
+}
+
+ul.userinfo-tagslist li .dashboard-statslist1 span {
+    background: url('/images/websitelistdropbutton.png');
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-top: 14px;
+    margin-bottom: -2px;
+    margin-left: -11px;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+ul.userinfo-tagslist li .dashboard-statslist1 span:hover {
+    background: url('/images/websitelistdropbutton.png') 0 -12px;
+}
+
+ul.userinfo-tagstitle li:nth-child(6) {
+    border-right: 0 !important;
+}
+
+ul.userinfo-campaigntitle li:nth-child(2), ul.userinfo-campaigntitle li:nth-child(3) {
+    border-right: 1px solid #E3E1E0;
+}
+
+ul.userinfo-statslist div div {
+    font-weight: 500 !important;
+}
+
+ul.userinfo-campaigntitle li:nth-child(6) {
+    border-right: 1px solid #E3E1E0;
+}
+
+ul.userinfo-campaigntitle li:nth-child(7) {
+    /*width: calc(100% - 1010px) !important;*/
+    width: 120px;
+    border-right: 0;
+}
+
+ul.userinfo-campaigntitle li:nth-child(8) {
+    border-right: 0;
+}
+
+ul.userinfo-campaignlist div div {
+    width: 120px;
+    font-weight: 500 !important;
+}
+
+ul.userinfo-campaignlist li:nth-child(5) {
+    font-weight: 500;
+}
+
+ul.userinfo-campaignlist li:nth-child(6) {
+    border-right: 0;
+}
+
+ul.userinfo-campaignlist div div:nth-child(7) {
+    width: calc(100% - 1010px) !important;
+    border-right: 1px solid #e3e1e0;
+}
+
+ul.userinfo-campaignlist li .dashboard-statslist3 {
+    float: right;
+    width: 160px;
+}
+
+ul.analyticsstats-row {
+    height: 110px;
+}
+
+ul.analyticsstats-row li {
+    width: 20%;
+    height: 110px;
+}
+
+ul.analyticsstats-row li:nth-child(2), ul.analyticsstats-row li:nth-child(3) {
+    width: calc(20% - 1px);
+}
+
+ul.analyticsstats-row li:nth-child(4) {
+    border-right: 1px solid #E3E1E0;
+    width: calc(20% - 1px);
+}
+
+ul.analyticsstats-row li:nth-child(5) {
+    border-right: 0;
+    width: calc(20% - 1px);
+}
+
+ul.analyticsstats-row li .campaignstats-title {
+    margin-top: 27px;
+}
+
+ul.analyticsstats-row li .campaignstats-digit {
+    color: #5E5985;
+}
+
+.analytics-linechartleft {
+    float: left;
+    width: calc(50% - 1px);
+    border-right: 2px solid #E3E1E0;
+}
+
+.analytics-linechartright {
+    float: left;
+    width: calc(50% - 1px);
+}
+
+.analytics-linechartheader {
+    float: left;
+    width: 100%;
+    background: #6C689E;
+    height: 50px;
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 50px;
+    padding-left: 18px;
+}
+
+.analytics-linechartsubhead {
+    float: left;
+    width: 100%;
+    background: #F9F9F7;
+    height: 58px;
+    color: #6C669E;
+    font-size: 11px;
+    line-height: 58px;
+    padding-left: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #E3E1E0;
+}
+
+ul.analytics-linechartlist {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 372px;
+}
+
+ul.analytics-linechartlist li {
+    float: left;
+    list-style-type: none;
+    height: 62px;
+    background: #FFFFFF;
+    width: 100%;
+    border-bottom: 1px solid #E3E1E0;
+}
+
+.analytics-linechartwrap {
+    float: left;
+    margin-left: 15px;
+    width: calc(100% - 95px);
+    margin-top: 9px;
+}
+
+.analytics-linecharttitle {
+    float: left;
+    width: 100%;
+    color: #535353;
+    font-size: 11px;
+    font-weight: 600;
+    padding-left: 18px;
+    margin-top: 12px;
+}
+
+.analytics-linechartnum {
+    float: left;
+    color: #02A3DE;
+    font-weight: 600;
+    padding-left: 18px;
+    width: 44px;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.analytics-linechartback {
+    float: left;
+    width: 100%;
+    background: #EEEEEE;
+    height: 10px;
+    position: relative;
+}
+
+.analytics-linechartfront {
+    float: left;
+    width: 100%;
+    background: #02A3DE;
+    height: 10px;
+    position: relative;
+    margin-top: -10px;
+}
+
+.analytics-linechartview {
+    float: left;
+    width: 100px;
+    height: 28px;
+    background: #303749;
+    text-align: center;
+    line-height: 28px;
+    font-size: 10px;
+    margin-left: 18px;
+    margin-top: 17px;
+    color: #FFFFFF;
+    letter-spacing: 0.6px;
+}
+
+.analytics-footer {
+    width: 100%;
+    height: 72px;
+    background: #F9F9F7;
+}
+
+ul.userinfo-tagslist {
+
+}
+
+ul.userinfo-tagslist li div div:nth-child(4) {
+    width: 120px !important;
+}
+
+ul.userinfo-tagslist li .dashboard-statslist2:last-child {
+    width: calc(100% - 1050px) !important;
+    border-right: 1px solid #e3e1e0;
+}
+
+.width250 {
+    width: 250px !important;
+}
+
+.width280 {
+    width: 280px !important;
+}
+
+.width200 {
+    width: 200px !important;
+}
+
+.width120 {
+    width: 120px !important;
+}
+
+.width160 {
+    width: 160px !important;
+}
+
+.width161 {
+    width: 161px !important;
+}
+
+.width107 {
+    width: 107px !important;
+}
+
+ul.userinfo-tagslist li {
+    height: auto;
+}
+
+.userinfo-websiteslisttags {
+    display: none;
+}
+
+.userinfo-websiteslisttags div {
+    float: left;
+    width: calc(100% - 161px) !important;
+}
+
+.userinfo-websiteslisttags .dashboard-statslist1 {
+    width: 100% !important;
+    float: left;
+    background: #00A3D9 !important;
+    color: #FFFFFF !important;
+}
+
+.userinfo-websiteslisttags:nth-child(2n) .dashboard-statslist1 {
+    background: #01acde !important;
+}
+
+.userinfo-websiteslisttags .dashboard-statslist3 {
+    width: 159px !important;
+}
+
+.userinfo-websiteslisttags .dashboard-statslist3 .dashboard-switch {
+    width: 159px !important;
+}
+
+.userinfo-websiteslisttags div .dashboard-statslist1:hover {
+    color: #FFFFFF !important;
+}
+
+.userinfo-websiteslisttags:hover .dashboard-statslist1 {
+    background: #3F485D !important;
 }

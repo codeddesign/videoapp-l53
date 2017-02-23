@@ -18,7 +18,7 @@ class CampaignTransformer extends Transformer
 
     public function transform(Campaign $campaign)
     {
-        return [
+        $transformedCampaign = [
             'id'                => (int) $campaign->id,
             'name'              => $campaign->name,
             'rpm'               => (int) $campaign->rpm,
@@ -26,6 +26,14 @@ class CampaignTransformer extends Transformer
             'type'              => $campaign->type,
             'created_at_humans' => $campaign->created_at_humans,
         ];
+
+        if ($campaign->stats) {
+            $transformedCampaign = array_merge($transformedCampaign, [
+                'stats' => $campaign->stats,
+            ]);
+        }
+
+        return $transformedCampaign;
     }
 
     /**

@@ -12,6 +12,7 @@ import {
   LOCATION_BACK,
   ADD_NOTE,
   LOAD_WEBSITE_STATS,
+  LOAD_CAMPAIGN_STATS,
   LOAD_GLOBAL_OPTIONS,
   UPDATE_GLOBAL_OPTIONS,
   LOAD_REPORTS,
@@ -39,6 +40,7 @@ const state = {
     cities: []
   },
   websitesStats: [],
+  campaignStats: [],
   showLocations: 'countries',
   globalOptions: []
 }
@@ -127,6 +129,12 @@ const actions = {
   loadWebsitesStats({ commit }, account) {
     User.loadWebsiteStats(account.id).then(stats => {
       commit(LOAD_WEBSITE_STATS, stats)
+    })
+  },
+
+  loadCampaignsStats({ commit }, account) {
+    Admin.loadCampaignsStats(account.id).then(stats => {
+      commit(LOAD_CAMPAIGN_STATS, stats)
     })
   },
 
@@ -248,6 +256,10 @@ const mutations = {
 
   [LOAD_WEBSITE_STATS](state, stats) {
     state.websitesStats = stats
+  },
+
+  [LOAD_CAMPAIGN_STATS](state, stats) {
+    state.campaignStats = stats
   },
 
   [LOAD_GLOBAL_OPTIONS](state, globalOptions) {

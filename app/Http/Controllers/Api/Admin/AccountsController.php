@@ -16,7 +16,7 @@ class AccountsController extends ApiController
 {
     public function index()
     {
-        $accounts = User::with('campaigns')->get();
+        $accounts = User::with('campaigns', 'websites', 'notes')->get();
 
         $events = CampaignEvent::with('tag', 'website.user')
             ->select('campaign_id', 'tag_id', DB::raw('SUM(count) as count'))

@@ -95,29 +95,19 @@
               <div class="userinfo-websitesheader">
                 <div class="userinfo-websitestitle">ACCOUNT WEBSITES</div>
               </div>
-              <ul class="userinfo-itemlistheader">
-                <li>SUPPLIER</li>
-                <li>REQUESTS</li>
-                <li>IMPRESSIONS</li>
-                <li>FILL-RATE</li>
-                <li>ERROR-RATE</li>
-                <li>TAG DISPLAY %</li>
+              <ul class="userinfo-itemlistheader userinfo-websitelistheader">
+                <li>URL</li>
+                <li>APPROVAL</li>
                 <li>STATE</li>
               </ul>
               <!-- START ACCOUNT WEBSITES LIST -->
-              <ul class="admindashboard-dailystatslist userinfo-statslist">
+              <ul class="admindashboard-dailystatslist userinfo-statslist userinfo-websitelist">
                 <li v-for="website in websites">
                   <div>
                     <div class="dashboard-statslist1">{{ website.domain }}</div>
-                    <div class="dashboard-statslist2">{{ website.stats.tagRequests }}</div>
-                    <div class="dashboard-statslist2">{{ website.stats.impressions }}</div>
-                    <div class="dashboard-statslist2">
-                      {{ calculateFillRate(website.stats.impressions, website.stats.requests) }}
+                    <div class="dashboard-statslist2" v-bind:class="websiteApprovedClass(website)">
+                      {{ websiteApprovedStatus(website) }}
                     </div>
-                    <div class="dashboard-statslist2">
-                      {{ calculateErrorRate(website.stats.impressions, website.stats.errors) }}
-                    </div>
-                    <div class="dashboard-statslist2">17%</div>
                   </div>
                   <div class="dashboard-statslist3">
                     <div class="dashboard-switch">
@@ -132,23 +122,107 @@
           </section>
         </div>
         <div>
-          <!-- START CAMPAIGNS TAB -->
           <input name="tagmanage-tabbed" id="tagmanage-tabbed13" type="radio">
           <section>
             <h1>
-              <label for="tagmanage-tabbed13">CAMPAIGNS</label>
+              <label for="tagmanage-tabbed13">WEBSITE STATS</label>
             </h1>
             <div>
-              <p>coming soon..</p>
+              <div class="userinfo-websitesheader">
+                <div class="userinfo-websitestitle">WEBSITE STATS</div>
+              </div>
+              <ul class="userinfo-itemlistheader">
+                <li style="width:250px;">URL</li>
+                <li style="border-right:1px solid #E3E1E0">REQUESTS</li>
+                <li style="border-right:1px solid #E3E1E0">IMPRESSIONS</li>
+                <li>FILL-RATE</li>
+                <li>ERROR-RATE</li>
+                <li>WEBSITE DISPLAY %</li>
+                <li>STATE</li>
+              </ul>
+              <!-- START ACCOUNT WEBSITES LIST -->
+              <ul class="admindashboard-dailystatslist userinfo-statslist">
+                <li v-for="website in websites" style="height: auto !important;">
+                  <div>
+                    <div class="dashboard-statslist1" style="width:250px;">{{ website.domain }}</div>
+                    <div class="dashboard-statslist2">{{ website.stats.tagRequests }}</div>
+                    <div class="dashboard-statslist2">{{ website.stats.impressions }}</div>
+                    <div class="dashboard-statslist2">
+                      {{ calculateFillRate(website.stats.fills, website.stats.tagRequests) }}
+                    </div>
+                    <div class="dashboard-statslist2">
+                      {{ calculateErrorRate(website.stats.tagRequests, website.stats.errors) }}
+                    </div>
+                    <div class="dashboard-statslist2" style="width:calc(100% - 866px)">
+                      {{ calculateTagDisplayPercent(website.stats.impressions, totalWebsiteImpressions(websites)) }}
+                    </div>
+                  </div>
+                  <div class="dashboard-statslist3">
+                    <div class="dashboard-switch">
+                      <input v-bind:id="'stats' + website.id" type="checkbox" v-on:change="activateWebsite(website.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" v-bind:checked="website.approved">
+                      <label v-bind:for="'stats' + website.id" class="cmn-labelchange"></label>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <!-- END ACCOUNT WEBSITES LIST -->
             </div>
           </section>
         </div>
         <div>
-          <!-- START TAGS TAB -->
+          <!-- START CAMPAIGNS TAB -->
           <input name="tagmanage-tabbed" id="tagmanage-tabbed14" type="radio">
           <section>
             <h1>
-              <label for="tagmanage-tabbed14">TAGS</label>
+              <label for="tagmanage-tabbed14">CAMPAIGNS</label>
+            </h1>
+            <div>
+            <div class="userinfo-websitesheader">
+              <div class="userinfo-websitestitle">CAMPAIGN STATS</div>
+            </div>
+            <ul class="userinfo-itemlistheader userinfo-campaigntitle">
+              <li class="width250">CAMPAIGN NAME</li>
+              <li class="width120">PLAYER TYPE</li>
+              <li class="width120">REQUESTS</li>
+              <li class="width120">IMPRESSIONS</li>
+              <li class="width120">FILL-RATE</li>
+              <li class="width120">USE-RATE</li>
+              <li>ERROR-RATE</li>
+              <li class="width161">STATE</li>
+            </ul>
+            <ul class="admindashboard-dailystatslist userinfo-campaignlist">
+              <li v-for="campaign in campaigns">
+                <div>
+                  <div class="dashboard-statslist1 width250">{{ campaign.name }}</div>
+                  <div class="dashboard-statslist2 width120">{{ campaign.type.title}}</div>
+                  <div class="dashboard-statslist2">{{ campaign.stats.tagRequests }}</div>
+                  <div class="dashboard-statslist2">{{ campaign.stats.impressions }}</div>
+                  <div class="dashboard-statslist2 width120">
+                    {{ calculateFillRate(campaign.stats.fills, campaign.stats.tagRequests) }}
+                  </div>
+                  <div class="dashboard-statslist2 width120">
+                    {{ calculateUseRate(campaign.stats.impressions, campaign.stats.fills) }}
+                  </div>
+                  <div class="dashboard-statslist2 width120">
+                    {{ calculateErrorRate(campaign.stats.tagRequests, campaign.stats.errors) }}
+                  </div>
+                </div>
+                <div class="dashboard-statslist3">
+                  <div class="dashboard-switch">
+                    <input id="1" type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange">
+                    <label for="1" class="cmn-labelchange"></label>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+        </div>
+        <div>
+          <!-- START TAGS TAB -->
+          <input name="tagmanage-tabbed" id="tagmanage-tabbed15" type="radio">
+          <section>
+            <h1>
+              <label for="tagmanage-tabbed15">TAGS</label>
             </h1>
             <div>
               <p>coming soon..</p>
@@ -157,10 +231,10 @@
         </div>
         <div>
           <!-- START NOTES TAB -->
-          <input name="tagmanage-tabbed" id="tagmanage-tabbed15" type="radio">
+          <input name="tagmanage-tabbed" id="tagmanage-tabbed16" type="radio">
           <section>
             <h1>
-              <label for="tagmanage-tabbed15">NOTES</label>
+              <label for="tagmanage-tabbed16">NOTES</label>
             </h1>
             <div>
               <div class="userinfo-noteswrapper">
@@ -201,7 +275,6 @@
       return {
         showBankInfo: false,
         note: '',
-        websites: [],
         stats: [],
         chartData: []
       }
@@ -219,6 +292,29 @@
       addNote() {
         this.$store.dispatch('addNote', { account: this.account, note: this.note })
       },
+
+      websiteApprovedStatus(website) {
+        if (website.waiting) {
+          return 'waiting'
+        }
+
+        if (website.approved) {
+          return 'approved'
+        } else {
+          return 'denied'
+        }
+      },
+
+      websiteApprovedClass(website) {
+        return 'website' + this.websiteApprovedStatus(website)
+      },
+
+      totalWebsiteImpressions(websites) {
+        return _.sumBy(websites, (website) => {
+          return website.stats.impressions
+        })
+      },
+
       ...stats
     },
 
@@ -242,11 +338,16 @@
           })
 
         this.$store.dispatch('loadWebsitesStats', account)
+        this.$store.dispatch('loadCampaignsStats', account)
         return account
       },
 
       websites() {
         return this.$store.state.admin.websitesStats
+      },
+
+      campaigns() {
+        return this.$store.state.admin.campaignStats
       }
     },
 
