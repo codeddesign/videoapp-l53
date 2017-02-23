@@ -23,7 +23,7 @@ class WebsitesController extends ApiController
 
     public function pending()
     {
-        $pendingWebsites = Website::where('approved', false)->get();
+        $pendingWebsites = Website::where('waiting', true)->get();
 
         return $this->collectionResponse($pendingWebsites, new WebsiteTransformer);
     }
