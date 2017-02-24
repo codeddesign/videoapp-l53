@@ -66,7 +66,7 @@ class Tag extends Model
         'excluded_websites'  => 'array',
     ];
 
-    public static function forRequest(array $location, $referer)
+    public static function forRequest(array $location, $websiteId)
     {
         /** @var Repository $cache */
         $cache = app(Repository::class);
@@ -82,8 +82,6 @@ class Tag extends Model
                         ->where('end_date', '>=', $date);
                 })->get();
         });
-
-        $websiteId = Website::idByLink($referer);
 
         $tags = $cache->tags(['tags'])->remember("tags.website.{$websiteId}", 60, function () use ($tags, $websiteId) {
             return $tags->filter(function ($tag) use ($websiteId) {
