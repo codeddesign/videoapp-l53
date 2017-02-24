@@ -12,8 +12,7 @@ export default {
           console.log('logout')
           auth.logout()
         } else {
-          // TODO: Maybe we should handle the other error codes differently?
-          auth.logout()
+          console.error("Failed to get user's info")
         }
       })
   },
