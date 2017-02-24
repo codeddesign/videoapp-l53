@@ -60,7 +60,6 @@
       <li>REQUESTS</li>
       <li>IMPRESSIONS</li>
       <li>REQ FILL %</li>
-      <li>PV FILL %</li>
       <li>ERROR-RATE</li>
       <li>ECPM</li>
       <li>REVENUE</li>
@@ -85,10 +84,6 @@
           <div class="dashboard-statslist2 dashboardadmin-statslist2">
             {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
             <span v-html="showComparePercent(tag, 'errorRate')"></span>
-          </div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ calculateTagDisplayPercent(tag.stats.impressions, totalTagImpressions(tags)) }}
-            <span v-html="showComparePercent(tag, 'tagDisplay')"></span>
           </div>
           <div class="dashboard-statslist2 dashboardadmin-statslist2">
             {{ presentRevenue(tag.ecpm) }}
