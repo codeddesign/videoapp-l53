@@ -343,40 +343,5 @@
         </form>
     </div>
 </div>
-<footer>
-    <div class="footerwrap">
-        <div class="footerleft">
-            <div class="footerlogo"></div>
-            <div class="footercopy">&copy; 2016, ad3media.com</div>
-        </div>
-        <div class="footerright">
-            <ul>
-                <li>FEATURES</li>
-                <li>MONETIZATION</li>
-                <li>WP PLUGIN</li>
-                <li>DEVELOPER API</li>
-            </ul>
-            <ul>
-                <li>ADVERTISERS</li>
-                <li>LEARN MORE</li>
-            </ul>
-            <ul>
-                <li>PUBLISHERS</li>
-                <li>PRICING</li>
-                <li>SIGN UP</li>
-            </ul>
-            <ul>
-                <li>COMPANY</li>
-                <li>ABOUT</li>
-            </ul>
-            <ul>
-                <li>CONTACT</li>
-                <li>SUPPORT</li>
-            </ul>
-        </div>
-    </div>
-</footer>
 
-</body>
-
-</html>
+@include('home.footer')
