@@ -1537,6 +1537,11 @@ ul.dashboard-dailystatslist li, ul.admindashboard-dailystatslist li {
     text-transform: uppercase;
 }
 
+.dashboardadmin-statslist1 {
+    /*width: 12.5%*/
+    width: 14.5%;
+}
+
 ul.dashboard-dailystatslist li:nth-child(2n) .dashboard-statslist1 {
     background: #615E8F;
 }
@@ -1554,6 +1559,11 @@ ul.admindashboard-dailystatslist li:nth-child(2n) .dashboard-statslist1 {
     height: 40px;
     background: #FFFFFF;
     text-transform: uppercase;
+}
+
+.dashboardadmin-statslist2 {
+    /*width: 12.5%*/
+    width: 9.5%;
 }
 
 .dashboard-statslist3 {
@@ -2197,7 +2207,7 @@ ul.admindashboard-dailystatstitles {
 }
 
 ul.admindashboard-dailystatstitles li {
-    width: 12.5%;
+    width: 9.5%;
     background: #F5F5F4;
     border-right: 1px solid #E3E1E0;
     font-size: 10px;
@@ -2207,6 +2217,10 @@ ul.admindashboard-dailystatstitles li {
     float: left;
     height: 40px;
     list-style-type: none;
+}
+
+ul.admindashboard-dailystatstitles li:first-child {
+    width: 14.5%;
 }
 
 ul.admindashboard-dailystatstitles li:last-child {

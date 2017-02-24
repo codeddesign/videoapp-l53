@@ -136,7 +136,7 @@
 </template>
 
 <script>
-  import TagList from './tags/TagList.vue'
+  import TagList from './DashboardTagList.vue'
   import Stats from '../dashboard/components/Stats.vue'
   import LineBarChart from '../dashboard/components/LineBarChart.vue'
   import SparkChart from './SparkChart.vue'
@@ -221,8 +221,6 @@
       },
 
       ecpm() {
-        // we calculate the revenue again to get the raw
-        // value instead of the formatted currency
         return this.calculateEcpm(this.impressions, this.revenue)
       },
 
