@@ -99,6 +99,8 @@ class Tag extends Model
                 if (count($tag->included_websites) > 0) {
                     return in_array($websiteId, $tag->included_websites);
                 }
+
+                return true;
             });
         });
 
