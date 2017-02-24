@@ -117,7 +117,15 @@ class StatsTransformer
     {
         $data = collect($this->transformSumAll($stats));
 
-        $data = $data->map(function ($item) use ($count) {
+        if ($count === 1) {
+            return $data;
+        }
+
+        $data = $data->map(function ($item, $key) use ($count) {
+            if ($key === 'revenue') {
+                return Calculator::decimals($item / $count);
+            }
+
             return round($item / $count);
         });
 

@@ -24,6 +24,7 @@ class TagsController extends ApiController
 
         if ($compareRange) {
             $stats = CampaignEvent::query()
+                ->with('tag')
                 ->select('name', 'tag_id', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
                 ->where('tag_id', '!=', null)
                 ->where('name', '!=', 'viewership')
