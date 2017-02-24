@@ -75,6 +75,12 @@
             </li>
           </router-link>
 
+          <router-link :to="{ name: 'admin.analytics'}">
+            <li>
+              <span>ANALYTICS</span>
+            </li>
+          </router-link>
+
           <router-link :to="{ name: 'admin.settings'}">
             <li>
               <span>SETTINGS</span>

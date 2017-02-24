@@ -17,6 +17,7 @@ import Logout from './views/components/Logout.vue'
 import Admin from './views/admin/Admin.vue'
 import AdminDashboard from './views/admin/Dashboard.vue'
 import AdminAccounts from './views/admin/Accounts.vue'
+import AdminAnalytics from './views/admin/Analytics.vue'
 import AccountInfo from './views/admin/AccountInfo.vue'
 import TagManagement from './views/admin/tags/TagManagement.vue'
 import Reports from './views/admin/reports/Reports.vue'
@@ -124,6 +125,14 @@ export default new Router({
           component: Reports,
           meta: {
             title: 'Reports'
+          }
+        },
+        {
+          path: 'analytics',
+          name: 'admin.analytics',
+          component: AdminAnalytics,
+          meta: {
+            title: 'Analytics'
           }
         },
         {
