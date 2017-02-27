@@ -19,26 +19,26 @@ class AccountsController extends ApiController
         $accounts = User::with('campaigns', 'websites', 'notes')->get();
 
         $events = CampaignEvent::with('tag', 'website.user')
-            ->select('campaign_id', 'tag_id', DB::raw('SUM(count) as count'))
+            ->select('website_id', 'tag_id', DB::raw('SUM(count) as count'))
             ->where('name', 'impressions')
             ->where('tag_id', '!=', null)
-            ->where('campaign_id', '!=', null)
+            ->where('website_id', '!=', null)
             ->timeRange('thirtyDays', $this->user->timezone)
-            ->groupBy('campaign_id', 'tag_id')
+            ->groupBy('website_id', 'tag_id')
             ->get()
-            ->groupBy('campaign_id');
+            ->groupBy('website_id');
 
-        //Calculate revenue per campaign
-        $campaignsRevenue = $events->map(function ($campaignEvents) {
+        //Calculate revenue per website
+        $websitesRevenue = $events->map(function ($campaignEvents) {
             return $campaignEvents->sum(function ($event) {
                 return Calculator::revenue($event->count, $event->tag);
             });
         });
 
-        //Sum the users campaigns revenue
-        $accounts->map(function ($account) use ($campaignsRevenue) {
-            $account->revenue = $account->campaigns->pluck('id')->sum(function ($id) use ($campaignsRevenue) {
-                return $campaignsRevenue[$id] ?? 0;
+        //Sum the users websites revenue
+        $accounts->map(function ($account) use ($websitesRevenue) {
+            $account->revenue = $account->websites->pluck('id')->sum(function ($id) use ($websitesRevenue) {
+                return $websitesRevenue[$id] ?? 0;
             });
 
             return $account;
