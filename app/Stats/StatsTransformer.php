@@ -113,6 +113,12 @@ class StatsTransformer
         return $data;
     }
 
+    /**
+     * @param \Illuminate\Support\Collection $stats
+     * @param                                $count
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function sumAllAndAverage(Collection $stats, $count)
     {
         $data = collect($this->transformSumAll($stats));

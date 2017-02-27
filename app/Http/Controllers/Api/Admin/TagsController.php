@@ -33,12 +33,20 @@ class TagsController extends ApiController
                 ->get()
                 ->groupBy('tag_id');
 
+            $pageViews = CampaignEvent::query()
+                ->select(DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
+                ->groupBy(DB::raw('created_at::date'))
+                ->whereIn('name', ['desktopPageviews', 'mobilePageviews'])
+                ->timeRange($compareRange, $this->user->timezone)
+                ->first()->count ?? 0;
+
             $days  = DateRange::byName($compareRange)->days() ?: 1;
 
             $statsTransformer = new StatsTransformer;
 
             foreach ($tags as $tag) {
                 $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days);
+                $tag->stats->put('pageviews', $pageViews);
             }
         }
 
