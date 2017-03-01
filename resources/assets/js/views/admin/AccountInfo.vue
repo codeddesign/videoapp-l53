@@ -176,7 +176,6 @@
             <h1>
               <label for="tagmanage-tabbed14">CAMPAIGNS</label>
             </h1>
-            <div>
             <div class="userinfo-websitesheader">
               <div class="userinfo-websitestitle">CAMPAIGN STATS</div>
             </div>

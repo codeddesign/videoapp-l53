@@ -1,56 +1,55 @@
 <template>
-  <div>
-    <!-- EDIT TAGS PLATFORM SELECT -->
-    <div class="admindash-supplierwrapper">
-      <div class="admindash-dailystatstitle">SUPPLIER ANALYTICS</div>
+  <!-- EDIT TAGS PLATFORM SELECT -->
+  <div class="admindash-supplierwrapper">
+    <div class="admindash-dailystatstitle">SUPPLIER ANALYTICS</div>
 
-      <div class="admindash-suppliercompare">
-        <div class="admindash-suppliercomparetitle">Compare to:</div>
-        <div class="admindash-supplierdroplist">
-          <select v-model="compareTagsRange">
-            <option v-for="compareRange in compareRangeOptions" v-bind:value="compareRange.value">
-              {{ compareRange.text }}
-            </option>
-          </select>
-          <div class="admindash-supplierdroparrow"></div>
-        </div>
-      </div>
-
-      <div class="admindash-suppliercompare">
-        <div class="admindash-suppliercomparetitle">Platform:</div>
-        <div class="admindash-supplierdroplist">
-          <select v-model="filters['platform']">
-            <option value="all">All</option>
-            <option value="desktop">Desktop</option>
-            <option value="mobile">Mobile</option>
-          </select>
+    <div class="admindash-suppliercompare">
+      <div class="admindash-suppliercomparetitle">Compare to:</div>
+      <div class="admindash-supplierdroplist">
+        <select v-model="compareTagsRange">
+          <option v-for="compareRange in compareRangeOptions" v-bind:value="compareRange.value">
+            {{ compareRange.text }}
+          </option>
+        </select>
         <div class="admindash-supplierdroparrow"></div>
-        </div>
       </div>
+    </div>
 
-      <div class="admindash-suppliercompare">
-        <div class="admindash-suppliercomparetitle">Active:</div>
-        <div class="admindash-supplierdroplist">
-          <select v-model="filters['active']">
-            <option value="all">All</option>
-            <option value="true">Active</option>
-            <option value="false">Inactive</option>
-          </select>
-        <div class="admindash-supplierdroparrow"></div>
-        </div>
+    <div class="admindash-suppliercompare">
+      <div class="admindash-suppliercomparetitle">Platform:</div>
+      <div class="admindash-supplierdroplist">
+        <select v-model="filters['platform']">
+          <option value="all">All</option>
+          <option value="desktop">Desktop</option>
+          <option value="mobile">Mobile</option>
+        </select>
+      <div class="admindash-supplierdroparrow"></div>
       </div>
+    </div>
 
-      <div class="admindash-suppliercompare">
-        <div class="admindash-suppliercomparetitle">Type:</div>
-        <div class="admindash-supplierdroplist">
-          <select v-model="filters['type']">
-            <option value="all">All</option>
-            <option value="instream">Instream</option>
-            <option value="outstream">Outstream</option>
-          </select>
-        <div class="admindash-supplierdroparrow"></div>
-        </div>
+    <div class="admindash-suppliercompare">
+      <div class="admindash-suppliercomparetitle">Active:</div>
+      <div class="admindash-supplierdroplist">
+        <select v-model="filters['active']">
+          <option value="all">All</option>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+      <div class="admindash-supplierdroparrow"></div>
       </div>
+    </div>
+
+    <div class="admindash-suppliercompare">
+      <div class="admindash-suppliercomparetitle">Type:</div>
+      <div class="admindash-supplierdroplist">
+        <select v-model="filters['type']">
+          <option value="all">All</option>
+          <option value="instream">Instream</option>
+          <option value="outstream">Outstream</option>
+        </select>
+      <div class="admindash-supplierdroparrow"></div>
+      </div>
+    </div>
 
     <!-- CAMPAIGN SELECTION AREA -->
     <ul class="admindashboard-dailystatstitles">
@@ -65,33 +64,33 @@
       <li>REVENUE</li>
     </ul>
     <ul class="admindashboard-dailystatslist">
-        <li v-for="tag in showTags">
-          <div class="dashboard-statslist1 dashboardadmin-statslist1">{{ tag.advertiser }}</div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.platform_type }}</div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.ad_type }}</div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ tag.stats.tagRequests }}
-            <span v-html="showComparePercent(tag, 'requests')"></span>
-          </div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ tag.stats.impressions }}
-            <span v-html="showComparePercent(tag, 'impressions')"></span>
-          </div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ calculateFillRate(tag.stats.fills, tag.stats.tagRequests) }}
-            <span v-html="showComparePercent(tag, 'fillRate')"></span>
-          </div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
-            <span v-html="showComparePercent(tag, 'errorRate')"></span>
-          </div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ presentRevenue(tag.ecpm) }}
-          </div>
-          <div class="dashboard-statslist2 dashboardadmin-statslist2">
-            {{ presentRevenue(tag.stats.revenue) }}
-          </div>
-        </li>
+      <li v-for="tag in showTags">
+        <div class="dashboard-statslist1 dashboardadmin-statslist1">{{ tag.advertiser }}</div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.platform_type }}</div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.ad_type }}</div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ tag.stats.tagRequests }}
+          <span v-html="showComparePercent(tag, 'requests')"></span>
+        </div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ tag.stats.impressions }}
+          <span v-html="showComparePercent(tag, 'impressions')"></span>
+        </div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ calculateFillRate(tag.stats.fills, tag.stats.tagRequests) }}
+          <span v-html="showComparePercent(tag, 'fillRate')"></span>
+        </div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
+          <span v-html="showComparePercent(tag, 'errorRate')"></span>
+        </div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ presentRevenue(tag.ecpm) }}
+        </div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ presentRevenue(tag.stats.revenue) }}
+        </div>
+      </li>
     </ul>
     <div class="understatlist-wrapper">
       <div class="dashpagination-wrapper">

@@ -52,7 +52,7 @@
                   <label for="video_size">VIDEO SIZE</label>
 
                   <select id="video_size" class="yt-uix-form-input-select-element" required v-model="campaign.size">
-                    <option v-for="(key, value) in sizes" :value="key" :selected="campaign.size==key">{{value | capitalize }}</optgroup>
+                    <option v-for="(key, value) in sizes" :value="key" :selected="campaign.size==key">{{value | capitalize }}</option>
                   </select>
                 </div>
 
