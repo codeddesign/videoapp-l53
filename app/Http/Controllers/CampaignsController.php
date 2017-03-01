@@ -41,7 +41,12 @@ class CampaignsController extends Controller
 
         $location = Location::byIp($ip);
 
-        $tags = Tag::forRequest($location, $websiteId);
+        if ($request->get('test'))
+        {
+            $tags = [Tag::findOrFail($request->get('test'))];
+        } else {
+            $tags = Tag::forRequest($location, $websiteId);
+        }
 
         Datadogstatsd::increment('video-app.campaign_request', 1);
 
