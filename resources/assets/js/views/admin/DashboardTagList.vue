@@ -71,11 +71,9 @@
         <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.ad_type }}</div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ tag.stats.tagRequests }}
-          <span v-html="showComparePercent(tag, 'requests')"></span>
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ tag.stats.impressions }}
-          <span v-html="showComparePercent(tag, 'impressions')"></span>
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ calculateFillRate(tag.stats.fills, tag.stats.tagRequests) }}
