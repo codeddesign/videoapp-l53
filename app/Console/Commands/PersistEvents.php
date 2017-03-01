@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\AnalyticsEvents;
-use App\Services\CampaignEvents;
+use App\Jobs\PersistEvents as PersistEventsJob;
 
 class PersistEvents extends Command
 {
@@ -36,15 +35,6 @@ class PersistEvents extends Command
      */
     public function handle()
     {
-        $campaignEvents = new CampaignEvents;
-        $events = $campaignEvents->persistRedisData();
-
-        $analyticsEvents = new AnalyticsEvents;
-        $events->merge($analyticsEvents->persistRedisData());
-
-        $message = "{$events->sum('count')} events saved.";
-
-        $this->log($message);
-        $this->info($message);
+        dispatch(new PersistEventsJob);
     }
 }
