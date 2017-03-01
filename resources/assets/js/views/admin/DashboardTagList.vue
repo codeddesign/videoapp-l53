@@ -59,6 +59,7 @@
       <li>REQUESTS</li>
       <li>IMPRESSIONS</li>
       <li>REQ FILL %</li>
+      <li>PV FILL %</li>
       <li>ERROR-RATE</li>
       <li>ECPM</li>
       <li>REVENUE</li>
@@ -79,6 +80,9 @@
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ calculateFillRate(tag.stats.fills, tag.stats.tagRequests) }}
           <span v-html="showComparePercent(tag, 'fillRate')"></span>
+        </div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">
+          {{ calculateFillRate(tag.stats.fills, tag.stats.pageviews) }}
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
