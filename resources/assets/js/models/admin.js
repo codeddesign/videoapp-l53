@@ -23,7 +23,7 @@ export default {
   },
 
   activateAccount(id, status) {
-    return axios.post('/admin/accounts/' + id + '/activate?include=campaigns', {
+    return axios.post('/admin/accounts/' + id + '/activate?include=campaigns,websites,notes', {
       status: status
     })
     .then((response) => {

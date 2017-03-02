@@ -4,8 +4,8 @@
       <div class="userinfo-returntosearch" @click="goBack()">RETURN TO SEARCH</div>
       <div class="userinfo-useractivate">
         <div class="userinfo-activatetitle">ACCOUNT ACTIVATION</div>
-        <div class="userinfo-activateoff"></div>
-        <div class="userinfo-activateon"></div>
+        <div @click="activateAccount(account.id, false)" class="userinfo-activateoff"></div>
+        <div @click="activateAccount(account.id, true)" class="userinfo-activateon"></div>
       </div>
     </div>
 
@@ -72,9 +72,12 @@
 
         <div class="userinfo-addtllinkswrap">
           <ul class="userinfo-addtllinks">
-            <li>MANAGE TAGS</li>
-            <li>VIEW ANALYTICS</li>
-            <li>RUN REPORT</li>
+            <router-link :to="{ name: 'admin.analytics'}">
+              <li>VIEW ANALYTICS</li>
+            </router-link>
+            <router-link :to="{ name: 'admin.reports'}">
+              <li>RUN REPORT</li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -176,55 +179,45 @@
             <h1>
               <label for="tagmanage-tabbed14">CAMPAIGNS</label>
             </h1>
-            <div class="userinfo-websitesheader">
-              <div class="userinfo-websitestitle">CAMPAIGN STATS</div>
-            </div>
-            <ul class="userinfo-itemlistheader userinfo-campaigntitle">
-              <li class="width250">CAMPAIGN NAME</li>
-              <li class="width120">PLAYER TYPE</li>
-              <li class="width120">REQUESTS</li>
-              <li class="width120">IMPRESSIONS</li>
-              <li class="width120">FILL-RATE</li>
-              <li class="width120">USE-RATE</li>
-              <li>ERROR-RATE</li>
-              <li class="width161">STATE</li>
-            </ul>
-            <ul class="admindashboard-dailystatslist userinfo-campaignlist">
-              <li v-for="campaign in campaigns">
-                <div>
-                  <div class="dashboard-statslist1 width250">{{ campaign.name }}</div>
-                  <div class="dashboard-statslist2 width120">{{ campaign.type.title}}</div>
-                  <div class="dashboard-statslist2">{{ campaign.stats.tagRequests }}</div>
-                  <div class="dashboard-statslist2">{{ campaign.stats.impressions }}</div>
-                  <div class="dashboard-statslist2 width120">
-                    {{ calculateFillRate(campaign.stats.fills, campaign.stats.tagRequests) }}
-                  </div>
-                  <div class="dashboard-statslist2 width120">
-                    {{ calculateUseRate(campaign.stats.impressions, campaign.stats.fills) }}
-                  </div>
-                  <div class="dashboard-statslist2 width120">
-                    {{ calculateErrorRate(campaign.stats.tagRequests, campaign.stats.errors) }}
-                  </div>
-                </div>
-                <div class="dashboard-statslist3">
-                  <div class="dashboard-switch">
-                    <input id="1" type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange">
-                    <label for="1" class="cmn-labelchange"></label>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </section>
-        </div>
-        <div>
-          <!-- START TAGS TAB -->
-          <input name="tagmanage-tabbed" id="tagmanage-tabbed15" type="radio">
-          <section>
-            <h1>
-              <label for="tagmanage-tabbed15">TAGS</label>
-            </h1>
             <div>
-              <p>coming soon..</p>
+              <div class="userinfo-websitesheader">
+                <div class="userinfo-websitestitle">CAMPAIGN STATS</div>
+              </div>
+              <ul class="userinfo-itemlistheader userinfo-campaigntitle">
+                <li class="width250">CAMPAIGN NAME</li>
+                <li class="width120">PLAYER TYPE</li>
+                <li class="width120">REQUESTS</li>
+                <li class="width120">IMPRESSIONS</li>
+                <li class="width120">FILL-RATE</li>
+                <li class="width120">USE-RATE</li>
+                <li>ERROR-RATE</li>
+                <li class="width161">STATE</li>
+              </ul>
+              <ul class="admindashboard-dailystatslist userinfo-campaignlist">
+                <li v-for="campaign in campaigns">
+                  <div>
+                    <div class="dashboard-statslist1 width250">{{ campaign.name }}</div>
+                    <div class="dashboard-statslist2 width120">{{ playerTypeShort(campaign.type.title) }}</div>
+                    <div class="dashboard-statslist2">{{ campaign.stats.tagRequests }}</div>
+                    <div class="dashboard-statslist2">{{ campaign.stats.impressions }}</div>
+                    <div class="dashboard-statslist2 width120">
+                      {{ calculateFillRate(campaign.stats.fills, campaign.stats.tagRequests) }}
+                    </div>
+                    <div class="dashboard-statslist2 width120">
+                      {{ calculateUseRate(campaign.stats.impressions, campaign.stats.fills) }}
+                    </div>
+                    <div class="dashboard-statslist2 width120">
+                      {{ calculateErrorRate(campaign.stats.tagRequests, campaign.stats.errors) }}
+                    </div>
+                  </div>
+                  <div class="dashboard-statslist3">
+                    <div class="dashboard-switch">
+                      <input id="1" type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange">
+                      <label for="1" class="cmn-labelchange"></label>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </section>
         </div>
@@ -304,6 +297,15 @@
         }
       },
 
+      activateAccount(id, status) {
+        this.$store.dispatch('activateUser', {
+          id: id,
+          status: status
+        })
+        let statusInfo = status ? 'activated' : 'deactivated'
+        window.alert('Account ' + statusInfo)
+      },
+
       websiteApprovedClass(website) {
         return 'website' + this.websiteApprovedStatus(website)
       },
@@ -312,6 +314,10 @@
         return _.sumBy(websites, (website) => {
           return website.stats.impressions
         })
+      },
+
+      playerTypeShort(playerType) {
+        return playerType.replace('Display', '')
       },
 
       ...stats
