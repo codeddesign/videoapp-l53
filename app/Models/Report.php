@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property array      $filter
  * @property array      $included_metrics
  * @property int        $user_id
- * @property bool    $deletable
+ * @property bool       $deletable
  * @property Carbon     $last_generated_at
  * @property Carbon     $created_at
  * @property Carbon     $updated_at
@@ -30,7 +30,6 @@ use Illuminate\Database\Eloquent\Collection;
  * Relationships
  *
  * @property User       $user
- * @property Collection $jobs
  */
 class Report extends Model
 {
@@ -58,11 +57,6 @@ class Report extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function jobs()
-    {
-        return $this->hasMany(ReportJob::class);
     }
 
     public function spreadsheetHeader($stats)
