@@ -76,12 +76,24 @@ export default {
       timeout_limit: '',
       daily_request_limit: '',
       wrapper_limit: '',
+      infinity_timeout_limit: '',
+      infinity_daily_request_limit: '',
+      infinity_wrapper_limit: '',
       guarantee_limit: '',
       guarantee_order: '1',
       guarantee_enabled: false,
       ecpm: '',
       delay_time: '',
-      priority_count: ''
+      priority_count: '',
+      demo_data: {
+        platform_type: 'all',
+        ad_type: 'all',
+        campaign_type: 'all',
+        timeout_limit: '',
+        wrapper_limit: '',
+        delay_time: '',
+        session_max_requests: ''
+      }
     }
   }
 }

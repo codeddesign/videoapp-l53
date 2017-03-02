@@ -15,7 +15,6 @@ class PersistEvents extends Job implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
      */
     public function __construct()
     {
@@ -38,5 +37,4 @@ class PersistEvents extends Job implements ShouldQueue
 
         $this->log($message);
     }
-
 }

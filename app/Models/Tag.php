@@ -23,7 +23,6 @@ use Illuminate\Redis\RedisManager;
  * @property Carbon $start_date
  * @property Carbon $end_date
  * @property int    $daily_request_limit
- * @property int    $delay_time
  * @property int    $ecpm
  * @property int    $guarantee_limit
  * @property int    $guarantee_order
@@ -31,6 +30,10 @@ use Illuminate\Redis\RedisManager;
  * @property int    $priority_count
  * @property int    $timeout_limit
  * @property int    $wrapper_limit
+ * @property int    $delay_time
+ * @property int    $infinity_timeout_limit
+ * @property int    $infinity_wrapper_limit
+ * @property int    $infinity_delay_time
  * @property bool   $active
  * @property array  $included_locations
  * @property array  $excluded_locations
@@ -49,7 +52,8 @@ class Tag extends Model
         'ad_type', 'date_range', 'start_date', 'end_date', 'daily_request_limit',
         'delay_time', 'ecpm', 'guarantee_limit', 'guarantee_order', 'guarantee_enabled',
         'priority_count', 'timeout_limit', 'wrapper_limit', 'active', 'included_locations',
-        'excluded_locations', 'included_websites', 'excluded_websites',
+        'excluded_locations', 'included_websites', 'excluded_websites', 'infinity_timeout_limit',
+        'infinity_wrapper_limit', 'infinity_delay_time', 'demo_data',
     ];
 
     protected $dates = [
@@ -64,6 +68,7 @@ class Tag extends Model
         'excluded_locations' => 'array',
         'included_websites'  => 'array',
         'excluded_websites'  => 'array',
+        'demo_data'          => 'array',
     ];
 
     public static function forRequest(array $location, $websiteId)

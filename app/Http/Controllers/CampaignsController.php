@@ -41,8 +41,7 @@ class CampaignsController extends Controller
 
         $location = Location::byIp($ip);
 
-        if ($request->get('test'))
-        {
+        if ($request->get('test')) {
             $tags = [Tag::findOrFail($request->get('test'))];
         } else {
             $tags = Tag::forRequest($location, $websiteId);

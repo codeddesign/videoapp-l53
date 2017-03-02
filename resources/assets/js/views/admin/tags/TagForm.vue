@@ -118,6 +118,21 @@
 
       <div class="tagcreate-formbg">
         <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+          <div class="tagcreate-fullinnertitle">INFINITY TIMEOUT LIMIT</div>
+          <input v-model="tag['infinity_timeout_limit']" class="tagcreate-longinput" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">INFINITY WRAPPER LIMIT</div>
+          <input v-model="tag['infinity_wrapper_limit']" class="tagcreate-longinput" placeholder="0">
+        </div>
+        <div class="tagcreate-quarterinnerwrap">
+          <div class="tagcreate-fullinnertitle">INFINITY DELAY TIME</div>
+          <input v-model="tag['infinity_delay_time']" class="tagcreate-longinput" placeholder="0">
+        </div>
+      </div>
+
+      <div class="tagcreate-formbg">
+        <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
           <div class="tagcreate-fullinnertitle">DAILY REQUEST LIMIT</div>
           <input class="tagcreate-longinput" v-model="tag['daily_request_limit']" placeholder="0">
         </div>
@@ -305,10 +320,10 @@
         <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
           <div class="tagcreate-fullinnertitle">PLATFORM TYPE</div>
           <div class="tagcreate-selectwrap">
-            <select class="tagcreate-dropdown">
-              <option value="">All</option>
-              <option value="">Desktop</option>
-              <option value="">Mobile</option>
+            <select v-model="tag['demo_data']['platform_type']" class="tagcreate-dropdown">
+              <option value="all">All</option>
+              <option value="desktop">Desktop</option>
+              <option value="mobile">Mobile</option>
             </select>
             <div class="tagcreate-selectarrow"></div>
           </div>
@@ -317,10 +332,10 @@
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">AD TYPE</div>
           <div class="tagcreate-selectwrap">
-            <select class="tagcreate-dropdown">
-              <option value="">All</option>
-              <option value="">Instream</option>
-              <option value="">Outstream</option>
+            <select v-model="tag['demo_data']['ad_type']" class="tagcreate-dropdown">
+              <option value="all">All</option>
+              <option value="instream">Instream</option>
+              <option value="outstream">Outstream</option>
             </select>
             <div class="tagcreate-selectarrow"></div>
           </div>
@@ -329,10 +344,10 @@
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">CAMPAIGN TYPE</div>
           <div class="tagcreate-selectwrap">
-            <select class="tagcreate-dropdown">
-              <option value="">All</option>
-              <option value="">On-scroll</option>
-              <option value="">Infinity</option>
+            <select v-model="tag['demo_data']['campaign_type']" class="tagcreate-dropdown">
+              <option value="all">All</option>
+              <option value="onscroll">On-scroll</option>
+              <option value="infinity">Infinity</option>
             </select>
             <div class="tagcreate-selectarrow"></div>
           </div>
@@ -344,22 +359,22 @@
 
         <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
           <div class="tagcreate-fullinnertitle">TIMEOUT LIMIT</div>
-          <input class="tagcreate-longinput" value="" placeholder="0">
+          <input v-model="tag['demo_data']['timeout_limit']" class="tagcreate-longinput" placeholder="0">
         </div>
 
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">WRAPPER LIMIT</div>
-          <input class="tagcreate-longinput" value="" placeholder="0">
+          <input v-model="tag['demo_data']['wrapper_limit']" class="tagcreate-longinput" placeholder="0">
         </div>
 
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">DELAY TIME</div>
-          <input class="tagcreate-longinput" value="" placeholder="0">
+          <input v-model="tag['demo_data']['delay_time']" class="tagcreate-longinput" placeholder="0">
         </div>
 
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">SESSION MAX REQUESTS</div>
-          <input class="tagcreate-longinput" value="" placeholder="0">
+          <input v-model="tag['demo_data']['session_max_requests']" class="tagcreate-longinput" placeholder="0">
         </div>
 
       </div><!-- END .tagcreate-formbg -->
@@ -416,7 +431,7 @@
         tag: _.cloneDeep(this.$store.state.admin.currentTag),
         macros: [
           'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
-          'USER_AGE', 'USER_COUNTRY', 'TIME', 'DATE', 'MEDIA_ID'
+          'DATE', 'MEDIA_ID', 'USER_AGENT', 'CAMPAIGN_ID', 'TIMESTAMP'
         ],
         geoFilter: '',
         include: true,
