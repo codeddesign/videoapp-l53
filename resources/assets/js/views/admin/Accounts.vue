@@ -18,6 +18,7 @@
                       <option value="first_name">First Name</option>
                       <option value="last_name">Last Name</option>
                       <option value="created_at_humans">Since Date</option>
+                      <option value="website">Website</option>
                   </select>
                   <div class="campview-selectarrow"></div>
               </div>
@@ -44,7 +45,6 @@
                   <div class="campview-droptitle">MAX</div>
                   <input v-model="filters[1]['max']" type="text" name="max">
               </div>
-              <button>SEARCH</button>
           </div>
       </form>
       <!-- END DROP FORM -->
@@ -150,12 +150,23 @@
         let filteredAccounts = this.accounts
 
         if (this.valueFilterSet) {
-          filteredAccounts = filteredAccounts.filter((account) => {
-            return _.includes(
-              account[this.filters[0]['option']].toLowerCase(),
-              this.filters[0]['value'].toLowerCase()
-            )
-          })
+          if (this.filters[0]['option'] === 'website') {
+            filteredAccounts = filteredAccounts.filter((account) => {
+              return account.websites.data.filter((website) => {
+                return _.includes(
+                  website.domain,
+                  this.filters[0]['value'].toLowerCase()
+                )
+              }).length > 0
+            })
+          } else {
+            filteredAccounts = filteredAccounts.filter((account) => {
+              return _.includes(
+                account[this.filters[0]['option']].toLowerCase(),
+                this.filters[0]['value'].toLowerCase()
+              )
+            })
+          }
         }
 
         if (this.rangeFilterSet) {
