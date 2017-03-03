@@ -24,7 +24,7 @@ class DateRange
     {
         $step = $step ?: $this->defaultStep();
 
-        $dateRange = new DatePeriod($this->from, $step, $this->to);
+        $dateRange = new DatePeriod($this->from->tz('UTC'), $step, $this->to->tz('UTC'));
 
         // Convert the DatePeriod into a plain array of Carbon objects
         $range = new Collection;
@@ -34,7 +34,7 @@ class DateRange
 
             //if the time is delayed, use the next hour
             if ($date->second !== 0) {
-                $date->addHour()->second(0);
+                //$date->addHour()->second(0);
             }
 
             $range->push($date);

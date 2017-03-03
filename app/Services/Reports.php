@@ -168,15 +168,12 @@ class Reports
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    protected function campaignEvents(Report $report)
+    public function campaignEvents(Report $report)
     {
-        $dateRange = $report->dateRange();
-
         $stats = CampaignEvent::query()
-            ->select('name', 'tag_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
             ->with('tag', 'website')
-            ->groupBy('name', 'tag_id', 'website_id', 'status')
-            ->timeRange($dateRange, $report->user->timezone);
+            ->select('name', 'tag_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
+            ->groupBy('name', 'tag_id', 'website_id', 'status');
 
         $stats = $report->filterQuery($stats);
 

@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Admin\StoreReportRequest;
 use App\Jobs\ProcessReport;
 use App\Models\Report;
 use App\Services\Reports;
+use App\Stats\StatsTransformer;
 use App\Transformers\ReportTransformer;
 use Illuminate\Http\Request;
 
@@ -27,19 +28,8 @@ class ReportsController extends ApiController
 
         $tagStats = $reportsService->stats($report, false);
 
-        $allStats = [
-            'requests'    => 0,
-            'impressions' => 0,
-            'fills'       => 0,
-            'ad_errors'   => 0,
-        ];
-
-        foreach ($tagStats as $tag) {
-            $allStats['requests'] += $tag['requests'];
-            $allStats['impressions'] += $tag['impressions'];
-            $allStats['fills'] += $tag['fills'];
-            $allStats['ad_errors'] += $tag['errors'];
-        }
+        $campaignEvents = $reportsService->campaignEvents($report);
+        $allStats = (new StatsTransformer)->transformSumAll($campaignEvents, true);
 
         return $this->jsonResponse(compact('allStats', 'tagStats'));
     }

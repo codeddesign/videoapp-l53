@@ -41,50 +41,50 @@
           <spark-chart id="revenue-chart" :chartData="chartData.revenue" color="#1aa74f"></spark-chart>
         </li>
         <li>
-          <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
+          <stats title="ecpm" :value="ecpm" color="#1aa74f" type="money"></stats>
           <spark-chart id="ecpm-chart" :chartData="ecpmSpark" color="#1aa74f"></spark-chart>
         </li>
       </ul>
       <ul class="campaignstats-row">
         <li>
-          <stats title="desktop pre-roll fill"
+          <stats title="desktop pre-roll fill" type="percentage"
           :value="calculateFillRate(tags.desktop.preroll.fills, tags.desktop.preroll.tagRequests)"></stats>
           <spark-chart id="desktop-preroll-fill-chart" :chartData="chartData.desktopPrerollFill" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile pre-roll fill"
+          <stats title="mobile pre-roll fill" type="percentage"
           :value="calculateFillRate(tags.mobile.preroll.fills, tags.mobile.preroll.tagRequests)"></stats>
           <spark-chart id="mobile-preroll-fill-chart" :chartData="chartData.mobilePrerollFill" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="desktop pre-roll errors"
+          <stats title="desktop pre-roll errors" type="percentage"
           :value="calculateErrorRate(tags.desktop.preroll.tagRequests, tags.desktop.preroll.errors)"></stats>
           <spark-chart id="desktop-preroll-errors-chart" :chartData="chartData.desktopPrerollErrors" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile pre-roll errors"
+          <stats title="mobile pre-roll errors" type="percentage"
           :value="calculateErrorRate(tags.mobile.preroll.tagRequests, tags.mobile.preroll.errors)"></stats>
           <spark-chart id="mobile-preroll-errors-chart" :chartData="chartData.mobilePrerollErrors" color="#7772a7"></spark-chart>
         </li>
       </ul>
       <ul class="campaignstats-row">
         <li>
-          <stats title="desktop outstream fill"
+          <stats title="desktop outstream fill" type="percentage"
           :value="calculateFillRate(tags.desktop.outstream.fills, tags.desktop.outstream.tagRequests)"></stats>
           <spark-chart id="desktop-outstream-fill-chart" :chartData="chartData.desktopOutstreamFill" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile outstream fill"
+          <stats title="mobile outstream fill" type="percentage"
           :value="calculateFillRate(tags.mobile.outstream.fills, tags.mobile.outstream.tagRequests)"></stats>
           <spark-chart id="mobile-outstream-fill-chart" :chartData="chartData.mobileOutstreamFill" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="desktop outstream errors"
+          <stats title="desktop outstream errors" type="percentage"
           :value="calculateErrorRate(tags.desktop.outstream.tagRequests, tags.desktop.outstream.errors)"></stats>
           <spark-chart id="desktop-outstream-errors-chart" :chartData="chartData.desktopOutstreamErrors" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile outstream errors"
+          <stats title="mobile outstream errors" type="percentage"
           :value="calculateErrorRate(tags.mobile.outstream.tagRequests, tags.mobile.outstream.errors)"></stats>
           <spark-chart id="mobile-outstream-errors-chart" :chartData="chartData.mobileOutstreamErrors" color="#7772a7"></spark-chart>
         </li>
@@ -99,12 +99,12 @@
           <spark-chart id="mobile-fill-chart" :chartData="chartData.mobileFill" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="desktop use-rate"
+          <stats title="desktop use-rate" type="percentage"
           :value="calculateUseRate(tags.desktop.impressions, tags.desktop.fills)"></stats>
           <spark-chart id="desktop-use-rate-chart" :chartData="chartData.desktopUserate" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile use-rate"
+          <stats title="mobile use-rate" type="percentage"
           :value="calculateUseRate(tags.mobile.impressions, tags.mobile.fills)"></stats>
           <spark-chart id="mobile-use-rate-chart" :chartData="chartData.mobileUserate" color="#7772a7"></spark-chart>
         </li>
@@ -119,12 +119,12 @@
           <spark-chart id="mobile-pageviews-chart" :chartData="chartData.mobilePageviews" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="desktop pageviews fill"
+          <stats title="desktop pageviews fill" type="percentage"
           :value="calculateFillRate(tags.desktop.fills, desktopPageviews)"></stats>
           <spark-chart id="desktop-pageviews-fill-chart" :chartData="chartData.desktopPageviewsFill" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile pageviews fill"
+          <stats title="mobile pageviews fill" type="percentage"
             :value="calculateFillRate(tags.mobile.fills, mobilePageviews)"></stats>
           <spark-chart id="mobile-pageviews-fill-chart" :chartData="chartData.mobilePageviewsFill" color="#7772a7"></spark-chart>
         </li>

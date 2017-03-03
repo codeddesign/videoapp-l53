@@ -6,7 +6,7 @@
         <animated-number :type="type" :number="value"></animated-number>
       </div>
       <div v-else>
-        {{ value }}
+        {{ present(value) }}
       </div>
     </div>
   </div>
@@ -15,6 +15,8 @@
 <script>
   import Sparkline from 'jquery-sparkline' // eslint-disable-line no-unused-vars
   import AnimatedNumber from '../../../components/animated-number.js' // eslint-disable-line no-unused-vars
+  import numeral from 'numeral'
+  import accounting from 'accounting'
 
   export default {
     name: 'Stats',
@@ -69,6 +71,26 @@
             zeroColor: '#cacaca'
           })
         }
+      },
+
+      present(number) {
+        if (this.type === 'money') {
+          return this.presentRevenue(number)
+        }
+
+        if (this.type === 'percentage') {
+          return number
+        }
+
+        return this.presentNumber(number)
+      },
+
+      presentNumber(number) {
+        return numeral(number).format('0,0')
+      },
+
+      presentRevenue(number) {
+        return accounting.formatMoney(number)
       }
     },
 

@@ -114,6 +114,8 @@ class Report extends Model
      */
     public function filterQuery($query)
     {
+        $query = $query->timeRange($this->dateRange(), $this->user->timezone);
+
         if ($this->filter['value'] === '') {
             return $query;
         }
