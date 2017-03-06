@@ -4,8 +4,8 @@
       <div class="userinfo-returntosearch" @click="goBack()">RETURN TO SEARCH</div>
       <div class="userinfo-useractivate">
         <div class="userinfo-activatetitle">ACCOUNT ACTIVATION</div>
-        <div @click="activateAccount(account.id, false)" class="userinfo-activateoff"></div>
-        <div @click="activateAccount(account.id, true)" class="userinfo-activateon"></div>
+        <div @click="activateAccount(account.id, false)" v-bind:class="{ userInactive: !account.active }" class="userinfo-activateoff"></div>
+        <div @click="activateAccount(account.id, true)" v-bind:class="{ userActive: account.active }" class="userinfo-activateon"></div>
       </div>
     </div>
 
@@ -370,5 +370,13 @@
   .userinfo-returntosearch, .userinfo-commentsubmitnote {
     cursor: pointer;
     cursor: hand;
+  }
+
+  .userActive {
+    background: url('/images/useractivateon.png') 0 -22px !important;
+  }
+
+  .userInactive {
+    background: url('/images/useractivateoff.png') 0 -22px !important;
   }
 </style>
