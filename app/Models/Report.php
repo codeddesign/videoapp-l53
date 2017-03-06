@@ -10,26 +10,26 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * Database Columns
  *
- * @property int        $id
- * @property string     $title
- * @property string     $date_range
- * @property Carbon     $start_date
- * @property Carbon     $end_date
- * @property string     $sort_by
- * @property string     $schedule
- * @property string     $schedule_every
- * @property string     $recipient
- * @property array      $filter
- * @property array      $included_metrics
- * @property int        $user_id
- * @property bool       $deletable
- * @property Carbon     $last_generated_at
- * @property Carbon     $created_at
- * @property Carbon     $updated_at
+ * @property int    $id
+ * @property string $title
+ * @property string $date_range
+ * @property Carbon $start_date
+ * @property Carbon $end_date
+ * @property string $sort_by
+ * @property string $schedule
+ * @property string $schedule_every
+ * @property string $recipient
+ * @property array  $filter
+ * @property array  $included_metrics
+ * @property int    $user_id
+ * @property bool   $deletable
+ * @property Carbon $last_generated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * Relationships
  *
- * @property User       $user
+ * @property User   $user
  */
 class Report extends Model
 {
@@ -155,32 +155,25 @@ class Report extends Model
     {
         $filter = $this->filter['filter'];
 
-        if ($this->filter['type'] === 'campaignType' && $filter === 'contains') {
-            return 'jsonb_exists_any';
-        } else {
-            if ($this->filter['type'] === 'campaignType' && $filter === 'is') {
-                return 'jsonb_eq';
-            }
+        $campaignTypeOperators = [
+            'contains'       => 'jsonb_exists_any',
+            'doesNotContain' => 'NOT jsonb_exists_any',
+            'is'             => 'jsonb_eq',
+            'isNot'          => 'NOT jsonb_eq',
+        ];
+
+        if ($this->filter['type'] === 'campaignType') {
+            return $campaignTypeOperators[$filter];
         }
 
-        $operator = null;
+        $operators = [
+            'doesNotContain' => 'not ilike',
+            'contains'       => 'ilike',
+            'is'             => '=',
+            'isNot'          => '!=',
+        ];
 
-        switch ($filter) {
-            case 'doesNotContain':
-                $operator = 'not ilike';
-                break;
-            case 'contains':
-                $operator = 'ilike';
-                break;
-            case 'is':
-                $operator = '=';
-                break;
-            case 'isNot':
-                $operator = '!=';
-                break;
-        }
-
-        return $operator;
+        return $operators[$filter];
     }
 
     protected function getFilterValue()
@@ -189,10 +182,10 @@ class Report extends Model
         $value  = $this->filter['value'];
 
         // the campaign_types column is json encoded
-        if ($this->filter['type'] === 'campaignType' && $filter === 'contains') {
+        if ($this->filter['type'] === 'campaignType') {
             return "array['{$value}']";
         } else {
-            if ($this->filter['type'] === 'campaignType' && $filter === 'is') {
+            if ($this->filter['type'] === 'campaignType') {
                 return "to_jsonb(array['{$value}'])";
             }
         }
