@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\CampaignEvent;
 use App\Models\Website;
 use App\Stats\RedisStats;
+use Carbon\Carbon;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 
@@ -20,6 +21,8 @@ class AnalyticsEvents
         $redis = $this->getRedis();
 
         $keys = $redis->keys('website:*');
+
+        \Log::info($keys);
 
         $events = new Collection();
 
@@ -41,7 +44,9 @@ class AnalyticsEvents
             $redis->del([$key]);
         }
 
-        CampaignEvent::saveMany($events);
+        $timestamp = Carbon::now()->second(0)->subSecond();
+
+        CampaignEvent::saveMany($events, $timestamp);
 
         return $events;
     }

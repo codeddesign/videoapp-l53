@@ -7,6 +7,7 @@ use App\Models\CampaignEvent;
 use App\Models\Tag;
 use App\Models\Website;
 use App\Stats\RedisStats;
+use Carbon\Carbon;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Collection;
 
@@ -63,6 +64,8 @@ class CampaignEvents
 
         $keys = $redis->keys('campaign:*');
 
+        \Log::info($keys);
+
         $events = new Collection();
 
         $redisStats = new RedisStats;
@@ -89,7 +92,9 @@ class CampaignEvents
             $redis->del([$key]);
         }
 
-        CampaignEvent::saveMany($events);
+        $timestamp = Carbon::now()->second(0)->subSecond();
+
+        CampaignEvent::saveMany($events, $timestamp);
 
         return $events;
     }

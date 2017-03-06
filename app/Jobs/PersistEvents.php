@@ -27,13 +27,15 @@ class PersistEvents extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $campaignEvents = new CampaignEvents;
-        $events = $campaignEvents->persistRedisData();
+        $campaignEvents      = new CampaignEvents;
+        $savedCampaignEvents = $campaignEvents->persistRedisData();
 
         $analyticsEvents = new AnalyticsEvents;
-        $events->merge($analyticsEvents->persistRedisData());
+        $savedAnalyticsEvents = $analyticsEvents->persistRedisData();
 
-        $message = "{$events->sum('count')} events saved.";
+        $totalEvents = $savedCampaignEvents->sum('count') + $savedAnalyticsEvents->sum('count');
+
+        $message = "{$totalEvents} events saved.";
 
         $this->log($message);
     }
