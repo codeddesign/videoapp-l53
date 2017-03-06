@@ -9,7 +9,6 @@ use App\Models\Report;
 use App\Models\User;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ChartsController extends ApiController
@@ -34,16 +33,15 @@ class ChartsController extends ApiController
         }
 
         if ($dateRange->days() > 1) {
-
             $keyFormat       = 'm/d/Y';
-            $createdAtFormat = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '". $this->user->timezone . "')::date";
+            $createdAtFormat = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')::date";
         } else {
             $keyFormat       = 'm/d/Y H';
             $createdAtFormat = 'created_at';
         }
 
         $stats = CampaignEvent::query()
-            ->select('name', 'tag_id', DB::raw($createdAtFormat. ' as created_at'), DB::raw('SUM(count) as count'))
+            ->select('name', 'tag_id', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(count) as count'))
             ->with('tag', 'website')
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', DB::raw($createdAtFormat));
@@ -68,7 +66,6 @@ class ChartsController extends ApiController
             ->groupBy(function ($item) use ($keyFormat) {
                 return $item->created_at->format($keyFormat);
             });
-
 
         $calculateTagStats = false;
         if ($range === 'lastTwentyFourHours' || isset($report)) {

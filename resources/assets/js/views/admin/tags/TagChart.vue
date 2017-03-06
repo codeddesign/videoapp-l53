@@ -28,12 +28,14 @@
 
     data() {
       return {
-        chart: null
+        chart: null,
+        visibility: [true, true, true]
       }
     },
 
     methods: {
       renderChart() {
+        var self = this
         this.chart = Highcharts.chart('chart', {
           credits: {
             enabled: false
@@ -83,20 +85,36 @@
             {
               name: 'Impressions',
               color: '#ff4001',
-              data: this.chartData.impressions
+              data: this.chartData.impressions,
+              visible: self.visibility[0]
             },
             {
               name: 'Requests',
               color: '#468c01',
-              data: this.chartData.tagRequests
+              data: this.chartData.tagRequests,
+              visible: self.visibility[1]
             },
             {
               name: 'Fills',
               color: '#00a2d9',
-              data: this.chartData.fills
+              data: this.chartData.fills,
+              visible: self.visibility[2]
             }
-          ]
+          ],
+          plotOptions: {
+            series: {
+              events: {
+                legendItemClick: function () {
+                  self.setVisiblity(this._i, !this.visible)
+                }
+              }
+            }
+          }
         })
+      },
+
+      setVisiblity(index, state) {
+        this.visibility[index] = state
       }
     },
 
