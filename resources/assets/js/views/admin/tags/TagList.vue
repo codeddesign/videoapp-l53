@@ -56,7 +56,7 @@
         <li>TAG DISPLAY %</li>
     </ul>
     <ul class="admindashboard-dailystatslist dashboard-tagsedit dashboard-tagscompare">
-        <li v-for="tag in showTags">
+        <li v-for="tag in showTags" v-bind:title="'ID: ' + tag.id">
           <div class="dashboard-statslist1">
             <div class="tagcreate-checkwrap">
               <input type="checkbox" v-bind:id="tag.id" v-bind:value="tag.id" v-model="selectedTags">

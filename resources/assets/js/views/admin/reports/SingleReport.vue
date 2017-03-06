@@ -186,7 +186,7 @@
           <li>ERROR 901</li>
         </ul>
         <ul class="dashboard-dailystatslist dashreports-width">
-          <li v-for="tag in paginatedStats">
+          <li v-for="tag in paginatedStats" v-bind:title="'ID: ' + tag.id">
             <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
             <div class="dashboard-statslist2">{{ tag.description }}</div>
             <div class="dashboard-statslist2">{{ tag.website }}</div>

@@ -45,7 +45,7 @@
               <li>STATE</li>
           </ul>
           <ul class="admindashboard-dailystatslist dashboard-tagsedit">
-            <li v-for="tag in tags">
+            <li v-for="tag in tags" v-bind:title="'ID: ' + tag.id">
               <div @click="showForm(tag)">
                 <div class="dashboard-statslist1">{{ tag.advertiser }} ({{tag.priority_count}})</div>
                 <div class="dashboard-statslist2">{{ tag.description }}</div>

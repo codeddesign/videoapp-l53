@@ -41,6 +41,7 @@ class Reports
             }
 
             $tagStats = collect([
+                'id'            => $tag->id,
                 'advertiser'    => $tag->advertiser,
                 'description'   => $tag->description,
                 'ad_type'       => $tag->ad_type,
