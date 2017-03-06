@@ -138,7 +138,7 @@ class DateRange
 
     public function twoDays()
     {
-        $this->from = $this->now()->subDays(2)->startOfDay();
+        $this->from = $this->now()->subDays(1)->startOfDay();
         $this->to   = $this->now()->endOfDay();
 
         return $this;
@@ -146,7 +146,7 @@ class DateRange
 
     public function threeDays()
     {
-        $this->from = $this->now()->subDays(3)->startOfDay();
+        $this->from = $this->now()->subDays(2)->startOfDay();
         $this->to   = $this->now()->endOfDay();
 
         return $this;
@@ -154,7 +154,7 @@ class DateRange
 
     public function sevenDays()
     {
-        $this->from = $this->now()->subDays(7)->startOfDay();
+        $this->from = $this->now()->subDays(6)->startOfDay();
         $this->to   = $this->now()->endOfDay();
 
         return $this;
@@ -162,7 +162,7 @@ class DateRange
 
     public function thirtyDays()
     {
-        $this->from = $this->now()->subDays(30)->startOfDay();
+        $this->from = $this->now()->subDays(29)->startOfDay();
         $this->to   = $this->now()->endOfDay();
 
         return $this;
@@ -170,7 +170,7 @@ class DateRange
 
     public function tenDays()
     {
-        $this->from = $this->now()->startOfDay();
+        $this->from = $this->now()->subDays(9)->startOfDay();
         $this->to   = $this->now()->endOfDay();
 
         return $this;
