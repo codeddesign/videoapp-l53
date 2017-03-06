@@ -32,11 +32,6 @@ class DateRange
         foreach ($dateRange as $period) {
             $date = new Carbon($period);
 
-            //if the time is delayed, use the next hour
-            if ($date->second !== 0) {
-                //$date->addHour()->second(0);
-            }
-
             $range->push($date);
         }
 
@@ -51,22 +46,14 @@ class DateRange
     /**
      * @param     $name     Name of the DateRange function
      * @param     $timezone DateRange's timezone
-     * @param int $delay    How many seconds to delay the dates.
-     *                      Defaults to 30 as the data is usually saved
-     *                      less than 30 seconds into the next hour.
      *
      * @return \App\Models\DateRange
      */
-    public static function byName($name, $timezone = null, $delay = 30)
+    public static function byName($name, $timezone = null)
     {
         /** @var DateRange $dateRange */
         $dateRange = new self(null, null, $timezone);
         $dateRange->{$name}();
-
-        if ($delay !== 0) {
-            $dateRange->from->addSeconds($delay);
-            $dateRange->to->addSeconds($delay);
-        }
 
         return $dateRange;
     }
