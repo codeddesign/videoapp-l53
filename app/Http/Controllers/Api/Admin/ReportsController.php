@@ -15,7 +15,7 @@ class ReportsController extends ApiController
 {
     public function index()
     {
-        $reports = $this->user->reports;
+        $reports = $this->user->reports->sortBy('id');
 
         return $this->collectionResponse($reports, new ReportTransformer);
     }
