@@ -124,15 +124,15 @@ class Reports
             ],
             [
                 'title'      => 'Last 3 Days',
-                'date_range' => 'lastThreeDays',
+                'date_range' => 'threeDays',
             ],
             [
                 'title'      => 'Last 7 Days',
-                'date_range' => 'lastSevenDays',
+                'date_range' => 'sevenDays',
             ],
             [
                 'title'      => 'Last 30 Days',
-                'date_range' => 'lastThirtyDays',
+                'date_range' => 'thirtyDays',
             ],
             [
                 'title'      => 'This Month',
