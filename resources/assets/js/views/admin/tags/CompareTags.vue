@@ -91,6 +91,7 @@
         timeRangeOptions: [
           { text: 'Today', value: 'today' },
           { text: 'Yesterday', value: 'yesterday' },
+          { text: '2 Days Ago', value: 'twoDaysAgo' },
           { text: 'Last 7 Days', value: 'sevenDays' },
           { text: 'This Month', value: 'thisMonth' },
           { text: 'Last Month', value: 'lastMonth' }
