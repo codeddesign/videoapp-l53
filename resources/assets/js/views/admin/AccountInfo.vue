@@ -197,7 +197,7 @@
                 <li v-for="campaign in campaigns">
                   <div>
                     <div class="dashboard-statslist1 width250">{{ campaign.name }}</div>
-                    <div class="dashboard-statslist2 width120">{{ playerTypeShort(campaign.type.title) }}</div>
+                    <div class="dashboard-statslist2 width120">{{ playerTypeShort(campaign.type.alias) }}</div>
                     <div class="dashboard-statslist2">{{ campaign.stats.tagRequests }}</div>
                     <div class="dashboard-statslist2">{{ campaign.stats.impressions }}</div>
                     <div class="dashboard-statslist2 width120">
@@ -317,7 +317,14 @@
       },
 
       playerTypeShort(playerType) {
-        return playerType.replace('Display', '')
+        let short = {
+          'onscrolldisplay': 'On-Scroll',
+          'sidebarinfinity': 'Infinity',
+        }
+
+        if(short[playerType]) {
+          return short[playerType] ? short[playerType] : playerType
+        }
       },
 
       ...stats
