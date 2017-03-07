@@ -21,6 +21,23 @@
         <div class="dashboard-livedatestamp">{{ currentTime.format('MMMM D YYYY') }}
           <span>( LIVE STATS UP TO {{ currentTime.format('hh:mm a') }} )</span>
         </div>
+        <div class="display-dashboardtimewrap">
+          <div class="dashmaintime-title">Ad Type</div>
+          <div class="dashboard-mainselect">
+            <select v-model="campaign_type">
+              <option value="all">
+                All
+              </option>
+              <option value="onscrolldisplay">
+                On Scroll
+              </option>
+              <option value="sidebarinfinity">
+                Infinity
+              </option>
+            </select>
+            <div class="dashmain-selectarrow"></div>
+          </div>
+        </div>
         <router-link :to="{ name: 'admin.reports.create'}">
           <div class="currentcamp-createbutton">GENERATE REPORT</div>
         </router-link>
@@ -202,6 +219,8 @@
         desktopPageviews: 0,
 
         chartData: {},
+
+        campaign_type: 'all',
 
         autoUpdateInterval: null
       }
