@@ -24,7 +24,6 @@
             <div class="tagcreate-fullinnertitle">AD TYPE</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="currentBackfill['ad_type']">
-                <option value="all">All</option>
                 <option value="preroll">Pre-roll</option>
                 <option value="onscroll">On-Scroll</option>
                 <option value="infinity">Infinity</option>
@@ -47,7 +46,6 @@
             <div class="tagcreate-fullinnertitle">PLATFORM TYPE</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="currentBackfill['platform_type']">
-                <option value="all">All</option>
                 <option value="desktop">Desktop</option>
                 <option value="mobile">Mobile</option>
               </select>
