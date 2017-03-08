@@ -497,6 +497,10 @@
 
       saveBackfillForm() {
         let duplicated = this.backfill.filter(backfill => {
+          if(backfill.id === this.currentBackfill.id) {
+            return false
+          }
+
           if (backfill.ad_type === this.currentBackfill.ad_type &&
               backfill.platform_type === this.currentBackfill.platform_type) {
             return true
