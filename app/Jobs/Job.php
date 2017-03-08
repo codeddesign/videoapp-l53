@@ -36,7 +36,7 @@ class Job
      */
     protected function lockJob()
     {
-        if(! $this->id) {
+        if (! $this->id) {
             throw new Exception("Tried to lock a job without a valid ID");
         }
 
@@ -45,8 +45,11 @@ class Job
 
         $key = "lock.job.{$this->id}";
 
-        if(! $redis->get($key)) {
-            $redis->set($this->id, 'true');
+        $expiry = 60 * 10; //lock it for 10 minutes
+
+        if (! $redis->get($key)) {
+            $redis->set($this->id, 'true', $expiry);
+
             return true;
         }
 
