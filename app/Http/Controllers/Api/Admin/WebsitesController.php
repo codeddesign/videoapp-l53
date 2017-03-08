@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\Api\Admin\StoreBackfillRequest;
+use App\Models\Backfill;
 use App\Models\CampaignEvent;
 use App\Models\User;
 use App\Models\Website;
 use App\Stats\StatsTransformer;
+use App\Transformers\BackfillTransformer;
 use App\Transformers\WebsiteTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -33,7 +36,7 @@ class WebsitesController extends ApiController
         $website = Website::findOrFail($id);
 
         $website->approved = $request->get('status');
-        $website->waiting = false;
+        $website->waiting  = false;
         $website->save();
 
         return $this->itemResponse($website, new WebsiteTransformer);
@@ -42,7 +45,7 @@ class WebsitesController extends ApiController
     public function stats(Request $request)
     {
         $userId = $request->get('user_id');
-        $user = User::with('websites')->findOrFail($userId);
+        $user   = User::with('websites')->findOrFail($userId);
 
         $sites = $user->websites;
 

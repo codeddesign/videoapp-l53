@@ -4415,3 +4415,64 @@ ul.userinfo-tagslist li {
 .userinfo-websiteslisttags:hover .dashboard-statslist1 {
     background: #3F485D !important;
 }
+
+ul.userinfo-backfilllist li {
+    cursor: pointer;
+}
+
+ul.userinfo-backfilllist li .dashboard-statslist2:nth-child(8n) {
+    color: #00A3D9;
+}
+
+ul.userinfo-backfilllist li .dashboard-statslist2:nth-child(5n) {
+    color: #468C00;
+}
+
+.userinfo-backfilllist .tagcreate-checkwrap {
+    float: left;
+    margin-top: -8px;
+    width: 25px;
+}
+
+.userinfo-backfilllist .tagcreate-checkwrap [type="checkbox"]:not(:checked) + label:before, .dashboard-tagscompare .tagcreate-checkwrap [type="checkbox"]:checked + label:before {
+    left: 0;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #485268;
+}
+.userinfo-backfilllist .tagcreate-checkwrap [type="checkbox"]:not(:checked) + label:after, .dashboard-tagscompare .tagcreate-checkwrap [type="checkbox"]:checked + label:after {
+    top: 2px;
+    left: 3px;
+    font-size: 16px;
+}
+.userinfo-backfilldelete {
+    float: right;
+    background: #262c3a;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: #fff;
+    font-size: 11px;
+    margin-top: 12px;
+    cursor: pointer;
+    margin-right: 20px;
+    opacity: 0.4;
+}
+.userinfo-backfilldelete:hover {
+    opacity: 1;
+}
+.userinfo-backfillcreate {
+    float: right;
+    background: #262c3a;
+    width: 140px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    color: #fff;
+    font-size: 11px;
+    margin-top: 12px;
+    cursor: pointer;
+    margin-right: 20px;
+}

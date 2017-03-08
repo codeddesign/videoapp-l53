@@ -6,6 +6,10 @@ use App\Models\Website;
 
 class WebsiteTransformer extends Transformer
 {
+    protected $availableIncludes = [
+        'backfill',
+    ];
+
     public function transform(Website $site)
     {
         $transformedSite = [
@@ -25,5 +29,12 @@ class WebsiteTransformer extends Transformer
         }
 
         return $transformedSite;
+    }
+
+    public function includeBackfill(Website $website)
+    {
+        $backfill = $website->backfill;
+
+        return $this->collection($backfill, new BackfillTransformer);
     }
 }

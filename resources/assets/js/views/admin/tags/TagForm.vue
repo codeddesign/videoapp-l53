@@ -474,7 +474,7 @@
           return
         }
 
-        window.open('http://104.131.39.217/demo.php?_tid=' + this.tag.id)
+        window.open('http://ad3media.com/demo.php?_tid=' + this.tag.id)
       },
 
       changedType() {

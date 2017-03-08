@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Geolite\Location;
+use App\Models\Backfill;
 use App\Models\Campaign;
 use App\Models\Tag;
 use App\Models\Website;
@@ -47,10 +48,13 @@ class CampaignsController extends Controller
             $tags = Tag::forRequest($location, $websiteId);
         }
 
+        $backfill = Backfill::forRequest($websiteId);
+
         Datadogstatsd::increment('video-app.campaign_request', 1);
 
         return response(array_merge($campaign, [
             'tags'       => $tags,
+            'backfill'   => $backfill,
             'ip'         => $ip,
             'location'   => $location,
             'website_id' => $websiteId,

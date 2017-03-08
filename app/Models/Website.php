@@ -3,26 +3,28 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Database Columns
  *
- * @property int    $id
- * @property int    $user_id
- * @property string $domain
- * @property bool   $approved
- * @property bool   $waiting
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property int        $id
+ * @property int        $user_id
+ * @property string     $domain
+ * @property bool       $approved
+ * @property bool       $waiting
+ * @property Carbon     $created_at
+ * @property Carbon     $updated_at
  *
  * Relationships
  *
- * @property User   $user
+ * @property User       $user
+ * @property Collection $backfill
  *
  * Accessors
  *
- * @property string $link
+ * @property string     $link
  */
 class Website extends Model
 {
@@ -48,6 +50,11 @@ class Website extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function backfill()
+    {
+        return $this->hasMany(Backfill::class);
     }
 
     /**

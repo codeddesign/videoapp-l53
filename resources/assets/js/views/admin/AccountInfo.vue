@@ -1,5 +1,87 @@
 <template>
   <div class="page-index">
+    <div class="tagmanage-tagcreationwrapper" style="margin-top:50px;min-height:820px;" v-show="showBackfillForm">
+      <div class="tagcreate-topbuttonswrap">
+        <div class="tagcreate-topcancel" @click="backfillFormVisible(false)">CANCEL EDIT</div>
+      </div>
+      <div class="tagcreate-formwrapper">
+        <div class="tagcreate-fullheadertitle">BACKFILL CREATION / EDITING</div>
+
+        <div class="tagcreate-formbg">
+          <div class="tagcreate-fullinnertitle">BACKFILL EMBED</div>
+          <input class="tagcreate-longinput" v-model="currentBackfill['embed']" placeholder="paste backfill embed script...">
+        </div>
+
+        <div class="tagcreate-formbg">
+          <div class="tagcreate-halfinnerwrap">
+            <div class="tagcreate-fullinnertitle">ADVERTISER NAME</div>
+            <input class="tagcreate-longinput" v-model="currentBackfill['advertiser']" placeholder="A3M">
+          </div>
+        </div>
+
+        <div class="tagcreate-formbg">
+          <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+            <div class="tagcreate-fullinnertitle">AD TYPE</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="currentBackfill['ad_type']">
+                <option value="all">All</option>
+                <option value="preroll">Pre-roll</option>
+                <option value="onscroll">On-Scroll</option>
+                <option value="infinity">Infinity</option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
+          <div class="tagcreate-quarterinnerwrap">
+            <div class="tagcreate-fullinnertitle">BACKFILL WIDTH</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="currentBackfill['width']">
+                <option value="responsive">Responsive</option>
+                <option value="640">640px</option>
+                <option value="300">300px</option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
+          <div class="tagcreate-quarterinnerwrap">
+            <div class="tagcreate-fullinnertitle">PLATFORM TYPE</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="currentBackfill['platform_type']">
+                <option value="all">All</option>
+                <option value="desktop">Desktop</option>
+                <option value="mobile">Mobile</option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tagcreate-formbg">
+          <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
+            <div class="tagcreate-fullinnertitle">WEBSITE SELECTION</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="currentBackfill['website_id']">
+                <option v-for="website in websites" v-bind:value="website.id">
+                  {{ website.domain }}
+                </option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
+          <div class="tagcreate-quarterinnerwrap">
+            <div class="tagcreate-fullinnertitle">ECPM $</div>
+            <input class="tagcreate-longinput" v-model="currentBackfill['ecpm']" placeholder="0.00">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tagcreate-savetagwrap">
+        <div class="tagcreate-savetagbutton" @click="saveBackfillForm">SAVE BACKFILL CONFIGURATION</div>
+        <div class="tagcreate-canceltagbutton" @click="backfillFormVisible(false)">CANCEL</div>
+      </div>
+
+    </div><!-- END .tagmanage-tagcreationwrapper -->
     <div class="userinfo-abovegraph">
       <div class="userinfo-returntosearch" @click="goBack()">RETURN TO SEARCH</div>
       <div class="userinfo-useractivate">
@@ -222,6 +304,66 @@
           </section>
         </div>
         <div>
+          <!-- START BACKFILL TAB -->
+          <input name="tagmanage-tabbed" id="tagmanage-tabbed16" type="radio">
+          <section>
+            <h1>
+              <label for="tagmanage-tabbed16">BACKFILL</label>
+            </h1>
+            <div>
+              <div class="userinfo-websitesheader">
+                <div class="userinfo-websitestitle">BACKFILL SETUP</div>
+
+                <div class="userinfo-backfilldelete" @click="deleteBackfill" v-bind:class="{ noOpacity: selectedBackfill.length > 0 }">DELETE</div>
+                <div class="userinfo-backfillcreate" @click="createNewBackfill(true)">CREATE BACKFILL</div>
+              </div>
+              <ul class="userinfo-itemlistheader">
+                <li style="width:250px;">URL</li>
+                <li style="border-right:1px solid #E3E1E0">IMPRESSIONS</li>
+                <li style="border-right:1px solid #E3E1E0">REVENUE</li>
+                <li>ECPM</li>
+                <li>AD TYPE</li>
+                <li style="width:115px;border-right:1px solid #E3E1E0;">PLATFORM</li>
+                <li style="width:115px;">WIDTH</li>
+                <li style="width:calc(100% - 1096px)">BACKFILL</li>
+                <li style="width:159px;border-left:0;">STATE</li>
+              </ul>
+              <!-- START BACKFILL WEBSITES LIST -->
+              <ul class="admindashboard-dailystatslist userinfo-statslist userinfo-backfilllist">
+                <li style="height: auto !important;" v-for="b in backfill">
+                  <div style="cursor: pointer;">
+                    <div class="dashboard-statslist1" style="width:250px;">
+                      <div class="tagcreate-checkwrap">
+                        <input type="checkbox" id="check-onscroll" v-bind:id="'deleteBackfill' + b.id" v-bind:value="b.id" v-model="selectedBackfill">
+                        <label v-bind:for="'deleteBackfill' + b.id"></label>
+                      </div>
+                      <div @click="editBackfill(b)">
+                      {{ b.website_domain }}
+                      </div>
+                    </div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)">N/A</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)">N/A</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)">${{ b.ecpm }}</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)">{{ b.ad_type }}</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:113px;border-right:0;">{{ b.platform_type }}</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:115px;">{{ b.width }}</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:calc(100% - 1094px);border-right:1px solid #e3e1e0;">
+                      {{ b.advertiser }}
+                    </div>
+                  </div>
+                  <div class="dashboard-statslist3">
+                    <div class="dashboard-switch">
+                      <input v-bind:id="'backfill' + b.id" type="checkbox" v-on:change="activateBackfill(b.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" v-bind:checked="b.active">
+                      <label v-bind:for="'backfill' + b.id" class="cmn-labelchange"></label>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <!-- END ACCOUNT WEBSITES LIST -->
+            </div>
+          </section>
+        </div>
+        <div>
           <!-- START NOTES TAB -->
           <input name="tagmanage-tabbed" id="tagmanage-tabbed16" type="radio">
           <section>
@@ -265,6 +407,10 @@
 
     data() {
       return {
+        selectedBackfill: [],
+        showBackfillForm: false,
+        currentBackfill: User.defaultBackfill(),
+
         showBankInfo: false,
         note: '',
         stats: [],
@@ -275,6 +421,26 @@
     methods: {
       activateWebsite(id, event) {
         Admin.activateWebsite(id, event.target.checked)
+      },
+
+      activateBackfill(id, event) {
+        User.activateBackfill(id, event.target.checked)
+      },
+
+      createNewBackfill() {
+        this.currentBackfill = User.defaultBackfill()
+        this.backfillFormVisible(true)
+      },
+
+      editBackfill(backfill) {
+        this.currentBackfill = backfill
+        this.backfillFormVisible(true)
+      },
+
+      deleteBackfill() {
+        User.deleteBackfill(this.selectedBackfill).then(response => {
+          this.$store.dispatch('loadAccounts')
+        })
       },
 
       goBack() {
@@ -319,12 +485,36 @@
       playerTypeShort(playerType) {
         let short = {
           'onscrolldisplay': 'On-Scroll',
-          'sidebarinfinity': 'Infinity',
+          'sidebarinfinity': 'Infinity'
         }
 
-        if(short[playerType]) {
+        if (short[playerType]) {
           return short[playerType] ? short[playerType] : playerType
         }
+      },
+
+      backfillFormVisible(visible) {
+        this.showBackfillForm = visible
+      },
+
+      saveBackfillForm() {
+        let duplicated = this.backfill.filter(backfill => {
+          if (backfill.ad_type === this.currentBackfill.ad_type &&
+              backfill.platform_type === this.currentBackfill.platform_type) {
+            return true
+          }
+          return false
+        })
+
+        if (duplicated.length > 0) {
+          window.alert('Duplicated backfill')
+          return
+        }
+
+        User.saveBackfill(this.currentBackfill).then(response => {
+          this.$store.dispatch('loadAccounts')
+          this.backfillFormVisible(false)
+        })
       },
 
       ...stats
@@ -352,6 +542,24 @@
         this.$store.dispatch('loadWebsitesStats', account)
         this.$store.dispatch('loadCampaignsStats', account)
         return account
+      },
+
+      backfill() {
+        let backfill = []
+
+        if (this.account.websites === undefined) {
+          return backfill
+        }
+
+        this.account.websites.data.map(website => {
+          website.backfill.data.map(websiteBackfill => {
+            websiteBackfill = _.cloneDeep(websiteBackfill)
+            websiteBackfill['website_domain'] = website.domain
+            backfill.push(websiteBackfill)
+          })
+        })
+
+        return backfill
       },
 
       websites() {
@@ -385,5 +593,9 @@
 
   .userInactive {
     background: url('/images/useractivateoff.png') 0 -22px !important;
+  }
+
+  .noOpacity {
+    opacity: 1 !important;
   }
 </style>

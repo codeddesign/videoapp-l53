@@ -34,6 +34,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('websites/{id}/activate', 'WebsitesController@activate');
     Route::get('websites/pending', 'WebsitesController@pending');
 
+    Route::post('backfill/delete', 'BackfillController@destroy');
+    Route::post('backfill/{id}', 'BackfillController@store');
+    Route::patch('backfill/{id}', 'BackfillController@update');
+    Route::post('backfill/{id}/activate', 'BackfillController@activate');
+
     Route::get('accounts', 'AccountsController@index');
     Route::post('accounts/{id}/note', 'AccountsController@addNote');
     Route::post('accounts/{id}/activate', 'AccountsController@activate');
