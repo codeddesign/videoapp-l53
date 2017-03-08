@@ -47,8 +47,11 @@ class CampaignsController extends Controller
         } else {
             $tags = Tag::forRequest($location, $websiteId);
         }
+        $type = null;
 
-        $backfill = Backfill::forRequest($websiteId);
+        $type = ($campaign['info']['type'] === 'sidebarinfinity') ? 'infinity' : 'onscroll';
+        $platform = $request->get('platform');
+        $backfill = Backfill::forRequest($websiteId, $type, $platform);
 
         Datadogstatsd::increment('video-app.campaign_request', 1);
 

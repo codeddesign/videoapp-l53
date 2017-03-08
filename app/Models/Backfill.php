@@ -34,19 +34,15 @@ class Backfill extends Model
         return $this->belongsTo(Website::class);
     }
 
-    public static function forRequest($websiteId)
+    public static function forRequest($websiteId, $type, $platform)
     {
         /** @var Repository $cache */
         $cache = app(Repository::class);
 
-        $backfill = $cache->tags(['backfill'])->remember("backfill.website.{$websiteId}", 60, function () use (
-            $websiteId
-        ) {
-            return Backfill::where('active', true)
-                ->where('website_id', $websiteId)
-                ->get();
-        });
-
-        return $backfill;
+        return Backfill::where('active', true)
+            ->where('website_id', $websiteId)
+            ->where('ad_type', $type)
+            ->where('platform_type', $platform)
+            ->first();
     }
 }
