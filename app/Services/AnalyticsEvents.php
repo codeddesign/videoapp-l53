@@ -34,7 +34,7 @@ class AnalyticsEvents
             $data = $this->fetchAnalyticsForWebsite($id);
 
             foreach ($data as $event) {
-                if ($event['website_id'] !== null && ! $websiteIds->contains($event['website_id'])) {
+                if ($event['website_id'] !== null && ! $websiteIds->contains($event['website_id'], '===')) {
                     \Log::info('Tried persisting invalid event: '.json_encode($event));
                 } else {
                     $events->push($event);

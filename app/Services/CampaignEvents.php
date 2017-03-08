@@ -108,7 +108,7 @@ class CampaignEvents
 
     protected function validId($id, Collection $validIds)
     {
-        if ($id !== null && ! $validIds->contains($id)) {
+        if ($id !== null && ! $validIds->contains($id, '===')) {
             return false;
         }
 
