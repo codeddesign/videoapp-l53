@@ -2,10 +2,20 @@
 
 namespace App\Jobs;
 
+use Exception;
+use Illuminate\Cache\Repository;
 use Illuminate\Log\Writer;
+use Illuminate\Redis\RedisManager;
 
 class Job
 {
+    protected $id;
+
+    public function __construct()
+    {
+        $this->id = uniqid();
+    }
+
     protected function log($message)
     {
         $className = (new \ReflectionClass($this))->getShortName();
@@ -18,5 +28,28 @@ class Job
     protected function getLogger()
     {
         return app(Writer::class);
+    }
+
+    /**
+     * @return bool Returns true if a lock was obtained, false otherwise.
+     * @throws \Exception
+     */
+    protected function lockJob()
+    {
+        if(! $this->id) {
+            throw new Exception("Tried to lock a job without a valid ID");
+        }
+
+        /** @var RedisManager $redis */
+        $redis = app(RedisManager::class);
+
+        $key = "lock.job.{$this->id}";
+
+        if(! $redis->get($key)) {
+            $redis->set($this->id, 'true');
+            return true;
+        }
+
+        return false;
     }
 }

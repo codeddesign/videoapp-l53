@@ -14,19 +14,16 @@ class PersistEvents extends Job implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Create a new job instance.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Execute the job.
      *
      * @return void
      */
     public function handle()
     {
+        if(! $this->lockJob()) {
+            return;
+        }
+
         $campaignEvents      = new CampaignEvents;
         $savedCampaignEvents = $campaignEvents->persistRedisData();
 

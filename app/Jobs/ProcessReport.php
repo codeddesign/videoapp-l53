@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ProcessReport implements ShouldQueue
+class ProcessReport extends Job implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,6 +26,7 @@ class ProcessReport implements ShouldQueue
     public function __construct(Report $report)
     {
         $this->report = $report;
+        parent::__construct();
     }
 
     /**
@@ -35,6 +36,10 @@ class ProcessReport implements ShouldQueue
      */
     public function handle()
     {
+        if(! $this->lockJob()) {
+            return;
+        }
+
         (new Reports)->process($this->report);
     }
 }
