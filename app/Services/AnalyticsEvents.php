@@ -34,7 +34,7 @@ class AnalyticsEvents
             $data = $this->fetchAnalyticsForWebsite($id);
 
             foreach ($data as $event) {
-                if ($event['website_id'] !== null && ! $websiteIds->contains($event['website_id'], '===')) {
+                if ($event['website_id'] !== null && ! $this->validId($id, $websiteIds)) {
                     \Log::info('Tried persisting invalid event: '.json_encode($event));
                 } else {
                     $events->push($event);
@@ -82,6 +82,23 @@ class AnalyticsEvents
         $redisStats = new RedisStats;
 
         return $redisStats->fetchStatusForWebsite($websiteId);
+    }
+
+    protected function validId($id, Collection $validIds)
+    {
+        if ($id === null) {
+            return true;
+        }
+
+        if (! is_numeric($id)) {
+            return false;
+        }
+
+        if (! $validIds->contains($id)) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function getRedis()
