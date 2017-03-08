@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Exception;
-use Illuminate\Cache\Repository;
 use Illuminate\Log\Writer;
 use Illuminate\Redis\RedisManager;
 
@@ -48,7 +47,7 @@ class Job
         $expiry = 60 * 10; //lock it for 10 minutes
 
         if (! $redis->get($key)) {
-            $redis->set($this->id, 'true', $expiry);
+            $redis->setex($this->id, $expiry, 'locked');
 
             return true;
         }
