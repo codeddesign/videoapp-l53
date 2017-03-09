@@ -65,7 +65,7 @@
             {{ tag.advertiser }}
           </div>
           <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
-          <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
+          <div class="dashboard-statslist2">{{ tag.type }}</div>
           <div class="dashboard-statslist2">
             {{ tag.stats.tagRequests }}
             <span v-html="showComparePercent(tag, 'requests')"></span>

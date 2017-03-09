@@ -476,18 +476,14 @@
       changedType() {
         if (this.tag.type === 'instream') {
           _.remove(this.tag.ad_types, i => {
-            return i!=1 || i!=2;
+            return i !== 1 || i !== 2
           })
-
-          //this.tag.campaign_types.onscroll = false
-          //this.tag.campaign_types.infinity = false
         }
 
         if (this.tag.type === 'outstream') {
           _.remove(this.tag.ad_types, i => {
-            return i!=3
+            return i !== 3
           })
-          //this.tag.campaign_types.preroll = false
         }
       },
 

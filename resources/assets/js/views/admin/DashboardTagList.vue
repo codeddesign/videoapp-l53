@@ -68,7 +68,7 @@
       <li v-for="tag in showTags" v-bind:title="'ID: ' + tag.id">
         <div class="dashboard-statslist1 dashboardadmin-statslist1">{{ tag.advertiser }}</div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.platform_type }}</div>
-        <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.ad_type }}</div>
+        <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.type }}</div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ tag.stats.tagRequests }}
         </div>

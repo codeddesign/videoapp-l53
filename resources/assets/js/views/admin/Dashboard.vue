@@ -143,7 +143,6 @@
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
-  import _ from 'lodash'
 
   export default {
     name: 'AdminDashboard',
