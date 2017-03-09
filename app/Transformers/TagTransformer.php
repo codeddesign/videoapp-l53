@@ -15,8 +15,8 @@ class TagTransformer extends Transformer
             'advertiser'             => $tag->advertiser,
             'description'            => $tag->description,
             'platform_type'          => $tag->platform_type,
-            'campaign_types'         => $this->fillCampaignTypes($tag->campaign_types),
-            'ad_type'                => $tag->ad_type,
+            'ad_types'               => $tag->ad_types,
+            'type'                   => $tag->type,
             'date_range'             => (boolean) $tag->date_range,
             'start_date'             => $this->date($tag->start_date),
             'end_date'               => $this->date($tag->end_date),
@@ -61,24 +61,6 @@ class TagTransformer extends Transformer
         }
 
         return $transformedWebsites;
-    }
-
-    protected function fillCampaignTypes($types)
-    {
-        $allTypes = collect([
-            'preroll'  => false,
-            'onscroll' => false,
-            'infinity' => false,
-            'unknown'  => false,
-        ]);
-
-        return $allTypes->map(function ($value, $type) use ($types) {
-            if (in_array($type, $types)) {
-                return true;
-            }
-
-            return false;
-        });
     }
 
     protected function parseLocations($locations)

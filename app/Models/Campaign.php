@@ -161,16 +161,16 @@ class Campaign extends Model
     public static function forPlayer($id)
     {
         $previewKey = config('videoad.TEMPORARY_PREVIEW_KEY');
-        $cache = app(Repository::class);
+        $cache      = app(Repository::class);
 
         if ($id != 0) {
             $campaign = $cache->remember("campaigns.{$id}", 5, function () use ($id) {
                 return self::withTrashed()
-                    ->with('videos')
+                    ->with('type', 'type.adType', 'videos')
                     ->find($id);
             });
         } else {
-            $previewId = app('request')->cookie('preview_id');
+            $previewId          = app('request')->cookie('preview_id');
             $campaignSerialized = app('redis')->connection()->get("{$previewKey}.{$previewId}");
             $campaign           = unserialize($campaignSerialized);
         }
@@ -183,14 +183,8 @@ class Campaign extends Model
         $info['type'] = $campaign->type->alias;
 
         return [
-            'campaign' => filterModelKeys(
-                $campaign->toArray(),
-                ['id', 'name', 'size', 'url', 'source']
-            ),
-            'info'     => filterModelKeys(
-                $info,
-                ['type', 'available', 'single', 'has_name']
-            ),
+            'id'      => $campaign->id,
+            'ad_type' => $campaign->type->adType->id,
         ];
     }
 }

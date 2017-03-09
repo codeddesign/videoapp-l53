@@ -83,7 +83,7 @@ export default {
       id: 0,
       embed: '',
       advertiser: '',
-      ad_type: 'all',
+      ad_type: 1,
       width: 'responsive',
       platform_type: 'all',
       website_id: '',

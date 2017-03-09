@@ -239,7 +239,7 @@ class StatsTransformer
             $platforms = [$tag->platform_type];
         }
 
-        $keys = $tag->campaign_types;
+        $keys = $tag->ad_types;
 
         if ($tag->ad_type === 'all') {
             $keys[] = 'instream';

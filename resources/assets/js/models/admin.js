@@ -16,14 +16,14 @@ export default {
   },
 
   loadAccounts() {
-    return axios.get('/admin/accounts?include=campaigns,websites,websites.backfill,notes')
+    return axios.get('/admin/accounts?include=campaigns,websites,websites.backfill,websites.backfill.adType,notes')
     .then((response) => {
       return response.data
     })
   },
 
   activateAccount(id, status) {
-    return axios.post('/admin/accounts/' + id + '/activate?include=campaigns,websites,websites.backfill,notes', {
+    return axios.post('/admin/accounts/' + id + '/activate?include=campaigns,websites,websites.backfill,websites.backfill.adType,notes', {
       status: status
     })
     .then((response) => {

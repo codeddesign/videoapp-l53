@@ -54,8 +54,8 @@
                 <option value="tagName">Tag Name</option>
                 <option value="website">Website</option>
                 <option value="platformType">Platform Type</option>
+                <option value="tagType">Tag Type</option>
                 <option value="adType">Ad Type</option>
-                <option value="campaignType">Campaign Type</option>
                 <option value="geography">Geography</option>
                 <option value="userAccount">User Account</option>
               </select>
@@ -89,8 +89,8 @@
                 <option value="website">Website</option>
                 <option value="tagName">Tag Name</option>
                 <option value="platformType">Platform Type</option>
+                <option value="tagType">Tag Type</option>
                 <option value="adType">Ad Type</option>
-                <option value="campaignType">Campaign Type</option>
                 <option value="country">Country</option>
                 <option value="state">State</option>
                 <option value="city">City</option>
@@ -255,12 +255,12 @@
             'Error %': 'error_rate'
           },
           total: {
-            'Total Ad Type %': 'total_ad_type_percent',
+            'Total Tag Type %': 'total_tag_type_percent',
             'Total Platform Type %': 'total_platform_type_percent',
-            'Total Campaign Type %': 'total_campaign_type_percent',
+            'Total Ad Type %': 'total_ad_type_percent',
             'Total Platform Type Errors': 'total_platform_type_errors',
             'Total Ad Type Errors': 'total_ad_type_errors',
-            'Total Campaign Type Errors': 'total_campaign_type_errors'
+            'Total Tag Type Errors': 'total_tag_type_errors'
           },
           viewership: {
             'Start': 'start',

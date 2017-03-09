@@ -23,10 +23,10 @@
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
             <div class="tagcreate-fullinnertitle">AD TYPE</div>
             <div class="tagcreate-selectwrap">
-              <select class="tagcreate-dropdown" v-model="currentBackfill['ad_type']">
-                <option value="preroll">Pre-roll</option>
-                <option value="onscroll">On-Scroll</option>
-                <option value="infinity">Infinity</option>
+              <select class="tagcreate-dropdown" v-model="currentBackfill['ad_type_id']">
+                <option value="3">Pre-roll</option>
+                <option value="1">On-Scroll</option>
+                <option value="2">Infinity</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
             </div>
@@ -277,7 +277,7 @@
                 <li v-for="campaign in campaigns">
                   <div>
                     <div class="dashboard-statslist1 width250">{{ campaign.name }}</div>
-                    <div class="dashboard-statslist2 width120">{{ playerTypeShort(campaign.type.alias) }}</div>
+                    <div class="dashboard-statslist2 width120">{{ campaign.ad_type_name }}</div>
                     <div class="dashboard-statslist2">{{ campaign.stats.tagRequests }}</div>
                     <div class="dashboard-statslist2">{{ campaign.stats.impressions }}</div>
                     <div class="dashboard-statslist2 width120">
@@ -342,7 +342,7 @@
                     <div class="dashboard-statslist2" @click="editBackfill(b)">N/A</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)">N/A</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)">${{ b.ecpm }}</div>
-                    <div class="dashboard-statslist2" @click="editBackfill(b)">{{ b.ad_type }}</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)">{{ b.adType.data.name }}</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:113px;border-right:0;">{{ b.platform_type }}</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:115px;">{{ b.width }}</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:calc(100% - 1094px);border-right:1px solid #e3e1e0;">
@@ -363,10 +363,10 @@
         </div>
         <div>
           <!-- START NOTES TAB -->
-          <input name="tagmanage-tabbed" id="tagmanage-tabbed16" type="radio">
+          <input name="tagmanage-tabbed" id="tagmanage-tabbed17" type="radio">
           <section>
             <h1>
-              <label for="tagmanage-tabbed16">NOTES</label>
+              <label for="tagmanage-tabbed17">NOTES</label>
             </h1>
             <div>
               <div class="userinfo-noteswrapper">

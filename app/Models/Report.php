@@ -130,13 +130,13 @@ class Report extends Model
             'advertiser'   => 'advertiser',
             'tagName'      => 'description',
             'platformType' => 'platform_type',
-            'adType'       => 'ad_type',
-            'campaignType' => 'campaign_types',
+            'adType'       => 'ad_types',
+            'tagType'      => 'type',
         ];
 
         // campaign_type is json, so it should be handled
         // with the appropriate PG json functions.
-        if ($type === 'campaignType') {
+        if ($type === 'adType') {
             return $query->whereHas('tag', function ($query) use ($type, $operator, $value, $tagFilters) {
                 $query->whereRaw("{$operator}({$tagFilters[$type]}, {$value})");
             });
@@ -155,15 +155,15 @@ class Report extends Model
     {
         $filter = $this->filter['filter'];
 
-        $campaignTypeOperators = [
+        $adTypesOperators = [
             'contains'       => 'jsonb_exists_any',
             'doesNotContain' => 'NOT jsonb_exists_any',
             'is'             => 'jsonb_eq',
             'isNot'          => 'NOT jsonb_eq',
         ];
 
-        if ($this->filter['type'] === 'campaignType') {
-            return $campaignTypeOperators[$filter];
+        if ($this->filter['type'] === 'adType') {
+            return $adTypesOperators[$filter];
         }
 
         $operators = [
@@ -182,10 +182,10 @@ class Report extends Model
         $value  = $this->filter['value'];
 
         // the campaign_types column is json encoded
-        if ($this->filter['type'] === 'campaignType') {
+        if ($this->filter['type'] === 'adType') {
             return "array['{$value}']";
         } else {
-            if ($this->filter['type'] === 'campaignType') {
+            if ($this->filter['type'] === 'adType') {
                 return "to_jsonb(array['{$value}'])";
             }
         }
@@ -287,8 +287,8 @@ class Report extends Model
     {
         return [
             'ad_type', 'platform_type', 'website', 'impressions', 'unfilled_impressions', 'requests', 'click', 'ctr', 'revenue',
-            'cpm', 'fills', 'fill_rate', 'errors', 'error_rate', 'total_ad_type_percent', 'total_platform_type_percent',
-            'total_campaign_type_percent', 'total_platform_type_errors', 'total_ad_type_errors', 'total_campaign_type_errors',
+            'cpm', 'fills', 'fill_rate', 'errors', 'error_rate', 'total_tag_type_percent', 'total_platform_type_percent',
+            'total_ad_type_percent', 'total_platform_type_errors', 'total_ad_type_errors', 'total_tag_type_errors',
             'start', 'firstquartile', 'midpoint', 'thirdquartile', 'complete', 'average_view_rate', 'average_view_time',
             'completion_rate', 'view_length', 'error101', 'error102', 'error200', 'error201', 'error202', 'error203',
             'error300', 'error301', 'error302', 'error303', 'error400', 'error401', 'error402', 'error403', 'error505',

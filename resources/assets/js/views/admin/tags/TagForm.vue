@@ -48,9 +48,9 @@
           </div>
         </div>
         <div class="tagcreate-quarterinnerwrap">
-          <div class="tagcreate-fullinnertitle">AD TYPE</div>
+          <div class="tagcreate-fullinnertitle">TYPE</div>
           <div class="tagcreate-selectwrap">
-            <select v-model="tag['ad_type']" @change="changedType()" class="tagcreate-dropdown">
+            <select v-model="tag['type']" @change="changedType()" class="tagcreate-dropdown">
               <option value="all">All</option>
               <option value="instream">Instream</option>
               <option value="outstream">Outstream</option>
@@ -62,22 +62,18 @@
 
       <div class="tagcreate-formbg">
         <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
-          <div class="tagcreate-fullinnertitle">CAMPAIGN TYPE</div>
+          <div class="tagcreate-fullinnertitle">AD TYPES</div>
           <div class="tagcreate-checkwrap">
-            <input v-bind:disabled="disabled.preroll" v-model="tag['campaign_types']['preroll']" type="checkbox" id="check-preroll" />
+            <input v-bind:disabled="disabled.preroll" v-model="tag['ad_types']" value="3" type="checkbox" id="check-preroll" />
             <label v-bind:class="{ disabled:disabled.preroll }" for="check-preroll">Pre-roll</label>
           </div>
           <div class="tagcreate-checkwrap">
-            <input v-bind:disabled="disabled.onscroll" v-model="tag['campaign_types']['onscroll']" type="checkbox" id="check-on-scroll" />
+            <input v-bind:disabled="disabled.onscroll" v-model="tag['ad_types']" value="1" type="checkbox" id="check-on-scroll" />
             <label v-bind:class="{ disabled:disabled.onscroll }" for="check-on-scroll">On-scroll</label>
           </div>
           <div class="tagcreate-checkwrap">
-            <input v-bind:disabled="disabled.infinity" v-model="tag['campaign_types']['infinity']" type="checkbox" id="check-infinity" />
+            <input v-bind:disabled="disabled.infinity" v-model="tag['ad_types']" value="2" type="checkbox" id="check-infinity" />
             <label v-bind:class="{ disabled:disabled.infinity }" for="check-infinity">Infinity</label>
-          </div>
-          <div class="tagcreate-checkwrap">
-            <input v-model="tag['campaign_types']['unknown']" type="checkbox" id="check-unknown" />
-            <label for="check-unknown">Unknown</label>
           </div>
         </div>
       </div>
@@ -93,7 +89,7 @@
         <div class="tagcreate-sepline"></div>
         <div class="tagcreate-starttimewrap">
           <div class="tagcreate-timetitle">START DATE</div>
-          <input id="starttime-datepicker" v-datepicker="{ key: 'start_date' }" class="tagtime-datepicker hasDatepicker" placeholder="select start date..">
+          <input id="starttime-datepicker" v-datepicker="{ key: 'start_date' }" class="tagtime-datepicker" placeholder="select start date..">
         </div>
         <div class="tagcreate-endtimewrap">
           <div class="tagcreate-timetitle">END DATE</div>
@@ -332,7 +328,7 @@
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">AD TYPE</div>
           <div class="tagcreate-selectwrap">
-            <select v-model="tag['demo_data']['ad_type']" class="tagcreate-dropdown">
+            <select v-model="tag['demo_data']['type']" class="tagcreate-dropdown">
               <option value="all">All</option>
               <option value="instream">Instream</option>
               <option value="outstream">Outstream</option>
@@ -344,10 +340,10 @@
         <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">CAMPAIGN TYPE</div>
           <div class="tagcreate-selectwrap">
-            <select v-model="tag['demo_data']['campaign_type']" class="tagcreate-dropdown">
-              <option value="all">All</option>
-              <option value="onscroll">On-scroll</option>
-              <option value="infinity">Infinity</option>
+            <select v-model="tag['demo_data']['ad_types']" class="tagcreate-dropdown">
+              <option value="1">On-scroll</option>
+              <option value="2">Infinity</option>
+              <option value="3">Pre-roll</option>
             </select>
             <div class="tagcreate-selectarrow"></div>
           </div>
@@ -452,8 +448,8 @@
       saveTag(e) {
         this.$validator.validateAll()
 
-        if (!this.validCampaignTypes) {
-          this.errors.add('campaign types', 'At least one campaign type is required.')
+        if (!this.validAdTypes) {
+          this.errors.add('ad types', 'At least one ad type is required.')
         }
 
         if (this.errors.any()) {
@@ -478,13 +474,20 @@
       },
 
       changedType() {
-        if (this.tag.ad_type === 'instream') {
-          this.tag.campaign_types.onscroll = false
-          this.tag.campaign_types.infinity = false
+        if (this.tag.type === 'instream') {
+          _.remove(this.tag.ad_types, i => {
+            return i!=1 || i!=2;
+          })
+
+          //this.tag.campaign_types.onscroll = false
+          //this.tag.campaign_types.infinity = false
         }
 
-        if (this.tag.ad_type === 'outstream') {
-          this.tag.campaign_types.preroll = false
+        if (this.tag.type === 'outstream') {
+          _.remove(this.tag.ad_types, i => {
+            return i!=3
+          })
+          //this.tag.campaign_types.preroll = false
         }
       },
 
@@ -632,12 +635,8 @@
     },
 
     computed: {
-      validCampaignTypes() {
-        return _.some(this.tag.campaign_types, function(val, key) {
-          if (val === true) {
-            return true
-          }
-        })
+      validAdTypes() {
+        return this.tag.ad_types.length > 0
       },
 
       websites() {
@@ -670,10 +669,9 @@
 
       disabled() {
         return {
-          'preroll': this.tag.ad_type === 'outstream',
-          'onscroll': this.tag.ad_type === 'instream',
-          'infinity': this.tag.ad_type === 'instream',
-          'unknown': false
+          'preroll': this.tag.type === 'outstream',
+          'onscroll': this.tag.type === 'instream',
+          'infinity': this.tag.type === 'instream'
         }
       }
     },

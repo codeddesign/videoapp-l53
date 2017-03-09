@@ -35,6 +35,7 @@ class PersistEvents extends Command
      */
     public function handle()
     {
+        \Log::info("Dispatching PersistEventsJob...");
         dispatch(new PersistEventsJob);
     }
 }

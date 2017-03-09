@@ -17,8 +17,8 @@ use Illuminate\Redis\RedisManager;
  * @property string $advertiser
  * @property string $description
  * @property string $platform_type
- * @property array  $campaign_types
- * @property string $ad_type
+ * @property array  $ad_types
+ * @property string $type
  * @property bool   $date_range
  * @property Carbon $start_date
  * @property Carbon $end_date
@@ -48,8 +48,8 @@ class Tag extends Model
     use TimeRange, SoftDeletes;
 
     protected $fillable = [
-        'url', 'advertiser', 'description', 'platform_type', 'campaign_types',
-        'ad_type', 'date_range', 'start_date', 'end_date', 'daily_request_limit',
+        'url', 'advertiser', 'description', 'platform_type', 'ad_types',
+        'type', 'date_range', 'start_date', 'end_date', 'daily_request_limit',
         'delay_time', 'ecpm', 'guarantee_limit', 'guarantee_order', 'guarantee_enabled',
         'priority_count', 'timeout_limit', 'wrapper_limit', 'active', 'included_locations',
         'excluded_locations', 'included_websites', 'excluded_websites', 'infinity_timeout_limit',
@@ -63,7 +63,7 @@ class Tag extends Model
     ];
 
     protected $casts = [
-        'campaign_types'     => 'array',
+        'ad_types'           => 'array',
         'included_locations' => 'array',
         'excluded_locations' => 'array',
         'included_websites'  => 'array',

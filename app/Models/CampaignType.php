@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Database Columns
  *
  * @property int        $id
+ * @property int        $ad_type_id
  * @property string     $title
  * @property string     $alias
  * @property bool       $available
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * Relationships
  *
  * @property Collection $campaigns
+ * @property AdType     $adType
  */
 class CampaignType extends Model
 {
@@ -35,7 +37,7 @@ class CampaignType extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'alias', 'available', 'single', 'has_name'];
+    protected $fillable = ['title', 'alias', 'available', 'single', 'has_name', 'ad_type'];
 
     /**
      * The attributes that should be cast to native types.
@@ -63,5 +65,10 @@ class CampaignType extends Model
     public function campaigns()
     {
         return $this->hasMany(Campaign::class);
+    }
+
+    public function adType()
+    {
+        return $this->belongsTo(AdType::class, 'ad_type_id');
     }
 }

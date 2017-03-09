@@ -24,6 +24,8 @@ class CampaignTransformer extends Transformer
             'rpm'               => (int) $campaign->rpm,
             'size'              => $campaign->size,
             'type'              => $campaign->type,
+            'ad_type'           => $campaign->type->adType->id,
+            'ad_type_name'      => $campaign->type->adType->name,
             'created_at_humans' => $campaign->created_at_humans,
         ];
 

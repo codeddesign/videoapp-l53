@@ -10,9 +10,7 @@ class CampaignTypeTransformer extends Transformer
     {
         return [
             'title'     => $type->title,
-            'alias'     => $type->alias,
             'available' => (boolean) $type->available,
-            'single'    => (boolean) $type->single,
             'has_name'  => (boolean) $type->has_name,
         ];
     }
