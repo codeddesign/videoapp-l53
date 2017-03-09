@@ -5,8 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel='shortcut icon' href='/home/images/logo.png'>
-    <title>Video App</title>
+    <link rel='shortcut icon' href='/home/images/ad3favicon.png'>
+    <title>Ad&sup3; Ad Server</title>
 </head>
 
 <body>
