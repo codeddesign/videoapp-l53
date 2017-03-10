@@ -1,6 +1,39 @@
 <template>
   <div>
     <div class="display-dashboardtoparea">
+      <div class="edittagsselect-wrapper comparetagsselect-wrapper">
+        <div class="edittagsselect-title">Time Range</div>
+        <select>
+          <option value="today">
+            Today
+          </option>
+          <option value="yesterday">
+            Yesterday
+          </option>
+          <option value="twoDaysAgo">
+            2 Days Ago
+          </option>
+          <option value="sevenDays">
+            Last 7 Days
+          </option>
+          <option value="thisMonth">
+            This Month
+          </option>
+          <option value="lastMonth">
+            Last Month
+          </option>
+        </select>
+        <div class="edittagsselect-selectarrow" style="margin-left: 158px;"></div>
+      </div>
+      <div class="edittagsselect-wrapper comparetagsselect-wrapper">
+        <div class="edittagsselect-title">Website</div>
+        <select>
+          <option value="1">domain.com</option>
+          <option value="1">domain.com</option>
+          <option value="1">domain.com</option>
+        </select>
+        <div class="edittagsselect-selectarrow" style="margin-left: 138px;"></div>
+      </div>
     </div>
     <!-- ANALYTICS STATS -->
     <!-- TOP ANALYTICS -->
