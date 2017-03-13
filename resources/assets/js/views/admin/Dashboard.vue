@@ -24,6 +24,24 @@
         <router-link :to="{ name: 'admin.reports.create'}">
           <div class="currentcamp-createbutton">GENERATE REPORT</div>
         </router-link>
+        <div class="edittagsselect-wrapper comparetagsselect-wrapper" style="float: right;">
+          <div class="edittagsselect-title">Ad Type</div>
+          <select v-model="adTypeFilter">
+            <option value="0">
+              All
+            </option>
+            <option value="1">
+              On-scroll
+            </option>
+            <option value="2">
+              Infinity
+            </option>
+            <option value="3">
+              Pre-roll
+            </option>
+          </select>
+          <div class="edittagsselect-selectarrow" style="margin-left: 136px;"></div>
+        </div>
       </div>
       <!-- ANALYTICS STATS -->
       <!-- TOP ANALYTICS -->
@@ -152,6 +170,8 @@
         // used for the Time Range Select.
         currentTime: moment(),
 
+        adTypeFilter: "0",
+
         tags: {
           mobile: {
             fills: 0,
@@ -269,7 +289,13 @@
       },
 
       fetchStats() {
-        http.get('/admin/stats/all?time=realtime')
+        let typeFilterQuery = ""
+
+        if(this.adTypeFilter != 0) {
+          typeFilterQuery = "&type=" + this.adTypeFilter
+        }
+
+        http.get('/admin/stats/all?time=realtime' + typeFilterQuery)
           .then((response) => {
             this.impressions = parseInt(response.data.impressions)
             this.fills = parseInt(response.data.fills)
@@ -287,7 +313,13 @@
       },
 
       fetchCharts() {
-        http.get('/admin/charts/all?time=lastTwentyFourHours')
+        let typeFilterQuery = ""
+
+        if(this.adTypeFilter !== 0) {
+          typeFilterQuery = "&type=" + this.adTypeFilter
+        }
+
+        http.get('/admin/charts/all?time=lastTwentyFourHours' + typeFilterQuery)
           .then((response) => {
             this.chartData = response.data
           })
@@ -295,8 +327,13 @@
             console.error('Error fetching the charts.')
           })
       },
-
       ...stats
+    },
+
+    watch: {
+      adTypeFilter() {
+        this.fetchCharts()
+      }
     },
 
     components: {

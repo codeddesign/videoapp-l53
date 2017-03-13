@@ -65,7 +65,7 @@ export default {
   },
 
   loadChart(id) {
-    return axios.get('/admin/charts/all?time=today&user=' + id)
+    return axios.get('/admin/charts/all?time=sevenDays&user=' + id)
       .then((response) => {
         return response.data
       })

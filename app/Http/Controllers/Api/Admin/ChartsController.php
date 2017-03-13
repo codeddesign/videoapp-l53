@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
 use App\Models\DateRange;
 use App\Models\Report;
+use App\Models\Campaign;
 use App\Models\User;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class ChartsController extends ApiController
         $range  = $request->get('time') ?? 'today';
         $user   = $request->get('user');
         $report = $request->get('report');
+        $adType = $request->get('type');
         $tags   = $request->get('tags') ? explode(',', $request->get('tags')) : null;
 
         if ($report) {
@@ -48,6 +50,14 @@ class ChartsController extends ApiController
 
         if ($tags) {
             $stats = $stats->whereIn('tag_id', $tags);
+        }
+
+        if($adType) {
+            $campaignIds = Campaign::with('type')->whereHas('type', function ($query) use ($adType) {
+                $query->where('ad_type_id', $adType);
+            })->get()->pluck('id')->toArray();
+
+            $stats = $stats->whereIn('campaign_id', $campaignIds);
         }
 
         if ($report) {

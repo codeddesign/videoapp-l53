@@ -96,6 +96,16 @@
               name: 'Fills',
               color: '#00a2d9',
               data: this.chartData.fills
+            },
+            {
+              name: 'Desktop Pageviews',
+              color: '#009688',
+              data: this.chartData.desktopPageviews
+            },
+            {
+              name: 'Mobile Pageviews',
+              color: '#FF9800',
+              data: this.chartData.mobilePageviews
             }
           ]
         })
