@@ -315,7 +315,7 @@
       fetchCharts() {
         let typeFilterQuery = ""
 
-        if(this.adTypeFilter !== 0) {
+        if(this.adTypeFilter != 0) {
           typeFilterQuery = "&type=" + this.adTypeFilter
         }
 
