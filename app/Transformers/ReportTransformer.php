@@ -12,6 +12,8 @@ class ReportTransformer extends Transformer
             'id'               => $report->id,
             'title'            => $report->title,
             'date_range'       => $report->date_range,
+            'start_date'       => $this->dateTime($report->start_date),
+            'end_date'         => $this->dateTime($report->end_date),
             'filter'           => $report->filter,
             'included_metrics' => $report->included_metrics,
             'sort_by'          => $report->sort_by,

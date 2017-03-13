@@ -14,4 +14,13 @@ abstract class Transformer extends TransformerAbstract
 
         return $date->toIso8601String();
     }
+
+    protected function dateTime($date)
+    {
+        if ($date === null) {
+            return;
+        }
+
+        return $date->toDateTimeString();
+    }
 }
