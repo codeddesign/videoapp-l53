@@ -17,8 +17,8 @@ class StoreReportRequest extends Request
         return [
             'title'            => 'required',
             'date_range'       => 'required',
-            'start_date'       => 'required_if:date_range,custom|date',
-            'end_date'         => 'required_if:date_range,custom|date|after_or_equal:start_date',
+            'start_date'       => 'required_if:date_range,custom|date|nullable',
+            'end_date'         => 'required_if:date_range,custom|date|after_or_equal:start_date|nullable',
             'sort_by'          => 'required',
             'included_metrics' => '',
             'recipient'        => 'required|email',
