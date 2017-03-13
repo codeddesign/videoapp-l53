@@ -216,6 +216,7 @@
               </div>
               <ul class="userinfo-itemlistheader">
                 <li style="width:250px;">URL</li>
+                <li style="border-right:1px solid #E3E1E0">PAGEVIEWS</li>
                 <li style="border-right:1px solid #E3E1E0">REQUESTS</li>
                 <li style="border-right:1px solid #E3E1E0">IMPRESSIONS</li>
                 <li>FILL-RATE</li>
@@ -228,6 +229,7 @@
                 <li v-for="website in websites" style="height: auto !important;">
                   <div>
                     <div class="dashboard-statslist1" style="width:250px;">{{ website.domain }}</div>
+                    <div class="dashboard-statslist2">{{ website.stats.mobilePageviews + website.stats.desktopPageviews }}</div>
                     <div class="dashboard-statslist2">{{ website.stats.tagRequests }}</div>
                     <div class="dashboard-statslist2">{{ website.stats.impressions }}</div>
                     <div class="dashboard-statslist2">
@@ -236,7 +238,7 @@
                     <div class="dashboard-statslist2">
                       {{ calculateErrorRate(website.stats.tagRequests, website.stats.errors) }}
                     </div>
-                    <div class="dashboard-statslist2" style="width:calc(100% - 866px)">
+                    <div class="dashboard-statslist2">
                       {{ calculateTagDisplayPercent(website.stats.impressions, totalWebsiteImpressions(websites)) }}
                     </div>
                   </div>
