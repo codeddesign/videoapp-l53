@@ -134,11 +134,10 @@ class Report extends Model
             'tagType'      => 'type',
         ];
 
-        // campaign_type is json, so it should be handled
-        // with the appropriate PG json functions.
+        // ad_type should be checked for the campaign
         if ($type === 'adType') {
-            return $query->whereHas('tag', function ($query) use ($type, $operator, $value, $tagFilters) {
-                $query->whereRaw("{$operator}({$tagFilters[$type]}, {$value})");
+            return $query->whereHas('campaign.type.adType', function ($query) use ($type, $operator, $value, $tagFilters) {
+                $query->where("name", $operator, $value);
             });
         }
 
@@ -155,17 +154,6 @@ class Report extends Model
     {
         $filter = $this->filter['filter'];
 
-        $adTypesOperators = [
-            'contains'       => 'jsonb_exists_any',
-            'doesNotContain' => 'NOT jsonb_exists_any',
-            'is'             => 'jsonb_eq',
-            'isNot'          => 'NOT jsonb_eq',
-        ];
-
-        if ($this->filter['type'] === 'adType') {
-            return $adTypesOperators[$filter];
-        }
-
         $operators = [
             'doesNotContain' => 'not ilike',
             'contains'       => 'ilike',
@@ -180,15 +168,6 @@ class Report extends Model
     {
         $filter = $this->filter['filter'];
         $value  = $this->filter['value'];
-
-        // the campaign_types column is json encoded
-        if ($this->filter['type'] === 'adType') {
-            return "array['{$value}']";
-        } else {
-            if ($this->filter['type'] === 'adType') {
-                return "to_jsonb(array['{$value}'])";
-            }
-        }
 
         if ($filter === 'doesNotcontain' || $filter === 'contains') {
             $value = "%{$value}%";
