@@ -18,6 +18,8 @@ class CreateAdTypesTable extends Migration
             $table->primary('id');
             $table->string('name');
         });
+
+        (new AdTypesSeeder)->run();
     }
 
     /**
