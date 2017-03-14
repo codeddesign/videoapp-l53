@@ -170,7 +170,7 @@
         // used for the Time Range Select.
         currentTime: moment(),
 
-        adTypeFilter: "0",
+        adTypeFilter: '0',
 
         tags: {
           mobile: {
@@ -289,10 +289,10 @@
       },
 
       fetchStats() {
-        let typeFilterQuery = ""
+        let typeFilterQuery = ''
 
-        if(this.adTypeFilter != 0) {
-          typeFilterQuery = "&type=" + this.adTypeFilter
+        if (parseInt(this.adTypeFilter) !== 0) {
+          typeFilterQuery = '&type=' + this.adTypeFilter
         }
 
         http.get('/admin/stats/all?time=realtime' + typeFilterQuery)
@@ -313,10 +313,10 @@
       },
 
       fetchCharts() {
-        let typeFilterQuery = ""
+        let typeFilterQuery = ''
 
-        if(this.adTypeFilter != 0) {
-          typeFilterQuery = "&type=" + this.adTypeFilter
+        if (parseInt(this.adTypeFilter) !== 0) {
+          typeFilterQuery = '&type=' + this.adTypeFilter
         }
 
         http.get('/admin/charts/all?time=lastTwentyFourHours' + typeFilterQuery)

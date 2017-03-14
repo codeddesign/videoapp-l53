@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Models\User;
 use App\Stats\StatsTransformer;
@@ -35,5 +36,15 @@ class CampaignsController extends ApiController
         }
 
         return $this->collectionResponse($campaigns, new CampaignTransformer);
+    }
+
+    public function activate($id, Request $request)
+    {
+        $campaign = Campaign::findOrFail($id);
+
+        $campaign->active = $request->get('active');
+        $campaign->save();
+
+        return $this->itemResponse($campaign, new CampaignTransformer);
     }
 }

@@ -294,8 +294,8 @@
                   </div>
                   <div class="dashboard-statslist3">
                     <div class="dashboard-switch">
-                      <input id="1" type="checkbox" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange">
-                      <label for="1" class="cmn-labelchange"></label>
+                      <input v-bind:id="'campaign' + campaign.id" type="checkbox" v-on:change="activateCampaign(campaign.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" v-bind:checked="campaign.active">
+                      <label v-bind:for="'campaign' + campaign.id" class="cmn-labelchange"></label>
                     </div>
                   </div>
                 </li>
@@ -421,6 +421,10 @@
     methods: {
       activateWebsite(id, event) {
         Admin.activateWebsite(id, event.target.checked)
+      },
+
+      activateCampaign(id, event) {
+        Admin.activateCampaign(id, event.target.checked)
       },
 
       activateBackfill(id, event) {

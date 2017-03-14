@@ -54,8 +54,8 @@ Vue.component('animated-number', {
     number: function () {
       clearInterval(this.interval)
 
-      //Don't animate when decreasing.
-      if(this.number < this.displayNumber) {
+      // Don't animate when decreasing.
+      if (this.number < this.displayNumber) {
         this.displayNumber = this.number
         return
       }

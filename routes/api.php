@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::get('charts/all', 'ChartsController@stats');
 
     Route::get('campaigns/stats', 'CampaignsController@stats');
+    Route::post('campaigns/{id}/activate', 'CampaignsController@activate');
 
     Route::get('websites', 'WebsitesController@index');
     Route::get('websites/stats', 'WebsitesController@stats');

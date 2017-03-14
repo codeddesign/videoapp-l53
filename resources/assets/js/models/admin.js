@@ -40,6 +40,15 @@ export default {
     })
   },
 
+  activateCampaign(id, status) {
+    return axios.post('/admin/campaigns/' + id + '/activate', {
+      active: status
+    })
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   updateGlobalOptions(options) {
     return axios.put('/admin/globalOptions', options)
     .then((response) => {

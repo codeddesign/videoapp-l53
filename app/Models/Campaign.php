@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
  * @property int          $rpm
  * @property int          $size
  * @property string       $name
+ * @property boolean      $active
  * @property Carbon       $created_at
  * @property Carbon       $updated_at
  *
@@ -165,7 +166,7 @@ class Campaign extends Model
 
         if ($id != 0) {
             $campaign = $cache->remember("campaigns.{$id}", 5, function () use ($id) {
-                return self::withTrashed()
+                return self::where('active', true)
                     ->with('type', 'type.adType', 'videos')
                     ->find($id);
             });
