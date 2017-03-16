@@ -245,7 +245,7 @@ class StatsTransformer
             $keys[] = 'instream';
             $keys[] = 'outstream';
         } else {
-            $keys[] = $tag->ad_type;
+            $keys[] = $tag->type;
         }
 
         foreach ($platforms as $platform) {
