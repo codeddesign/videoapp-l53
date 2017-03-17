@@ -45,7 +45,7 @@ class StoreTagRequest extends Request
             'advertiser'             => $this->get('advertiser'),
             'description'            => $this->get('description'),
             'platform_type'          => $this->get('platform_type'),
-            'ad_types'               => json_decode($this->get('ad_types')),
+            'ad_types'               => $this->get('ad_types'),
             'type'                   => $this->get('type'),
             'date_range'             => (boolean) $this->get('date_range'),
             'start_date'             => $this->get('start_date') ? Carbon::parse($this->get('start_date')) : null,
