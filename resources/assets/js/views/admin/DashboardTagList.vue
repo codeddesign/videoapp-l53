@@ -140,7 +140,7 @@
         filters: {
           platform: 'all',
           type: 'all',
-          active: 'all'
+          active: 'true'
         },
 
         tags: [],
