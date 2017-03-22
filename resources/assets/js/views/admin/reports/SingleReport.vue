@@ -124,15 +124,17 @@
 
     <!-- CAMPAIGN SELECTION AREA -->
 
-    <div class="dashboard-dailystatstitle">DAILY STATS</div>
+    <div class="dashboard-dailystatstitle">COMPARISON STATS</div>
     <div class="dashreports-scrollwrapper">
       <div class="dashreports-scrollarea">
         <ul class="dashboard-dailystatstitles dashreports-titlewidth">
           <li>ADVERTISER</li>
           <li>TAG NAME</li>
           <li>WEBSITE</li>
+          <li>PAGEVIEWS</li>
           <li>PLATFORM</li>
-          <li>TYPE</li>
+          <li>TAG TYPE</li>
+          <li>AD TYPE</li>
           <li>IMPRESSIONS</li>
           <li>AD REQUESTS</li>
           <li>FILLS</li>
@@ -186,11 +188,13 @@
           <li>ERROR 901</li>
         </ul>
         <ul class="dashboard-dailystatslist dashreports-width">
-          <li v-for="tag in paginatedStats" v-bind:title="'ID: ' + tag.id">
+          <li v-for="tag in paginatedStats" v-bind:title="'ID: ' + tag.tag_id">
             <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
             <div class="dashboard-statslist2">{{ tag.description }}</div>
             <div class="dashboard-statslist2">{{ tag.website }}</div>
+            <div class="dashboard-statslist2">{{ tag.desktopPageviews + tag.mobilePageviews }}</div>
             <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
+            <div class="dashboard-statslist2">{{ tag.tag_type }}</div>
             <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
             <div class="dashboard-statslist2">{{ tag.impressions }}</div>
             <div class="dashboard-statslist2">{{ tag.requests }}</div>
@@ -325,7 +329,7 @@
               }
             }
           },
-          tagStats: {}
+          stats: {}
         },
 
         chartData: {},
@@ -373,7 +377,7 @@
           errors: []
         }
 
-        _.each(this.stats.tagStats, tag => {
+        _.each(this.stats.stats, tag => {
           categories.push(tag.description)
           chartStats.impressions.push(tag.impressions)
           chartStats.fills.push(tag.fills)
@@ -435,7 +439,7 @@
       },
 
       paginatedStats() {
-        this.pagination.data = this.stats.tagStats
+        this.pagination.data = this.stats.stats
         return this.pagination.getData()
       },
 

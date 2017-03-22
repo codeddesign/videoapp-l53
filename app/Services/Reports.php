@@ -23,45 +23,71 @@ class Reports
 
     public function stats(Report $report, $filterMetrics = true)
     {
-        $events = $this->campaignEvents($report)->groupBy(function ($item) {
-            return "{$item->tag_id}-{$item->website_id}";
-        });
+        $combineBy = $report->dimension($report->combine_by);
+        $sortBy    = $report->dimension($report->sort_by);
 
-        $stats            = new Collection;
-        $statsTransformer = new StatsTransformer;
+        $reportEvents = $this->campaignEvents($report)->groupBy(function ($item) use ($combineBy, $sortBy) {
+            $groupBy = $item->{$combineBy['model']}->{$combineBy['column']} ?? '';
 
-        foreach ($events as $tagEvents) {
-            $parsedStats = $statsTransformer->transformSumAll($tagEvents);
-
-            $tag = $tagEvents->first()->tag;
-
-            //The tag may have been deleted
-            if (! $tag) {
-                continue;
+            if ($combineBy !== $sortBy) {
+                $groupBy .= '-';
+                $groupBy .= $item->{$sortBy['model']}->{$sortBy['column']} ?? '';
             }
 
-            $tagStats = collect([
-                'id'            => $tag->id,
-                'advertiser'    => $tag->advertiser,
-                'description'   => $tag->description,
-                'ad_type'       => $tag->ad_type,
-                'platform_type' => $tag->platform_type,
-                'website'       => $tagEvents->first()->website->domain ?? 'N/A',
-                'requests'      => $parsedStats['tagRequests'],
-                'impressions'   => $parsedStats['impressions'],
-                'fills'         => $parsedStats['fills'],
-                'fill_rate'     => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
-                'revenue'       => number_format($parsedStats['revenue'], 2),
-                'ecpm'          => $tag->ecpm / 100.0,
-                'errors'        => $parsedStats['errors'],
-                'error_rate'    => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
+            return $groupBy;
+        });
+
+        $reportStats      = new Collection;
+        $statsTransformer = new StatsTransformer;
+
+        foreach ($reportEvents as $events) {
+            $parsedStats = $statsTransformer->transformSumAll($events);
+
+            $campaign = $events->first()->campaign;
+            $tag      = $events->first()->tag;
+            $website  = $events->first()->website;
+
+            $stats = new Collection;
+
+            if ($campaign && ($combineBy['model'] === 'campaign' || $sortBy['model'] === 'campaign')) {
+                $stats = $stats->merge([
+                    'ad_type' => $campaign->type->adType->name,
+                ]);
+            }
+
+            if ($tag && ($combineBy['model'] === 'tag' || $sortBy['model'] === 'tag')) {
+                $stats = $stats->merge([
+                    'tag_id'        => $tag->id,
+                    'advertiser'    => $tag->advertiser,
+                    'description'   => $tag->description,
+                    'tag_type'      => $tag->type,
+                    'platform_type' => $tag->platform_type,
+                ]);
+            }
+
+            if ($website && ($combineBy['model'] === 'website' || $sortBy['model'] === 'website')) {
+                $stats = $stats->merge([
+                    'website'          => $website->domain,
+                    'desktopPageviews' => $parsedStats['desktopPageviews'],
+                    'mobilePageviews'  => $parsedStats['mobilePageviews'],
+                ]);
+            }
+
+            $stats = $stats->merge([
+                'requests'    => $parsedStats['tagRequests'],
+                'impressions' => $parsedStats['impressions'],
+                'fills'       => $parsedStats['fills'],
+                'fill_rate'   => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
+                'revenue'     => number_format($parsedStats['revenue'], 2),
+                'errors'      => $parsedStats['errors'],
+                'error_rate'  => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
             ]);
 
-            $tagStats = $tagStats->merge($this->parseViewership($tagEvents, $tagStats));
-            $tagStats = $tagStats->merge($this->parseErrors($tagEvents));
+            $stats = $stats->merge($this->parseViewership($events, $stats));
+            $stats = $stats->merge($this->parseErrors($events));
 
             if ($filterMetrics && $report->included_metrics) {
-                $tagStats = $tagStats->filter(function ($value, $key) use ($report) {
+                $stats = $stats->filter(function ($value, $key) use ($report) {
                     return in_array($key, array_merge(
                         $report->included_metrics,
                         [$report->sort_by],
@@ -70,12 +96,14 @@ class Reports
                 });
             }
 
-            $stats->push($tagStats->toArray());
+            $reportStats->push($stats->toArray());
         }
 
-        $stats = $stats->sortBy($report->sort_by);
+        $reportStats = $statsTransformer->combineWebsites($reportStats);
 
-        return $stats->values()->toArray();
+        $reportStats = $reportStats->sortBy($report->sort_by);
+
+        return $reportStats->values()->toArray();
     }
 
     /**
@@ -172,9 +200,9 @@ class Reports
     public function campaignEvents(Report $report)
     {
         $stats = CampaignEvent::query()
-            ->with('tag', 'website')
-            ->select('name', 'tag_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
-            ->groupBy('name', 'tag_id', 'website_id', 'status');
+            ->with('tag', 'website', 'campaign', 'campaign.type')
+            ->select('name', 'tag_id', 'campaign_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
+            ->groupBy('name', 'tag_id', 'campaign_id', 'website_id', 'status');
 
         $stats = $report->filterQuery($stats);
 

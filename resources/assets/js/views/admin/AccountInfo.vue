@@ -507,12 +507,17 @@
             return false
           }
 
-          if (backfill.ad_type === this.currentBackfill.ad_type &&
+          if (backfill.ad_type_id === this.currentBackfill.ad_type_id &&
               backfill.platform_type === this.currentBackfill.platform_type) {
+            console.log(this.currentBackfill.id)
+            console.log(backfill.id)
             return true
           }
+
           return false
         })
+
+        console.log(duplicated)
 
         if (duplicated.length > 0) {
           window.alert('Duplicated backfill')

@@ -82,7 +82,26 @@
 
         <div class="tagcreate-formbg">
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
-            <div class="tagcreate-fullinnertitle">SORT BY DIMENSION</div>
+            <div class="tagcreate-fullinnertitle">COMBINE BY DIMENSION</div>
+            <div class="tagcreate-selectwrap">
+              <select class="tagcreate-dropdown" v-model="report.combine_by">
+                <option value="advertiser">Advertiser</option>
+                <option value="website">Website</option>
+                <option value="tagName">Tag Name</option>
+                <option value="platformType">Platform Type</option>
+                <option value="tagType">Tag Type</option>
+                <option value="adType">Ad Type</option>
+                <option value="date">Date</option>
+                <option value="dayOfWeek">Day of Week</option>
+                <option value="hour">Hour</option>
+                <option value="month">Month</option>
+                <option value="week">Week</option>
+              </select>
+              <div class="tagcreate-selectarrow"></div>
+            </div>
+          </div>
+          <div class="tagcreate-quarterinnerwrap" style="margin-left:6px;">
+            <div class="tagcreate-fullinnertitle">SORT DIMENSION</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.sort_by">
                 <option value="advertiser">Advertiser</option>
@@ -91,10 +110,6 @@
                 <option value="platformType">Platform Type</option>
                 <option value="tagType">Tag Type</option>
                 <option value="adType">Ad Type</option>
-                <option value="country">Country</option>
-                <option value="state">State</option>
-                <option value="city">City</option>
-                <option value="postalCode">Postal Code</option>
                 <option value="date">Date</option>
                 <option value="dayOfWeek">Day of Week</option>
                 <option value="hour">Hour</option>
@@ -230,6 +245,7 @@
             value: ''
           },
           included_metrics: [],
+          combine_by: 'advertiser',
           sort_by: 'advertiser',
           schedule: 'once',
           weekly_every: '0',

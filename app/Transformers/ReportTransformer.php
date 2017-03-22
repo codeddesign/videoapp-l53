@@ -17,6 +17,7 @@ class ReportTransformer extends Transformer
             'filter'           => $report->filter,
             'included_metrics' => $report->included_metrics,
             'sort_by'          => $report->sort_by,
+            'combine_by'       => $report->combine_by,
             'schedule'         => $report->schedule,
             'schedule_every'   => $report->schedule_every,
             'recipient'        => $report->recipient,

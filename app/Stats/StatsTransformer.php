@@ -301,6 +301,37 @@ class StatsTransformer
         ];
     }
 
+    public function combineWebsites(Collection $stats)
+    {
+        $filtered = $stats->filter(function ($stat) {
+            return array_key_exists('website', $stat) && ($stat['desktopPageviews'] + $stat['mobilePageviews'] === 0);
+        });
+
+        return $stats;
+
+        $pageviews = $stats->filter(function ($stat) {
+            return array_key_exists('website', $stat) && ($stat['desktopPageviews'] + $stat['mobilePageviews'] > 0);
+        });
+
+        $filtered = $filtered->map(function ($stat) use ($pageviews) {
+            $websitePageviews = $pageviews->where('website', $stat['website']);
+            switch ($stat['platform_type']) {
+                case 'desktop':
+                    $stat['desktopPageviews'] += $websitePageviews->sum('desktopPageviews');
+                    break;
+                case 'mobile':
+                    $stat['mobilePageviews'] += $websitePageviews->sum('mobilePageviews');
+                    break;
+            }
+
+            unset($stat['advertiser'], $stat['tag_type'], $stat['description'], $stat['ad_type']);
+
+            return $stat;
+        });
+
+        return $filtered;
+    }
+
     protected function calculateFillRate($tagStats, $timestamp)
     {
         return [

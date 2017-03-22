@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Carbon $start_date
  * @property Carbon $end_date
  * @property string $sort_by
+ * @property string $combine_by
  * @property string $schedule
  * @property string $schedule_every
  * @property string $recipient
@@ -38,7 +39,7 @@ class Report extends Model
     public static $fixedSpreadsheetHeader = ['advertiser', 'description'];
 
     protected $fillable = [
-        'title', 'date_range', 'sort_by', 'schedule', 'schedule_every',
+        'title', 'date_range', 'sort_by', 'combine_by', 'schedule', 'schedule_every',
         'recipient', 'filter', 'included_metrics', 'deletable',
         'start_date', 'end_date',
     ];
@@ -107,6 +108,47 @@ class Report extends Model
         return $orderedHeader;
     }
 
+    public function dimension($dimension)
+    {
+        $tagDimensions = [
+            'advertiser'   => 'advertiser',
+            'tagName'      => 'description',
+            'platformType' => 'platform_type',
+            'tagType'      => 'type',
+        ];
+
+        $campaignDimensions = [
+            'adType' => 'type.adType',
+        ];
+
+        $websiteDimensions = [
+            'website' => 'domain',
+        ];
+
+        $model  = null;
+        $column = null;
+
+        if (array_key_exists($dimension, $tagDimensions)) {
+            $model  = 'tag';
+            $column = $tagDimensions[$dimension];
+        }
+
+        if (array_key_exists($dimension, $campaignDimensions)) {
+            $model  = 'campaign';
+            $column = $campaignDimensions[$dimension];
+        }
+
+        if (array_key_exists($dimension, $websiteDimensions)) {
+            $model  = 'website';
+            $column = $websiteDimensions[$dimension];
+        }
+
+        return [
+            'model'  => $model,
+            'column' => $column,
+        ];
+    }
+
     /**
      * @param Builder $query
      *
@@ -136,7 +178,12 @@ class Report extends Model
 
         // ad_type should be checked for the campaign
         if ($type === 'adType') {
-            return $query->whereHas('campaign.type.adType', function ($query) use ($type, $operator, $value, $tagFilters) {
+            return $query->whereHas('campaign.type.adType', function ($query) use (
+                $type,
+                $operator,
+                $value,
+                $tagFilters
+            ) {
                 $query->where("name", $operator, $value);
             });
         }
