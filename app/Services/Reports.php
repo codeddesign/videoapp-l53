@@ -49,7 +49,7 @@ class Reports
 
             $stats = new Collection;
 
-            if ($campaign && ($combineBy['model'] === 'campaign' || $sortBy['model'] === 'campaign')) {
+            if ($campaign) {
                 $stats = $stats->merge([
                     'ad_type' => $campaign->type->adType->name,
                 ]);
