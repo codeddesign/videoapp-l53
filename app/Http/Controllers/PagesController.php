@@ -9,6 +9,7 @@ class PagesController extends Controller
     /**
      * Show the app page.
      *
+     *
      * @return \Illuminate\View\View
      */
     public function index(): View
@@ -17,6 +18,9 @@ class PagesController extends Controller
         $socketIoIp = config('app.socket_io_ip');
         $apiDomain  = config('app.url');
 
-        return view('pages.app', compact('webpack', 'socketIoIp', 'apiDomain'));
+        $jsManifest = json_decode(file_get_contents(public_path('manifest.json')), true);
+        $jsBundle   = $jsManifest['main.js'];
+
+        return view('pages.app', compact('webpack', 'socketIoIp', 'apiDomain', 'jsBundle'));
     }
 }

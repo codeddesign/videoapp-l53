@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var ManifestPlugin = require('webpack-manifest-plugin')
 const vueConfig = require('./vue-loader.config')
 
 module.exports = {
@@ -54,7 +55,9 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.performance.hints = "warning",
+  module.exports.performance.hints = "warning"
+
+  module.exports.output.filename = 'js/app-[hash].js'
 
   module.exports.devtool = 'cheap-module-source-map'
 
@@ -81,6 +84,10 @@ if (process.env.NODE_ENV === 'production') {
     }),
 
     // optimize module ids by occurrence count
-    new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+
+    new ManifestPlugin({
+      filename: 'manifest.json',
+    })
   ])
 }

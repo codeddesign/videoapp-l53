@@ -21,7 +21,7 @@
     @if($webpack)
         <script src="http://192.168.10.10:8080/js/app.js"></script>
     @else
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset($jsBundle) }}"></script>
     @endif
 
     {{--include typekit font--}}
