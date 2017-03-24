@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\CampaignEvent;
-use Illuminate\Console\Command;
 use Illuminate\Redis\RedisManager;
 use Illuminate\Database\Connection as Database;
 
