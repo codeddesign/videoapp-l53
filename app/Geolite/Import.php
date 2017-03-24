@@ -24,10 +24,16 @@ class Import
     private $db_rows = [];
 
     /**
-     *
+     * @var bool
      */
-    public function __construct()
+    private $update = false;
+
+    /**
+     * @param bool $update
+     */
+    public function __construct($update = false)
     {
+        $this->update = $update;
     }
 
     /**
@@ -49,7 +55,7 @@ class Import
             $row = array_combine($keys, $values);
 
             // ignore the ones that don't have an id
-            if (! trim($row['geoname_id'])) {
+            if (!trim($row['geoname_id'])) {
                 continue;
             }
 
@@ -108,7 +114,7 @@ class Import
     private function csv_lines($csv_file)
     {
         $file_path = (storage_path().'/geolite/'.$csv_file);
-        if (! file_exists($file_path)) {
+        if (!file_exists($file_path)) {
             echo 'File: '.$file_path.' does not exist';
 
             exit;
@@ -126,7 +132,15 @@ class Import
     {
         $total_rows = count($this->db_rows);
         if ($total_rows && ($force || $total_rows == static::ROWS_AT_ONCE)) {
-            Location::insert($this->db_rows);
+            if (!$this->update) {
+                Location::insert($this->db_rows);
+            } else {
+                $update_key = 'geoname_id';
+                foreach ($this->db_rows as $row) {
+                    Location::updateOrCreate([$update_key => $row[$update_key]], $row);
+                }
+            }
+
             $this->db_rows = [];
         }
 
@@ -142,7 +156,15 @@ class Import
     {
         $total_rows = count($this->db_rows);
         if ($total_rows && ($force || $total_rows == static::ROWS_AT_ONCE)) {
-            Range::insert($this->db_rows);
+            if (!$this->update) {
+                Range::insert($this->db_rows);
+            } else {
+                $update_key = 'geoname_id';
+                foreach ($this->db_rows as $row) {
+                    Range::updateOrCreate([$update_key => $row[$update_key]], $row);
+                }
+            }
+
             $this->db_rows = [];
         }
 

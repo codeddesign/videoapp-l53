@@ -11,7 +11,8 @@ class ImportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'ad3:import-geolite';
+    protected $signature = 'ad3:import-geolite
+    {--update : Update geolite}';
 
     /**
      * The console command description.
@@ -35,9 +36,11 @@ class ImportCommand extends Command
      */
     public function handle()
     {
-        $import = new Import();
+        $update = $this->option('update');
 
-        if (Location::first()) {
+        $import = new Import($update);
+
+        if (Location::first() && !$update) {
             $this->comment('Geolite table looks already seeded. Skipping for now..');
 
             return false;
