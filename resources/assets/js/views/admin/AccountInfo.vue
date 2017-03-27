@@ -213,6 +213,29 @@
             <div>
               <div class="userinfo-websitesheader">
                 <div class="userinfo-websitestitle">WEBSITE STATS</div>
+                <div class="edittagsselect-wrapper comparetagsselect-wrapper" style="margin-top: 4px;">
+                  <select v-model="websiteDateFilter">
+                    <option value="yesterday">
+                      Yesterday
+                    </option>
+                    <option value="twoDaysAgo">
+                      2 Days Ago
+                    </option>
+                    <option value="threeDaysAgo">
+                      3 Days Ago
+                    </option>
+                    <option value="oneWeekAgo">
+                      7 Days Ago
+                    </option>
+                    <option value="thisMonth">
+                      This Month
+                    </option>
+                    <option value="lastMonth">
+                      Last Month
+                    </option>
+                  </select>
+                  <div class="edittagsselect-selectarrow" style="margin-left: 80px;"></div>
+                </div>
               </div>
               <ul class="userinfo-itemlistheader">
                 <li style="width:250px;">URL</li>
@@ -264,6 +287,29 @@
             <div>
               <div class="userinfo-websitesheader">
                 <div class="userinfo-websitestitle">CAMPAIGN STATS</div>
+                <div class="edittagsselect-wrapper comparetagsselect-wrapper" style="margin-top: 4px;">
+                  <select v-model="campaignsDateFilter">
+                    <option value="yesterday">
+                      Yesterday
+                    </option>
+                    <option value="twoDaysAgo">
+                      2 Days Ago
+                    </option>
+                    <option value="threeDaysAgo">
+                      3 Days Ago
+                    </option>
+                    <option value="oneWeekAgo">
+                      7 Days Ago
+                    </option>
+                    <option value="thisMonth">
+                      This Month
+                    </option>
+                    <option value="lastMonth">
+                      Last Month
+                    </option>
+                  </select>
+                  <div class="edittagsselect-selectarrow" style="margin-left: 80px;"></div>
+                </div>
               </div>
               <ul class="userinfo-itemlistheader userinfo-campaigntitle">
                 <li class="width250">CAMPAIGN NAME</li>
@@ -407,6 +453,8 @@
 
     data() {
       return {
+        websiteDateFilter: 'thisMonth',
+        campaignsDateFilter: 'thisMonth',
         selectedBackfill: [],
         showBackfillForm: false,
         currentBackfill: User.defaultBackfill(),
@@ -550,8 +598,8 @@
             this.chartData = chartData
           })
 
-        this.$store.dispatch('loadWebsitesStats', account)
-        this.$store.dispatch('loadCampaignsStats', account)
+        this.$store.dispatch('loadWebsitesStats', { account: account, range: this.websiteDateFilter })
+        this.$store.dispatch('loadCampaignsStats', { account: account, range: this.campaignsDateFilter })
         return account
       },
 

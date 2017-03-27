@@ -18,13 +18,14 @@ class CampaignsController extends ApiController
     {
         $userId = $request->get('user_id');
         $user = User::with('campaigns')->findOrFail($userId);
+        $range = $request->get('time');
 
         $campaigns = $user->campaigns;
 
         $stats = CampaignEvent::with('tag', 'campaign')
             ->select('name', 'campaign_id', 'tag_id', DB::raw('SUM(count) as count'))
             ->whereIn('campaign_id', $campaigns->pluck('id'))
-            ->timeRange('today', $this->user->timezone)
+            ->timeRange($range, $this->user->timezone)
             ->groupBy('name', 'campaign_id', 'tag_id')
             ->get()
             ->groupBy('campaign_id');

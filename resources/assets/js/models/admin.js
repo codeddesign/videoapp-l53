@@ -101,8 +101,8 @@ export default {
     })
   },
 
-  loadCampaignsStats(userId) {
-    return axios.get('/admin/campaigns/stats?user_id=' + userId)
+  loadCampaignsStats(userId, range) {
+    return axios.get('/admin/campaigns/stats?user_id=' + userId + '&time=' + range)
       .then((response) => {
         return response.data.data
       })

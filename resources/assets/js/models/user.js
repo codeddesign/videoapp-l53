@@ -71,8 +71,8 @@ export default {
       })
   },
 
-  loadWebsiteStats(id) {
-    return axios.get('/admin/websites/stats?user_id=' + id)
+  loadWebsiteStats(id, range) {
+    return axios.get('/admin/websites/stats?user_id=' + id + '&time=' + range)
       .then((response) => {
         return response.data.data
       })

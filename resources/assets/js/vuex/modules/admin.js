@@ -126,14 +126,14 @@ const actions = {
     })
   },
 
-  loadWebsitesStats({ commit }, account) {
-    User.loadWebsiteStats(account.id).then(stats => {
+  loadWebsitesStats({ commit }, { account, range }) {
+    User.loadWebsiteStats(account.id, range).then(stats => {
       commit(LOAD_WEBSITE_STATS, stats)
     })
   },
 
-  loadCampaignsStats({ commit }, account) {
-    Admin.loadCampaignsStats(account.id).then(stats => {
+  loadCampaignsStats({ commit }, { account, range }) {
+    Admin.loadCampaignsStats(account.id, range).then(stats => {
       commit(LOAD_CAMPAIGN_STATS, stats)
     })
   },

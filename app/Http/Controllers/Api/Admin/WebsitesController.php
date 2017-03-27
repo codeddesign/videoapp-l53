@@ -46,13 +46,14 @@ class WebsitesController extends ApiController
     {
         $userId = $request->get('user_id');
         $user   = User::with('websites')->findOrFail($userId);
+        $range = $request->get('time');
 
         $sites = $user->websites;
 
         $stats = CampaignEvent::with('website', 'tag')
             ->select('name', 'website_id', 'tag_id', DB::raw('SUM(count) as count'))
             ->whereIn('website_id', $sites->pluck('id'))
-            ->timeRange('today', $this->user->timezone)
+            ->timeRange($range, $this->user->timezone)
             ->groupBy('name', 'website_id', 'tag_id')
             ->get()
             ->groupBy('website_id');
