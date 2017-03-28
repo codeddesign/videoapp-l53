@@ -17,7 +17,7 @@ class RefactorAdType extends Migration
         \DB::statement('ALTER TABLE tags RENAME COLUMN campaign_types TO ad_types');
 
         DB::table('tags')
-            ->update(['ad_types' => json_encode([1,2])]);
+            ->update(['ad_types' => json_encode([1, 2])]);
 
         Schema::table('campaign_types', function (Blueprint $table) {
             $table->dropColumn('alias');

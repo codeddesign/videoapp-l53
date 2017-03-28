@@ -8,15 +8,15 @@ class AdTypesSeeder extends Seeder
     protected $adTypes = [
         [
             'id' => 1,
-            'name' => 'On-scroll'
+            'name' => 'On-scroll',
         ],
         [
             'id' => 2,
-            'name' => 'Infinity'
+            'name' => 'Infinity',
         ],
         [
             'id' => 3,
-            'name' => 'Pre-roll'
+            'name' => 'Pre-roll',
         ],
     ];
 
@@ -27,8 +27,7 @@ class AdTypesSeeder extends Seeder
      */
     public function run()
     {
-        foreach($this->adTypes as $info)
-        {
+        foreach ($this->adTypes as $info) {
             $adType = new AdType;
             $adType->id = $info['id'];
             $adType->name = $info['name'];

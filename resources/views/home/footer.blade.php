@@ -2,7 +2,7 @@
     <div class="footerwrap">
         <div class="footerleft">
             <div class="footerlogo"></div>
-            <div class="footercopy">&copy; <?php echo date("Y");?>, ad3media.com</div>
+            <div class="footercopy">&copy; <?php echo date('Y');?>, ad3media.com</div>
         </div>
         <div class="footerright">
             <ul>

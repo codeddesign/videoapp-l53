@@ -28,10 +28,12 @@ class ReportsController extends ApiController
 
         $stats = $reportsService->stats($report, false);
 
+        $header = $report->spreadsheetHeader($stats);
+
         $campaignEvents = $reportsService->campaignEvents($report);
         $allStats = (new StatsTransformer)->transformSumAll($campaignEvents, true);
 
-        return $this->jsonResponse(compact('allStats', 'stats'));
+        return $this->jsonResponse(compact('allStats', 'stats', 'header'));
     }
 
     public function xls($id)

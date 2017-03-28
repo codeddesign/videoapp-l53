@@ -46,6 +46,15 @@ class Calculator
         return self::decimals(($impressions / 1000) * ($tag->ecpm / 100));
     }
 
+    public static function ecpm($revenue, $impressions)
+    {
+        if ($impressions === 0) {
+            return 0;
+        }
+
+        return self::decimals($revenue / ($impressions / 1000));
+    }
+
     public static function decimals($number, $decimals = 2)
     {
         return floatval(number_format($number, $decimals, '.', ''));

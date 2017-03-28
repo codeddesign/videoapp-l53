@@ -36,7 +36,7 @@ class Job
     protected function lockJob()
     {
         if (! $this->id) {
-            throw new Exception("Tried to lock a job without a valid ID");
+            throw new Exception('Tried to lock a job without a valid ID');
         }
 
         /** @var RedisManager $redis */

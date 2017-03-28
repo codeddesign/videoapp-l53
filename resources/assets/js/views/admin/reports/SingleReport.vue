@@ -128,125 +128,15 @@
     <div class="dashreports-scrollwrapper">
       <div class="dashreports-scrollarea">
         <ul class="dashboard-dailystatstitles dashreports-titlewidth">
-          <li>ADVERTISER</li>
-          <li>TAG NAME</li>
-          <li>WEBSITE</li>
-          <li>PAGEVIEWS</li>
-          <li>PLATFORM</li>
-          <li>TAG TYPE</li>
-          <li>AD TYPE</li>
-          <li>IMPRESSIONS</li>
-          <li>AD REQUESTS</li>
-          <li>FILLS</li>
-          <li>FILL %</li>
-          <li>CLICKS</li>
-          <li>CTR</li>
-          <li>eCPM</li>
-          <li>REVENUE</li>
-          <li>ONSCROLL</li>
-          <li>ONSCROLL %</li>
-          <li>ONSCROLL ERRORS</li>
-          <li>INFINITY</li>
-          <li>INFINITY %</li>
-          <li>INFINITY ERRORS</li>
-          <li>START</li>
-          <li>FIRST QUARTILE</li>
-          <li>MIDPOINT</li>
-          <li>THIRD QUARTILE</li>
-          <li>COMPLETE</li>
-          <li>COMPLETION RATE</li>
-          <li>AVERAGE VIEW RATE</li>
-          <li>AVERAGE VIEW TIME</li>
-          <li>AVG VIDEO LENGTH</li>
-          <li>TOTAL ERRORS</li>
-          <li>ERROR RATE</li>
-          <li>ERROR 101</li>
-          <li>ERROR 102</li>
-          <li>ERROR 200</li>
-          <li>ERROR 201</li>
-          <li>ERROR 202</li>
-          <li>ERROR 203</li>
-          <li>ERROR 300</li>
-          <li>ERROR 301</li>
-          <li>ERROR 302</li>
-          <li>ERROR 303</li>
-          <li>ERROR 400</li>
-          <li>ERROR 401</li>
-          <li>ERROR 402</li>
-          <li>ERROR 403</li>
-          <li>ERROR 405</li>
-          <li>ERROR 500</li>
-          <li>ERROR 501</li>
-          <li>ERROR 502</li>
-          <li>ERROR 503</li>
-          <li>ERROR 600</li>
-          <li>ERROR 601</li>
-          <li>ERROR 602</li>
-          <li>ERROR 603</li>
-          <li>ERROR 604</li>
-          <li>ERROR 900</li>
-          <li>ERROR 901</li>
+          <li v-for="header in stats.header">
+            {{ header }}
+          </li>
         </ul>
         <ul class="dashboard-dailystatslist dashreports-width">
-          <li v-for="tag in paginatedStats" v-bind:title="'ID: ' + tag.tag_id">
-            <div class="dashboard-statslist1">{{ tag.advertiser }}</div>
-            <div class="dashboard-statslist2">{{ tag.description }}</div>
-            <div class="dashboard-statslist2">{{ tag.website }}</div>
-            <div class="dashboard-statslist2">{{ tag.desktopPageviews + tag.mobilePageviews }}</div>
-            <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
-            <div class="dashboard-statslist2">{{ tag.tag_type }}</div>
-            <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
-            <div class="dashboard-statslist2">{{ tag.impressions }}</div>
-            <div class="dashboard-statslist2">{{ tag.requests }}</div>
-            <div class="dashboard-statslist2">{{ tag.fills }}</div>
-            <div class="dashboard-statslist2">{{ tag.fill_rate }}%</div>
-            <div class="dashboard-statslist2">{{ tag.click }}</div>
-            <div class="dashboard-statslist2">{{ tag.ctr }}%</div>
-            <div class="dashboard-statslist2">${{ tag.ecpm }}</div>
-            <div class="dashboard-statslist2">${{ tag.revenue }}</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">{{ tag.start }}</div>
-            <div class="dashboard-statslist2">{{ tag.firstquartile }}</div>
-            <div class="dashboard-statslist2">{{ tag.midpoint }}</div>
-            <div class="dashboard-statslist2">{{ tag.thirdquartile }}</div>
-            <div class="dashboard-statslist2">{{ tag.complete }}</div>
-            <div class="dashboard-statslist2">{{ tag.completion_rate }}%</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">TBD</div>
-            <div class="dashboard-statslist2">{{ tag.errors }}</div>
-            <div class="dashboard-statslist2">{{ tag.error_rate }}%</div>
-            <div class="dashboard-statslist2">{{ tag.error101 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error102 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error200 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error201 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error202 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error203 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error300 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error301 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error302 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error303 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error400 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error401 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error402 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error403 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error405 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error500 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error501 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error502 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error503 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error600 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error601 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error602 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error603 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error604 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error900 }}</div>
-            <div class="dashboard-statslist2">{{ tag.error901 }}</div>
+          <li v-for="stats in paginatedStats">
+            <div :class="'dashboard-statslist' + (index === 0 ? '1' : '2')" v-for="(stat, key, index) in stats">
+              {{ stat }}
+            </div>
           </li>
         </ul>
       </div><!-- END .dashreports-scrollarea -->
@@ -472,6 +362,10 @@
 </script>
 
 <style lang="scss">
+  ul.dashreports-titlewidth li {
+    text-transform: uppercase;
+  }
+
   .chart {
     width: 100%;
   }

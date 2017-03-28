@@ -63,27 +63,29 @@ class Report extends Model
     public function spreadsheetHeader($stats)
     {
         $header = collect([
-            'advertiser'      => 'Advertiser',
-            'description'     => 'Description',
-            'ad_type'         => 'Ad Type',
-            'platform_type'   => 'Platform Type',
-            'website'         => 'Website',
-            'requests'        => 'Ad Requests',
-            'impressions'     => 'Impressions',
-            'fills'           => 'Fills',
-            'fill_rate'       => 'Fill Rate',
-            'revenue'         => 'Revenue',
-            'ecpm'            => 'eCPM',
-            'click'           => 'Clicks',
-            'start'           => 'Start',
-            'firstquartile'   => 'First Quartile',
-            'midpoint'        => 'Midpoint',
-            'thirdquartile'   => 'Third Quartile',
-            'complete'        => 'Completed',
-            'ctr'             => 'CTR',
-            'completion_rate' => 'Completion Rate',
-            'errors'          => 'Total Errors',
-            'error_rate'      => 'Error Rate',
+            'advertiser'       => 'Advertiser',
+            'description'      => 'Description',
+            'ad_type'          => 'Ad Type',
+            'platform_type'    => 'Platform Type',
+            'website'          => 'Website',
+            'desktopPageviews' => 'Desktop Pageviews',
+            'mobilePageviews'  => 'Mobile Pageviews',
+            'requests'         => 'Ad Requests',
+            'impressions'      => 'Impressions',
+            'fills'            => 'Fills',
+            'fill_rate'        => 'Fill Rate',
+            'revenue'          => 'Revenue',
+            'ecpm'             => 'eCPM',
+            'click'            => 'Clicks',
+            'start'            => 'Start',
+            'firstquartile'    => 'First Quartile',
+            'midpoint'         => 'Midpoint',
+            'thirdquartile'    => 'Third Quartile',
+            'complete'         => 'Completed',
+            'ctr'              => 'CTR',
+            'completion_rate'  => 'Completion Rate',
+            'errors'           => 'Total Errors',
+            'error_rate'       => 'Error Rate',
         ]);
 
         $errorCodes = CampaignEvent::$errors;
@@ -101,7 +103,7 @@ class Report extends Model
             return $header->values()->toArray();
         }
 
-        foreach ($stats[0] as $key => $value) {
+        foreach ($stats->first() as $key => $value) {
             $orderedHeader[] = $header->get($key) ?? $key;
         }
 
@@ -118,7 +120,7 @@ class Report extends Model
         ];
 
         $campaignDimensions = [
-            'adType' => 'type.adType',
+            'adType' => 'type->adType->name',
         ];
 
         $websiteDimensions = [
@@ -184,7 +186,7 @@ class Report extends Model
                 $value,
                 $tagFilters
             ) {
-                $query->where("name", $operator, $value);
+                $query->where('name', $operator, $value);
             });
         }
 

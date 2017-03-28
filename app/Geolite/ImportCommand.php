@@ -40,7 +40,7 @@ class ImportCommand extends Command
 
         $import = new Import($update);
 
-        if (Location::first() && !$update) {
+        if (Location::first() && ! $update) {
             $this->comment('Geolite table looks already seeded. Skipping for now..');
 
             return false;

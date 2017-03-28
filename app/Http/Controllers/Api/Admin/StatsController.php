@@ -77,7 +77,7 @@ class StatsController extends ApiController
             $events = $events->whereIn('tag_id', $tags);
         }
 
-        if($campaigns !== null) {
+        if ($campaigns !== null) {
             $events = $events->whereIn('campaign_id', $campaigns);
         }
 

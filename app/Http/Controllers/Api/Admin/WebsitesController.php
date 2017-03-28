@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Api\Admin\StoreBackfillRequest;
-use App\Models\Backfill;
 use App\Models\CampaignEvent;
 use App\Models\User;
 use App\Models\Website;
 use App\Stats\StatsTransformer;
-use App\Transformers\BackfillTransformer;
 use App\Transformers\WebsiteTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;

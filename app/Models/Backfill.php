@@ -15,7 +15,7 @@ use Illuminate\Cache\Repository;
  * @property string   $platform_type
  * @property string   $width
  * @property int      $ecpm
- * @property boolean  $active
+ * @property bool  $active
  * @property Carbon   $created_at
  * @property Carbon   $updated_at
  *
@@ -45,7 +45,7 @@ class Backfill extends Model
         /** @var Repository $cache */
         $cache = app(Repository::class);
 
-        return Backfill::where('active', true)
+        return self::where('active', true)
             ->where('website_id', $websiteId)
             ->where('ad_type_id', $type)
             ->where('platform_type', $platform)

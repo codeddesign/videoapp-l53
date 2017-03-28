@@ -304,10 +304,10 @@ class StatsTransformer
     public function combineWebsites(Collection $stats)
     {
         $filtered = $stats->filter(function ($stat) {
-            return array_key_exists('website', $stat) && ($stat['desktopPageviews'] + $stat['mobilePageviews'] === 0);
+            return array_key_exists('website', $stat) && (
+                    $stat['desktopPageviews'] + $stat['mobilePageviews'] === 0
+                );
         });
-
-        return $stats;
 
         $pageviews = $stats->filter(function ($stat) {
             return array_key_exists('website', $stat) && ($stat['desktopPageviews'] + $stat['mobilePageviews'] > 0);

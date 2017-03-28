@@ -31,7 +31,6 @@ class BackfillTransformer extends Transformer
      * @param \App\Models\Backfill $backfill
      *
      * @return \League\Fractal\Resource\Item
-     *
      */
     public function includeAdType(Backfill $backfill)
     {

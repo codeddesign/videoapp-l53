@@ -52,7 +52,7 @@ class ChartsController extends ApiController
             $stats = $stats->whereIn('tag_id', $tags);
         }
 
-        if($adType) {
+        if ($adType) {
             $campaignIds = Campaign::with('type')->whereHas('type', function ($query) use ($adType) {
                 $query->where('ad_type_id', $adType);
             })->get()->pluck('id')->toArray();

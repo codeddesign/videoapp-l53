@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
  * @property int          $rpm
  * @property int          $size
  * @property string       $name
- * @property boolean      $active
+ * @property bool      $active
  * @property Carbon       $created_at
  * @property Carbon       $updated_at
  *

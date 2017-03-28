@@ -20,7 +20,7 @@ class PersistEvents extends Job implements ShouldQueue
      */
     public function handle()
     {
-        if(! $this->lockJob()) {
+        if (! $this->lockJob()) {
             return;
         }
 

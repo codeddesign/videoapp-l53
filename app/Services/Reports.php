@@ -6,6 +6,7 @@ use App\Mail\ScheduledReport;
 use App\Models\CampaignEvent;
 use App\Models\Report;
 use App\Models\User;
+use App\Stats\Calculator;
 use App\Stats\StatsTransformer;
 use App\Transformers\Spreadsheet\ReportTransformer;
 use Carbon\Carbon;
@@ -26,16 +27,33 @@ class Reports
         $combineBy = $report->dimension($report->combine_by);
         $sortBy    = $report->dimension($report->sort_by);
 
-        $reportEvents = $this->campaignEvents($report)->groupBy(function ($item) use ($combineBy, $sortBy) {
-            $groupBy = $item->{$combineBy['model']}->{$combineBy['column']} ?? '';
+        $reportEvents = $this->campaignEvents($report)
+            ->filter(function ($event) use ($report) {
+                if ($report->sort_by === 'platformType') {
+                    return true;
+                }
 
-            if ($combineBy !== $sortBy) {
-                $groupBy .= '-';
-                $groupBy .= $item->{$sortBy['model']}->{$sortBy['column']} ?? '';
-            }
+                if (in_array($event->name, ['mobilePageviews', 'desktopPageviews'])) {
+                    return false;
+                }
 
-            return $groupBy;
-        });
+                return true;
+            })
+            ->groupBy(function ($item) use ($combineBy, $sortBy) {
+                $groupBy = $item->{$combineBy['model']}->{$combineBy['column']} ?? '';
+
+                if ($combineBy !== $sortBy) {
+                    $groupBy .= '-';
+
+                    if ($sortBy['model'] === 'campaign') {
+                        $groupBy .= $item->campaign->type->adType->name ?? '';
+                    } else {
+                        $groupBy .= $item->{$sortBy['model']}->{$sortBy['column']} ?? '';
+                    }
+                }
+
+                return $groupBy;
+            });
 
         $reportStats      = new Collection;
         $statsTransformer = new StatsTransformer;
@@ -49,6 +67,12 @@ class Reports
 
             $stats = new Collection;
 
+            // Make sure the combine_by field is always
+            // the first item in the stats array
+            $stats = $stats->merge([
+                $report->combine_by => '',
+            ]);
+
             if ($campaign) {
                 $stats = $stats->merge([
                     'ad_type' => $campaign->type->adType->name,
@@ -57,7 +81,6 @@ class Reports
 
             if ($tag && ($combineBy['model'] === 'tag' || $sortBy['model'] === 'tag')) {
                 $stats = $stats->merge([
-                    'tag_id'        => $tag->id,
                     'advertiser'    => $tag->advertiser,
                     'description'   => $tag->description,
                     'tag_type'      => $tag->type,
@@ -65,9 +88,9 @@ class Reports
                 ]);
             }
 
-            if ($website && ($combineBy['model'] === 'website' || $sortBy['model'] === 'website')) {
+            if ($combineBy['model'] === 'website' || $sortBy['model'] === 'website') {
                 $stats = $stats->merge([
-                    'website'          => $website->domain,
+                    'website'          => $website->domain ?? 'N/A',
                     'desktopPageviews' => $parsedStats['desktopPageviews'],
                     'mobilePageviews'  => $parsedStats['mobilePageviews'],
                 ]);
@@ -78,7 +101,8 @@ class Reports
                 'impressions' => $parsedStats['impressions'],
                 'fills'       => $parsedStats['fills'],
                 'fill_rate'   => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
-                'revenue'     => number_format($parsedStats['revenue'], 2),
+                'revenue'     => Calculator::decimals($parsedStats['revenue']),
+                'ecpm'        => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
                 'errors'      => $parsedStats['errors'],
                 'error_rate'  => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
             ]);
@@ -99,11 +123,15 @@ class Reports
             $reportStats->push($stats->toArray());
         }
 
-        $reportStats = $statsTransformer->combineWebsites($reportStats);
+        if ($report->sort_by === 'platformType') {
+            $reportStats = $statsTransformer->combineWebsites($reportStats);
+        }
 
         $reportStats = $reportStats->sortBy($report->sort_by);
 
-        return $reportStats->values()->toArray();
+        dd($reportStats);
+
+        return $reportStats->values();
     }
 
     /**
@@ -202,7 +230,8 @@ class Reports
         $stats = CampaignEvent::query()
             ->with('tag', 'website', 'campaign', 'campaign.type')
             ->select('name', 'tag_id', 'campaign_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
-            ->groupBy('name', 'tag_id', 'campaign_id', 'website_id', 'status');
+            ->groupBy('name', 'tag_id', 'campaign_id', 'website_id', 'status')
+            ->where('name', '!=', 'campaignRequests');
 
         $stats = $report->filterQuery($stats);
 
