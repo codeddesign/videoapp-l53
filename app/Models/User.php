@@ -161,9 +161,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         // add campaign
         $data['user_id'] = $this->id;
 
-        $campaignType = CampaignType::where('alias', $data['type'])->first();
-
-        $data['campaign_type_id'] = $campaignType->id;
+        $campaignType = CampaignType::where('id', $data['campaign_type_id'])->first();
 
         if (! $campaignType->has_name) {
             $data['name'] = Youtube::title($data);

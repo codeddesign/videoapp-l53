@@ -15,7 +15,7 @@
         <div class="selectadtype-wrapper">
           <ul class="selectadtype-adtypes">
             <li v-for="type in campaign_types" :class="{'disabled': !type.available}" @click="pickAdType(type)">
-              <img :src="'/images/adtype-'+type.alias+'.png'">
+              <img :src="'/images/adtype-'+type.title.replace(/-|\s/g, '').toLowerCase()+'.png'">
               <div class="selectadtype-adtypetitle">{{ type.title }}</div>
               <div class="selectadtype-adtypeselect">select this ad</div>
             </li>
@@ -134,7 +134,7 @@
         ],
         sizes: null,
         campaign: {
-          type: false,
+          campaign_type_id: false,
           name: '',
           size: 'auto',
           video: ''
@@ -163,7 +163,7 @@
     computed: {
       selectedCampaign: function() {
         return _.find(this.campaign_types, (type) => {
-          return type.alias === this.campaign.type
+          return type.id === this.campaign.campaign_type_id
         })
       }
     },
@@ -203,7 +203,7 @@
         }
       },
       pickAdType: function(type) {
-        this.campaign.type = type.alias
+        this.campaign.campaign_type_id = type.id
 
         this.nextStep(2)
       },
