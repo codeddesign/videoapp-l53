@@ -129,8 +129,6 @@ class Reports
 
         $reportStats = $reportStats->sortBy($report->sort_by);
 
-        dd($reportStats);
-
         return $reportStats->values();
     }
 
