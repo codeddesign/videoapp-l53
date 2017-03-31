@@ -10,6 +10,7 @@ use App\Services\CampaignEvents;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Cache\Repository;
 
 class StatsController extends ApiController
 {
@@ -50,7 +51,14 @@ class StatsController extends ApiController
         }
 
         $events = $campaignEvents->merge($analyticsEvents);
-        $events = $events->merge($this->campaignEvents('today', null, $campaignIds));
+
+        $cache = app(Repository::class);
+
+        $databaseEvents = $cache->tags(['events'])->remember('events.today', 30, function () use ($campaignIds) {
+            return $this->campaignEvents('today', null, $campaignIds);
+        });
+
+        $events = $events->merge($databaseEvents);
 
         return (new StatsTransformer)->transformSumAll($events, true);
     }

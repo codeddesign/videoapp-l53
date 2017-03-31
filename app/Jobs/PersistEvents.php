@@ -34,6 +34,9 @@ class PersistEvents extends Job implements ShouldQueue
 
         $message = "{$totalEvents} events saved.";
 
+        $cache = app(Repository::class);
+        $cache->tags(['events'])->flush();
+
         $this->log($message);
     }
 }
