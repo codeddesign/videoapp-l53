@@ -113,14 +113,14 @@ class Report extends Model
     public function dimension($dimension)
     {
         $tagDimensions = [
-            'advertiser'   => 'advertiser',
-            'tagName'      => 'description',
-            'platformType' => 'platform_type',
-            'tagType'      => 'type',
+            'advertiser'    => 'advertiser',
+            'description'   => 'description',
+            'platform_type' => 'platform_type',
+            'tag_type'      => 'type',
         ];
 
         $campaignDimensions = [
-            'adType' => 'type->adType->name',
+            'ad_type' => 'type->adType->name',
         ];
 
         $websiteDimensions = [

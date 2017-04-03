@@ -135,7 +135,7 @@
         <ul class="dashboard-dailystatslist dashreports-width">
           <li v-for="stats in paginatedStats">
             <div :class="'dashboard-statslist' + (index === 0 ? '1' : '2')" v-for="(stat, key, index) in stats">
-              {{ stat }}
+              <span v-if="['ecpm', 'revenue'].indexOf(key) !== -1">$</span>{{ stat }}
             </div>
           </li>
         </ul>

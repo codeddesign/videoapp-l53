@@ -51,11 +51,11 @@
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.filter.type">
                 <option value="advertiser">Advertiser</option>
-                <option value="tagName">Tag Name</option>
+                <option value="description">Tag Name</option>
                 <option value="website">Website</option>
-                <option value="platformType">Platform Type</option>
-                <option value="tagType">Tag Type</option>
-                <option value="adType">Ad Type</option>
+                <option value="platform_type">Platform Type</option>
+                <option value="tag_type">Tag Type</option>
+                <option value="ad_type">Ad Type</option>
                 <option value="geography">Geography</option>
                 <option value="userAccount">User Account</option>
               </select>
@@ -87,10 +87,10 @@
               <select class="tagcreate-dropdown" v-model="report.combine_by">
                 <option value="advertiser">Advertiser</option>
                 <option value="website">Website</option>
-                <option value="tagName">Tag Name</option>
-                <option value="platformType">Platform Type</option>
-                <option value="tagType">Tag Type</option>
-                <option value="adType">Ad Type</option>
+                <option value="description">Tag Name</option>
+                <option value="platform_type">Platform Type</option>
+                <option value="tag_type">Tag Type</option>
+                <option value="ad_type">Ad Type</option>
                 <option value="date">Date</option>
                 <option value="dayOfWeek">Day of Week</option>
                 <option value="hour">Hour</option>
@@ -106,10 +106,10 @@
               <select class="tagcreate-dropdown" v-model="report.sort_by">
                 <option value="advertiser">Advertiser</option>
                 <option value="website">Website</option>
-                <option value="tagName">Tag Name</option>
-                <option value="platformType">Platform Type</option>
-                <option value="tagType">Tag Type</option>
-                <option value="adType">Ad Type</option>
+                <option value="description">Tag Name</option>
+                <option value="platform_type">Platform Type</option>
+                <option value="tag_type">Tag Type</option>
+                <option value="ad_type">Ad Type</option>
                 <option value="date">Date</option>
                 <option value="dayOfWeek">Day of Week</option>
                 <option value="hour">Hour</option>

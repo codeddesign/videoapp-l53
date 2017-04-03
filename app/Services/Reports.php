@@ -29,7 +29,7 @@ class Reports
 
         $reportEvents = $this->campaignEvents($report)
             ->filter(function ($event) use ($report) {
-                if ($report->sort_by === 'platformType') {
+                if ($report->sort_by === 'platform_type') {
                     return true;
                 }
 
@@ -123,7 +123,7 @@ class Reports
             $reportStats->push($stats->toArray());
         }
 
-        if ($report->sort_by === 'platformType') {
+        if ($report->sort_by === 'platform_type') {
             $reportStats = $statsTransformer->combineWebsites($reportStats);
         }
 
