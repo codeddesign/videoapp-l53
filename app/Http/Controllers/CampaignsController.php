@@ -54,7 +54,7 @@ class CampaignsController extends Controller
 
         Datadogstatsd::increment('video-app.campaign_request', 1);
 
-        return response([
+        return $this->response([
             'campaign'   => $campaign,
             'tags'       => $tags,
             'backfill'   => $backfill,
@@ -62,5 +62,26 @@ class CampaignsController extends Controller
             'location'   => $location,
             'website_id' => $websiteId,
         ], 200);
+    }
+
+    private function response($data)
+    {
+        if (!request()->get('xml')) {
+            return response($data);
+        }
+
+        $data['platform'] = 'desktop';
+        $agent = request()->server('HTTP_USER_AGENT');
+
+        $options = 'Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini';
+        foreach (explode('|', $options) as $option) {
+            if (stripos($agent, $option) !== false) {
+                $data['platform'] = 'mobile';
+            }
+        }
+
+        return response()
+            ->view('campaign.tag', $data)
+            ->header('Content-Type', 'text/xml');
     }
 }
