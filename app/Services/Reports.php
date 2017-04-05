@@ -29,7 +29,11 @@ class Reports
 
         $reportEvents = $this->campaignEvents($report)
             ->filter(function ($event) use ($report) {
-                if ($report->sort_by === 'platform_type') {
+                if (in_array('platform_type', [$report->sort_by, $report->combine_by])) {
+                    return true;
+                }
+
+                if (in_array('website', [$report->sort_by, $report->combine_by])) {
                     return true;
                 }
 
@@ -67,7 +71,7 @@ class Reports
 
             $stats = new Collection;
 
-            // Make sure the combine_by field is always
+            // Ensure the combine_by field is always
             // the first item in the stats array
             $stats = $stats->merge([
                 $report->combine_by => '',
@@ -123,11 +127,11 @@ class Reports
             $reportStats->push($stats->toArray());
         }
 
-        if ($report->sort_by === 'platform_type') {
+        if ($report->sort_by === 'platform_type' || $report->combine_by === 'platform_type') {
             $reportStats = $statsTransformer->combineWebsites($reportStats);
         }
 
-        $reportStats = $reportStats->sortBy($report->sort_by);
+        $reportStats = $reportStats->sortByDesc($report->sort_by);
 
         return $reportStats->values();
     }
