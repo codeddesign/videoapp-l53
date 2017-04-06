@@ -42,7 +42,7 @@ class ReportsController extends ApiController
     {
         $report = $this->user->reports()->where('id', $id)->firstOrFail();
 
-        $reportsSpreadsheet = new Reports\Spreadsheet;
+        $reportsSpreadsheet = new Spreadsheet;
 
         $xlsFile = $reportsSpreadsheet->generateXls($report);
 
