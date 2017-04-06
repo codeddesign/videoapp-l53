@@ -78,7 +78,7 @@ class Website extends Model
      *
      * @return string
      */
-    protected static function linkDomain($link)
+    public static function linkDomain($link)
     {
         $parsed = parse_url($link);
         if (! isset($parsed['host'])) {

@@ -27,3 +27,5 @@ Route::post('password/reset', 'Authentication\ResetPasswordController@reset');
 
 // Vue app.
 Route::get('/app/{vue?}', ['as' => 'app', 'uses' => 'PagesController@index'])->where('vue', '[\/\w\.-]*');
+
+Route::get('domainlist', 'DomainListController@domains');

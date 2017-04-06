@@ -7,7 +7,9 @@ use App\Models\Backfill;
 use App\Models\Campaign;
 use App\Models\Tag;
 use App\Models\Website;
+use Carbon\Carbon;
 use Datadogstatsd;
+use Illuminate\Redis\RedisManager;
 
 class CampaignsController extends Controller
 {
@@ -47,7 +49,13 @@ class CampaignsController extends Controller
         } else {
             $tags = Tag::forRequest($location, $websiteId);
         }
-        $type = null;
+
+        if (request()->get('xml') && $referer !== null) {
+            $redis  = app(RedisManager::class);
+            $domain = Website::linkDomain($referer);
+            $date   = Carbon::now()->format('mdY');
+            $redis->hsetnx('sm_domains', $domain, $date);
+        }
 
         $platform = $request->get('platform');
         $backfill = Backfill::forRequest($websiteId, $campaign['ad_type'], $platform);
@@ -66,12 +74,12 @@ class CampaignsController extends Controller
 
     private function response($data)
     {
-        if (!request()->get('xml')) {
+        if (! request()->get('xml')) {
             return response($data);
         }
 
         $data['platform'] = 'desktop';
-        $agent = request()->server('HTTP_USER_AGENT');
+        $agent            = request()->server('HTTP_USER_AGENT');
 
         $options = 'Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini';
         foreach (explode('|', $options) as $option) {

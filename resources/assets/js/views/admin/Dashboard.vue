@@ -327,6 +327,7 @@
             console.error('Error fetching the charts.')
           })
       },
+
       ...stats
     },
 
