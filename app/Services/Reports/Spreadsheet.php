@@ -80,7 +80,7 @@ class Spreadsheet
             'fills'            => 'Fills',
             'fill_rate'        => 'Fill Rate',
             'revenue'          => 'Revenue',
-            'ecpm'             => 'eCPM',
+            'cpm'              => 'eCPM',
             'click'            => 'Clicks',
             'start'            => 'Start',
             'firstquartile'    => 'First Quartile',

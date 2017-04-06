@@ -90,7 +90,7 @@ class Reports
                 'fills'       => $parsedStats['fills'],
                 'fill_rate'   => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
                 'revenue'     => Calculator::decimals($parsedStats['revenue']),
-                'ecpm'        => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
+                'cpm'        => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
                 'errors'      => $parsedStats['errors'],
                 'error_rate'  => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
             ]);
