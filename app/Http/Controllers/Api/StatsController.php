@@ -16,6 +16,9 @@ class StatsController extends ApiController
      */
     public function all(Request $request)
     {
+        // Temporary until the user's dashboard is fixed.
+        return $this->jsonResponse([]);
+
         $timespan = $request->get('time');
 
         if (! $timespan || $timespan === 'realtime') {
