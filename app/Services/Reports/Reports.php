@@ -46,11 +46,6 @@ class Reports
         foreach ($reportEvents as $events) {
             $parsedStats = $statsTransformer->transformSumAll($events);
 
-            if ($parsedStats['tagRequests'] === 432) {
-                // THE PROBLEM IS ON LINE 73. WE ARE GROUPING BY PLATFORM_TYPE (AND THUS COMBINING MULTIPLE TAGS) AND THEN ASKING FOR THE FIRST TAG (DOESN'T MAKE SENSE)...
-                dd(json_encode($events));
-            }
-
             $campaign = $events->first()->campaign;
             $tag      = $events->first()->tag;
             $website  = $events->first()->website;
@@ -69,7 +64,7 @@ class Reports
                 ]);
             }
 
-            $relations  = [$combineBy['relation'], $sortBy['relation']];
+            $relations = [$combineBy['relation'], $sortBy['relation']];
 
             if ($tag && in_array('tag', $relations)) {
                 foreach ([$combineBy, $sortBy] as $item) {
@@ -108,7 +103,7 @@ class Reports
                     return in_array($key, array_merge(
                         $report->included_metrics,
                         [$report->sort_by],
-                        Report::$fixedSpreadsheetHeader
+                        ['desktopPageviews', 'mobilePageviews']
                     ));
                 });
             }
@@ -125,6 +120,11 @@ class Reports
         $reportStats = $reportStats->sortByDesc($report->sort_by);
 
         return $reportStats->values();
+    }
+
+    protected function calculateTotals($events)
+    {
+
     }
 
     /**

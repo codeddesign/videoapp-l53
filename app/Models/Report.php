@@ -35,8 +35,6 @@ class Report extends Model
 {
     use SaveMany;
 
-    public static $fixedSpreadsheetHeader = ['advertiser', 'description'];
-
     protected $fillable = [
         'title', 'date_range', 'sort_by', 'combine_by', 'schedule', 'schedule_every',
         'recipient', 'filter', 'included_metrics', 'deletable',
