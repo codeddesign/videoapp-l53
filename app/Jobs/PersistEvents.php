@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Services\AnalyticsEvents;
 use App\Services\CampaignEvents;
 use Illuminate\Bus\Queueable;
+use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
