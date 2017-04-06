@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Traits\SaveMany;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -60,180 +59,6 @@ class Report extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function spreadsheetHeader($stats)
-    {
-        $header = collect([
-            'advertiser'       => 'Advertiser',
-            'description'      => 'Description',
-            'ad_type'          => 'Ad Type',
-            'platform_type'    => 'Platform Type',
-            'website'          => 'Website',
-            'desktopPageviews' => 'Desktop Pageviews',
-            'mobilePageviews'  => 'Mobile Pageviews',
-            'requests'         => 'Ad Requests',
-            'impressions'      => 'Impressions',
-            'fills'            => 'Fills',
-            'fill_rate'        => 'Fill Rate',
-            'revenue'          => 'Revenue',
-            'ecpm'             => 'eCPM',
-            'click'            => 'Clicks',
-            'start'            => 'Start',
-            'firstquartile'    => 'First Quartile',
-            'midpoint'         => 'Midpoint',
-            'thirdquartile'    => 'Third Quartile',
-            'complete'         => 'Completed',
-            'ctr'              => 'CTR',
-            'completion_rate'  => 'Completion Rate',
-            'errors'           => 'Total Errors',
-            'error_rate'       => 'Error Rate',
-        ]);
-
-        $errorCodes = CampaignEvent::$errors;
-        $errors     = [];
-
-        foreach ($errorCodes as $code) {
-            $errors["error{$code}"] = "Error {$code}";
-        }
-
-        $header = $header->merge($errors);
-
-        $orderedHeader = [];
-
-        if (count($stats) === 0) {
-            return $header->values()->toArray();
-        }
-
-        foreach ($stats->first() as $key => $value) {
-            $orderedHeader[] = $header->get($key) ?? $key;
-        }
-
-        return $orderedHeader;
-    }
-
-    public function dimension($dimension)
-    {
-        $tagDimensions = [
-            'advertiser'    => 'advertiser',
-            'description'   => 'description',
-            'platform_type' => 'platform_type',
-            'tag_type'      => 'type',
-        ];
-
-        $campaignDimensions = [
-            'ad_type' => 'type->adType->name',
-        ];
-
-        $websiteDimensions = [
-            'website' => 'domain',
-        ];
-
-        $model  = null;
-        $column = null;
-
-        if (array_key_exists($dimension, $tagDimensions)) {
-            $model  = 'tag';
-            $column = $tagDimensions[$dimension];
-        }
-
-        if (array_key_exists($dimension, $campaignDimensions)) {
-            $model  = 'campaign';
-            $column = $campaignDimensions[$dimension];
-        }
-
-        if (array_key_exists($dimension, $websiteDimensions)) {
-            $model  = 'website';
-            $column = $websiteDimensions[$dimension];
-        }
-
-        return [
-            'model'  => $model,
-            'column' => $column,
-        ];
-    }
-
-    /**
-     * @param Builder $query
-     *
-     * @return $this
-     */
-    public function filterQuery($query)
-    {
-        $query = $query->timeRange($this->dateRange(), $this->user->timezone);
-
-        if ($this->filter['value'] === '') {
-            return $query;
-        }
-
-        $type     = $this->filter['type'];
-        $operator = $this->getFilterQueryOperator();
-        $value    = $this->getFilterValue();
-
-        // Maps the tag filters to their
-        // database column.
-        $tagFilters = [
-            'advertiser'   => 'advertiser',
-            'tagName'      => 'description',
-            'platformType' => 'platform_type',
-            'adType'       => 'ad_types',
-            'tagType'      => 'type',
-        ];
-
-        // ad_type should be checked for the campaign
-        if ($type === 'adType') {
-            return $query->whereHas('campaign.type.adType', function ($query) use (
-                $type,
-                $operator,
-                $value,
-                $tagFilters
-            ) {
-                $query->where('name', $operator, $value);
-            });
-        }
-
-        if (array_key_exists($type, $tagFilters)) {
-            return $query->whereHas('tag', function ($query) use ($type, $operator, $value, $tagFilters) {
-                $query->where($tagFilters[$type], $operator, $value);
-            });
-        }
-
-        return $query;
-    }
-
-    protected function getFilterQueryOperator()
-    {
-        $filter = $this->filter['filter'];
-
-        $operators = [
-            'doesNotContain' => 'not ilike',
-            'contains'       => 'ilike',
-            'is'             => '=',
-            'isNot'          => '!=',
-        ];
-
-        return $operators[$filter];
-    }
-
-    protected function getFilterValue()
-    {
-        $filter = $this->filter['filter'];
-        $value  = $this->filter['value'];
-
-        if ($filter === 'doesNotcontain' || $filter === 'contains') {
-            $value = "%{$value}%";
-        }
-
-        return $value;
-    }
-
-    public function friendlyFilename()
-    {
-        $now = Carbon::now();
-
-        $name = preg_replace("([^\w\s\d\.\-_~,;:\[\]\(\)]|[\.]{2,})", '', $this->title);
-
-        return "{$now->format('mdY')} - {$name}.xlsx";
-    }
-
     public function dateRange()
     {
         if ($this->date_range === 'custom') {
@@ -241,6 +66,20 @@ class Report extends Model
         }
 
         return DateRange::byName($this->date_range, $this->user->timezone);
+    }
+
+    /**
+     * @return Collection
+     */
+    public static function pending()
+    {
+        $reports = static::all();
+
+        $pendingReports = $reports->filter(function (Report $report) {
+            return $report->isPending();
+        });
+
+        return $pendingReports;
     }
 
     /**
@@ -274,20 +113,6 @@ class Report extends Model
         }
 
         return false;
-    }
-
-    /**
-     * @return Collection
-     */
-    public static function pending()
-    {
-        $reports = static::all();
-
-        $pendingReports = $reports->filter(function (Report $report) {
-            return $report->isPending();
-        });
-
-        return $pendingReports;
     }
 
     protected function monthlyPending()

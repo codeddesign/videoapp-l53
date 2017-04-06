@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\User;
-use App\Services\Reports;
+use App\Services\Reports\Standard;
 use Illuminate\Database\Seeder;
 
 class InitialUserSeeder extends Seeder
@@ -22,6 +22,6 @@ class InitialUserSeeder extends Seeder
             'admin'          => true,
         ]);
 
-        (new Reports)->createDefaultReports($user);
+        Standard::create($user);
     }
 }

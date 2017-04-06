@@ -315,6 +315,11 @@ class StatsTransformer
 
         $filtered = $filtered->map(function ($stat) use ($pageviews) {
             $websitePageviews = $pageviews->where('website', $stat['website']);
+
+            if (! isset($stat['platform_type'])) {
+                return $stat;
+            }
+
             switch ($stat['platform_type']) {
                 case 'desktop':
                     $stat['desktopPageviews'] += $websitePageviews->sum('desktopPageviews');

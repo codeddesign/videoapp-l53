@@ -68,7 +68,7 @@ class CampaignEvent extends Model
      */
     public function tag()
     {
-        return $this->belongsTo(Tag::class, 'tag_id');
+        return $this->belongsTo(Tag::class, 'tag_id')->withTrashed();
     }
 
     /**

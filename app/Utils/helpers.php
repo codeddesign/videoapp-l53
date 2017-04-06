@@ -100,9 +100,10 @@ function env_adTags()
  * Compute a range between two dates, and generate
  * a plain array of Carbon objects of each day in it.
  *
- * @param  \Carbon\Carbon  $from
- * @param  \Carbon\Carbon  $to
- * @param  bool  $inclusive
+ * @param  \Carbon\Carbon $from
+ * @param  \Carbon\Carbon $to
+ * @param  bool           $inclusive
+ *
  * @return array|null
  */
 function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
@@ -113,14 +114,14 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
 
     // Clone the date objects to avoid issues, then reset their time
     $from = $from->copy();
-    $to = $to->copy();
+    $to   = $to->copy();
 
     // Include the end date in the range
     if ($inclusive) {
         $to->addDay();
     }
 
-    $step = Carbon\CarbonInterval::day();
+    $step   = Carbon\CarbonInterval::day();
     $period = new DatePeriod($from, $step, $to);
 
     // Convert the DatePeriod into a plain array of Carbon objects
@@ -133,60 +134,30 @@ function date_range(Carbon\Carbon $from, Carbon\Carbon $to, $inclusive = true)
     return ! empty($range) ? $range : null;
 }
 
-/**
- * array_merge_recursive_numeric function.  Merges N arrays into one array AND sums the values of identical keys.
- * WARNING: If keys have values of different types, the latter values replace the previous ones.
- *
- * Source: https://gist.github.com/Nickology/f700e319cbafab5eaedc
- * @param arrays (all parameters must be arrays)
- * @author Nick Jouannem <nick@nickology.com>
- * @return void
- */
-function array_merge_recursive_numeric($arrays)
+function callModule($object, $pathString, $delimiter = '->')
 {
-    // If there's only one array, it's already merged
+    //split the string into an array
+    $pathArray = explode($delimiter, $pathString);
 
-    // Remove any items in $arrays that are NOT arrays
-    foreach ($arrays as $key => $array) {
-        if (! is_array($array)) {
-            unset($arrays[$key]);
-        }
+    //get the first and last of the array
+    $module   = array_shift($pathArray);
+    $property = array_pop($pathArray);
+
+    //if the array is now empty, we can access simply without a loop
+    if (count($pathArray) == 0) {
+        return $object->{$module}->{$property} ?? null;
     }
 
-    // We start by setting the first array as our final array.
-    // We will merge all other arrays with this one.
-    $final = array_shift($arrays);
+    //we need to go deeper
+    //$tmp = $this->Foo
+    $tmp = $object->{$module};
 
-    foreach ($arrays as $b) {
-        foreach ($final as $key => $value) {
-
-            // If $key does not exist in $b, then it is unique and can be safely merged
-            if (! isset($b[$key])) {
-                $final[$key] = $value;
-            } else {
-
-                // If $key is present in $b, then we need to merge and sum numeric values in both
-                if (is_numeric($value) && is_numeric($b[$key])) {
-                    // If both values for these keys are numeric, we sum them
-                    $final[$key] = $value + $b[$key];
-                } elseif (is_array($value) && is_array($b[$key])) {
-                    // If both values are arrays, we recursively call ourself
-                    $final[$key] = array_merge_recursive_numeric($value, $b[$key]);
-                } else {
-                    // If both keys exist but differ in type, then we cannot merge them.
-                    // In this scenario, we will $b's value for $key is used
-                    $final[$key] = $b[$key];
-                }
-            }
-        }
-
-        // Finally, we need to merge any keys that exist only in $b
-        foreach ($b as $key => $value) {
-            if (! isset($final[$key])) {
-                $final[$key] = $value;
-            }
-        }
+    foreach ($pathArray as $deeper) {
+        //re-assign $tmp to be the next level of the object
+        // $tmp = $Foo->Bar --- then $tmp = $Bar->baz
+        $tmp = $tmp->{$deeper};
     }
 
-    return $final;
+    //now we are at the level we need to be and can access the property
+    return $tmp->{$property};
 }

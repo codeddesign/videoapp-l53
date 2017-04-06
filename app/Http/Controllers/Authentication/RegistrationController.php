@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Events\AccountCreated;
-use App\Models\User;
-use App\Services\Reports;
-use Illuminate\Http\Request;
+use App\Services\Reports\Standard;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +36,7 @@ class RegistrationController extends Controller
         // form request, just to add more clarity.
         $user = $request->register();
 
-        (new Reports)->createDefaultReports($user);
+        Standard::create($user);
 
         // send verification email and phone.
         event(new AccountCreated($user));

@@ -56,8 +56,7 @@
                 <option value="platform_type">Platform Type</option>
                 <option value="tag_type">Tag Type</option>
                 <option value="ad_type">Ad Type</option>
-                <option value="geography">Geography</option>
-                <option value="userAccount">User Account</option>
+                <option value="user_company">User's Company</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
             </div>
@@ -91,11 +90,6 @@
                 <option value="platform_type">Platform Type</option>
                 <option value="tag_type">Tag Type</option>
                 <option value="ad_type">Ad Type</option>
-                <option value="date">Date</option>
-                <option value="dayOfWeek">Day of Week</option>
-                <option value="hour">Hour</option>
-                <option value="month">Month</option>
-                <option value="week">Week</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
             </div>
@@ -110,11 +104,6 @@
                 <option value="platform_type">Platform Type</option>
                 <option value="tag_type">Tag Type</option>
                 <option value="ad_type">Ad Type</option>
-                <option value="date">Date</option>
-                <option value="dayOfWeek">Day of Week</option>
-                <option value="hour">Hour</option>
-                <option value="month">Month</option>
-                <option value="week">Week</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
             </div>

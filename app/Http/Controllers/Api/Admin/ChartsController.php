@@ -8,6 +8,7 @@ use App\Models\DateRange;
 use App\Models\Report;
 use App\Models\Campaign;
 use App\Models\User;
+use App\Services\Reports\Query;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,7 +62,7 @@ class ChartsController extends ApiController
         }
 
         if ($report) {
-            $stats = $report->filterQuery($stats);
+            $stats = (new Query($report))->filter($stats);
         } else {
             $stats = $stats->timeRange($dateRange);
         }

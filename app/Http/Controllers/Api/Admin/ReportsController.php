@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\Api\Admin\StoreReportRequest;
 use App\Jobs\ProcessReport;
 use App\Models\Report;
-use App\Services\Reports;
+use App\Services\Reports\Query;
+use App\Services\Reports\Reports;
+use App\Services\Reports\Spreadsheet;
 use App\Stats\StatsTransformer;
 use App\Transformers\ReportTransformer;
 use Illuminate\Http\Request;
@@ -28,9 +30,9 @@ class ReportsController extends ApiController
 
         $stats = $reportsService->stats($report, false);
 
-        $header = $report->spreadsheetHeader($stats);
+        $header = (new Spreadsheet)->header($stats);
 
-        $campaignEvents = $reportsService->campaignEvents($report);
+        $campaignEvents = (new Query($report))->campaignEvents($report);
         $allStats = (new StatsTransformer)->transformSumAll($campaignEvents, true);
 
         return $this->jsonResponse(compact('allStats', 'stats', 'header'));
@@ -40,11 +42,11 @@ class ReportsController extends ApiController
     {
         $report = $this->user->reports()->where('id', $id)->firstOrFail();
 
-        $reportsService = new Reports;
+        $reportsSpreadsheet = new Reports\Spreadsheet;
 
-        $xlsFile = $reportsService->generateXls($report);
+        $xlsFile = $reportsSpreadsheet->generateXls($report);
 
-        return response()->download($xlsFile, $report->friendlyFilename());
+        return response()->download($xlsFile, $reportsSpreadsheet->friendlyFilename($report));
     }
 
     public function store(StoreReportRequest $request)
