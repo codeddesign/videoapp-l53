@@ -16,7 +16,7 @@ class DomainListController extends Controller
 
         $domains = collect($redis->hgetall('sm_domains'));
 
-        $domains = $domains->filter(function ($date, $website) use ($filter) {
+        $domains = $domains->filter(function ($date) use ($filter) {
             return $date === $filter;
         });
 
