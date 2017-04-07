@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Report;
-use App\Services\Reports;
+use App\Services\Reports\Reports;
 
 class ProcessReports extends Command
 {
