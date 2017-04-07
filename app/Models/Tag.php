@@ -142,7 +142,10 @@ class Tag extends Model
         });
 
         foreach ($tags as $tag) {
-            $tag->guaranteed_count = $tag->requestCount();
+            $requests = $tag->requestCount();
+
+            $tag->guaranteed_count = $requests['total'];
+            $tag->daily_count      = $requests['daily'];
         }
 
         return $tags;
@@ -152,11 +155,13 @@ class Tag extends Model
     {
         $redis = app(RedisManager::class);
 
-        $redisRequests = $redis->hget('tag_requests', $this->id);
+        $totalRequests = (int) $redis->hget('tag_requests', $this->id) ?? 0;
+        $dailyRequests = (int) $redis->hget('daily_tag_requests', $this->id) ?? 0;
 
-        $databaseRequests = CampaignEvent::where('tag_id', $this->id)->where('name', 'requests')->sum('count');
-
-        return $redisRequests + $databaseRequests;
+        return [
+            'total' => $totalRequests,
+            'daily' => $dailyRequests,
+        ];
     }
 
     public static function compareLocations($userLocation, $location)

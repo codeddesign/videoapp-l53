@@ -6,6 +6,7 @@ use App\Console\Commands\CleanTemporaryFiles;
 use App\Console\Commands\ClearAllEvents;
 use App\Console\Commands\PersistEvents;
 use App\Console\Commands\ProcessReports;
+use App\Console\Commands\ResetTagsDailyCount;
 use App\Geolite\ImportCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -23,6 +24,7 @@ class Kernel extends ConsoleKernel
         ProcessReports::class,
         CleanTemporaryFiles::class,
         ClearAllEvents::class,
+        ResetTagsDailyCount::class,
     ];
 
     /**
@@ -37,6 +39,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('ad3:persist-events')->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('ad3:process-reports')->daily()->withoutOverlapping();
         $schedule->command('ad3:clean-temporary-files')->daily();
+        $schedule->command('ad3:reset-tags-daily-count')->daily();
     }
 
     /**
