@@ -90,7 +90,7 @@ class Reports
                 'fills'       => $parsedStats['fills'],
                 'fill_rate'   => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
                 'revenue'     => Calculator::decimals($parsedStats['revenue']),
-                'cpm'        => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
+                'cpm'         => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
                 'errors'      => $parsedStats['errors'],
                 'error_rate'  => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
             ]);
@@ -119,12 +119,38 @@ class Reports
 
         $reportStats = $reportStats->sortByDesc($report->sort_by);
 
+        $reportStats = $this->calculateTotals($reportStats);
+
         return $reportStats->values();
     }
 
-    protected function calculateTotals($events)
+    protected function calculateTotals(Collection $events)
     {
+        $totals = [
+            'desktopPageviews', 'mobilePageviews', 'requests', 'impressions', 'fills', 'revenue', 'errors',
+            'loaded', 'start', 'firstquartile', 'midpoint', 'thirdquartile', 'complete', 'click', 'pause',
+            'click',
+        ];
 
+        foreach (CampaignEvent::$errors as $error) {
+            $totals[] = 'error'.$error;
+        }
+
+        $totals = array_fill_keys($totals, 0);
+
+        foreach ($totals as $key => $value) {
+            $totals[$key] = $events->sum($key);
+        }
+
+        $newLine = [];
+
+        foreach (array_keys($events->first()) as $key) {
+            $newLine[$key] = $totals[$key] ?? '—';
+        }
+
+        $events->push($newLine);
+
+        return $events;
     }
 
     /**

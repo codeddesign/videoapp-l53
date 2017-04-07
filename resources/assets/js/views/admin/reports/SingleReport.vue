@@ -135,7 +135,7 @@
         <ul class="dashboard-dailystatslist dashreports-width">
           <li v-for="stats in paginatedStats">
             <div :class="'dashboard-statslist' + (index === 0 ? '1' : '2')" v-for="(stat, key, index) in stats">
-              <span v-if="['ecpm', 'revenue'].indexOf(key) !== -1">$</span>{{ stat }}<span style="margin-left:0;" v-if="['fill_rate', 'error_rate', 'ctr', 'completion_rate'].indexOf(key) !== -1">%</span>
+              <span v-if="['cpm', 'revenue'].indexOf(key) !== -1">$</span>{{ stat }}<span style="margin-left:0;" v-if="['fill_rate', 'error_rate', 'ctr', 'completion_rate'].indexOf(key) !== -1">%</span>
             </div>
           </li>
         </ul>
@@ -267,12 +267,18 @@
           errors: []
         }
 
-        _.each(this.stats.stats, tag => {
-          categories.push(tag.description)
-          chartStats.impressions.push(tag.impressions)
-          chartStats.fills.push(tag.fills)
-          chartStats.errors.push(tag.errors)
-        })
+        for (let i = 0; i < this.stats.stats.length; i++) {
+          if (i === this.stats.stats.length - 1) {
+            continue
+          }
+
+          let stat = this.stats.stats[i]
+
+          categories.push(stat[Object.keys(stat)[0]])
+          chartStats.impressions.push(stat.impressions)
+          chartStats.fills.push(stat.fills)
+          chartStats.errors.push(stat.errors)
+        }
 
         this.chart = Highcharts.chart('chart', {
           credits: {
