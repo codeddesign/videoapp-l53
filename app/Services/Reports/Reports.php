@@ -17,12 +17,12 @@ class Reports
         $combineBy = $reportQuery->mapTypeToModel($report->combine_by);
         $sortBy    = $reportQuery->mapTypeToModel($report->sort_by);
 
+        $pageviews = ($combineBy['relation'] === 'website' && $sortBy['property'] === 'platform_type' ||
+            $combineBy['property'] === 'platform_type' && $sortBy['relation'] === 'website');
+
         $reportEvents = $reportQuery->campaignEvents($report)
-            ->filter(function ($event) use ($report, $combineBy, $sortBy) {
-                if (in_array('website', [$combineBy['relation'], $sortBy['property']]) ||
-                    ($combineBy['relation'] === 'website' && $sortBy['property'] === 'platform_type' ||
-                        $combineBy['property'] === 'platform_type' && $sortBy['relation'] === 'website')
-                ) {
+            ->filter(function ($event) use ($report, $combineBy, $sortBy, $pageviews) {
+                if ($pageviews) {
                     return true;
                 }
 
@@ -99,11 +99,12 @@ class Reports
             $stats = $stats->merge($this->parseErrors($events));
 
             if ($filterMetrics && $report->included_metrics) {
-                $stats = $stats->filter(function ($value, $key) use ($report) {
+                $pageviewsFilter = $pageviews ? ['desktopPageviews', 'mobilePageviews'] : [];
+                $stats = $stats->filter(function ($value, $key) use ($report, $pageviewsFilter) {
                     return in_array($key, array_merge(
                         $report->included_metrics,
-                        [$report->sort_by],
-                        ['desktopPageviews', 'mobilePageviews']
+                        [$report->sort_by, $report->combine_by],
+                        $pageviewsFilter
                     ));
                 });
             }
@@ -126,10 +127,10 @@ class Reports
 
     protected function calculateTotals(Collection $events)
     {
-        if($events->count() === 0) {
+        if ($events->count() === 0) {
             return $events;
         }
-        
+
         $totals = [
             'desktopPageviews', 'mobilePageviews', 'requests', 'impressions', 'fills', 'revenue', 'errors',
             'loaded', 'start', 'firstquartile', 'midpoint', 'thirdquartile', 'complete', 'click', 'pause',

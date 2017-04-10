@@ -28,7 +28,7 @@ class ReportsController extends ApiController
 
         $reportsService = new Reports;
 
-        $stats = $reportsService->stats($report, false);
+        $stats = $reportsService->stats($report);
 
         $header = (new Spreadsheet)->header($stats);
 
