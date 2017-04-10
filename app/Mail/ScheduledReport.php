@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Report;
+use App\Services\Reports\Spreadsheet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -35,9 +36,11 @@ class ScheduledReport extends Mailable
      */
     public function build()
     {
+        $filename = (new Spreadsheet)->friendlyFilename($this->report);
+
         return $this->view('emails.report')
             ->attach($this->file->getRealPath(), [
-                'as'   => $this->report->friendlyFilename(),
+                'as'   => $filename,
                 'mime' => $this->file->getMimeType(),
             ]);
     }
