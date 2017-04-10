@@ -215,6 +215,9 @@
                 <div class="userinfo-websitestitle">WEBSITE STATS</div>
                 <div class="edittagsselect-wrapper comparetagsselect-wrapper" style="margin-top: 4px;">
                   <select v-model="websiteDateFilter">
+                    <option value="today">
+                      Today
+                    </option>
                     <option value="yesterday">
                       Yesterday
                     </option>
