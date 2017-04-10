@@ -126,6 +126,10 @@ class Reports
 
     protected function calculateTotals(Collection $events)
     {
+        if($events->count() === 0) {
+            return $events;
+        }
+        
         $totals = [
             'desktopPageviews', 'mobilePageviews', 'requests', 'impressions', 'fills', 'revenue', 'errors',
             'loaded', 'start', 'firstquartile', 'midpoint', 'thirdquartile', 'complete', 'click', 'pause',
