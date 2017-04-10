@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Stats\StatsTransformer;
 use App\Transformers\CampaignTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Cache\Repository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -45,6 +46,9 @@ class CampaignsController extends ApiController
 
         $campaign->active = $request->get('active');
         $campaign->save();
+
+        $cache = app(Repository::class);
+        $cache->tags(['campaigns'])->flush();
 
         return $this->itemResponse($campaign, new CampaignTransformer);
     }

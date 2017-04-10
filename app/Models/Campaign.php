@@ -165,10 +165,13 @@ class Campaign extends Model
         $cache      = app(Repository::class);
 
         if ($id != 0) {
-            $campaign = $cache->remember("campaigns.{$id}", 5, function () use ($id) {
+            $campaign = $cache->tags(['campaigns'])->remember("campaigns.{$id}", 5, function () use ($id) {
                 return self::where('active', true)
-                    ->with('type', 'type.adType', 'videos')
-                    ->find($id);
+                    ->whereHas('user', function ($query) {
+                        $query->where('active', true);
+                    })
+                    ->where('id', $id)
+                    ->first();
             });
         } else {
             $previewId          = app('request')->cookie('preview_id');

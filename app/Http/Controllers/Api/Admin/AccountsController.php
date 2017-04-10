@@ -9,6 +9,7 @@ use App\Stats\Calculator;
 use App\Transformers\NoteTransformer;
 use App\Transformers\UserTransformer;
 use App\Models\User;
+use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -60,6 +61,9 @@ class AccountsController extends ApiController
 
         $user->active = $request->get('status');
         $user->save();
+
+        $cache = app(Repository::class);
+        $cache->tags(['campaigns'])->flush();
 
         return $this->itemResponse($user, new UserTransformer);
     }
