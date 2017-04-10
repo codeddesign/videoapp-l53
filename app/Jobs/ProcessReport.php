@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Report;
-use App\Services\Reports\Reports;
+use App\Services\Reports\Spreadsheet as ReportsSpreadsheet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,6 +40,6 @@ class ProcessReport extends Job implements ShouldQueue
             return;
         }
 
-        (new Reports)->process($this->report);
+        (new ReportsSpreadsheet)->process($this->report);
     }
 }
