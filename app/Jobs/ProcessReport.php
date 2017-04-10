@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Report;
-use App\Services\Reports;
+use App\Services\Reports\Reports;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
