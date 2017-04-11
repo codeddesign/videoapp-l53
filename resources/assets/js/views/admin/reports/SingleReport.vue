@@ -135,7 +135,7 @@
         <ul class="dashboard-dailystatslist dashreports-width">
           <li v-for="stats in paginatedStats">
             <div :class="'dashboard-statslist' + (index === 0 ? '1' : '2')" v-for="(stat, key, index) in stats">
-              <span v-if="['cpm', 'revenue'].indexOf(key) !== -1">$</span>{{ stat }}<span style="margin-left:0;" v-if="['fill_rate', 'error_rate', 'ctr', 'completion_rate'].indexOf(key) !== -1">%</span>
+              {{ presentStat(stat, key) }}
             </div>
           </li>
         </ul>
@@ -163,13 +163,14 @@
 <script>
   import Highcharts from 'highcharts'
   import Stats from '../../dashboard/components/Stats.vue'
-
   import SparkChart from '../SparkChart.vue'
   import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
   import Pagination from '../../../services/pagination'
   import _ from 'lodash'
   import http from '../../../services/http'
   import stats from '../../../services/stats'
+  import numeral from 'numeral'
+  import accounting from 'accounting'
 
   export default {
     name: 'SingleReport',
@@ -228,6 +229,18 @@
     },
 
     methods: {
+      presentStat(stat, key) {
+        if (['cpm', 'revenue'].indexOf(key) !== -1) {
+          return accounting.formatMoney(stat)
+        }
+
+        if (['fill_rate', 'error_rate', 'ctr', 'completion_rate'].indexOf(key) !== -1) {
+          return stat + '%'
+        }
+
+        return numeral(stat).format('0,0')
+      },
+
       fetchStats(report) {
         http.get('/admin/reports/' + report.id + '/stats')
             .then((response) => {
