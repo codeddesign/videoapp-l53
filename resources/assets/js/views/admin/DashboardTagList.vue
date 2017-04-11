@@ -258,7 +258,7 @@
 
         if (this.filters.type !== 'all') {
           tags = tags.filter((tag) => {
-            return tag.ad_type === this.filters.type
+            return tag.type === this.filters.type
           })
         }
 
