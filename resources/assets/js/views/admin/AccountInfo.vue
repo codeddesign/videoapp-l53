@@ -558,6 +558,8 @@
             return false
           }
 
+          this.currentBackfill.ad_type_id = parseInt(this.currentBackfill.ad_type_id)
+
           if (backfill.ad_type_id === this.currentBackfill.ad_type_id &&
               backfill.platform_type === this.currentBackfill.platform_type) {
             return true
@@ -565,8 +567,6 @@
 
           return false
         })
-
-        console.log(duplicated)
 
         if (duplicated.length > 0) {
           window.alert('Duplicated backfill')
