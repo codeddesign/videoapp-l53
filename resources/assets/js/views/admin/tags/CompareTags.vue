@@ -33,15 +33,15 @@
               <ul class="taggraph-textlist">
                 <li>
                   <div class="taggraph-listtitle">REQUESTS:</div>
-                  <div class="taggraph-listnumber">{{ requests }}</div>
+                  <div class="taggraph-listnumber">{{ presentNumber(requests) }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">FILLS:</div>
-                  <div class="taggraph-listnumber">{{ fills }}</div>
+                  <div class="taggraph-listnumber">{{ presentNumber(fills) }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">IMPRESSIONS:</div>
-                  <div class="taggraph-listnumber">{{ impressions }}</div>
+                  <div class="taggraph-listnumber">{{ presentNumber(impressions) }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">FILL-RATE:</div>
@@ -53,7 +53,7 @@
                 </li>
                 <li>
                   <div class="taggraph-listtitle">ERRORS:</div>
-                  <div class="taggraph-listnumber">{{ errors }}</div>
+                  <div class="taggraph-listnumber">{{ presentNumber(errors) }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">REVENUE:</div>
@@ -77,6 +77,7 @@
   import TagChart from './TagChart.vue'
   import TagList from './TagList.vue'
   import moment from 'moment'
+  import numeral from 'numeral'
   import accounting from 'accounting'
 
   export default {
@@ -113,6 +114,10 @@
       newSelectedTags(selectedTags) {
         this.selectedTags = selectedTags
         this.fetchStats()
+      },
+
+      presentNumber(number) {
+        return numeral(number).format('0,0')
       },
 
       fetchStats() {
