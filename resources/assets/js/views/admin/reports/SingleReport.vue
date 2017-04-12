@@ -238,6 +238,10 @@
           return stat + '%'
         }
 
+        if(isNaN(stat)) {
+          return stat
+        }
+
         return numeral(stat).format('0,0')
       },
 
