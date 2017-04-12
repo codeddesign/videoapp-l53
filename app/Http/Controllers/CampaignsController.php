@@ -57,6 +57,10 @@ class CampaignsController extends Controller
             $redis->hsetnx('sm_domains', $domain, $date);
         }
 
+        if (! request()->get('xml') && ! $websiteId) {
+            return response('Unauthorized.', 401);
+        }
+
         $platform = $request->get('platform');
         $backfill = Backfill::forRequest($websiteId, $campaign['ad_type'], $platform);
 

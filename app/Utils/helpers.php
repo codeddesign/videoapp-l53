@@ -155,8 +155,8 @@ function callModule($object, $pathString, $delimiter = '->')
     foreach ($pathArray as $deeper) {
         //re-assign $tmp to be the next level of the object
         // $tmp = $Foo->Bar --- then $tmp = $Bar->baz
-        if(!isset($tmp->{$deeper})) {
-            return null;
+        if (! isset($tmp->{$deeper})) {
+            return;
         }
         $tmp = $tmp->{$deeper};
     }
