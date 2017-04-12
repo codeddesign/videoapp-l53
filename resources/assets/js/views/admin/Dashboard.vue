@@ -63,7 +63,7 @@
           <spark-chart id="ecpm-chart" :chartData="ecpmSpark" color="#1aa74f"></spark-chart>
         </li>
       </ul>
-      <ul class="campaignstats-row">
+      <!---<ul class="campaignstats-row">
         <li>
           <stats title="desktop pre-roll fill" type="percentage"
           :value="calculateFillRate(tags.desktop.preroll.fills, tags.desktop.preroll.tagRequests)"></stats>
@@ -84,7 +84,7 @@
           :value="calculateErrorRate(tags.mobile.preroll.tagRequests, tags.mobile.preroll.errors)"></stats>
           <spark-chart id="mobile-preroll-errors-chart" :chartData="chartData.mobilePrerollErrors" color="#7772a7"></spark-chart>
         </li>
-      </ul>
+      </ul>-->
       <ul class="campaignstats-row">
         <li>
           <stats title="desktop outstream fill" type="percentage"
