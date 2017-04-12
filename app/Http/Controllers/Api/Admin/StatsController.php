@@ -54,7 +54,7 @@ class StatsController extends ApiController
 
         $cache = app(Repository::class);
 
-        $databaseEvents = $cache->tags(['events'])->remember('events.today', 30, function () use ($campaignIds) {
+        $databaseEvents = $cache->tags(['events'])->remember("events.today.{$type}", 30, function () use ($campaignIds) {
             return $this->campaignEvents('today', null, $campaignIds);
         });
 
