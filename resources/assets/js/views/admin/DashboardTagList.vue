@@ -65,7 +65,7 @@
       <li>REVENUE</li>
     </ul>
     <ul class="admindashboard-dailystatslist">
-      <li v-for="tag in showTags" v-bind:title="'ID: ' + tag.id">
+      <li v-for="tag in showTags">
         <div class="dashboard-statslist1 dashboardadmin-statslist1">{{ tag.advertiser }}</div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.platform_type }}</div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">{{ tag.type }}</div>
@@ -265,7 +265,7 @@
 
     computed: {
       showTags() {
-        let tags = this.combineTags(this.tags)
+        let tags = this.tags
 
         console.log(tags)
 
@@ -287,6 +287,8 @@
             return tag.type === this.filters.type
           })
         }
+
+        tags = this.combineTags(tags)
 
         this.pagination.data = tags
 
