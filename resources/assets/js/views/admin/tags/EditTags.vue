@@ -50,7 +50,7 @@
                 <div class="dashboard-statslist1">{{ tag.advertiser }} ({{tag.priority_count}})</div>
                 <div class="dashboard-statslist2">{{ tag.description }}</div>
                 <div class="dashboard-statslist2">{{ tag.platform_type }}</div>
-                <div class="dashboard-statslist2">{{ tag.ad_type }}</div>
+                <div class="dashboard-statslist2">{{ tag.type }}</div>
                 <div class="dashboard-statslist2">{{ tag.timeout_limit }}</div>
                 <div class="dashboard-statslist2">{{ tag.wrapper_limit }}</div>
                 <div class="dashboard-statslist2">{{ tag.delay_time }}</div>

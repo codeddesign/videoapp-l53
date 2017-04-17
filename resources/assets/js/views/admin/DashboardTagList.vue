@@ -236,12 +236,38 @@
         return accounting.formatMoney(number)
       },
 
+      combineTags(tags) {
+        let combinedTags = {}
+
+        tags.map(tag => {
+          let key = tag.advertiser + tag.type + tag.platform_type
+
+          if (combinedTags[key]) {
+            combinedTags[key].stats = _.forIn(combinedTags[key].stats, (value, key) => {
+              return value + tag.stats.key
+            })
+          } else {
+            combinedTags[key] = tag
+          }
+        })
+
+        let array = []
+
+        _.mapValues(combinedTags, tag => {
+          array.push(tag)
+        })
+
+        return array
+      },
+
       ...stats
     },
 
     computed: {
       showTags() {
-        let tags = this.tags
+        let tags = this.combineTags(this.tags)
+
+        console.log(tags)
 
         if (this.filters.platform !== 'all') {
           tags = tags.filter((tag) => {
