@@ -238,7 +238,7 @@
           return stat + '%'
         }
 
-        if(isNaN(stat)) {
+        if (isNaN(stat)) {
           return stat
         }
 

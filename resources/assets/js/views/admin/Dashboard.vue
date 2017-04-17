@@ -87,6 +87,24 @@
       </ul>-->
       <ul class="campaignstats-row">
         <li>
+          <stats title="desktop backfill revenue" :value="desktopBackfillRevenue" :animated="true" type="money"></stats>
+          <spark-chart id="desktop-backfill-chart" :chartData="chartData.desktopBackfillRevenue" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="mobile backfill revenue" :value="mobileBackfillRevenue" :animated="true" type="money"></stats>
+          <spark-chart id="mobile-backfill-chart" :chartData="chartData.mobileBackfillRevenue" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="total backfill revenue" :value="backfillRevenue" :animated="true" type="money"></stats>
+          <spark-chart id="total-backfill-chart" :chartData="backfillRevenueSpark" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="backfill ecpm" :value="backfillEcpm" type="money"></stats>
+          <spark-chart id="backfill-ecpm-chart" :chartData="backfillEcpmSpark" color="#7772a7"></spark-chart>
+        </li>
+      </ul>
+      <ul class="campaignstats-row">
+        <li>
           <stats title="desktop outstream fill" type="percentage"
           :value="calculateFillRate(tags.desktop.outstream.fills, tags.desktop.outstream.tagRequests)"></stats>
           <spark-chart id="desktop-outstream-fill-chart" :chartData="chartData.desktopOutstreamFill" color="#7772a7"></spark-chart>
@@ -219,6 +237,9 @@
         errors: 0,
         mobilePageviews: 0,
         desktopPageviews: 0,
+        backfill: 0,
+        mobileBackfillRevenue: 0,
+        desktopBackfillRevenue: 0,
 
         chartData: {},
 
@@ -243,11 +264,41 @@
         return this.calculateEcpm(this.impressions, this.revenue)
       },
 
+      backfillEcpm() {
+        return this.calculateEcpm(this.backfill, this.desktopBackfillRevenue + this.mobileBackfillRevenue)
+      },
+
+      backfillRevenue() {
+        return this.desktopBackfillRevenue + this.mobileBackfillRevenue
+      },
+
       ecpmSpark() {
         if (!this.chartData.impressions) return []
 
         return this.chartData.impressions.map((item, index) => {
           let ecpm = this.calculateEcpm(item[1], this.chartData.revenue[index][1], false)
+          return [item[0], +ecpm.toFixed(2)]
+        })
+      },
+
+      backfillRevenueSpark() {
+        if (!this.chartData.mobileBackfillRevenue) return []
+
+        let backfillRevenue = []
+
+        for (let i = 0; i < this.chartData.mobileBackfillRevenue.length; i++) {
+          let revenue = this.chartData.mobileBackfillRevenue[i][1] + this.chartData.desktopBackfillRevenue[i][1]
+          backfillRevenue.push([this.chartData.mobileBackfillRevenue[i][0], revenue])
+        }
+
+        return backfillRevenue
+      },
+
+      backfillEcpmSpark() {
+        if (!this.chartData.mobileBackfillRevenue) return []
+
+        return this.chartData.backfill.map((item, index) => {
+          let ecpm = this.calculateEcpm(item[1], this.backfillRevenueSpark[index][1], false)
           return [item[0], +ecpm.toFixed(2)]
         })
       },
@@ -304,6 +355,9 @@
             this.tagRequests = parseInt(response.data.tagRequests)
             this.mobilePageviews = parseInt(response.data.mobilePageviews)
             this.desktopPageviews = parseInt(response.data.desktopPageviews)
+            this.backfill = parseInt(response.data.backfill)
+            this.mobileBackfillRevenue = parseFloat(response.data.mobileBackfillRevenue)
+            this.desktopBackfillRevenue = parseFloat(response.data.desktopBackfillRevenue)
             this.tagRequests = parseInt(response.data.tagRequests)
             this.tags = response.data.tags
           })

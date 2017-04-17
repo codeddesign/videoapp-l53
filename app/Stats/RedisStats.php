@@ -44,7 +44,7 @@ class RedisStats
 
         $campaignKey = "campaign:{$campaignId}";
 
-        $regex = '/source:(\w*):status:(\d*)(?::tag:(\w*))?(?::website:(\d*))?/';
+        $regex = '/source:(\w*)(?::status:(\d*))?(?::tag:(\w*))?(?::website:(\d*))?(?::backfill:(\d*))?/';
 
         $data = $redis->hgetall($campaignKey);
 
@@ -56,10 +56,11 @@ class RedisStats
 
         foreach ($data as $key => $value) {
             if (preg_match($regex, $key, $matches)) {
-                $source  = array_get($matches, 1);
-                $status  = (int) array_get($matches, 2);
-                $tag     = array_get($matches, 3) ? intval(array_get($matches, 3)) : null;
-                $website = array_get($matches, 4) ? intval(array_get($matches, 4)) : null;
+                $source   = array_get($matches, 1);
+                $status   = (int) array_get($matches, 2);
+                $tag      = array_get($matches, 3) ? intval(array_get($matches, 3)) : null;
+                $website  = array_get($matches, 4) ? intval(array_get($matches, 4)) : null;
+                $backfill = array_get($matches, 5) ? intval(array_get($matches, 5)) : null;
 
                 switch ($source) {
                     case 'campaign':
@@ -72,6 +73,10 @@ class RedisStats
 
                     case 'ad':
                         $stats = $this->handleAdStats($stats, $value, $status, $tag, $website);
+                        break;
+
+                    case 'backfill':
+                        $stats = $this->handleBackfillStats($stats, $value, $status, $tag, $website, $backfill);
                         break;
                 }
             }
@@ -159,6 +164,19 @@ class RedisStats
                 'website_id' => $website,
             ]);
         }
+
+        return $stats;
+    }
+
+    protected function handleBackfillStats($stats, $value, $status, $tag, $website, $backfill)
+    {
+        $stats->push([
+            'name'        => 'backfill',
+            'count'       => $value,
+            'tag_id'      => $tag,
+            'website_id'  => $website,
+            'backfill_id' => $backfill,
+        ]);
 
         return $stats;
     }

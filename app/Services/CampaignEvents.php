@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Backfill;
 use App\Models\Campaign;
 use App\Models\CampaignEvent;
 use App\Models\Tag;
@@ -43,13 +44,19 @@ class CampaignEvents
             });
         }
 
-        $tagIds = $data->pluck('tag_id')->unique()->values();
+        $tagIds      = $data->pluck('tag_id')->unique()->values();
+        $backfillIds = $data->pluck('backfill_id')->unique()->values();
 
-        $tags = Tag::whereIn('id', $tagIds)->get();
+        $tags      = Tag::whereIn('id', $tagIds)->get();
+        $backfills = Backfill::whereIn('id', $backfillIds)->get();
 
-        $data = $data->map(function ($event) use ($tags) {
+        $data = $data->map(function ($event) use ($tags, $backfills) {
             if ($event->tag_id) {
                 $event->tag = $tags->find($event->tag_id);
+            }
+
+            if ($event->backfill_id) {
+                $event->backfill = $backfills->find($event->backfill_id);
             }
 
             return $event;
@@ -74,6 +81,7 @@ class CampaignEvents
             'campaigns' => Campaign::all()->pluck('id'),
             'websites'  => Website::all()->pluck('id'),
             'tags'      => Tag::all()->pluck('id'),
+            'backfill'  => Backfill::all()->pluck('id'),
         ];
 
         foreach ($keys as $key) {
@@ -103,6 +111,7 @@ class CampaignEvents
     {
         return $this->validId($event['campaign_id'], $validIds['campaigns']) &&
             $this->validId($event['tag_id'], $validIds['tags']) &&
+            $this->validId($event['backfill_id'], $validIds['backfill']) &&
             $this->validId($event['website_id'], $validIds['websites']);
     }
 

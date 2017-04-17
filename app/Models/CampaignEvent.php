@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int      $campaign_id
  * @property int      $tag_id
  * @property int      $website_id
+ * @property int      $backfill_id
  * @property string   $name
  * @property int      $count
  * @property Carbon   $created_at
@@ -50,6 +51,11 @@ class CampaignEvent extends Model
         9  => 'pause',
         14 => 'click',
     ];
+
+    public function backfill()
+    {
+        return $this->belongsTo(Backfill::class);
+    }
 
     /**
      * A campaign event belongs to a campaign.

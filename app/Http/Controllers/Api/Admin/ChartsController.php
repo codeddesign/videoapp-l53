@@ -44,10 +44,10 @@ class ChartsController extends ApiController
         }
 
         $stats = CampaignEvent::query()
-            ->select('name', 'tag_id', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(count) as count'))
-            ->with('tag', 'website')
+            ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(count) as count'))
+            ->with('tag', 'website', 'backfill')
             ->where('name', '!=', 'viewership')//viewership data isn't charted
-            ->groupBy('name', 'tag_id', DB::raw($createdAtFormat));
+            ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat));
 
         if ($tags) {
             $stats = $stats->whereIn('tag_id', $tags);

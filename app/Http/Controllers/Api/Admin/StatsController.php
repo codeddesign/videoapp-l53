@@ -75,10 +75,10 @@ class StatsController extends ApiController
     protected function campaignEvents($timespan, $tags = null, $campaigns = null)
     {
         $events = CampaignEvent::query()
-            ->with('tag')
-            ->select('name', 'tag_id', DB::raw('SUM(count) as count'))
+            ->with('tag', 'backfill')
+            ->select('name', 'tag_id', 'backfill_id', DB::raw('SUM(count) as count'))
             ->where('name', '!=', 'viewership')//viewership data isn't charted
-            ->groupBy('name', 'tag_id')
+            ->groupBy('name', 'tag_id', 'backfill_id')
             ->timeRange($timespan, $this->user->timezone);
 
         if ($tags) {
