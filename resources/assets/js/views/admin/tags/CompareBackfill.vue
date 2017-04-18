@@ -1,9 +1,9 @@
 <template>
   <div>
-    <input name="tagmanage-tabbed" id="tagmanage-tabbed2" v-on:click="isVisible()" type="radio" checked>
+    <input name="tagmanage-tabbed" id="tagmanage-tabbed5" v-on:click="isVisible()" type="radio">
     <section>
       <h1>
-        <label for="tagmanage-tabbed2">COMPARE TAGS</label>
+        <label for="tagmanage-tabbed5">COMPARE BACKFILL</label>
       </h1>
       <div>
         <!-- START CHART TIME RANGE -->
@@ -27,37 +27,25 @@
         <!-- TAG GRAPH AREA -->
           <div class="taggraph-wrapper">
             <div class="taggraph-wrapleft">
-              <tag-chart :chart-data="chartData"></tag-chart>
+              <backfill-chart chart-id="backfill-chart" :chart-data="chartData"></backfill-chart>
             </div>
             <div class="taggraph-wrapright">
               <ul class="taggraph-textlist">
                 <li>
-                  <div class="taggraph-listtitle">REQUESTS:</div>
-                  <div class="taggraph-listnumber">{{ presentNumber(requests) }}</div>
-                </li>
-                <li>
-                  <div class="taggraph-listtitle">FILLS:</div>
-                  <div class="taggraph-listnumber">{{ presentNumber(fills) }}</div>
+                  <div class="taggraph-listtitle">PAGEVIEWS:</div>
+                  <div class="taggraph-listnumber">{{ presentNumber(totalPageviews) }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">IMPRESSIONS:</div>
-                  <div class="taggraph-listnumber">{{ presentNumber(impressions) }}</div>
+                  <div class="taggraph-listnumber">{{ presentNumber(backfill) }}</div>
                 </li>
                 <li>
-                  <div class="taggraph-listtitle">FILL-RATE:</div>
-                  <div class="taggraph-listnumber">{{ fillRate }}</div>
-                </li>
-                <li>
-                  <div class="taggraph-listtitle">USE-RATE:</div>
-                  <div class="taggraph-listnumber">{{ useRate }}</div>
-                </li>
-                <li>
-                  <div class="taggraph-listtitle">ERRORS:</div>
-                  <div class="taggraph-listnumber">{{ presentNumber(errors) }}</div>
+                  <div class="taggraph-listtitle">ECPM:</div>
+                  <div class="taggraph-listnumber">{{ presentMoney(ecpm) }}</div>
                 </li>
                 <li>
                   <div class="taggraph-listtitle">REVENUE:</div>
-                  <div class="taggraph-listnumber">{{ presentRevenue }}</div>
+                  <div class="taggraph-listnumber">{{ presentMoney(totalBackfillRevenue) }}</div>
                 </li>
               </ul>
             </div>
@@ -65,7 +53,7 @@
           <!-- END GRAPH AREA -->
           <!-- START TAGS AREA -->
 
-          <tag-list v-on:selectedTags="newSelectedTags"></tag-list>
+          <backfill-list v-on:selectedTags="newSelectedTags"></backfill-list>
       </div>
     </section><!-- END COMPARE TAGS -->
   </div>
@@ -74,20 +62,22 @@
 <script>
   import stats from '../../../services/stats'
   import http from '../../../services/http'
-  import TagChart from './TagChart.vue'
-  import TagList from './TagList.vue'
+  import BackfillChart from './BackfillChart.vue'
+  import BackfillList from './BackfillList.vue'
   import moment from 'moment'
   import numeral from 'numeral'
-  import _ from 'lodash'
   import accounting from 'accounting'
+  import _ from 'lodash'
 
   export default {
-    name: 'CompareTags',
+    name: 'CompareBackfill',
 
     data() {
       return {
         // used for the Time Range Select.
         currentTime: moment(),
+
+        visible: false,
 
         timeRange: 'today',
         timeRangeOptions: [
@@ -99,11 +89,13 @@
           { text: 'Last Month', value: 'lastMonth' }
         ],
 
-        requests: 0,
-        impressions: 0,
-        revenue: 0,
-        fills: 0,
-        errors: 0,
+        backfill: 0,
+        desktopBackfillRevenue: 0,
+        mobileBackfillRevenue: 0,
+        totalBackfillRevenue: 0,
+        desktopPageviews: 0,
+        mobilePageviews: 0,
+        totalPageviews: 0,
 
         selectedTags: [],
 
@@ -125,14 +117,20 @@
         return numeral(number).format('0,0')
       },
 
+      presentMoney(number) {
+        return accounting.formatMoney(number)
+      },
+
       fetchStats() {
         http.get('/admin/stats/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
             .then((response) => {
-              this.requests = parseInt(response.data.tagRequests)
-              this.impressions = parseInt(response.data.impressions)
-              this.fills = parseInt(response.data.fills)
-              this.errors = parseInt(response.data.errors)
-              this.revenue = parseFloat(response.data.revenue)
+              this.backfill = parseInt(response.data.backfill)
+              this.desktopBackfillRevenue = parseFloat(response.data.desktopBackfillRevenue)
+              this.mobileBackfillRevenue = parseFloat(response.data.mobileBackfillRevenue)
+              this.totalBackfillRevenue = this.desktopBackfillRevenue + this.mobileBackfillRevenue
+              this.desktopPageviews = parseInt(response.data.desktopPageviews)
+              this.mobilePageviews = parseInt(response.data.mobilePageviews)
+              this.totalPageviews = this.desktopPageviews + this.mobilePageviews
             })
             .catch((error) => {
               console.error('Error fetching the stats count.')
@@ -151,11 +149,11 @@
 
     computed: {
       presentRevenue() {
-        return accounting.formatMoney(this.revenue)
+        return this.presentMoney(this.revenue)
       },
 
       ecpm() {
-        return this.calculateEcpm(this.impressions, this.revenue)
+        return this.calculateEcpm(this.backfill, this.totalBackfillRevenue, false)
       },
 
       fillRate() {
@@ -188,8 +186,8 @@
     },
 
     components: {
-      TagChart,
-      TagList
+      BackfillChart,
+      BackfillList
     }
 
   }

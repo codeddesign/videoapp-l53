@@ -88,19 +88,19 @@
             {
               name: 'Impressions',
               color: '#ff4001',
-              data: this.chartData.impressions,
+              data: this.chartData.backfill,
               visible: self.visibility[0]
             },
             {
-              name: 'Requests',
+              name: 'Pageviews',
               color: '#468c01',
-              data: this.chartData.tagRequests,
+              data: this.combineCharts(this.chartData.desktopPageviews, this.chartData.mobilePageviews),
               visible: self.visibility[1]
             },
             {
-              name: 'Fills',
+              name: 'Revenue',
               color: '#00a2d9',
-              data: this.chartData.fills,
+              data: this.combineCharts(this.chartData.desktopBackfillRevenue, this.chartData.mobileBackfillRevenue),
               visible: self.visibility[2]
             }
           ],
@@ -118,6 +118,21 @@
 
       setVisiblity(index, state) {
         this.visibility[index] = state
+      },
+
+      combineCharts(first, second) {
+        let newChart = []
+        if (first === undefined) {
+          return newChart
+        }
+        for (let i = 0; i < first.length; i++) {
+          newChart.push([
+            first[i][0],
+            first[i][1] + second[i][1]
+          ])
+        }
+
+        return newChart
       }
     },
 

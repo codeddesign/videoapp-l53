@@ -267,8 +267,6 @@
       showTags() {
         let tags = this.tags
 
-        console.log(tags)
-
         if (this.filters.platform !== 'all') {
           tags = tags.filter((tag) => {
             return tag.platform_type === this.filters.platform

@@ -22,7 +22,7 @@ use Illuminate\Cache\Repository;
  * Relationships
  *
  * @property Website  $website
- * @property Backfill $adType
+ * @property AdType $adType
  */
 class Backfill extends Model
 {

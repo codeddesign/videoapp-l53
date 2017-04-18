@@ -2,6 +2,7 @@
   <div class="page-index">
     <div class="tagmanage-tabbed">
       <compare-tags></compare-tags>
+      <compare-backfill></compare-backfill>
       <edit-tags></edit-tags>
       <global-options></global-options>
     </div>
@@ -11,6 +12,7 @@
 <script>
   import EditTags from './EditTags.vue'
   import CompareTags from './CompareTags.vue'
+  import CompareBackfill from './CompareBackfill.vue'
   import GlobalOptions from './GlobalOptions.vue'
 
   export default {
@@ -18,6 +20,7 @@
     components: {
       EditTags,
       CompareTags,
+      CompareBackfill,
       GlobalOptions
     },
 
