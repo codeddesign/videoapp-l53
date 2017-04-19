@@ -51,11 +51,11 @@ class CampaignEvents
         $backfills = Backfill::whereIn('id', $backfillIds)->get();
 
         $data = $data->map(function ($event) use ($tags, $backfills) {
-            if ($event->tag_id) {
+            if (isset($event->tag_id)) {
                 $event->tag = $tags->find($event->tag_id);
             }
 
-            if ($event->backfill_id) {
+            if (isset($event->backfill_id)) {
                 $event->backfill = $backfills->find($event->backfill_id);
             }
 
@@ -111,7 +111,7 @@ class CampaignEvents
     {
         return $this->validId($event['campaign_id'], $validIds['campaigns']) &&
             $this->validId($event['tag_id'], $validIds['tags']) &&
-            $this->validId($event['backfill_id'], $validIds['backfill']) &&
+            $this->validId($event['backfill_id'] ?? null, $validIds['backfill']) &&
             $this->validId($event['website_id'], $validIds['websites']);
     }
 
