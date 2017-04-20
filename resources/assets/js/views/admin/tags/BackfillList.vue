@@ -37,8 +37,8 @@
         <li v-for="backfill in showBackfill" v-bind:title="'ID: ' + backfill.id">
           <div class="dashboard-statslist1">
             <div class="tagcreate-checkwrap">
-              <input type="checkbox" v-bind:id="backfill.id" v-bind:value="backfill.id" v-model="selectedBackfill">
-              <label v-bind:for="backfill.id"></label>
+              <input type="checkbox" v-bind:id="'backfill' + backfill.id" v-bind:value="backfill.id" v-model="selectedBackfill">
+              <label v-bind:for="'backfill' + backfill.id"></label>
             </div>
             {{ backfill.advertiser }}
           </div>
@@ -168,8 +168,8 @@
       compareTagsRange(newTimeRange) {
         this.fetchCompareTags()
       },
-      selectedTags(newTags) {
-        this.$emit('selectedTags', newTags)
+      selectedBackfill(newBackfill) {
+        this.$emit('selectedBackfill', newBackfill)
       }
     }
   }

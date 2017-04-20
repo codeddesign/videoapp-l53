@@ -22,11 +22,12 @@ class ChartsController extends ApiController
      */
     public function stats(Request $request)
     {
-        $range  = $request->get('time') ?? 'today';
-        $user   = $request->get('user');
-        $report = $request->get('report');
-        $adType = $request->get('type');
-        $tags   = $request->get('tags') ? explode(',', $request->get('tags')) : null;
+        $range          = $request->get('time') ?? 'today';
+        $user           = $request->get('user');
+        $report         = $request->get('report');
+        $adType         = $request->get('type');
+        $tags           = $request->get('tags') ? explode(',', $request->get('tags')) : null;
+        $backfillFilter = $request->get('backfill') ? explode(',', $request->get('backfill')) : null;
 
         if ($report) {
             $report    = Report::find($report);
@@ -51,6 +52,10 @@ class ChartsController extends ApiController
 
         if ($tags) {
             $stats = $stats->whereIn('tag_id', $tags);
+        }
+
+        if ($backfillFilter) {
+            $stats = $stats->whereIn('backfill_id', $backfillFilter);
         }
 
         if ($adType) {

@@ -53,7 +53,7 @@
           <!-- END GRAPH AREA -->
           <!-- START TAGS AREA -->
 
-          <backfill-list v-on:selectedTags="newSelectedTags"></backfill-list>
+          <backfill-list v-on:selectedBackfill="newSelectedBackfill"></backfill-list>
       </div>
     </section><!-- END COMPARE TAGS -->
   </div>
@@ -97,15 +97,15 @@
         mobilePageviews: 0,
         totalPageviews: 0,
 
-        selectedTags: [],
+        selectedBackfill: [],
 
         chartData: []
       }
     },
 
     methods: {
-      newSelectedTags(selectedTags) {
-        this.selectedTags = selectedTags
+      newSelectedBackfill(selectedBackfill) {
+        this.selectedBackfill = selectedBackfill
         this.fetchStats()
       },
 
@@ -122,7 +122,7 @@
       },
 
       fetchStats() {
-        http.get('/admin/stats/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
+        http.get('/admin/stats/all?time=' + this.timeRange + '&backfill=' + this.selectedBackfill)
             .then((response) => {
               this.backfill = parseInt(response.data.backfill)
               this.desktopBackfillRevenue = parseFloat(response.data.desktopBackfillRevenue)
@@ -136,7 +136,7 @@
               console.error('Error fetching the stats count.')
             })
 
-        http.get('/admin/charts/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
+        http.get('/admin/charts/all?time=' + this.timeRange + '&backfill=' + this.selectedBackfill)
             .then((response) => {
               this.chartData = response.data
             })

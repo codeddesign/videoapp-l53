@@ -24,11 +24,12 @@ class StatsController extends ApiController
         $timespan = $request->get('time');
         $adType   = $request->get('type');
         $tags     = $request->get('tags') ? explode(',', $request->get('tags')) : null;
+        $backfillFilter = $request->get('backfill') ? explode(',', $request->get('backfill')) : null;
 
         if (! $timespan || $timespan === 'realtime') {
             $stats = $this->fetchRealTimeData($adType);
         } else {
-            $stats = $this->fetchHistoricalData($timespan, $tags);
+            $stats = $this->fetchHistoricalData($timespan, $tags, $backfillFilter);
         }
 
         return $this->jsonResponse($stats);
@@ -63,16 +64,16 @@ class StatsController extends ApiController
         return (new StatsTransformer)->transformSumAll($events, true);
     }
 
-    protected function fetchHistoricalData($timespan, $tags)
+    protected function fetchHistoricalData($timespan, $tags, $backfillFilter)
     {
-        $statsByCampaign = $this->campaignEvents($timespan, $tags);
+        $statsByCampaign = $this->campaignEvents($timespan, $tags, null, $backfillFilter);
 
         $stats = (new StatsTransformer)->transformSumAll($statsByCampaign, true);
 
         return $stats;
     }
 
-    protected function campaignEvents($timespan, $tags = null, $campaigns = null)
+    protected function campaignEvents($timespan, $tags = null, $campaigns = null, $backfillFilter = null)
     {
         $events = CampaignEvent::query()
             ->with('tag', 'backfill')
@@ -83,6 +84,10 @@ class StatsController extends ApiController
 
         if ($tags) {
             $events = $events->whereIn('tag_id', $tags);
+        }
+
+        if ($backfillFilter) {
+            $events = $events->whereIn('backfill_id', $backfillFilter);
         }
 
         if ($campaigns !== null) {

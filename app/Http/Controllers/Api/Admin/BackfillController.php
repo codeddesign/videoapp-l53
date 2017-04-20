@@ -21,7 +21,7 @@ class BackfillController extends ApiController
     {
         $backfill = Backfill::all();
 
-        $compareRange = $request->get('compareRange');
+        $compareRange   = $request->get('compareRange');
 
         if ($compareRange) {
             $stats = CampaignEvent::query()
@@ -30,11 +30,12 @@ class BackfillController extends ApiController
                 ->where('backfill_id', '!=', null)
                 ->where('name', '=', 'backfill')
                 ->groupBy('name', 'backfill_id', DB::raw('created_at::date'))
-                ->timeRange($compareRange, $this->user->timezone)
-                ->get()
+                ->timeRange($compareRange, $this->user->timezone);
+
+            $stats = $stats->get()
                 ->groupBy('backfill_id');
 
-            $days  = DateRange::byName($compareRange)->days() ?: 1;
+            $days = DateRange::byName($compareRange)->days() ?: 1;
 
             $statsTransformer = new StatsTransformer;
 
