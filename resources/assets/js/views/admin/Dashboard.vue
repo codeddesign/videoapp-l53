@@ -55,7 +55,7 @@
           <spark-chart id="impressions-chart" :chartData="chartData.impressions" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="revenue" :value="revenue" :animated="true" type="money" color="#1aa74f"></stats>
+          <stats title="video revenue" :value="revenue" :animated="true" type="money" color="#1aa74f"></stats>
           <spark-chart id="revenue-chart" :chartData="chartData.revenue" color="#1aa74f"></spark-chart>
         </li>
         <li>
@@ -95,7 +95,7 @@
           <spark-chart id="mobile-backfill-chart" :chartData="chartData.mobileBackfillRevenue" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="total backfill revenue" :value="backfillRevenue" :animated="true" type="money"></stats>
+          <stats title="backfill revenue" :value="backfillRevenue" :animated="true" type="money"></stats>
           <spark-chart id="total-backfill-chart" :chartData="backfillRevenueSpark" color="#7772a7"></spark-chart>
         </li>
         <li>
