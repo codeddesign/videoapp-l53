@@ -25,7 +25,6 @@ class BackfillTransformer extends Transformer
             'active'        => (boolean) $backfill->active,
         ];
 
-
         if ($backfill->stats) {
             $transformedBackfill = array_merge($transformedBackfill, [
                 'stats' => $backfill->stats,

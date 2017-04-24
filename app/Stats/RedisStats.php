@@ -106,11 +106,12 @@ class RedisStats
     protected function handleAppStats(Collection $stats, $value, $status, $tag = null, $website = null)
     {
         $stats->push([
-            'name'       => 'campaignRequests',
-            'status'     => $status,
-            'count'      => $value,
-            'tag_id'     => $tag,
-            'website_id' => $website,
+            'name'        => 'campaignRequests',
+            'status'      => $status,
+            'count'       => $value,
+            'tag_id'      => $tag,
+            'website_id'  => $website,
+            'backfill_id' => null,
         ]);
 
         return $stats;
@@ -119,11 +120,12 @@ class RedisStats
     protected function handleTagStats($stats, $value, $status, $tag, $website)
     {
         $stats->push([
-            'name'       => 'tagRequests',
-            'status'     => $status,
-            'count'      => $value,
-            'tag_id'     => $tag,
-            'website_id' => $website,
+            'name'        => 'tagRequests',
+            'status'      => $status,
+            'count'       => $value,
+            'tag_id'      => $tag,
+            'website_id'  => $website,
+            'backfill_id' => null,
         ]);
 
         return $stats;
@@ -133,35 +135,39 @@ class RedisStats
     {
         if ($status === 0) {
             $stats->push([
-                'name'       => 'fills',
-                'status'     => $status,
-                'count'      => $value,
-                'tag_id'     => $tag,
-                'website_id' => $website,
+                'name'        => 'fills',
+                'status'      => $status,
+                'count'       => $value,
+                'tag_id'      => $tag,
+                'website_id'  => $website,
+                'backfill_id' => null,
             ]);
         } elseif ($status === 3) {
             $stats->push([
-                'name'       => 'impressions',
-                'status'     => $status,
-                'count'      => $value,
-                'tag_id'     => $tag,
-                'website_id' => $website,
+                'name'        => 'impressions',
+                'status'      => $status,
+                'count'       => $value,
+                'tag_id'      => $tag,
+                'website_id'  => $website,
+                'backfill_id' => null,
             ]);
         } elseif ($status < 100) {
             $stats->push([
-                'name'       => 'viewership',
-                'status'     => $status,
-                'count'      => $value,
-                'tag_id'     => $tag,
-                'website_id' => $website,
+                'name'        => 'viewership',
+                'status'      => $status,
+                'count'       => $value,
+                'tag_id'      => $tag,
+                'website_id'  => $website,
+                'backfill_id' => null,
             ]);
         } else {
             $stats->push([
-                'name'       => 'errors',
-                'status'     => $status,
-                'count'      => $value,
-                'tag_id'     => $tag,
-                'website_id' => $website,
+                'name'        => 'errors',
+                'status'      => $status,
+                'count'       => $value,
+                'tag_id'      => $tag,
+                'website_id'  => $website,
+                'backfill_id' => null,
             ]);
         }
 
@@ -172,6 +178,7 @@ class RedisStats
     {
         $stats->push([
             'name'        => 'backfill',
+            'status'      => null,
             'count'       => $value,
             'tag_id'      => $tag,
             'website_id'  => $website,
