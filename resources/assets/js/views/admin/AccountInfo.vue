@@ -367,27 +367,27 @@
                 <div class="userinfo-backfillcreate" @click="createNewBackfill(true)">CREATE BACKFILL</div>
               </div>
               <ul class="userinfo-itemlistheader">
-                <li style="width:250px;">URL</li>
+                <li style="width: 250px;">URL</li>
                 <li style="border-right:1px solid #E3E1E0">IMPRESSIONS</li>
                 <li style="border-right:1px solid #E3E1E0">REVENUE</li>
                 <li>ECPM</li>
                 <li>AD TYPE</li>
                 <li style="width:115px;border-right:1px solid #E3E1E0;">PLATFORM</li>
-                <li style="width:115px;">WIDTH</li>
-                <li style="width:calc(100% - 1096px)">BACKFILL</li>
+                <li style="width:117px;border-right:1px solid #E3E1E0;">WIDTH</li>
+                <li style="width:calc(100% - 1098px)">BACKFILL</li>
                 <li style="width:159px;border-left:0;">STATE</li>
               </ul>
               <!-- START BACKFILL WEBSITES LIST -->
               <ul class="admindashboard-dailystatslist userinfo-statslist userinfo-backfilllist">
                 <li style="height: auto !important;" v-for="b in backfill">
                   <div style="cursor: pointer;">
-                    <div class="dashboard-statslist1" style="width:250px;">
+                    <div class="dashboard-statslist1" style="width: 250px;">
                       <div class="tagcreate-checkwrap">
                         <input type="checkbox" id="check-onscroll" v-bind:id="'deleteBackfill' + b.id" v-bind:value="b.id" v-model="selectedBackfill">
                         <label v-bind:for="'deleteBackfill' + b.id"></label>
                       </div>
-                      <div @click="editBackfill(b)">
-                      {{ b.website_domain }}
+                      <div @click="editBackfill(b)" style="width: 250px;">
+                        {{ b.website_domain }}
                       </div>
                     </div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)">N/A</div>
@@ -395,8 +395,8 @@
                     <div class="dashboard-statslist2" @click="editBackfill(b)">${{ b.ecpm }}</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)">{{ b.adType.data.name }}</div>
                     <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:113px;border-right:0;">{{ b.platform_type }}</div>
-                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:115px;">{{ b.width }}</div>
-                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:calc(100% - 1094px);border-right:1px solid #e3e1e0;">
+                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:119px;">{{ b.width }}</div>
+                    <div class="dashboard-statslist2" @click="editBackfill(b)" style="width:calc(100% - 1098px);border-right:1px solid #e3e1e0;">
                       {{ b.advertiser }}
                     </div>
                   </div>
@@ -559,9 +559,11 @@
           }
 
           this.currentBackfill.ad_type_id = parseInt(this.currentBackfill.ad_type_id)
+          this.currentBackfill.website_id = parseInt(this.currentBackfill.website_id)
 
           if (backfill.ad_type_id === this.currentBackfill.ad_type_id &&
-              backfill.platform_type === this.currentBackfill.platform_type) {
+              backfill.platform_type === this.currentBackfill.platform_type &&
+              backfill.website_id === this.currentBackfill.website_id) {
             return true
           }
 
