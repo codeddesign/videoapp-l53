@@ -330,7 +330,6 @@
         @endif
 
         <form action="/signup" class="startearningmore validate" method="POST">
-            {{ csrf_field() }}
             <input name="name" id="mce-FNAME" placeholder="full name">
             <input name="email" id="mce-EMAIL" placeholder="email address">
             <input name="website" id="mce-WEBSITE" placeholder="website">
@@ -342,6 +341,7 @@
             </div>
 
             <!--<submit type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">Sign Up for Beta</submit>-->
+            {{ csrf_field() }}
             <input type="submit" value="Sign Up for Beta" value="register" name="subscribe" id="mc-embedded-subscribe" class="button">
         </form>
     </div>
