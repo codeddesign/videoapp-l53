@@ -322,28 +322,28 @@
             <br> It doesn’t get any better than this!
         </div>
 
-        @if (session('status'))
-            <div style="color:#4596CB;font-size:18px;line-height:31px;text-align:center;">
+        @if (session('status') || true)
+            <div style="color:#4596CB;font-size:18px;line-height:31px;text-align:center;margin-bottom:50px;">
                 Thank you signing up for Ad3 Beta.<br>
                 A member of our support team will be in contact with you shortly.
             </div>
+        @else
+            <form action="/signup" class="startearningmore validate" method="POST">
+                <input name="name" id="mce-FNAME" placeholder="full name">
+                <input name="email" id="mce-EMAIL" placeholder="email address">
+                <input name="website" id="mce-WEBSITE" placeholder="website">
+                <input name="phone" id="mce-PHONE" placeholder="phone number">
+
+                <div id="mce-responses" class="clear">
+                    <div class="response" id="mce-error-response" style="display:none"></div>
+                    <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>
+
+                <!--<submit type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">Sign Up for Beta</submit>-->
+                {{ csrf_field() }}
+                <input type="submit" value="Sign Up for Beta" value="register" name="subscribe" id="mc-embedded-subscribe" class="button">
+            </form>
         @endif
-
-        <form action="/signup" class="startearningmore validate" method="POST">
-            <input name="name" id="mce-FNAME" placeholder="full name">
-            <input name="email" id="mce-EMAIL" placeholder="email address">
-            <input name="website" id="mce-WEBSITE" placeholder="website">
-            <input name="phone" id="mce-PHONE" placeholder="phone number">
-
-            <div id="mce-responses" class="clear">
-                <div class="response" id="mce-error-response" style="display:none"></div>
-                <div class="response" id="mce-success-response" style="display:none"></div>
-            </div>
-
-            <!--<submit type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">Sign Up for Beta</submit>-->
-            {{ csrf_field() }}
-            <input type="submit" value="Sign Up for Beta" value="register" name="subscribe" id="mc-embedded-subscribe" class="button">
-        </form>
     </div>
 </div>
 
