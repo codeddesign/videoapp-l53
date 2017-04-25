@@ -322,8 +322,16 @@
             <br> It doesn’t get any better than this!
         </div>
 
-        <form action="//aptone.us3.list-manage.com/subscribe/post?u=c4f47191c48fc179e46e77975&amp;id=d8c704b2db" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="startearningmore validate" target="_blank" novalidate>
-            <input name="full_name" id="mce-FNAME" placeholder="full name">
+        @if (session('status'))
+            <div style="color:#4596CB;font-size:18px;line-height:31px;text-align:center;">
+                Thank you signing up for Ad3 Beta.<br>
+                A member of our support team will be in contact with you shortly.
+            </div>
+        @endif
+
+        <form action="/signup" class="startearningmore validate" method="POST">
+            {{ csrf_field() }}
+            <input name="name" id="mce-FNAME" placeholder="full name">
             <input name="email" id="mce-EMAIL" placeholder="email address">
             <input name="website" id="mce-WEBSITE" placeholder="website">
             <input name="phone" id="mce-PHONE" placeholder="phone number">

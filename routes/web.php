@@ -2,6 +2,7 @@
 
 // Home Page.
 Route::get('/', ['uses' => 'HomeController@index']);
+Route::post('signup', 'HomeController@signup');
 
 // Login.
 Route::get('login', 'Authentication\LoginController@showLoginForm')->name('login');
