@@ -322,7 +322,7 @@
             <br> It doesn’t get any better than this!
         </div>
 
-        @if (session('status') || true)
+        @if (session('status'))
             <div style="color:#4596CB;font-size:18px;line-height:31px;text-align:center;margin-bottom:50px;">
                 Thank you signing up for Ad3 Beta.<br>
                 A member of our support team will be in contact with you shortly.
