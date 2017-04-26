@@ -30,9 +30,9 @@ class Query
     public function campaignEvents()
     {
         $stats = CampaignEvent::query()
-            ->with('tag', 'website', 'campaign', 'campaign.type')
-            ->select('name', 'tag_id', 'campaign_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
-            ->groupBy('name', 'tag_id', 'campaign_id', 'website_id', 'status')
+            ->with('tag', 'website', 'campaign', 'campaign.type', 'backfill')
+            ->select('name', 'tag_id', 'backfill_id', 'campaign_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
+            ->groupBy('name', 'tag_id', 'backfill_id', 'campaign_id', 'website_id', 'status')
             ->where('name', '!=', 'campaignRequests');
 
         $stats = $this->filter($stats);

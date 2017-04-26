@@ -30,6 +30,7 @@
         <spark-chart id="ecpm-chart" :chartData="ecpmSpark" color="#1aa74f"></spark-chart>
       </li>
     </ul>
+    <!---
     <ul class="campaignstats-row">
       <li>
         <stats title="desktop pre-roll fill" type="percentage"
@@ -50,6 +51,25 @@
         <stats title="mobile pre-roll errors" type="percentage"
         :value="calculateErrorRate(stats.allStats.tags.mobile.preroll.tagRequests, stats.allStats.tags.mobile.preroll.errors)"></stats>
         <spark-chart id="mobile-preroll-errors-chart" :chartData="chartData.mobilePrerollErrors" color="#7772a7"></spark-chart>
+      </li>
+    </ul>
+    -->
+    <ul class="campaignstats-row">
+      <li>
+        <stats title="desktop backfill revenue" :value="stats.allStats.desktopBackfillRevenue" type="money"></stats>
+        <spark-chart id="desktop-backfill-chart" :chartData="chartData.desktopBackfillRevenue" color="#7772a7"></spark-chart>
+      </li>
+      <li>
+        <stats title="mobile backfill revenue" :value="stats.allStats.mobileBackfillRevenue" type="money"></stats>
+        <spark-chart id="mobile-backfill-chart" :chartData="chartData.mobileBackfillRevenue" color="#7772a7"></spark-chart>
+      </li>
+      <li>
+        <stats title="backfill revenue" :value="backfillRevenue" :animated="true" type="money"></stats>
+        <spark-chart id="total-backfill-chart" :chartData="backfillRevenueSpark" color="#7772a7"></spark-chart>
+      </li>
+      <li>
+        <stats title="backfill ecpm" :value="backfillEcpm" type="money"></stats>
+        <spark-chart id="backfill-ecpm-chart" :chartData="backfillEcpmSpark" color="#7772a7"></spark-chart>
       </li>
     </ul>
     <ul class="campaignstats-row">
@@ -356,6 +376,14 @@
         return this.pagination.getData()
       },
 
+      backfillEcpm() {
+        return this.calculateEcpm(this.stats.allStats.backfill, this.stats.allStats.desktopBackfillRevenue + this.stats.allStats.mobileBackfillRevenue)
+      },
+
+      backfillRevenue() {
+        return this.stats.allStats.desktopBackfillRevenue + this.stats.allStats.mobileBackfillRevenue
+      },
+
       ecpm() {
         return this.calculateEcpm(this.stats.allStats.impressions, this.stats.allStats.revenue)
       },
@@ -365,6 +393,28 @@
 
         return this.chartData.impressions.map((item, index) => {
           let ecpm = this.calculateEcpm(item[1], this.chartData.revenue[index][1], false)
+          return [item[0], +ecpm.toFixed(2)]
+        })
+      },
+
+      backfillRevenueSpark() {
+        if (!this.chartData.mobileBackfillRevenue) return []
+
+        let backfillRevenue = []
+
+        for (let i = 0; i < this.chartData.mobileBackfillRevenue.length; i++) {
+          let revenue = this.chartData.mobileBackfillRevenue[i][1] + this.chartData.desktopBackfillRevenue[i][1]
+          backfillRevenue.push([this.chartData.mobileBackfillRevenue[i][0], revenue])
+        }
+
+        return backfillRevenue
+      },
+
+      backfillEcpmSpark() {
+        if (!this.chartData.mobileBackfillRevenue) return []
+
+        return this.chartData.backfill.map((item, index) => {
+          let ecpm = this.calculateEcpm(item[1], this.backfillRevenueSpark[index][1], false)
           return [item[0], +ecpm.toFixed(2)]
         })
       }
