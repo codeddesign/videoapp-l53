@@ -13,16 +13,16 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="request" :value="requests"></stats>
+            <stats title="request" :value="tagRequests"></stats>
         </li>
         <li>
           <stats title="impressions" :value="impressions"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="presentRevenue" color="#1aa74f"></stats>
+          <stats title="revenue" :value="presentRevenue" color="#1aa74f" type="money"></stats>
         </li>
         <li>
-          <stats title="ecpm" :value="ecpm" color="#1aa74f"></stats>
+          <stats title="ecpm" :value="ecpm" color="#1aa74f" type="money"></stats>
         </li>
       </ul>
       <!-- BOTTOM ANALYTICS -->
@@ -31,13 +31,13 @@
           <stats title="fill" :value="fills"></stats>
         </li>
         <li>
-          <stats title="fill-rate" :value="fillRate"></stats>
+          <stats title="fill-rate" :value="fillRate" type="percentage"></stats>
         </li>
         <li>
-          <stats title="error-rate" :value="errorRate" color="#009dd7"></stats>
+          <stats title="error-rate" :value="errorRate" color="#009dd7" type="percentage"></stats>
         </li>
         <li>
-          <stats title="use-rate" :value="useRate" color="#009dd7"></stats>
+          <stats title="use-rate" :value="useRate" color="#009dd7" type="percentage"></stats>
         </li>
       </ul>
 
@@ -69,8 +69,8 @@
       <ul class="dashboard-dailystatslist">
         <li v-for="(stat, date) in dailyStats">
           <div class="dashboard-statslist1">{{ date }}</div>
-          <div class="dashboard-statslist2">{{ stat.requests }}</div>
-          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.requests) }}</div>
+          <div class="dashboard-statslist2">{{ stat.tagRequests }}</div>
+          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.tagRequests) }}</div>
           <div class="dashboard-statslist2">
             {{ calculateEcpm(stat.impressions, calculateRevenue(stat.impressions, false)) }}
           </div>
@@ -108,7 +108,7 @@
           { text: 'Last Month', value: 'lastMonth' }
         ],
 
-        requests: 0,
+        tagRequests: 0,
         impressions: 0,
         revenue: 0,
 
@@ -137,11 +137,11 @@
       },
 
       fillRate() {
-        return this.calculateFillRate(this.impressions, this.requests)
+        return this.calculateFillRate(this.impressions, this.tagRequests)
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.impressions, this.errors)
+        return this.calculateErrorRate(this.tagRequests, this.errors)
       },
 
       useRate() {
@@ -169,7 +169,7 @@
       fetchStats() {
         http.get('/stats/all?time=realtime')
             .then((response) => {
-              this.requests = parseInt(response.data.requests)
+              this.tagRequests = parseInt(response.data.tagRequests)
               this.impressions = parseInt(response.data.impressions)
               this.revenue = parseFloat(response.data.revenue)
               this.fills = parseInt(response.data.fills)

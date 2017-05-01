@@ -6,6 +6,8 @@ use App\Models\CampaignEvent;
 use App\Services\CampaignEvents;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
+use Illuminate\Cache\Repository;
+use Illuminate\Support\Facades\DB;
 
 class StatsController extends ApiController
 {
@@ -16,9 +18,6 @@ class StatsController extends ApiController
      */
     public function all(Request $request)
     {
-        // Temporary until the user's dashboard is fixed.
-        return $this->jsonResponse([]);
-
         $timespan = $request->get('time');
 
         if (! $timespan || $timespan === 'realtime') {
@@ -35,19 +34,40 @@ class StatsController extends ApiController
         $ids = $this->user->campaigns->pluck('id')->toArray();
         $stats = (new CampaignEvents)->fetchMultipleCampaigns($ids, true);
 
-        return (new StatsTransformer)->transformSumAll($stats);
+        $cache = app(Repository::class);
+
+        /*$databaseEvents = $cache->tags(['events'])->remember("user.{$this->user->id}.events.today}", 30, function () {
+            return $this->fetchHistoricalData('today');
+        });*/
+
+        $databaseEvents = $this->campaignEvents('today');
+
+        $stats = $stats->merge($databaseEvents);
+
+        return (new StatsTransformer)->transformSumAll($stats, false);
     }
 
     protected function fetchHistoricalData($timespan)
     {
-        $statsByCampaign = CampaignEvent::userStats($timespan)
-            ->get()
+        $statsByCampaign = $this->campaignEvents($timespan);
+
+        $statsByCampaign = $statsByCampaign
             ->groupBy(function ($item) {
                 return $item->created_at->format('F d, Y');
             });
 
-        $stats = (new StatsTransformer)->transform($statsByCampaign, $timespan);
+        return (new StatsTransformer)->transform($statsByCampaign, $timespan);;
+    }
 
-        return $stats;
+    protected function campaignEvents($timespan)
+    {
+        $statsByCampaign = CampaignEvent::userStats($timespan)
+            ->with('tag', 'backfill')
+            ->select('name', 'tag_id', 'backfill_id', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
+            ->where('name', '!=', 'viewership')//viewership data isn't charted
+            ->groupBy('name', 'tag_id', 'backfill_id', DB::raw('created_at::date'))
+            ->get();
+
+        return $statsByCampaign;
     }
 }
