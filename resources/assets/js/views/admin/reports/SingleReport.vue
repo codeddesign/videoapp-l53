@@ -64,7 +64,7 @@
         <spark-chart id="mobile-backfill-chart" :chartData="chartData.mobileBackfillRevenue" color="#7772a7"></spark-chart>
       </li>
       <li>
-        <stats title="backfill revenue" :value="backfillRevenue" :animated="true" type="money"></stats>
+        <stats title="backfill revenue" :value="backfillRevenue" :animated="false" type="money"></stats>
         <spark-chart id="total-backfill-chart" :chartData="backfillRevenueSpark" color="#7772a7"></spark-chart>
       </li>
       <li>
