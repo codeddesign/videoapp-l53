@@ -81,6 +81,7 @@
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ calculateFillRate(tag.stats.fills, tag.stats.pageviews) }}
+          <span v-html="showComparePercent(tag, 'pageviewFillRate')"></span>
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
@@ -156,7 +157,7 @@
       showComparePercent(tag, stat) {
         let tagValue = 0
         let compareValue = 0
-        let compareTag = _.find(this.compareTags, value => { return value.id === tag.id })
+        let compareTag = _.find(this.compareTags, value => { return value.combinedKey === tag.combinedKey })
 
         if (!compareTag) {
           return
@@ -174,6 +175,10 @@
           case 'fillRate':
             tagValue = this.calculateFillRate(tag.stats.fills, tag.stats.tagRequests)
             compareValue = this.calculateFillRate(compareTag.stats.fills, compareTag.stats.tagRequests)
+            break
+          case 'pageviewFillRate':
+            tagValue = this.calculateFillRate(tag.stats.fills, tag.stats.pageviews)
+            compareValue = this.calculateFillRate(compareTag.stats.fills, compareTag.stats.pageviews)
             break
           case 'errorRate':
             tagValue = this.calculateErrorRate(tag.stats.tagRequests, tag.stats.errors)
@@ -219,7 +224,7 @@
 
         http.get('/admin/tags?compareRange=' + this.compareTagsRange)
           .then((response) => {
-            this.compareTags = response.data.data
+            this.compareTags = this.combineTags(response.data.data)
           })
           .catch((error) => {
             console.error('Error fetching the tags stats.')
@@ -241,6 +246,8 @@
 
         tags.map(tag => {
           let key = tag.advertiser + tag.type + tag.platform_type
+
+          tag.combinedKey = key
 
           if (combinedTags[key]) {
             combinedTags[key].stats = _.mapValues(combinedTags[key].stats, (value, stat) => {
