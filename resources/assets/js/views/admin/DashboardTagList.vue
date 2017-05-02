@@ -87,7 +87,7 @@
           <span v-html="showComparePercent(tag, 'errorRate')"></span>
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
-          {{ this.calculateEcpm(tag.stats.impressions, tag.stats.revenue) }}
+          {{ calculateEcpm(tag.stats.impressions, tag.stats.revenue) }}
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ presentRevenue(tag.stats.revenue) }}
@@ -242,16 +242,10 @@
         tags.map(tag => {
           let key = tag.advertiser + tag.type + tag.platform_type
 
-          console.log(key)
-
           if (combinedTags[key]) {
             combinedTags[key].stats = _.mapValues(combinedTags[key].stats, (value, stat) => {
-              console.log(stat)
-              console.log(value)
-              console.log(tag.stats[stat])
               return value + tag.stats[stat]
             })
-            console.log(combinedTags[key].stats)
           } else {
             combinedTags[key] = tag
           }
