@@ -59,14 +59,4 @@ return
                 'has_name' => true,
             ],
         ],
-        /*
-         * Video sizes.
-         */
-        'sizes' => [
-            'auto' => 'auto',
-            'small' => '560x315',
-            'medium' => '640x360',
-            'large' => '853x480',
-            'hd720' => '1280x720',
-        ],
     ];

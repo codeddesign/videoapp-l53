@@ -183,7 +183,7 @@
         this.modal = {
           visible: true,
           title: 'Copy the code below into your website',
-          body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;"><script src="http://a3m.io:8000/p' + campaign.id + '.js"><\/script><\/textarea>'
+          body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;">' + campaign.embed + '<\/textarea>'
         }
       }
     },

@@ -162,6 +162,12 @@
         if (!_.isEmpty(this.currentUser)) {
           this.userLoaded()
         }
+
+        let that = this
+        this.autoUpdateInterval = setInterval(function() {
+          that.fetchStats()
+          that.currentTime = moment()
+        }, 2000)
       })
     },
 
@@ -179,14 +185,6 @@
             .catch((error) => {
               console.error('Error fetching the stats count.')
             })
-
-        http.get('/stats/all?time=tenDays')
-            .then((response) => {
-              this.dailyStats = response.data
-            })
-            .catch((error) => {
-              console.error('Error fetching the stats count.')
-            })
       },
 
       fetchChart() {
@@ -199,17 +197,20 @@
             .catch((error) => {
               console.error('Error fetching the stats.')
             })
+
+        http.get('/stats/all?time=tenDays')
+            .then((response) => {
+              this.dailyStats = response.data
+            })
+            .catch((error) => {
+              console.error('Error fetching the stats count.')
+            })
       },
 
       userLoaded() {
         if (this.currentUser.isAdmin) {
           this.$router.push({ name: 'admin.dashboard' })
         }
-
-        let that = this
-        setInterval(function() {
-          that.currentTime = moment()
-        }, 5000)
       },
 
       ...stats
