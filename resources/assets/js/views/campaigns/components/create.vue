@@ -48,14 +48,6 @@
                   <input id="campaign_name" type="text" placeholder="Reference name.." required v-model="campaign.name">
                 </div>
 
-                <div class="campaign-creationvidsize">
-                  <label for="video_size">VIDEO SIZE</label>
-
-                  <select id="video_size" class="yt-uix-form-input-select-element" required v-model="campaign.size">
-                    <option v-for="(key, value) in sizes" :value="key" :selected="campaign.size==key">{{value | capitalize }}</option>
-                  </select>
-                </div>
-
                 <button>PROCEED TO PREVIEW</button>
               </form>
             </div>
@@ -132,11 +124,9 @@
             disabled: true
           }
         ],
-        sizes: null,
         campaign: {
           campaign_type_id: false,
           name: '',
-          size: 'auto',
           video: ''
         },
         backup: {},
@@ -148,11 +138,6 @@
         http.get('/campaign-types')
             .then((response) => {
               this.campaign_types = response.data.data
-            })
-
-        http.get('/video-sizes')
-            .then((response) => {
-              this.sizes = response.data
             })
 
         // hold a clean copy of campaign
@@ -232,7 +217,7 @@
             .then((response) => {
               this.loading = false
 
-              this.addJSPreview(response.data.url)
+              this.addJSPreview(response.data.embed)
             })
             .catch((response) => {
               this.error = response.data.message
@@ -260,7 +245,7 @@
               this.savedCampaign = response.data.campaign
 
               this.$nextTick(function() {
-                this.$refs.embedJsCode.value = '<script src="' + response.data.url + '"><\/script>'
+                this.$refs.embedJsCode.value = response.data.embed
               })
             })
       },

@@ -64,8 +64,8 @@ class CampaignsController extends ApiController
         );
 
         return response()
-                ->json(['url' => $this->getEmbedLink()])
-                ->withCookie(cookie('preview_id', $previewId, 60));
+            ->json(['embed' => $campaign->embedCode()])
+            ->withCookie(cookie('preview_id', $previewId, 60));
     }
 
     /**
@@ -92,7 +92,7 @@ class CampaignsController extends ApiController
         return response([
             'message'  => 'Successfully added a campaign.',
             'campaign' => $campaign,
-            'url'      => $this->getEmbedLink($campaign->id),
+            'embed'      => $campaign->embedCode(),
         ], 201);
     }
 
@@ -136,21 +136,5 @@ class CampaignsController extends ApiController
         return response([
             'message' => 'Successfully deleted the campaign.',
         ], 200);
-    }
-
-    /**
-     * Generate the embed link.
-     * example: http://domain.com/p{number}.js
-     * where 'number' is an interger.
-     *
-     * @param int $campaignId
-     *
-     * @return string
-     */
-    public function getEmbedLink($campaignId = 0)
-    {
-        $pattern = '%s/p%s.js';
-
-        return sprintf($pattern, env('PLAYER_URL'), $campaignId);
     }
 }

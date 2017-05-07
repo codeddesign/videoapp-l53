@@ -19,14 +19,15 @@ class CampaignTransformer extends Transformer
     public function transform(Campaign $campaign)
     {
         $transformedCampaign = [
-            'id'           => (int) $campaign->id,
-            'name'         => $campaign->name,
-            'rpm'          => (int) $campaign->rpm,
-            'size'         => $campaign->size,
-            'type'         => $campaign->type,
-            'ad_type'      => $campaign->type->adType->id,
-            'ad_type_name' => $campaign->type->adType->name,
-            'active'       => (boolean) $campaign->active,
+            'id'                => (int) $campaign->id,
+            'name'              => $campaign->name,
+            'rpm'               => (int) $campaign->rpm,
+            'size'              => $campaign->size,
+            'type'              => $campaign->type,
+            'ad_type'           => $campaign->type->adType->id,
+            'ad_type_name'      => $campaign->type->adType->name,
+            'active'            => (boolean) $campaign->active,
+            'embed'             => $campaign->embedCode(),
             'created_at_humans' => $campaign->created_at_humans,
         ];
 

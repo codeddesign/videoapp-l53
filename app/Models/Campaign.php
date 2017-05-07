@@ -191,4 +191,10 @@ class Campaign extends Model
             'ad_type' => $campaign->type->adType->id,
         ];
     }
+
+    public function embedCode() {
+        $script = '<div class="a3m-row"><script async src="http://cdn.a3m.io/i%d.js" styling="bottom:0,right:0,width:320"></script></div>';
+
+        return sprintf($script, $this->id);
+    }
 }
