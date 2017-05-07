@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Models\User;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -49,14 +50,16 @@ class LoginController extends Controller
             ]);
         }
 
+        Auth::login(User::where('email', $request->get('email'))->first());
+
         $jwtCookie = cookie('jwt_token', $token, 0, null, null, false, false);
 
         if (! $this->auth->user()->verified_phone) {
-            return redirect()->route('verify.phone')->withCookie($jwtCookie);
+            return redirect()->route('verify.phone');
         }
 
         if (! $this->auth->user()->verified_email) {
-            return redirect()->route('verify.email')->withCookie($jwtCookie);
+            return redirect()->route('verify.email');
         }
 
         return redirect()->route('app')->withCookie($jwtCookie);

@@ -46,7 +46,7 @@ class VerificationsController extends Controller
             if ($response->status == 0) {
                 app('auth')->user()->confirmPhone();
 
-                return redirect()->route('app');
+                return redirect()->route('login');
             }
 
             return redirect()

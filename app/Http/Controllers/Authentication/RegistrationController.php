@@ -43,11 +43,8 @@ class RegistrationController extends Controller
 
         // login the created user.
         Auth::login($user);
-        $token = Auth::guard('api')->fromUser($user);
-
-        $jwtCookie = cookie('jwt_token', $token, 0, null, null, false, false);
 
         // login the user and redirect to the phone verification page.
-        return redirect()->route('verify.phone')->withCookie($jwtCookie);
+        return redirect()->route('verify.phone');
     }
 }
