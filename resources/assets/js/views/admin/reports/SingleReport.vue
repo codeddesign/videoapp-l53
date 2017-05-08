@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="display-dashboardtoparea">
-      <div class="dashboard-livedatestamp">REPORT QUERY: <span>{{ report.title }}</span></div>
+      <div class="dashboard-livedatestamp">REPORT QUERY: <span>{{ report.title }}</span><span>{{ showCustomDate(report) }}</span></div>
       <div class="currentcamp-createbutton" @click="downloadXls()">EXPORT TO XLS</div>
       <div class="currentcamp-createbutton" @click="edit()">EDIT</div>
     </div>
@@ -190,6 +190,7 @@
   import http from '../../../services/http'
   import stats from '../../../services/stats'
   import numeral from 'numeral'
+  import moment from 'moment'
   import accounting from 'accounting'
 
   export default {
@@ -263,6 +264,14 @@
         }
 
         return numeral(stat).format('0,0')
+      },
+
+      showCustomDate(report) {
+        if (report.date_range === 'custom') {
+          let startDate = moment(report.start_date).format('MMMM Do')
+          let endDate = moment(report.end_date).format('MMMM Do')
+          return '(' + startDate + ' - ' + endDate + ')'
+        }
       },
 
       fetchStats(report) {
