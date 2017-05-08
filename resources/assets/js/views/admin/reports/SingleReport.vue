@@ -448,6 +448,11 @@
     text-transform: uppercase;
   }
 
+  ul.dashreports-titlewidth, ul.dashreports-width {
+    width: auto;
+    clear: left;
+  }
+
   .chart {
     width: 100%;
   }
