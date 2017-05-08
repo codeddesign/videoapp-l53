@@ -201,10 +201,19 @@
           return false
         }
 
-        script = document.createElement('script')
-        script.src = src
+        this.$refs.previewContainer.innerHTML = src
 
-        this.$refs.previewContainer.appendChild(script)
+        var scripts = Array.prototype.slice.call(this.$refs.previewContainer.getElementsByTagName("script"));
+        for (var i = 0; i < scripts.length; i++) {
+            if (scripts[i].src != "") {
+                var tag = document.createElement("script");
+                tag.src = scripts[i].src;
+                document.getElementsByTagName("head")[0].appendChild(tag);
+            }
+            else {
+                eval(scripts[i].innerHTML);
+            }
+        }
       },
       checkPreview: function() {
         this.nextStep(3)
@@ -254,9 +263,10 @@
         this.$refs.embedJsCode.select()
       }
     },
+
     filters: {
       capitalize: v => (v[0].toUpperCase() + v.slice(1))
-    }
+    },
   }
 </script>
 

@@ -225,6 +225,10 @@
       }
     },
 
+    destroyed() {
+      window.clearInterval(this.autoUpdateInterval)
+    },
+
     components: {
       Stats,
       LineBarChart
