@@ -118,8 +118,6 @@
         fills: 0,
         fillErrors: 0,
 
-        errors: 0,
-
         requestsChartData: [],
         impressionsChartData: [],
         revenueChartData: [],
