@@ -118,6 +118,8 @@
         fills: 0,
         fillErrors: 0,
 
+        errorCount: 0,
+
         requestsChartData: [],
         impressionsChartData: [],
         revenueChartData: [],
@@ -142,7 +144,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.tagRequests, this.errors)
+        return this.calculateErrorRate(this.tagRequests, this.errorCount)
       },
 
       useRate() {
@@ -180,7 +182,7 @@
               this.impressions = parseInt(response.data.impressions)
               this.revenue = parseFloat(response.data.revenue)
               this.fills = parseInt(response.data.fills)
-              this.errors = parseInt(response.data.errors)
+              this.errorCount = parseInt(response.data.errors)
               this.fillErrors = parseInt(response.data.fillErrors)
             })
             .catch((error) => {
