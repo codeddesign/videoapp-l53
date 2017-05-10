@@ -193,8 +193,6 @@
         this.nextStep(2)
       },
       addJSPreview: function(src) {
-        var script
-
         if (!src) {
           this.$refs.previewContainer.innerHTML = ''
 
@@ -203,16 +201,16 @@
 
         this.$refs.previewContainer.innerHTML = src
 
-        var scripts = Array.prototype.slice.call(this.$refs.previewContainer.getElementsByTagName("script"));
-        for (var i = 0; i < scripts.length; i++) {
-            if (scripts[i].src != "") {
-                var tag = document.createElement("script");
-                tag.src = scripts[i].src;
-                document.getElementsByTagName("head")[0].appendChild(tag);
-            }
-            else {
-                eval(scripts[i].innerHTML);
-            }
+        let scripts = Array.prototype.slice.call(this.$refs.previewContainer.getElementsByTagName('script'))
+
+        for (let i = 0; i < scripts.length; i++) {
+          if (scripts[i].src !== '') {
+            let tag = document.createElement('script')
+            tag.src = scripts[i].src
+            document.getElementsByTagName('head')[0].appendChild(tag)
+          } else {
+            eval(scripts[i].innerHTML) /* eslint no-eval: 0 */
+          }
         }
       },
       checkPreview: function() {
@@ -266,7 +264,7 @@
 
     filters: {
       capitalize: v => (v[0].toUpperCase() + v.slice(1))
-    },
+    }
   }
 </script>
 

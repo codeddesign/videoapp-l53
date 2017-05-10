@@ -53,7 +53,11 @@
         </div>
         <!-- START GRAPH AREA -->
         <div class="dashstats-graph">
-          <line-bar-chart :timeRange="timeRange" :revenue="revenueChartData" :impressions="impressionsChartData"></line-bar-chart>
+          <line-bar-chart
+            :timeRange="timeRange"
+            :revenue="revenueChartData"
+            :impressions="impressionsChartData"
+          ></line-bar-chart>
         </div>
       </div>
 
@@ -98,9 +102,8 @@
         // used for the Time Range Select.
         currentTime: moment(),
 
-        timeRange: 'realtime',
+        timeRange: 'today',
         timeRangeOptions: [
-          { text: 'Real-time', value: 'realtime' },
           { text: 'Today', value: 'today' },
           { text: 'Yesterday', value: 'yesterday' },
           { text: 'Last 7 Days', value: 'sevenDays' },
