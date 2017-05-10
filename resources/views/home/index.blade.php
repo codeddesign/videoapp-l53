@@ -13,9 +13,12 @@
     <link href="/home/css/slick-theme.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="/js/intlTelInput.min.js"></script>
 
     <!-- GOOGLE FONT TYPE -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+    <link href='/css/intlTelInput.css' rel='stylesheet' type='text/css'>
 
     <!-- TYPEKIT FONT TYPE -->
     <script src="https://use.typekit.net/lwk5wec.js"></script>
@@ -31,6 +34,33 @@
 
     <!-- SLICK CAROUSEL STYLESHEET -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+
+    <style>
+    .iti-flag {background-image: url("/images/flags.png");}
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+      .iti-flag {background-image: url("/images/flags@2x.png");}
+    }
+
+    .intl-tel-input {
+        width: 429px;
+    }
+
+    #phone-input {
+        width: 429px;
+    }
+
+    @media screen and (max-width: 770px) {
+        .intl-tel-input {
+            width: calc(100%);
+            margin-bottom: 32px;
+        }
+
+        #phone-input {
+            width: 100%;
+        }
+    }
+</style>
 
     <script>
         $(document).ready(function() {
@@ -72,6 +102,18 @@
                 $('.navmore').css('display', 'block');
                 $('body').css('overflow', 'inherit');
             });
+
+            $("#phone-input").intlTelInput({
+                utilsScript: "/js/utils.js"
+            });
+
+            $("#signup-form").on('submit', function(e) {
+                console.log($("#phone-input").intlTelInput("getNumber"))
+
+                $("#phone").val($("#phone-input").intlTelInput("getNumber"))
+
+                return true
+            })
 
         });
     </script>
@@ -328,16 +370,12 @@
                 A member of our support team will be in contact with you shortly.
             </div>
         @else
-            <form action="/signup" class="startearningmore validate" method="POST">
+            <form action="/signup" id="signup-form" class="startearningmore validate" method="POST">
                 <input name="name" id="mce-FNAME" placeholder="full name">
                 <input name="email" id="mce-EMAIL" placeholder="email address">
                 <input name="website" id="mce-WEBSITE" placeholder="website">
-                <input name="phone" id="mce-PHONE" placeholder="phone number">
-
-                <div id="mce-responses" class="clear">
-                    <div class="response" id="mce-error-response" style="display:none"></div>
-                    <div class="response" id="mce-success-response" style="display:none"></div>
-                </div>
+                <input name="phone-input" id="phone-input" placeholder="phone number">
+                <input type="hidden" name="phone" id="phone">
 
                 <!--<submit type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">Sign Up for Beta</submit>-->
                 {{ csrf_field() }}
