@@ -158,6 +158,10 @@ class StatsTransformer
             $data[$stat] = [];
         }
 
+        if(! $dateRange instanceof DateRange) {
+            $dateRange = DateRange::byName($dateRange);
+        }
+
         //Loop through all date periods
         foreach ($dateRange->arrayByStep() as $period) {
             $key       = $period->format($format);
@@ -181,6 +185,10 @@ class StatsTransformer
                     if ($stat === 'backfill') {
                         $desktopRevenue = $events->where('name', $stat)
                             ->sum(function ($backfill) {
+                                if(! $backfill->backfill) {
+                                    return 0;
+                                }
+
                                 if ($backfill->backfill->platform_type !== 'desktop') {
                                     return 0;
                                 }
@@ -190,6 +198,10 @@ class StatsTransformer
 
                         $mobileRevenue = $events->where('name', $stat)
                             ->sum(function ($backfill) {
+                                if(! $backfill->backfill) {
+                                    return 0;
+                                }
+                                
                                 if ($backfill->backfill->platform_type !== 'mobile') {
                                     return 0;
                                 }
