@@ -100,32 +100,39 @@
   export default {
     data() {
       return {
-        campaign_types: null,
-        step: 'type',
+        campaign_types: [{
+          id: 7,
+          title: 'On-Scroll Display',
+          has_name: true
+        }],
+        step: 'name',
         tabNo: 0,
         loading: false,
         error: false,
         tabs: [
-          {
+          /* {
             name: 'type',
             title: 'Select Ad Type',
             disabled: false
-          }, {
+          },*/
+          {
             name: 'name',
             title: 'Create Ad Name',
             disabled: true
-          }, {
+          },
+          /* {
             name: 'preview',
             title: 'Preview Campaign',
             disabled: true
-          }, {
+          }, */
+          {
             name: 'code',
             title: 'Get Code',
             disabled: true
           }
         ],
         campaign: {
-          campaign_type_id: false,
+          campaign_type_id: 7,
           name: '',
           video: ''
         },
@@ -214,6 +221,9 @@
         }
       },
       checkPreview: function() {
+        this.save()
+        /* eslint-disable no-unreachable */
+        return
         this.nextStep(3)
 
         this.loading = true
@@ -233,7 +243,7 @@
             })
       },
       save: function() {
-        this.nextStep(4)
+        this.nextStep(2)
 
         this.loading = true
 
@@ -244,7 +254,7 @@
               this.resetCampaign()
 
               this.tabs.forEach(function(tab, i) {
-                if (i > 0 && i < 4) {
+                if (i !== 0) {
                   tab.disabled = true
                 }
               })
