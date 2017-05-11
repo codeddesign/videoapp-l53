@@ -28,7 +28,7 @@
         <div v-for="site in sites">
           <div class="accountpass-accountid">
             <div class="sitevalidation-sitelink">{{ site.link }}</div>
-            <div class="sitevalidation-timestamp">MARCH 15, 2016</div>
+            <div class="sitevalidation-timestamp">{{ formatDate(site.created_at) }}</div>
             <!-- site approval alert -->
 
             <!-- end approval alert -->
@@ -44,6 +44,7 @@
 </template>
 <script>
   import http from '../../services/http'
+  import moment from 'moment'
 
   export default {
     data() {
@@ -82,6 +83,10 @@
               var index = this.sites.indexOf(site)
               this.sites.splice(index, 1)
             })
+      },
+
+      formatDate(timestamp) {
+        return moment(timestamp * 1000).format('MMMM D, YYYY')
       }
     }
   }
