@@ -80,6 +80,8 @@ class Website extends Model
      */
     public static function linkDomain($link)
     {
+        $link   = (strpos($link, "://") === false) ? "http://{$link}" : $link;
+
         $parsed = parse_url($link);
         if (! isset($parsed['host'])) {
             return false;

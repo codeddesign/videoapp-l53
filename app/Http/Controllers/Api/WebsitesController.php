@@ -29,7 +29,7 @@ class WebsitesController extends ApiController
 
         return $this->jsonResponse([
             'message' => 'Successfully added a website.',
-            'site' => $site,
+            'site' => (new WebsiteTransformer)->transform($site),
         ], 201);
     }
 
