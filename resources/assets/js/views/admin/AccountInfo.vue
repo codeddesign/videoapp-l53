@@ -494,7 +494,7 @@
 
       deleteBackfill() {
         User.deleteBackfill(this.selectedBackfill).then(response => {
-          this.$store.dispatch('loadAccounts')
+          this.$store.dispatch('admin/loadAccounts')
         })
       },
 
@@ -503,7 +503,7 @@
       },
 
       addNote() {
-        this.$store.dispatch('addNote', { account: this.account, note: this.note })
+        this.$store.dispatch('admin/addNote', { account: this.account, note: this.note })
       },
 
       websiteApprovedStatus(website) {
@@ -519,7 +519,7 @@
       },
 
       activateAccount(id, status) {
-        this.$store.dispatch('activateUser', {
+        this.$store.dispatch('admin/activateUser', {
           id: id,
           status: status
         })
@@ -576,7 +576,7 @@
         }
 
         User.saveBackfill(this.currentBackfill).then(response => {
-          this.$store.dispatch('loadAccounts')
+          this.$store.dispatch('admin/loadAccounts')
           this.backfillFormVisible(false)
         })
       },
@@ -589,7 +589,7 @@
         let account = _.find(this.$store.state.admin.accounts, { 'id': parseInt(this.$route.params.accountId) })
 
         if (account === undefined) {
-          this.$store.dispatch('loadAccounts')
+          this.$store.dispatch('admin/loadAccounts')
           return {
             bank_details: {},
             notes: {
@@ -603,8 +603,8 @@
             this.chartData = chartData
           })
 
-        this.$store.dispatch('loadWebsitesStats', { account: account, range: this.websiteDateFilter })
-        this.$store.dispatch('loadCampaignsStats', { account: account, range: this.campaignsDateFilter })
+        this.$store.dispatch('admin/loadWebsitesStats', { account: account, range: this.websiteDateFilter })
+        this.$store.dispatch('admin/loadCampaignsStats', { account: account, range: this.campaignsDateFilter })
         return account
       },
 

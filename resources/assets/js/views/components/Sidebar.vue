@@ -15,11 +15,11 @@
             </li>
           </router-link>
 
-          <router-link :to="{ name: 'analytics'}">
+          <!--<router-link :to="{ name: 'analytics'}">
             <li>
               <span>ANALYTICS</span>
             </li>
-          </router-link>
+          </router-link>-->
 
           <router-link :to="{ name: 'campaigns.listing'}">
             <li>
@@ -30,6 +30,12 @@
           <router-link :to="{ name: 'campaigns.create'}">
             <li>
               <span>CREATE CAMPAIGN</span>
+            </li>
+          </router-link>
+
+         <router-link :to="{ name: 'reports'}">
+            <li>
+              <span>REPORTS</span>
             </li>
           </router-link>
 

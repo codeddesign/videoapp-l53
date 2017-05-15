@@ -175,7 +175,7 @@
   import TagList from './DashboardTagList.vue'
   import Stats from '../dashboard/components/Stats.vue'
   import LineBarChart from '../dashboard/components/LineBarChart.vue'
-  import SparkChart from './SparkChart.vue'
+  import SparkChart from '../components/SparkChart.vue'
   import stats from '../../services/stats'
   import http from '../../services/http'
   import moment from 'moment'
@@ -320,7 +320,7 @@
       this.$nextTick(function() {
         this.fetchStats()
         this.fetchCharts()
-        this.$store.dispatch('loadPendingWebsites')
+        this.$store.dispatch('admin/loadPendingWebsites')
 
         let that = this
         this.autoUpdateInterval = setInterval(function() {

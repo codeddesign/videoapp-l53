@@ -17,6 +17,35 @@ export default {
       })
   },
 
+  loadReports() {
+    return axios.get('/reports')
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
+  saveReport(report) {
+    if (report.id === 0) {
+      return this.createReport(report)
+    } else {
+      return this.updateReport(report)
+    }
+  },
+
+  createReport(report) {
+    return axios.post('/reports', report)
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
+  updateReport(report) {
+    return axios.patch('/reports/' + report.id, report)
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   addNote(id, note) {
     return axios.post('/admin/accounts/' + id + '/note', { content: note })
       .then((response) => {

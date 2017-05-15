@@ -45,7 +45,8 @@ class Standard
             return array_merge($report, [
                 'user_id'          => $user->id,
                 'recipient'        => $user->email,
-                'sort_by'          => 'advertiser',
+                'sort_by'          => 'website',
+                'sort_by'          => 'website',
                 'schedule'         => 'once',
                 'deletable'        => false,
                 'included_metrics' => json_encode(Report::allMetrics()),

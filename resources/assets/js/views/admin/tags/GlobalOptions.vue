@@ -55,7 +55,7 @@
 
     methods: {
       savePresets() {
-        this.$store.dispatch('updateGlobalOptions', {
+        this.$store.dispatch('admin/updateGlobalOptions', {
           wrapperLimit: this.wrapperLimit,
           timeoutLimit: this.timeoutLimit,
           delayTime: this.delayTime

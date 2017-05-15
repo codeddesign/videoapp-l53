@@ -172,7 +172,7 @@
     mounted() {
       this.$nextTick(function() {
         this.fetchStats()
-        this.$store.dispatch('loadTags')
+        this.$store.dispatch('admin/loadTags')
       })
     },
 

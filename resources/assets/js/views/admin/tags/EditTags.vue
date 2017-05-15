@@ -130,9 +130,9 @@
     },
 
     mounted() {
-      this.$store.dispatch('loadTags')
-      this.$store.dispatch('loadWebsites')
-      this.$store.dispatch('loadCountries')
+      this.$store.dispatch('admin/loadTags')
+      this.$store.dispatch('admin/loadWebsites')
+      this.$store.dispatch('admin/loadCountries')
     },
 
     methods: {
@@ -141,12 +141,12 @@
           tag = Tag.default()
         }
 
-        this.$store.dispatch('setCurrentTag', tag)
-        this.$store.dispatch('setShowTagForm', true)
+        this.$store.dispatch('admin/setCurrentTag', tag)
+        this.$store.dispatch('admin/setShowTagForm', true)
       },
 
       activateTag(id, event) {
-        this.$store.dispatch('activateTag', {
+        this.$store.dispatch('admin/activateTag', {
           id: id,
           status: event.target.checked
         })

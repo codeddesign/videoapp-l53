@@ -30,108 +30,23 @@
         <spark-chart id="ecpm-chart" :chartData="ecpmSpark" color="#1aa74f"></spark-chart>
       </li>
     </ul>
-    <!---
+    <!-- BOTTOM ANALYTICS -->
     <ul class="campaignstats-row">
       <li>
-        <stats title="desktop pre-roll fill" type="percentage"
-        :value="calculateFillRate(stats.allStats.tags.desktop.preroll.fills, stats.allStats.tags.desktop.preroll.tagRequests)"></stats>
-        <spark-chart id="desktop-preroll-fill-chart" :chartData="chartData.desktopPrerollFill" color="#7772a7"></spark-chart>
+        <stats title="fill" :value="stats.allStats.fills"></stats>
+        <spark-chart id="fills-chart" :chartData="chartData.fills" color="#7772a7"></spark-chart>
       </li>
       <li>
-        <stats title="mobile pre-roll fill" type="percentage"
-        :value="calculateFillRate(stats.allStats.tags.mobile.preroll.fills, stats.allStats.tags.mobile.preroll.tagRequests)"></stats>
-        <spark-chart id="mobile-preroll-fill-chart" :chartData="chartData.mobilePrerollFill" color="#7772a7"></spark-chart>
+        <stats title="fill-rate" :value="fillRate" type="percentage"></stats>
+        <spark-chart id="fill-rate-chart" :chartData="fillRateSpark" color="#7772a7"></spark-chart>
       </li>
       <li>
-        <stats title="desktop pre-roll errors" type="percentage"
-        :value="calculateErrorRate(stats.allStats.tags.desktop.preroll.tagRequests, stats.allStats.tags.desktop.preroll.errors)"></stats>
-        <spark-chart id="desktop-preroll-errors-chart" :chartData="chartData.desktopPrerollErrors" color="#7772a7"></spark-chart>
+        <stats title="error-rate" :value="errorRate" color="#009dd7" type="percentage"></stats>
+        <spark-chart id="error-rate-chart" :chartData="errorRateSpark" color="#009dd7"></spark-chart>
       </li>
       <li>
-        <stats title="mobile pre-roll errors" type="percentage"
-        :value="calculateErrorRate(stats.allStats.tags.mobile.preroll.tagRequests, stats.allStats.tags.mobile.preroll.errors)"></stats>
-        <spark-chart id="mobile-preroll-errors-chart" :chartData="chartData.mobilePrerollErrors" color="#7772a7"></spark-chart>
-      </li>
-    </ul>
-    -->
-    <ul class="campaignstats-row">
-      <li>
-        <stats title="desktop backfill revenue" :value="stats.allStats.desktopBackfillRevenue" type="money"></stats>
-        <spark-chart id="desktop-backfill-chart" :chartData="chartData.desktopBackfillRevenue" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile backfill revenue" :value="stats.allStats.mobileBackfillRevenue" type="money"></stats>
-        <spark-chart id="mobile-backfill-chart" :chartData="chartData.mobileBackfillRevenue" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="backfill revenue" :value="backfillRevenue" :animated="false" type="money"></stats>
-        <spark-chart id="total-backfill-chart" :chartData="backfillRevenueSpark" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="backfill ecpm" :value="backfillEcpm" type="money"></stats>
-        <spark-chart id="backfill-ecpm-chart" :chartData="backfillEcpmSpark" color="#7772a7"></spark-chart>
-      </li>
-    </ul>
-    <ul class="campaignstats-row">
-      <li>
-        <stats title="desktop outstream fill" type="percentage"
-        :value="calculateFillRate(stats.allStats.tags.desktop.outstream.fills, stats.allStats.tags.desktop.outstream.tagRequests)"></stats>
-        <spark-chart id="desktop-outstream-fill-chart" :chartData="chartData.desktopOutstreamFill" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile outstream fill" type="percentage"
-        :value="calculateFillRate(stats.allStats.tags.mobile.outstream.fills, stats.allStats.tags.mobile.outstream.tagRequests)"></stats>
-        <spark-chart id="mobile-outstream-fill-chart" :chartData="chartData.mobileOutstreamFill" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="desktop outstream errors" type="percentage"
-        :value="calculateErrorRate(stats.allStats.tags.desktop.outstream.tagRequests, stats.allStats.tags.desktop.outstream.errors)"></stats>
-        <spark-chart id="desktop-outstream-errors-chart" :chartData="chartData.desktopOutstreamErrors" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile outstream errors" type="percentage"
-        :value="calculateErrorRate(stats.allStats.tags.mobile.outstream.tagRequests, stats.allStats.tags.mobile.outstream.errors)"></stats>
-        <spark-chart id="mobile-outstream-errors-chart" :chartData="chartData.mobileOutstreamErrors" color="#7772a7"></spark-chart>
-      </li>
-    </ul>
-    <ul class="campaignstats-row">
-      <li>
-        <stats title="desktop fill" :value="stats.allStats.tags.desktop.fills" :animated="false"></stats>
-        <spark-chart id="desktop-fill-chart" :chartData="chartData.desktopFill" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile fill" :value="stats.allStats.tags.mobile.fills" :animated="false"></stats>
-        <spark-chart id="mobile-fill-chart" :chartData="chartData.mobileFill" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="desktop use-rate" type="percentage"
-        :value="calculateUseRate(stats.allStats.tags.desktop.impressions, stats.allStats.tags.desktop.fills)"></stats>
-        <spark-chart id="desktop-use-rate-chart" :chartData="chartData.desktopUserate" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile use-rate" type="percentage"
-        :value="calculateUseRate(stats.allStats.tags.mobile.impressions, stats.allStats.tags.mobile.fills)"></stats>
-        <spark-chart id="mobile-use-rate-chart" :chartData="chartData.mobileUserate" color="#7772a7"></spark-chart>
-      </li>
-    </ul>
-    <ul class="campaignstats-row">
-      <li>
-        <stats title="desktop pageviews" :value="stats.allStats.desktopPageviews" :animated="false"></stats>
-          <spark-chart id="desktop-pageviews-chart" :chartData="chartData.desktopPageviews" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile pageviews" :value="stats.allStats.mobilePageviews" :animated="false"></stats>
-          <spark-chart id="mobile-pageviews-chart" :chartData="chartData.mobilePageviews" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="desktop pageviews fill" type="percentage"
-        :value="calculateFillRate(stats.allStats.tags.desktop.fills, stats.allStats.desktopPageviews)"></stats>
-        <spark-chart id="desktop-pageviews-fill-chart" :chartData="chartData.desktopPageviewsFill" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="mobile pageviews fill" type="percentage"
-          :value="calculateFillRate(stats.allStats.tags.mobile.fills, stats.allStats.mobilePageviews)"></stats>
-        <spark-chart id="mobile-pageviews-fill-chart" :chartData="chartData.mobilePageviewsFill" color="#7772a7"></spark-chart>
+        <stats title="use-rate" :value="useRate" color="#009dd7" type="percentage"></stats>
+        <spark-chart id="use-rate-chart" :chartData="useRateSpark" color="#009dd7"></spark-chart>
       </li>
     </ul>
     </div>
@@ -182,13 +97,13 @@
 
 <script>
   import Highcharts from 'highcharts'
-  import Stats from '../../dashboard/components/Stats.vue'
-  import SparkChart from '../../components/SparkChart.vue'
+  import Stats from '../dashboard/components/Stats.vue'
+  import SparkChart from '../components/SparkChart.vue'
   import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
-  import Pagination from '../../../services/pagination'
+  import Pagination from '../../services/pagination'
   import _ from 'lodash'
-  import http from '../../../services/http'
-  import stats from '../../../services/stats'
+  import http from '../../services/http'
+  import stats from '../../services/stats'
   import numeral from 'numeral'
   import moment from 'moment'
   import accounting from 'accounting'
@@ -252,6 +167,9 @@
     methods: {
       presentStat(stat, key) {
         if (['cpm', 'revenue'].indexOf(key) !== -1) {
+          if (stat === '—') {
+            return stat
+          }
           return accounting.formatMoney(stat)
         }
 
@@ -275,7 +193,7 @@
       },
 
       fetchStats(report) {
-        http.get('/admin/reports/' + report.id + '/stats')
+        http.get('/reports/' + report.id + '/stats')
             .then((response) => {
               this.loading = false
               this.stats = response.data
@@ -284,7 +202,7 @@
       },
 
       fetchCharts(report) {
-        http.get('/admin/charts/all?report=' + report.id + '')
+        http.get('/charts/all?report=' + report.id + '')
           .then((response) => {
             this.chartData = response.data
           })
@@ -295,13 +213,13 @@
 
       edit() {
         this.chart.destroy()
-        this.$router.push({ name: 'admin.reports.edit', params: { reportId: this.report.id }})
+        this.$router.push({ name: 'reports.edit', params: { reportId: this.report.id }})
       },
 
       downloadXls() {
         http.get('/user/token').then((response) => {
           let token = response.data
-          window.open('/api/admin/reports/' + this.report.id + '/xls?jwt=' + token, '_self')
+          window.open('/api/reports/' + this.report.id + '/xls?jwt=' + token, '_self')
         })
       },
 
@@ -354,10 +272,6 @@
               name: 'Fills',
               color: '#468c01',
               data: chartStats.fills
-            }, {
-              name: 'Errors',
-              color: '#ff4001',
-              data: chartStats.errors
             }
           ]
         })
@@ -367,10 +281,10 @@
 
     computed: {
       report() {
-        let report = _.find(this.$store.state.admin.reports, { 'id': parseInt(this.$route.params.reportId) })
+        let report = _.find(this.$store.state.users.reports, { 'id': parseInt(this.$route.params.reportId) })
 
         if (report === undefined) {
-          this.$store.dispatch('admin/loadReports')
+          this.$store.dispatch('users/loadReports')
           return {}
         }
 
@@ -426,6 +340,45 @@
           let ecpm = this.calculateEcpm(item[1], this.backfillRevenueSpark[index][1], false)
           return [item[0], +ecpm.toFixed(2)]
         })
+      },
+
+      fillRateSpark() {
+        if (!this.chartData.impressions) return []
+
+        return this.chartData.impressions.map((item, index) => {
+          let fillRate = this.calculateFillRate(item[1], this.chartData.fills[index][1], false)
+          return [item[0], +fillRate.toFixed(2)]
+        })
+      },
+
+      errorRateSpark() {
+        if (!this.chartData.tagRequests) return []
+
+        return this.chartData.tagRequests.map((item, index) => {
+          let fillRate = this.calculateErrorRate(item[1], this.chartData.errors[index][1], false)
+          return [item[0], +fillRate.toFixed(2)]
+        })
+      },
+
+      useRateSpark() {
+        if (!this.chartData.impressions) return []
+
+        return this.chartData.impressions.map((item, index) => {
+          let fillRate = this.calculateUseRate(item[1], this.chartData.fills[index][1], false)
+          return [item[0], +fillRate.toFixed(2)]
+        })
+      },
+
+      fillRate() {
+        return this.calculateFillRate(this.stats.allStats.impressions, this.stats.allStats.tagRequests)
+      },
+
+      errorRate() {
+        return this.calculateErrorRate(this.stats.allStats.tagRequests, this.stats.allStats.errors)
+      },
+
+      useRate() {
+        return this.calculateUseRate(this.stats.allStats.impressions, this.stats.allStats.fills)
       }
     },
 
@@ -444,6 +397,10 @@
 </script>
 
 <style lang="scss">
+  .dashstats-graphwrapper {
+    height: auto;
+  }
+char
   ul.dashreports-titlewidth li {
     text-transform: uppercase;
   }

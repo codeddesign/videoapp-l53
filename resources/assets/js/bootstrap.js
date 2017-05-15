@@ -1,7 +1,7 @@
 window.$ = window.jQuery = require('jquery')
 require('bootstrap-sass/assets/javascripts/bootstrap')
 
-window.$.datatimepicker = require('eonasdan-bootstrap-datetimepicker')
+window.$.datetimepicker = require('eonasdan-bootstrap-datetimepicker')
 
 // Fetch JWT from LS or redirect to login page
 import auth from './services/auth'

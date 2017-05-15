@@ -9,6 +9,9 @@ import Analytics from './views/analytics/Analytics.vue'
 import Campaigns from './views/campaigns/Campaigns.vue'
 import CreateCampaign from './views/campaigns/components/create.vue'
 import ListCampaign from './views/campaigns/components/listing.vue'
+import UserReports from './views/reports/Reports.vue'
+import UserSingleReport from './views/reports/SingleReport.vue'
+import UserReportForm from './views/reports/ReportForm.vue'
 import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 import Logout from './views/components/Logout.vue'
@@ -65,7 +68,40 @@ export default new Router({
           }
         }
       ]
-    }, {
+    },
+    {
+      path: '/reports',
+      name: 'reports',
+      component: UserReports,
+      meta: {
+        title: 'Reports'
+      }
+    },
+    {
+      path: '/reports/create',
+      name: 'reports.create',
+      component: UserReportForm,
+      meta: {
+        title: 'Create Report'
+      }
+    },
+    {
+      path: '/reports/:reportId',
+      name: 'reports.show',
+      component: UserSingleReport,
+      meta: {
+        title: 'Report'
+      }
+    },
+    {
+      path: '/reports/:reportId/edit',
+      name: 'reports.edit',
+      component: UserReportForm,
+      meta: {
+        title: 'Edit Report'
+      }
+    },
+    {
       path: '/web-config',
       name: 'webconfig',
       component: WebConfig,

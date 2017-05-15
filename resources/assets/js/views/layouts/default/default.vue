@@ -21,7 +21,7 @@
     },
 
     mounted() {
-      this.$store.dispatch('loadUser')
+      this.$store.dispatch('users/loadUser')
     }
   }
 </script>
