@@ -98,6 +98,7 @@
             <div class="tagcreate-fullinnertitle">SORT DIMENSION</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.sort_by">
+                <option value=""></option>
                 <option value="advertiser">Advertiser</option>
                 <option value="website">Website</option>
                 <option value="description">Tag Name</option>

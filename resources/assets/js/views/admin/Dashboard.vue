@@ -234,7 +234,7 @@
         impressions: 0,
         revenue: 0,
         fills: 0,
-        errors: 0,
+        errorCount: 0,
         mobilePageviews: 0,
         desktopPageviews: 0,
         backfill: 0,
@@ -308,7 +308,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.impressions, this.errors)
+        return this.calculateErrorRate(this.impressions, this.errorCount)
       },
 
       useRate() {
@@ -351,7 +351,7 @@
             this.impressions = parseInt(response.data.impressions)
             this.fills = parseInt(response.data.fills)
             this.revenue = parseFloat(response.data.revenue)
-            this.errors = parseInt(response.data.errors)
+            this.errorCount = parseInt(response.data.errors)
             this.tagRequests = parseInt(response.data.tagRequests)
             this.mobilePageviews = parseInt(response.data.mobilePageviews)
             this.desktopPageviews = parseInt(response.data.desktopPageviews)

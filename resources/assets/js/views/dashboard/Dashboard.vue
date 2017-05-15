@@ -53,7 +53,11 @@
         </div>
         <!-- START GRAPH AREA -->
         <div class="dashstats-graph">
-          <line-bar-chart :timeRange="timeRange" :revenue="revenueChartData" :impressions="impressionsChartData"></line-bar-chart>
+          <line-bar-chart
+            :timeRange="timeRange"
+            :revenue="revenueChartData"
+            :impressions="impressionsChartData"
+          ></line-bar-chart>
         </div>
       </div>
 
@@ -98,9 +102,8 @@
         // used for the Time Range Select.
         currentTime: moment(),
 
-        timeRange: 'realtime',
+        timeRange: 'today',
         timeRangeOptions: [
-          { text: 'Real-time', value: 'realtime' },
           { text: 'Today', value: 'today' },
           { text: 'Yesterday', value: 'yesterday' },
           { text: 'Last 7 Days', value: 'sevenDays' },
@@ -115,7 +118,7 @@
         fills: 0,
         fillErrors: 0,
 
-        errors: 0,
+        errorCount: 0,
 
         requestsChartData: [],
         impressionsChartData: [],
@@ -141,7 +144,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.tagRequests, this.errors)
+        return this.calculateErrorRate(this.tagRequests, this.errorCount)
       },
 
       useRate() {
@@ -179,7 +182,7 @@
               this.impressions = parseInt(response.data.impressions)
               this.revenue = parseFloat(response.data.revenue)
               this.fills = parseInt(response.data.fills)
-              this.errors = parseInt(response.data.errors)
+              this.errorCount = parseInt(response.data.errors)
               this.fillErrors = parseInt(response.data.fillErrors)
             })
             .catch((error) => {

@@ -2,28 +2,25 @@
 
 namespace App\Mail;
 
-use App\Models\User;
+use App\Models\Website;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyEmail extends Mailable
+class WebsiteApprovedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * @var \App\Models\User
-     */
-    public $user;
+    public $website;
 
     /**
      * Create a new message instance.
      *
-     * @param \App\Models\User $user
+     * @param \App\Models\Website $website
      */
-    public function __construct(User $user)
+    public function __construct(Website $website)
     {
-        $this->user = $user;
+        $this->website = $website;
     }
 
     /**
@@ -33,7 +30,7 @@ class VerifyEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Please verify your email address')
-            ->view('emails.auth.verify');
+        return $this->view('emails.website-approved')
+            ->subject('Your website has been approved');
     }
 }

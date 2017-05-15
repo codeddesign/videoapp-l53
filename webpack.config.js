@@ -46,7 +46,8 @@ module.exports = {
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000
-    }
+    },
+    disableHostCheck: true
   },
   devtool: '#eval-source-map',
   performance: {

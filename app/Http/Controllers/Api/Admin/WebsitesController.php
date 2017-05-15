@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Events\WebsiteApproved;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\CampaignEvent;
 use App\Models\User;
@@ -31,6 +32,10 @@ class WebsitesController extends ApiController
     public function activate($id, Request $request)
     {
         $website = Website::findOrFail($id);
+
+        if($website->waiting && $request->get('status') === true) {
+            event(new WebsiteApproved($website));
+        }
 
         $website->approved = $request->get('status');
         $website->waiting  = false;

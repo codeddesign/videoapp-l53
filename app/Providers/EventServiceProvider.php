@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\AccountCreated' => [
             'App\Listeners\SendVerificationEmail',
         ],
+        'App\Events\WebsiteApproved' => [
+            'App\Listeners\SendApprovalEmail',
+        ],
     ];
 
     /**

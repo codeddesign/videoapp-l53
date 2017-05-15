@@ -32,7 +32,7 @@ class HomeController extends Controller
 
         $mailer = app(Mailer::class);
 
-        //$mailer->to(['john@ad3media.com','daniel@ad3media.com', 'bryant@ad3media.com'])->send(new BetaSignup($signup));
+        $mailer->to(['john@ad3media.com','daniel@ad3media.com', 'bryant@ad3media.com'])->send(new BetaSignup($signup));
 
         return redirect('/#betasignup')->with('status', 'Signed Up');
     }
