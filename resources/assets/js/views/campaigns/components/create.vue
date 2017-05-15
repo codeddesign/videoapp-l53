@@ -117,7 +117,7 @@
           },*/
           {
             name: 'name',
-            title: 'Create Ad Name',
+            title: 'Create Campaign Name',
             disabled: true
           },
           /* {

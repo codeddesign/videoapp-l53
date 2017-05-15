@@ -31,7 +31,7 @@
         <button id="login" type="submit">LOGIN</button>
     </form>
     <div class="loginadditional">
-        <div class="login-registerbutton"><a href="/register">REGISTER</a></div>
+        <!--<div class="login-registerbutton"><a href="/register">REGISTER</a></div>-->
         <div class="login-lostpassbutton"><a href="/password/reset">LOST PASSWORD</a></div>
     </div>
 @endsection

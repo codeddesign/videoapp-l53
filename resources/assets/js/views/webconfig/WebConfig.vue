@@ -17,7 +17,7 @@
       <div class="sitevalidation-howitworkswrap">
         <div class="sitevalidation-howitworks"><span></span> HOW APPROVAL WORKS</div>
 
-        <div class="sitevalidation-worksaddtl"><span>NEW WEBSITE APPROVAL MAY TAKE UP TO 24 HOURS.</span>
+        <div class="sitevalidation-worksaddtl"><span>NEW WEBSITE APPROVAL MAY TAKE UP TO 48 HOURS.</span>
           <br>YOU WILL RECEIVE AN EMAIL ONCE YOUR WEBSITE HAS BEEN APPROVED.
         </div>
       </div>
@@ -91,3 +91,9 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .sitevalidation-removesite {
+    padding: 0;
+  }
+</style>

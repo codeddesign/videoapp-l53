@@ -45,13 +45,13 @@
             </li>
           </router-link>
 
-          <router-link :to="{ name: 'support'}">
+          <!--<router-link :to="{ name: 'support'}">
             <li>
               <span>SUPPORT</span>
             </li>
-          </router-link>
+          </router-link>-->
         </ul>
-        <div class="sidebar-wpbutton">WORDPRESS PLUGIN</div>
+        <!--<div class="sidebar-wpbutton">WORDPRESS PLUGIN</div>-->
       </div>
 
       <!-- Admin Menu -->
