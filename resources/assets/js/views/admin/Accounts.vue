@@ -219,7 +219,7 @@
       },
 
       activateAccount(id, event) {
-        this.$store.dispatch('activateUser', {
+        this.$store.dispatch('admin/activateUser', {
           id: id,
           status: event.target.checked
         })
@@ -231,7 +231,7 @@
     },
 
     mounted() {
-      this.$store.dispatch('loadAccounts')
+      this.$store.dispatch('admin/loadAccounts')
     }
   }
 </script>

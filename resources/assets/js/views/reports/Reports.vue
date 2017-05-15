@@ -2,7 +2,7 @@
   <div>
     <div class="page-index">
       <div class="adminreports-deletebutton" @click="deleteReports()">DELETE</div>
-      <router-link :to="{ name: 'admin.reports.create'}">
+      <router-link :to="{ name: 'reports.create'}">
         <div class="tagcreate-topcancel tagcreate-editpagetopcancel">CREATE NEW QUERY</div>
       </router-link>
     </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import Pagination from '../../../services/pagination'
+  import Pagination from '../../services/pagination'
 
   export default {
     name: 'Reports',
@@ -58,24 +58,24 @@
 
     methods: {
       showReport(report) {
-        this.$router.push({ name: 'admin.reports.show', params: { reportId: report.id }})
+        this.$router.push({ name: 'reports.show', params: { reportId: report.id }})
       },
 
       deleteReports() {
-        this.$store.dispatch('admin/deleteReports', this.selectedReports)
+        this.$store.dispatch('users/deleteReports', this.selectedReports)
       }
     },
 
     computed: {
       reports() {
-        this.pagination.data = this.$store.state.admin.reports
+        this.pagination.data = this.$store.state.users.reports
 
         return this.pagination.getData()
       }
     },
 
     mounted() {
-      this.$store.dispatch('admin/loadReports')
+      this.$store.dispatch('users/loadReports')
     }
   }
 </script>

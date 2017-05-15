@@ -17,7 +17,7 @@ export default {
     }
   },
 
-  calculateFillRate(fills, requests) {
+  calculateFillRate(fills, requests, format = true) {
     // Fill Rate: fills/requests
     let fillRate = 0
 
@@ -25,7 +25,11 @@ export default {
       fillRate = ((fills / requests) * 100)
     }
 
-    return displayPercentage(fillRate)
+    if (format) {
+      return displayPercentage(fillRate)
+    } else {
+      return fillRate
+    }
   },
 
   calculateEcpm(impressions, revenue, format = true) {
@@ -42,7 +46,7 @@ export default {
     }
   },
 
-  calculateErrorRate(requests, errors) {
+  calculateErrorRate(requests, errors, format = true) {
     // errors / requests
     let errorRate = 0
 
@@ -50,17 +54,25 @@ export default {
       errorRate = ((errors / requests) * 100)
     }
 
-    return displayPercentage(errorRate)
+    if (format) {
+      return displayPercentage(errorRate)
+    } else {
+      return errorRate
+    }
   },
 
-  calculateUseRate(impressions, fills) {
+  calculateUseRate(impressions, fills, format = true) {
     let useRate = 0
 
     if (fills !== 0) {
       useRate = ((impressions / fills) * 100)
     }
 
-    return displayPercentage(useRate)
+    if (format) {
+      return displayPercentage(useRate)
+    } else {
+      return useRate
+    }
   },
 
   calculateTagDisplayPercent(impressions, totalImpressions) {

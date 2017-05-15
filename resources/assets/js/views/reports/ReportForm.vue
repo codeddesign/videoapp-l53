@@ -50,13 +50,9 @@
             <div class="tagcreate-fullinnertitle">PLATFORM TYPE</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.filter.type">
-                <option value="advertiser">Advertiser</option>
-                <option value="description">Tag Name</option>
                 <option value="website">Website</option>
                 <option value="platform_type">Platform Type</option>
-                <option value="tag_type">Tag Type</option>
                 <option value="ad_type">Ad Type</option>
-                <option value="user_company">User's Company</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
             </div>
@@ -80,30 +76,13 @@
         </div><!-- END .tagcreate-formbg -->
 
         <div class="tagcreate-formbg">
-          <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
-            <div class="tagcreate-fullinnertitle">COMBINE BY DIMENSION</div>
-            <div class="tagcreate-selectwrap">
-              <select class="tagcreate-dropdown" v-model="report.combine_by">
-                <option value="advertiser">Advertiser</option>
-                <option value="website">Website</option>
-                <option value="description">Tag Name</option>
-                <option value="platform_type">Platform Type</option>
-                <option value="tag_type">Tag Type</option>
-                <option value="ad_type">Ad Type</option>
-              </select>
-              <div class="tagcreate-selectarrow"></div>
-            </div>
-          </div>
-          <div class="tagcreate-quarterinnerwrap" style="margin-left:6px;">
+          <div class="tagcreate-quarterinnerwrap" style="margin-left:0px;">
             <div class="tagcreate-fullinnertitle">SORT DIMENSION</div>
             <div class="tagcreate-selectwrap">
               <select class="tagcreate-dropdown" v-model="report.sort_by">
                 <option value=""></option>
-                <option value="advertiser">Advertiser</option>
                 <option value="website">Website</option>
-                <option value="description">Tag Name</option>
                 <option value="platform_type">Platform Type</option>
-                <option value="tag_type">Tag Type</option>
                 <option value="ad_type">Ad Type</option>
               </select>
               <div class="tagcreate-selectarrow"></div>
@@ -218,7 +197,7 @@
   import $ from 'jquery'
   import _ from 'lodash'
   import moment from 'moment'
-  import admin from '../../../models/admin'
+  import user from '../../models/user'
 
   export default {
     name: 'CreateReport',
@@ -230,13 +209,13 @@
           title: '',
           date_range: 'today',
           filter: {
-            type: 'advertiser',
+            type: 'website',
             filter: 'doesNotContain',
             value: ''
           },
           included_metrics: [],
-          combine_by: 'advertiser',
-          sort_by: 'advertiser',
+          combine_by: 'website',
+          sort_by: '',
           schedule: 'once',
           weekly_every: '0',
           monthly_every: 'beginning',
@@ -341,10 +320,10 @@
 
           window.alert(errorMsg)
         } else {
-          admin.saveReport(this.report)
+          user.saveReport(this.report)
               .then(newReport => {
-                this.$store.dispatch('admin/loadReports')
-                this.$router.push({ name: 'admin.reports.show', params: { reportId: newReport.id }})
+                this.$store.dispatch('users/loadReports')
+                this.$router.push({ name: 'reports.show', params: { reportId: newReport.id }})
               })
         }
       },
@@ -372,10 +351,12 @@
           return this.reportData
         }
 
-        let report = _.find(this.$store.state.admin.reports, { 'id': parseInt(this.$route.params.reportId) })
+        console.log('custom')
+
+        let report = _.find(this.$store.state.users.reports, { 'id': parseInt(this.$route.params.reportId) })
 
         if (report === undefined) {
-          this.$store.dispatch('admin/loadReports')
+          this.$store.dispatch('users/loadReports')
           return {
             filter: {}
           }

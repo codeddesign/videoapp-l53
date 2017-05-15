@@ -25,7 +25,7 @@
     },
 
     mounted() {
-      this.$store.dispatch('loadGlobalOptions')
+      this.$store.dispatch('admin/loadGlobalOptions')
     }
   }
 </script>

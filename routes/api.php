@@ -19,6 +19,13 @@ Route::get('charts/all', 'ChartsController@stats');
 Route::get('user', 'UsersController@user');
 Route::get('user/token', 'UsersController@token'); // temporary token
 
+Route::get('reports', 'ReportsController@index');
+Route::post('reports', 'ReportsController@store');
+Route::patch('reports/{id}', 'ReportsController@update');
+Route::post('reports/delete', 'ReportsController@destroy');
+Route::get('reports/{id}/stats', 'ReportsController@stats');
+Route::get('reports/{id}/xls', 'ReportsController@xls');
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
     Route::get('globalOptions', 'GlobalOptionsController@index');
     Route::put('globalOptions', 'GlobalOptionsController@update');

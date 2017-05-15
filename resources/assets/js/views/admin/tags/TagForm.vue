@@ -438,7 +438,7 @@
 
     mounted() {
       this.$watch('tag', (value) => {
-        this.$store.dispatch('setCurrentTag', value)
+        this.$store.dispatch('admin/setCurrentTag', value)
       }, {
         deep: true
       })
@@ -460,7 +460,7 @@
 
           window.alert(errorMsg)
         } else {
-          this.$store.dispatch('saveCurrentTag')
+          this.$store.dispatch('admin/saveCurrentTag')
         }
       },
 
@@ -492,7 +492,7 @@
       },
 
       geoBack() {
-        this.$store.dispatch('locationBack')
+        this.$store.dispatch('admin/locationBack')
         this.geoFilter = ''
       },
 
@@ -501,7 +501,7 @@
           return
         }
 
-        this.$store.dispatch('expandLocation', location)
+        this.$store.dispatch('admin/expandLocation', location)
         this.$store.subscribe((mutation, state) => {
           if (mutation.type === 'LOAD_LOCATIONS') {
             this.geoFilter = ''
@@ -592,14 +592,14 @@
       },
 
       hideForm() {
-        this.$store.dispatch('setShowTagForm', false)
+        this.$store.dispatch('admin/setShowTagForm', false)
       },
 
       deleteTag() {
         let confirmed = window.confirm('Are you sure you want to delete this tag?')
 
         if (confirmed) {
-          this.$store.dispatch('deleteCurrentTag')
+          this.$store.dispatch('admin/deleteCurrentTag')
         }
       },
 

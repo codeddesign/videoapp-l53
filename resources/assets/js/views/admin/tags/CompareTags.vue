@@ -9,20 +9,31 @@
         <!-- START CHART TIME RANGE -->
         <div class="display-dashboardtoparea">
           <div class="display-dashboardtimewrap">
-              <div class="dashmaintime-title">Time Range</div>
-              <div class="dashboard-mainselect">
-                <select v-model="timeRange">
-                  <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
-                    {{ timeRange.text }}
-                  </option>
-                </select>
-              <div class="dashmain-selectarrow"></div>
-              </div>
+            <div class="dashmaintime-title">Time Range</div>
+            <div class="dashboard-mainselect">
+              <select v-model="timeRange">
+                <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
+                  {{ timeRange.text }}
+                </option>
+              </select>
+            <div class="dashmain-selectarrow"></div>
             </div>
-            <router-link :to="{ name: 'admin.reports.create'}">
-              <div class="currentcamp-createbutton">GENERATE REPORT</div>
-            </router-link>
           </div>
+          <div class="display-dashboardtimewrap">
+            <div class="dashmaintime-title">Website</div>
+            <div class="dashboard-mainselect">
+              <select v-model="websiteFilter">
+                <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
+                  {{ timeRange.text }}
+                </option>
+              </select>
+            <div class="dashmain-selectarrow"></div>
+            </div>
+          </div>
+          <router-link :to="{ name: 'admin.reports.create'}">
+            <div class="currentcamp-createbutton">GENERATE REPORT</div>
+          </router-link>
+        </div>
           <!-- END CHART TIME FRAME -->
         <!-- TAG GRAPH AREA -->
           <div class="taggraph-wrapper">
@@ -103,7 +114,7 @@
         impressions: 0,
         revenue: 0,
         fills: 0,
-        errors: 0,
+        errorCount: 0,
 
         selectedTags: [],
 
@@ -131,7 +142,7 @@
               this.requests = parseInt(response.data.tagRequests)
               this.impressions = parseInt(response.data.impressions)
               this.fills = parseInt(response.data.fills)
-              this.errors = parseInt(response.data.errors)
+              this.errorCount = parseInt(response.data.errors)
               this.revenue = parseFloat(response.data.revenue)
             })
             .catch((error) => {
@@ -163,7 +174,7 @@
       },
 
       errorRate() {
-        return this.calculateErrorRate(this.requests, this.errors)
+        return this.calculateErrorRate(this.requests, this.errorCount)
       },
 
       useRate() {
@@ -174,7 +185,7 @@
     mounted() {
       this.$nextTick(function() {
         this.fetchStats()
-        this.$store.dispatch('loadTags')
+        this.$store.dispatch('admin/loadTags')
       })
     },
 
