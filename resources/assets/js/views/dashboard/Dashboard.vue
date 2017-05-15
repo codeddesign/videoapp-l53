@@ -13,22 +13,22 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="request" :value="tagRequests"></stats>
+            <stats title="request" :value="tagRequests" :animated="true"></stats>
         </li>
         <li>
-          <stats title="impressions" :value="impressions"></stats>
+          <stats title="impressions" :value="impressions" :animated="true"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="presentRevenue" color="#1aa74f" type="money"></stats>
+          <stats title="revenue" :value="presentRevenue" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
         <li>
-          <stats title="ecpm" :value="ecpm" color="#1aa74f" type="money"></stats>
+          <stats title="ecpm" :value="ecpm" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
       </ul>
       <!-- BOTTOM ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-          <stats title="fill" :value="fills"></stats>
+          <stats title="fill" :value="fills" :animated="true"></stats>
         </li>
         <li>
           <stats title="fill-rate" :value="fillRate" type="percentage"></stats>
