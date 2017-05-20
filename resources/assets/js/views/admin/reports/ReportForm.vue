@@ -312,8 +312,9 @@
         timeRangeOptions: [
           { text: 'Today', value: 'today' },
           { text: 'Yesterday', value: 'yesterday' },
-          { text: 'Last 3 Days', value: 'lastThreeDays' },
-          { text: 'Last 7 Days', value: 'lastSevenDays' },
+          { text: 'Last 3 Days', value: 'threeDays' },
+          { text: 'Last 7 Days', value: 'sevenDays' },
+          { text: 'Last 30 Days', value: 'thirtyDays' },
           { text: 'This Month', value: 'thisMonth' },
           { text: 'Last Month', value: 'lastMonth' },
           { text: 'Custom', value: 'custom' }
