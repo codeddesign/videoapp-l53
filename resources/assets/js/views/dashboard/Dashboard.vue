@@ -19,7 +19,7 @@
           <stats title="impressions" :value="impressions" :animated="true"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="presentRevenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <stats title="revenue" :value="revenue" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
         <li>
           <stats title="ecpm" :value="ecpm" color="#1aa74f" type="money" :animated="true"></stats>
@@ -76,9 +76,9 @@
           <div class="dashboard-statslist2">{{ stat.tagRequests }}</div>
           <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.tagRequests) }}</div>
           <div class="dashboard-statslist2">
-            {{ calculateEcpm(stat.impressions, calculateRevenue(stat.impressions, false)) }}
+            {{ calculateEcpm(stat.impressions, stat.revenue) }}
           </div>
-          <div class="dashboard-statslist2">{{ calculateRevenue(stat.impressions) }}</div>
+          <div class="dashboard-statslist2">{{ presentRevenue(stat.revenue) }}</div>
         </li>
       </ul>
     </div>
@@ -116,7 +116,6 @@
         revenue: 0,
 
         fills: 0,
-        fillErrors: 0,
 
         errorCount: 0,
 
@@ -136,7 +135,7 @@
       ecpm() {
         // we calculate the revenue again to get the raw
         // value instead of the formatted currency
-        return this.calculateEcpm(this.impressions, this.revenue)
+        return this.calculateEcpm(this.impressions, this.revenue, false)
       },
 
       fillRate() {
@@ -150,10 +149,6 @@
       useRate() {
         return this.calculateUseRate(this.impressions, this.fills)
       },
-
-      presentRevenue() {
-        return accounting.formatMoney(this.revenue)
-      }
     },
     mounted() {
       this.$nextTick(function() {
@@ -208,6 +203,10 @@
             .catch((error) => {
               console.error('Error fetching the stats count.')
             })
+      },
+
+      presentRevenue(revenue) {
+        return accounting.formatMoney(revenue)
       },
 
       userLoaded() {

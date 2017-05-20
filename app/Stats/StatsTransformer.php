@@ -64,6 +64,21 @@ class StatsTransformer
                     }
 
                     $data[$key][$event->name] += $event->count;
+
+                    if ($event->name === 'impressions' && isset($event->tag)) {
+                        $data[$key]['revenue'] += $this->calculateRevenue($event->count, $event->tag);
+                    }
+
+                    if ($event->name === 'backfill' && isset($stat->backfill)) {
+                        switch ($event->backfill->platform_type) {
+                            case 'mobile':
+                                $data[$key]['mobileBackfillRevenue'] += $this->calculateRevenue($event->count, $event->backfill);
+                                break;
+                            case 'desktop':
+                                $data[$key]['desktopBackfillRevenue'] += $this->calculateRevenue($event->count, $event->backfill);
+                                break;
+                        }
+                    }
                 }
             }
         }

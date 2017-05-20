@@ -92,7 +92,7 @@ class CampaignEvent extends Model
         $user = auth()->user();
 
         return $this->whereHas('campaign', function ($query) use ($user) {
-            $query->user_id = auth()->user()->id;
+            $query->where('user_id', $user->id);
         })->timeRange($timeRange, $user->timezone);
     }
 }

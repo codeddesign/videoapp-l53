@@ -37,7 +37,7 @@ class StatsController extends ApiController
         $cache = app(Repository::class);
 
         /*$databaseEvents = $cache->tags(['events'])->remember("user.{$this->user->id}.events.today}", 30, function () {
-            return $this->fetchHistoricalData('today');
+            return $this->campaignEvents('today');
         });*/
 
         $databaseEvents = $this->campaignEvents('today');
@@ -61,11 +61,13 @@ class StatsController extends ApiController
 
     protected function campaignEvents($timespan)
     {
+        $createdAtTimezone = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')::date";
+
         $statsByCampaign = CampaignEvent::userStats($timespan)
             ->with('tag', 'backfill')
-            ->select('name', 'tag_id', 'backfill_id', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
+            ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtTimezone.' as created_at'), DB::raw('SUM(count) as count'))
             ->where('name', '!=', 'viewership')//viewership data isn't charted
-            ->groupBy('name', 'tag_id', 'backfill_id', DB::raw('created_at::date'))
+            ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtTimezone))
             ->get();
 
         return $statsByCampaign;
