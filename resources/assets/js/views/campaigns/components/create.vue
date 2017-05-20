@@ -27,7 +27,7 @@
       <!-- start create ad name -->
       <div class="adcreation-section" v-if="step == 'name'">
         <div class="selectadtype-title">
-          {{ selectedCampaign.has_name ? 'Create a Reference Name for your Ad:' : 'Ad your youtube link' }}
+          {{ selectedCampaign.has_name ? 'Create a Reference Name for your Campaign:' : 'Add your youtube link' }}
 
           <div class="message error" v-if="error">
             {{ error }}
@@ -43,12 +43,12 @@
                 </div>
 
                 <div class="campaign-creationyoutube" v-if="selectedCampaign.has_name">
-                  <label for="campaign_name">NAME</label>
-                  <div class="campaignform-error hidden">Already same title exists.</div>
+                  <label for="campaign_name">CAMPAIGN</label>
+                  <div class="campaignform-error hidden">This name is already in use.</div>
                   <input id="campaign_name" type="text" placeholder="Reference name.." required v-model="campaign.name">
                 </div>
 
-                <button>PROCEED TO PREVIEW</button>
+                <button>GENERATE EMBED CODE</button>
               </form>
             </div>
           </div>
