@@ -61,10 +61,10 @@ class AnalyticsEvents
             return explode(':', $key)[1];
         })->toArray();
 
-        return $this->fetchMultipleAnalytics($ids);
+        return $this->fetchMultipleWebsites($ids);
     }
 
-    public function fetchMultipleAnalytics(array $ids)
+    public function fetchMultipleWebsites(array $ids)
     {
         $data = new Collection();
 

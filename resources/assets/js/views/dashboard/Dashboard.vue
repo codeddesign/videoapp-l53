@@ -13,31 +13,46 @@
       <!-- TOP ANALYTICS -->
       <ul class="campaignstats-row">
         <li>
-            <stats title="request" :value="tagRequests" :animated="true"></stats>
+          <stats title="impressions" :value="stats.impressions" :animated="true"></stats>
         </li>
         <li>
-          <stats title="impressions" :value="impressions" :animated="true"></stats>
+          <stats title="video revenue" :value="stats.revenue" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
         <li>
-          <stats title="revenue" :value="revenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <stats title="display revenue" :value="backfillRevenue" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
         <li>
-          <stats title="ecpm" :value="ecpm" color="#1aa74f" type="money" :animated="true"></stats>
+          <stats title="total revenue" :value="totalRevenue" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
       </ul>
-      <!-- BOTTOM ANALYTICS -->
+
       <ul class="campaignstats-row">
         <li>
-          <stats title="fill" :value="fills" :animated="true"></stats>
+          <stats title="desktop pageviews" :value="stats.desktopPageviews" :animated="true"></stats>
         </li>
         <li>
-          <stats title="fill-rate" :value="fillRate" type="percentage"></stats>
+          <stats title="desktop impressions" :value="stats.tags.desktop.impressions" :animated="true"></stats>
         </li>
         <li>
-          <stats title="error-rate" :value="errorRate" color="#009dd7" type="percentage"></stats>
+          <stats title="desktop ecpm" :value="desktopEcpm" color="#1aa74f" type="money"></stats>
         </li>
         <li>
-          <stats title="use-rate" :value="useRate" color="#009dd7" type="percentage"></stats>
+          <stats title="desktop revenue" :value="stats.desktopRevenue" color="#1aa74f" type="money" :animated="true"></stats>
+        </li>
+      </ul>
+
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="mobile pageviews" :value="stats.mobilePageviews" :animated="true"></stats>
+        </li>
+        <li>
+          <stats title="mobile impressions" :value="stats.tags.mobile.impressions" :animated="true"></stats>
+        </li>
+        <li>
+          <stats title="mobile ecpm" :value="mobileEcpm" color="#1aa74f" type="money"></stats>
+        </li>
+        <li>
+          <stats title="mobile revenue" :value="stats.mobileRevenue" color="#1aa74f" type="money" :animated="true"></stats>
         </li>
       </ul>
 
@@ -111,13 +126,12 @@
           { text: 'Last Month', value: 'lastMonth' }
         ],
 
-        tagRequests: 0,
-        impressions: 0,
-        revenue: 0,
-
-        fills: 0,
-
-        errorCount: 0,
+        stats: {
+          tags: {
+            desktop: {},
+            mobile: {}
+          }
+        },
 
         requestsChartData: [],
         impressionsChartData: [],
@@ -135,19 +149,23 @@
       ecpm() {
         // we calculate the revenue again to get the raw
         // value instead of the formatted currency
-        return this.calculateEcpm(this.impressions, this.revenue, false)
+        return this.calculateEcpm(this.stats.impressions, this.stats.revenue, false)
       },
 
-      fillRate() {
-        return this.calculateFillRate(this.impressions, this.tagRequests)
+      backfillRevenue() {
+        return this.stats.desktopBackfillRevenue + this.stats.mobileBackfillRevenue
       },
 
-      errorRate() {
-        return this.calculateErrorRate(this.tagRequests, this.errorCount)
+      totalRevenue() {
+        return this.backfillRevenue + this.stats.revenue
       },
 
-      useRate() {
-        return this.calculateUseRate(this.impressions, this.fills)
+      desktopEcpm() {
+        return this.calculateEcpm(this.stats.tags.desktop.impressions, this.stats.desktopRevenue, false)
+      },
+
+      mobileEcpm() {
+        return this.calculateEcpm(this.stats.tags.mobile.impressions, this.stats.mobileRevenue, false)
       }
     },
     mounted() {
@@ -173,12 +191,7 @@
       fetchStats() {
         http.get('/stats/all?time=realtime')
             .then((response) => {
-              this.tagRequests = parseInt(response.data.tagRequests)
-              this.impressions = parseInt(response.data.impressions)
-              this.revenue = parseFloat(response.data.revenue)
-              this.fills = parseInt(response.data.fills)
-              this.errorCount = parseInt(response.data.errors)
-              this.fillErrors = parseInt(response.data.fillErrors)
+              this.stats = response.data
             })
             .catch((error) => {
               console.error('Error fetching the stats count.')

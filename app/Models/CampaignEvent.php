@@ -93,6 +93,8 @@ class CampaignEvent extends Model
 
         return $this->whereHas('campaign', function ($query) use ($user) {
             $query->where('user_id', $user->id);
+        })->orWhereHas('website', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
         })->timeRange($timeRange, $user->timezone);
     }
 }

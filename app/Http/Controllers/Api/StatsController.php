@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\CampaignEvent;
+use App\Services\AnalyticsEvents;
 use App\Services\CampaignEvents;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
@@ -31,8 +32,13 @@ class StatsController extends ApiController
 
     protected function fetchRealTimeData()
     {
-        $ids = $this->user->campaigns->pluck('id')->toArray();
-        $stats = (new CampaignEvents)->fetchMultipleCampaigns($ids, true);
+        $campaignIds = $this->user->campaigns->pluck('id')->toArray();
+        $websiteIds = $this->user->websites->pluck('id')->toArray();
+
+        $campaignEvents = (new CampaignEvents)->fetchMultipleCampaigns($campaignIds);
+        $analyticsEvents = (new AnalyticsEvents)->fetchMultipleWebsites($websiteIds);
+
+        $events = $campaignEvents->merge($analyticsEvents);
 
         $cache = app(Repository::class);
 
@@ -42,9 +48,9 @@ class StatsController extends ApiController
 
         $databaseEvents = $this->campaignEvents('today');
 
-        $stats = $stats->merge($databaseEvents);
+        $events = $events->merge($databaseEvents);
 
-        return (new StatsTransformer)->transformSumAll($stats, false);
+        return (new StatsTransformer)->transformSumAll($events, true);
     }
 
     protected function fetchHistoricalData($timespan)

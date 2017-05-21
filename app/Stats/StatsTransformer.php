@@ -11,7 +11,7 @@ class StatsTransformer
     protected static $allStats = [
         'campaignRequests', 'tagRequests', 'impressions', 'fills', 'errors', 'revenue',
         'desktopPageviews', 'mobilePageviews', 'backfill', 'desktopBackfillRevenue', 'mobileBackfillRevenue',
-        'desktopBackfillImpressions', 'mobileBackfillImpressions',
+        'desktopBackfillImpressions', 'mobileBackfillImpressions', 'desktopRevenue','mobileRevenue',
     ];
 
     protected static $tagChartStats = [
@@ -68,6 +68,15 @@ class StatsTransformer
 
                     if ($event->name === 'impressions' && isset($event->tag)) {
                         $data[$key]['revenue'] += $this->calculateRevenue($event->count, $event->tag);
+
+                        switch($event->tag->platform_type) {
+                            case 'mobile':
+                                $data[$key]['mobileRevenue'] += $this->calculateRevenue($event->count, $event->tag);
+                                break;
+                            case 'desktop':
+                                $data[$key]['desktopRevenue'] += $this->calculateRevenue($event->count, $event->tag);
+                                break;
+                        }
                     }
 
                     if ($event->name === 'backfill' && isset($stat->backfill)) {
@@ -118,7 +127,17 @@ class StatsTransformer
             $data[$stat->name] += $stat->count;
 
             if ($stat->name === 'impressions' && isset($stat->tag)) {
-                $data['revenue'] += $this->calculateRevenue($stat->count, $stat->tag);
+                $revenue = $this->calculateRevenue($stat->count, $stat->tag);
+                $data['revenue'] += $revenue;
+
+                switch($stat->tag->platform_type) {
+                    case 'mobile':
+                        $data['mobileRevenue'] += $revenue;
+                        break;
+                    case 'desktop':
+                        $data['desktopRevenue'] += $revenue;
+                        break;
+                }
             }
 
             if ($stat->name === 'backfill' && isset($stat->backfill)) {
