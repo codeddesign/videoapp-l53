@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\CampaignEvent;
+use App\Stats\StatsTransformer;
 use App\Transformers\CampaignTransformer;
 use Illuminate\Redis\RedisManager;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\CampaignRequest;
 
@@ -22,9 +26,25 @@ class CampaignsController extends ApiController
      */
     public function index()
     {
-        $campaigns = $this->paginate($this->user->campaigns()->getQuery());
+        $campaigns = $this->user->campaigns;
 
-        return $this->paginatedCollectionResponse($campaigns, new CampaignTransformer);
+        $range = 'thirtyDays';
+
+        $stats = CampaignEvent::with('tag', 'campaign', 'backfill')
+            ->select('name', 'campaign_id', 'tag_id', 'backfill_id', DB::raw('SUM(count) as count'))
+            ->whereIn('campaign_id', $campaigns->pluck('id'))
+            ->timeRange($range, $this->user->timezone)
+            ->groupBy('name', 'campaign_id', 'tag_id', 'backfill_id')
+            ->get()
+            ->groupBy('campaign_id');
+
+        $statsTransformer = new StatsTransformer;
+
+        foreach ($campaigns as $campaign) {
+            $campaign->stats = $statsTransformer->transformSumAll($stats->get($campaign->id) ?? new Collection());
+        }
+
+        return $this->collectionResponse($campaigns, new CampaignTransformer);
     }
 
     /**

@@ -11,6 +11,7 @@ class StatsTransformer
     protected static $allStats = [
         'campaignRequests', 'tagRequests', 'impressions', 'fills', 'errors', 'revenue',
         'desktopPageviews', 'mobilePageviews', 'backfill', 'desktopBackfillRevenue', 'mobileBackfillRevenue',
+        'desktopBackfillImpressions', 'mobileBackfillImpressions',
     ];
 
     protected static $tagChartStats = [
@@ -123,9 +124,11 @@ class StatsTransformer
             if ($stat->name === 'backfill' && isset($stat->backfill)) {
                 switch ($stat->backfill->platform_type) {
                     case 'mobile':
+                        $data['mobileBackfillImpressions'] += $stat->count;
                         $data['mobileBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                     case 'desktop':
+                        $data['desktopBackfillImpressions'] += $stat->count;
                         $data['desktopBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                 }

@@ -148,7 +148,7 @@
 
       useRate() {
         return this.calculateUseRate(this.impressions, this.fills)
-      },
+      }
     },
     mounted() {
       this.$nextTick(function() {
