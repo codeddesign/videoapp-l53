@@ -46,7 +46,7 @@ class ChartsController extends ApiController
             $createdAtFormat = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')::date";
         } else {
             $keyFormat       = 'm/d/Y H';
-            $createdAtFormat = 'created_at';
+            $createdAtFormat = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')";
         }
 
         $userStats = CampaignEvent::userStats($range)
