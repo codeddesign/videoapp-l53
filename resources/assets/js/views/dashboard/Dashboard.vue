@@ -80,7 +80,7 @@
       <div class="dashboard-dailystatstitle">DAILY STATS</div>
       <ul class="dashboard-dailystatstitles">
         <li>DATE</li>
-        <li>REQUESTS</li>
+        <li>PAGEVIEWS</li>
         <li>FILL-RATE</li>
         <li>eCPM</li>
         <li>REVENUE</li>
@@ -88,8 +88,8 @@
       <ul class="dashboard-dailystatslist">
         <li v-for="(stat, date) in dailyStats">
           <div class="dashboard-statslist1">{{ date }}</div>
-          <div class="dashboard-statslist2">{{ stat.tagRequests }}</div>
-          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, stat.tagRequests) }}</div>
+          <div class="dashboard-statslist2">{{ stat.desktopPageviews + stat.mobilePageviews }}</div>
+          <div class="dashboard-statslist2">{{ calculateFillRate(stat.impressions, (stat.desktopPageviews + stat.mobilePageviews)) }}</div>
           <div class="dashboard-statslist2">
             {{ calculateEcpm(stat.impressions, stat.revenue) }}
           </div>
