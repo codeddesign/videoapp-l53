@@ -32,7 +32,7 @@ class ReportsController extends ApiController
 
         $header = (new Spreadsheet)->header($stats);
 
-        $campaignEvents = (new Query($report))->campaignEvents($report);
+        $campaignEvents = (new Query($report))->campaignEvents();
         $allStats = (new StatsTransformer)->transformSumAll($campaignEvents, true);
 
         return $this->jsonResponse(compact('allStats', 'stats', 'header'));
