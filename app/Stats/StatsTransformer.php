@@ -202,6 +202,7 @@ class StatsTransformer
 
         //Loop through all date periods
         foreach ($dateRange->arrayByStep() as $period) {
+
             $key       = $period->format($format);
             $timestamp = $period->timestamp * 1000;
 

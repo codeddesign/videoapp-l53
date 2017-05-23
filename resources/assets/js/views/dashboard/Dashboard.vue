@@ -225,7 +225,7 @@
         }
 
         return totalRevenue
-      },
+      }
     },
     mounted() {
       this.$nextTick(function() {

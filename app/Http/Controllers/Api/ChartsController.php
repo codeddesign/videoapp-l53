@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\CampaignEvent;
 use App\Models\DateRange;
 use App\Models\Report;
+use App\Services\Reports\Query;
 use App\Stats\StatsTransformer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,18 +23,6 @@ class ChartsController extends ApiController
         $range  = $request->get('time') ?? 'today';
         $report = $request->get('report');
 
-        if ($range === 'realtime') {
-            $now = Carbon::now()->timestamp * 1000;
-
-            return [
-                'requests'    => [[$now, 0]],
-                'impressions' => [[$now, 0]],
-                'revenue'     => [[$now, 0]],
-            ];
-        }
-
-        $keyFormat = 'm/d/Y';
-
         if ($report) {
             $report    = Report::find($report);
             $dateRange = $report->dateRange();
@@ -50,13 +39,19 @@ class ChartsController extends ApiController
             //$createdAtFormat = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')";
         }
 
-        $userStats = CampaignEvent::userStats($range)
+        $userStats = CampaignEvent::userStats($dateRange)
             ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(count) as count'))
             ->with('tag', 'website', 'backfill')
             ->where('name', '!=', 'viewership')//viewership data isn't charted
-            ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat))
-            ->with('tag')
-            ->get()
+            ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat));
+
+        if ($report) {
+            $userStats = (new Query($report))->filter($userStats);
+        } else {
+            $userStats = $userStats->timeRange($dateRange);
+        }
+
+        $userStats = $userStats->get()
             ->groupBy(function ($item) use ($keyFormat) {
                 return $item->created_at->format($keyFormat);
             });
@@ -66,7 +61,7 @@ class ChartsController extends ApiController
             $calculateTagStats = true;
         }
 
-        $stats = (new StatsTransformer)->highcharts($userStats, $keyFormat, $range, $calculateTagStats);
+        $stats = (new StatsTransformer)->highcharts($userStats, $keyFormat, $dateRange, $calculateTagStats);
 
         return $stats;
     }

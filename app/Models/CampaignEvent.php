@@ -87,7 +87,7 @@ class CampaignEvent extends Model
         return $this->belongsTo(Website::class, 'website_id');
     }
 
-    public function scopeUserStats($query, $timeRange)
+    public function scopeUserStats($query)
     {
         $user = auth()->user();
 
@@ -95,6 +95,6 @@ class CampaignEvent extends Model
             $query->where('user_id', $user->id);
         })->orWhereHas('website', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->timeRange($timeRange, $user->timezone);
+        });
     }
 }

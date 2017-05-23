@@ -210,7 +210,7 @@
             'Revenue': 'revenue',
             'CPM': 'cpm',
             'Fills': 'fills',
-            'Fill %': 'fill_rate',
+            'Fill %': 'fill_rate'
           },
           viewership: {
             'Start': 'start',
@@ -222,7 +222,7 @@
             'Average View Time': 'average_view_time',
             'Completion Rate': 'completion_rate',
             'Video Length': 'view_length'
-          },
+          }
         },
 
         timeRangeOptions: [

@@ -9,46 +9,64 @@
     <!-- ANALYTICS STATS -->
     <!-- TOP ANALYTICS -->
     <div>
-    <div v-show="loading" class="report-loading">
-      <bounce-loader :loading="loading" color="#7772a7" size="100px"></bounce-loader>
-    </div>
-    <ul class="campaignstats-row">
-      <li>
-        <stats title="requests" :value="stats.allStats.tagRequests" :animated="false"></stats>
-        <spark-chart id="requests-chart" :chartData="chartData.tagRequests" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="impressions" :value="stats.allStats.impressions" :animated="false"></stats>
-        <spark-chart id="impressions-chart" :chartData="chartData.impressions" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="revenue" :value="stats.allStats.revenue" :animated="false" type="money" color="#1aa74f"></stats>
-        <spark-chart id="revenue-chart" :chartData="chartData.revenue" color="#1aa74f"></spark-chart>
-      </li>
-      <li>
-        <stats title="ecpm" :value="ecpm" :animated="false" type="money" color="#1aa74f"></stats>
-        <spark-chart id="ecpm-chart" :chartData="ecpmSpark" color="#1aa74f"></spark-chart>
-      </li>
-    </ul>
-    <!-- BOTTOM ANALYTICS -->
-    <ul class="campaignstats-row">
-      <li>
-        <stats title="fill" :value="stats.allStats.fills"></stats>
-        <spark-chart id="fills-chart" :chartData="chartData.fills" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="fill-rate" :value="fillRate" type="percentage"></stats>
-        <spark-chart id="fill-rate-chart" :chartData="fillRateSpark" color="#7772a7"></spark-chart>
-      </li>
-      <li>
-        <stats title="error-rate" :value="errorRate" color="#009dd7" type="percentage"></stats>
-        <spark-chart id="error-rate-chart" :chartData="errorRateSpark" color="#009dd7"></spark-chart>
-      </li>
-      <li>
-        <stats title="use-rate" :value="useRate" color="#009dd7" type="percentage"></stats>
-        <spark-chart id="use-rate-chart" :chartData="useRateSpark" color="#009dd7"></spark-chart>
-      </li>
-    </ul>
+      <div v-show="loading" class="report-loading">
+        <bounce-loader :loading="loading" color="#7772a7" size="100px"></bounce-loader>
+      </div>
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="impressions" :value="stats.allStats.impressions" :animated="true"></stats>
+          <spark-chart id="impressions-chart" :chartData="chartData.impressions" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="video revenue" :value="stats.allStats.revenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <spark-chart id="revenue-chart" :chartData="chartData.revenue" color="#1aa74f"></spark-chart>
+        </li>
+        <li>
+          <stats title="display revenue" :value="backfillRevenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <spark-chart id="backfill-revenue-chart" :chartData="backfillRevenueSpark" color="#1aa74f"></spark-chart>
+        </li>
+        <li>
+          <stats title="total revenue" :value="totalRevenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <spark-chart id="total-revenue-chart" :chartData="totalRevenueSpark" color="#1aa74f"></spark-chart>
+        </li>
+      </ul>
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="desktop pageviews" :value="stats.allStats.desktopPageviews" :animated="true"></stats>
+          <spark-chart id="desktop-pageviews-chart" :chartData="chartData.desktopPageviews" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="desktop impressions" :value="stats.allStats.tags.desktop.impressions" :animated="true"></stats>
+          <spark-chart id="desktop-impressions-chart" :chartData="chartData.desktopImpressions" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="desktop ecpm" :value="desktopEcpm" color="#1aa74f" type="money"></stats>
+          <spark-chart id="desktop-ecpm-chart" :chartData="desktopEcpmSpark" color="#1aa74f"></spark-chart>
+        </li>
+        <li>
+          <stats title="desktop revenue" :value="stats.allStats.desktopRevenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <spark-chart id="desktop-revenue-chart" :chartData="chartData.desktopRevenue" color="#1aa74f"></spark-chart>
+        </li>
+      </ul>
+
+      <ul class="campaignstats-row">
+        <li>
+          <stats title="mobile pageviews" :value="stats.allStats.mobilePageviews" :animated="true"></stats>
+          <spark-chart id="mobile-pageviews-chart" :chartData="chartData.mobilePageviews" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="mobile impressions" :value="stats.allStats.tags.mobile.impressions" :animated="true"></stats>
+          <spark-chart id="mobile-impressions-chart" :chartData="chartData.mobileImpressions" color="#7772a7"></spark-chart>
+        </li>
+        <li>
+          <stats title="mobile ecpm" :value="mobileEcpm" color="#1aa74f" type="money"></stats>
+          <spark-chart id="mobile-ecpm-chart" :chartData="mobileEcpmSpark" color="#1aa74f"></spark-chart>
+        </li>
+        <li>
+          <stats title="mobile revenue" :value="stats.allStats.mobileRevenue" color="#1aa74f" type="money" :animated="true"></stats>
+          <spark-chart id="mobile-revenue-chart" :chartData="chartData.mobileRevenue" color="#1aa74f"></spark-chart>
+        </li>
+      </ul>
     </div>
 
     <div class="dashstats-graphwrapper">
@@ -307,8 +325,38 @@
         return this.stats.allStats.desktopBackfillRevenue + this.stats.allStats.mobileBackfillRevenue
       },
 
+      totalRevenue() {
+        return this.backfillRevenue + this.stats.allStats.revenue
+      },
+
+      desktopEcpm() {
+        return this.calculateEcpm(this.stats.allStats.tags.desktop.impressions, this.stats.allStats.desktopRevenue, false)
+      },
+
+      mobileEcpm() {
+        return this.calculateEcpm(this.stats.allStats.tags.mobile.impressions, this.stats.allStats.mobileRevenue, false)
+      },
+
       ecpm() {
         return this.calculateEcpm(this.stats.allStats.impressions, this.stats.allStats.revenue)
+      },
+
+      desktopEcpmSpark() {
+        if (!this.chartData.desktopImpressions) return []
+
+        return this.chartData.desktopImpressions.map((item, index) => {
+          let ecpm = this.calculateEcpm(item[1], this.chartData.desktopRevenue[index][1], false)
+          return [item[0], +ecpm.toFixed(2)]
+        })
+      },
+
+      mobileEcpmSpark() {
+        if (!this.chartData.mobileImpressions) return []
+
+        return this.chartData.mobileImpressions.map((item, index) => {
+          let ecpm = this.calculateEcpm(item[1], this.chartData.mobileRevenue[index][1], false)
+          return [item[0], +ecpm.toFixed(2)]
+        })
       },
 
       ecpmSpark() {
@@ -342,31 +390,17 @@
         })
       },
 
-      fillRateSpark() {
-        if (!this.chartData.impressions) return []
+      totalRevenueSpark() {
+        if (!this.chartData.mobileBackfillRevenue) return []
 
-        return this.chartData.impressions.map((item, index) => {
-          let fillRate = this.calculateFillRate(item[1], this.chartData.fills[index][1], false)
-          return [item[0], +fillRate.toFixed(2)]
-        })
-      },
+        let totalRevenue = []
 
-      errorRateSpark() {
-        if (!this.chartData.tagRequests) return []
+        for (let i = 0; i < this.chartData.mobileBackfillRevenue.length; i++) {
+          let revenue = this.chartData.mobileBackfillRevenue[i][1] + this.chartData.desktopBackfillRevenue[i][1] + this.chartData.revenue[i][1]
+          totalRevenue.push([this.chartData.mobileBackfillRevenue[i][0], revenue])
+        }
 
-        return this.chartData.tagRequests.map((item, index) => {
-          let fillRate = this.calculateErrorRate(item[1], this.chartData.errors[index][1], false)
-          return [item[0], +fillRate.toFixed(2)]
-        })
-      },
-
-      useRateSpark() {
-        if (!this.chartData.impressions) return []
-
-        return this.chartData.impressions.map((item, index) => {
-          let fillRate = this.calculateUseRate(item[1], this.chartData.fills[index][1], false)
-          return [item[0], +fillRate.toFixed(2)]
-        })
+        return totalRevenue
       },
 
       fillRate() {
