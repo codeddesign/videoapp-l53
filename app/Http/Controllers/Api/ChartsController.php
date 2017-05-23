@@ -39,7 +39,7 @@ class ChartsController extends ApiController
             //$createdAtFormat = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')";
         }
 
-        $userStats = CampaignEvent::userStats($dateRange)
+        $userStats = CampaignEvent::userStats()
             ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(count) as count'))
             ->with('tag', 'website', 'backfill')
             ->where('name', '!=', 'viewership')//viewership data isn't charted
