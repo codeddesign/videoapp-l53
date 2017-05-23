@@ -147,4 +147,13 @@ class Report extends Model
             'error900', 'error901',
         ];
     }
+
+    public static function allUserMetrics()
+    {
+        return [
+            'ad_type', 'platform_type', 'website', 'impressions', 'unfilled_impressions', 'click', 'ctr', 'revenue',
+            'cpm', 'fills', 'fill_rate', 'start', 'firstquartile', 'midpoint', 'thirdquartile', 'complete',
+            'average_view_rate', 'average_view_time', 'completion_rate', 'view_length',
+        ];
+    }
 }

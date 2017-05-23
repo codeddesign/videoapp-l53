@@ -49,7 +49,7 @@ class Standard
                 'sort_by'          => 'website',
                 'schedule'         => 'once',
                 'deletable'        => false,
-                'included_metrics' => json_encode(Report::allMetrics()),
+                'included_metrics' => json_encode(Report::allUserMetrics()),
                 'filter'           => json_encode([
                     'type'   => '',
                     'value'  => '',

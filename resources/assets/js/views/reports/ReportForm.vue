@@ -104,18 +104,6 @@
           </div><!-- END VIDEO -->
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
             <div class="tagcreate-fullinnertitle"></div>
-            <div class="reportquery-fullinnertitle">TOTALS</div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="all_totals" @click="includeAll('total', $event)">
-              <label for="all_totals">All Totals</label>
-            </div>
-            <div class="tagcreate-checkwrap" v-for="(key, metric) in metrics.total">
-              <input type="checkbox" v-bind:id="key" v-bind:value="key" v-model="report.included_metrics">
-              <label v-bind:for="key">{{ metric }}</label>
-            </div>
-          </div><!-- END TOTALS -->
-          <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
-            <div class="tagcreate-fullinnertitle"></div>
             <div class="reportquery-fullinnertitle">VIEWERSHIP</div>
             <div class="tagcreate-checkwrap">
               <input type="checkbox" id="all_viewership" @click="includeAll('viewership', $event)">
@@ -126,18 +114,6 @@
               <label v-bind:for="key">{{ metric }}</label>
             </div>
           </div><!-- END VIEWERSHIP -->
-          <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
-            <div class="tagcreate-fullinnertitle"></div>
-            <div class="reportquery-fullinnertitle">ERRORS</div>
-            <div class="tagcreate-checkwrap">
-              <input type="checkbox" id="all_errors" @click="includeAll('errors', $event)">
-              <label for="all_errors">All Errors</label>
-            </div>
-            <div class="tagcreate-checkwrap" v-for="(key, metric) in metrics.errors">
-              <input type="checkbox" v-bind:id="key" v-bind:value="key" v-model="report.included_metrics">
-              <label v-bind:for="key">{{ metric }}</label>
-            </div>
-          </div><!-- END ERRORS -->
         </div><!-- END .tagcreate-formbg -->
         <div class="tagcreate-formbg">
           <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
@@ -229,23 +205,12 @@
             'Website': 'website',
             'Impressions': 'impressions',
             'Unfilled Impressions': 'unfilled_impressions',
-            'Ads Requests': 'requests',
             'Clicks': 'click',
             'CTR': 'ctr',
             'Revenue': 'revenue',
             'CPM': 'cpm',
             'Fills': 'fills',
             'Fill %': 'fill_rate',
-            'Errors': 'errors',
-            'Error %': 'error_rate'
-          },
-          total: {
-            'Total Tag Type %': 'total_tag_type_percent',
-            'Total Platform Type %': 'total_platform_type_percent',
-            'Total Ad Type %': 'total_ad_type_percent',
-            'Total Platform Type Errors': 'total_platform_type_errors',
-            'Total Ad Type Errors': 'total_ad_type_errors',
-            'Total Tag Type Errors': 'total_tag_type_errors'
           },
           viewership: {
             'Start': 'start',
@@ -258,34 +223,6 @@
             'Completion Rate': 'completion_rate',
             'Video Length': 'view_length'
           },
-          errors: {
-            '101': 'error101',
-            '102': 'error102',
-            '200': 'error200',
-            '201': 'error201',
-            '202': 'error202',
-            '203': 'error203',
-            '300': 'error300',
-            '301': 'error301',
-            '302': 'error302',
-            '303': 'error303',
-            '400': 'error400',
-            '401': 'error401',
-            '402': 'error402',
-            '403': 'error403',
-            '405': 'error505',
-            '500': 'error500',
-            '501': 'error501',
-            '502': 'error502',
-            '503': 'error503',
-            '600': 'error600',
-            '601': 'error601',
-            '602': 'error602',
-            '603': 'error603',
-            '604': 'error604',
-            '900': 'error900',
-            '901': 'error901'
-          }
         },
 
         timeRangeOptions: [
