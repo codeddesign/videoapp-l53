@@ -53,7 +53,12 @@ class Spreadsheet
         /** @var Mailer $mailer */
         $mailer = app(Mailer::class);
 
-        $mailer->to($report->recipient)->send(new ScheduledReport($report, $file));
+        $recipients = collect(explode(',', $report->recipient));
+        $recipients->map(function($email) {
+            return trim($email);
+        });
+
+        $mailer->to($recipients)->send(new ScheduledReport($report, $file));
     }
 
     public function friendlyFilename(Report $report)

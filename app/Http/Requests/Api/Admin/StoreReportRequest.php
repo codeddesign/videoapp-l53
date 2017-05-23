@@ -22,7 +22,7 @@ class StoreReportRequest extends Request
             'sort_by'          => '',
             'combine_by'       => 'required',
             'included_metrics' => '',
-            'recipient'        => 'required|email',
+            'recipient'        => 'required|emails',
             'schedule'         => 'required|in:once,daily,weekly,monthly',
             'schedule_every'   => 'required_if:schedule,monthly,weekly',
         ];
