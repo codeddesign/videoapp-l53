@@ -8,6 +8,9 @@ Route::post('signup', 'HomeController@signup');
 Route::get('contact', 'HomeController@getContact');
 Route::post('contact', 'HomeController@postContact');
 
+// Features
+Route::get('features', 'HomeController@getFeatures');
+
 // Login.
 Route::get('login', 'Authentication\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Authentication\LoginController@login');

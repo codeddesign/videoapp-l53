@@ -8,6 +8,7 @@ use App\Mail\BetaSignup;
 use App\Mail\Contact;
 use App\Models\Signup;
 use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -35,7 +36,7 @@ class HomeController extends Controller
 
         $mailer->to(['john@ad3media.com', 'daniel@ad3media.com', 'bryant@ad3media.com'])->send(new BetaSignup($signup));
 
-        return redirect('/#betasignup')->with('status', 'Signed Up');
+        return redirect(URL::previous().'#betasignup')->with('status', 'Signed Up');
     }
 
     public function getContact()
@@ -58,5 +59,10 @@ class HomeController extends Controller
             ->send(new Contact($details));
 
         return redirect('/contact')->with('status', 'Done');
+    }
+
+    public function getFeatures()
+    {
+        return view('home.features');
     }
 }
