@@ -4,385 +4,302 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta name="viewport" content="width=550, user-scalable=no">
+    <meta name="viewport" content="width=auto, initial-scale=0">
     <title>Ad&sup3; Media | High Impact Ad Solutions</title>
-    <title>Ad3 Media delivers the highest converting advertising solutions the market has to offer. An entire system built on simplicity with you in mind.</title>
+    <meta name="description" content="Ad3 Media delivers the highest converting advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">
     <link rel='shortcut icon' href='/home/images/ad3favicon.png'>
-    <link href="/home/style.css" rel="stylesheet" type="text/css">
-    <link href="/home/responsive.css" rel="stylesheet" type="text/css">
-    <link href="/home/css/slick-theme.css" rel="stylesheet" type="text/css">
+    <link href="home/style.css?v=2" rel="stylesheet" type="text/css">
+    <!-- <link href="home/responsive.css" rel="stylesheet" type="text/css"> -->
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="/js/intlTelInput.min.js"></script>
 
     <!-- GOOGLE FONT TYPE -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
-    <link href='/css/intlTelInput.css' rel='stylesheet' type='text/css'>
-
     <!-- TYPEKIT FONT TYPE -->
     <script src="https://use.typekit.net/lwk5wec.js"></script>
     <script>
-        try {
-            Typekit.load({
-                async: true
-            });
-        } catch (e) {}
-    </script>
-
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-
-    <!-- SLICK CAROUSEL STYLESHEET -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
-
-    <style>
-    .iti-flag {background-image: url("/images/flags.png");}
-
-    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-      .iti-flag {background-image: url("/images/flags@2x.png");}
-    }
-
-    .intl-tel-input {
-        width: 429px;
-    }
-
-    #phone-input {
-        width: 429px;
-    }
-
-    @media screen and (max-width: 770px) {
-        .intl-tel-input {
-            width: calc(100%);
-            margin-bottom: 32px;
-        }
-
-        #phone-input {
-            width: 100%;
-        }
-    }
-</style>
-
-    <script>
-        $(document).ready(function() {
-            // SLICK CAROUSEL
-            $('.homepage-slickcarousel').slick({
-                centerMode: true,
-                centerPadding: '130px',
-                slidesToShow: 3,
-                dots: true,
-                responsive: [{
-                    breakpoint: 768,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '100px',
-                        slidesToShow: 3
-                    }
-                }, {
-                    breakpoint: 560,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '20px',
-                        slidesToShow: 3
-                    }
-                }]
-            });
-
-            // SHOW/HIDE NAV OVERLAY
-            $('.navmore').click(function() {
-                $('.mainnav-overlay').show();
-                $(this).css('display', 'none');
-                $('.closenavmore').css('display', 'block');
-                $('body').css('overflow', 'hidden');
-            });
-            $('.closenavmore').click(function() {
-                $('.mainnav-overlay').hide();
-                $(this).css('display', 'none');
-                $('.navmore').css('display', 'block');
-                $('body').css('overflow', 'inherit');
-            });
-
-            $("#phone-input").intlTelInput({
-                utilsScript: "/js/utils.js"
-            });
-
-            $("#signup-form").on('submit', function(e) {
-                console.log($("#phone-input").intlTelInput("getNumber"))
-
-                $("#phone").val($("#phone-input").intlTelInput("getNumber"))
-
-                return true
-            })
-
+    try {
+        Typekit.load({
+            async: true
         });
+    } catch (e) {}
     </script>
+
+    <!-- FACEBOOK OG -->
+    <meta property="fb:app_id" content="344924649174257" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ad&sup3; Media | High Impact Ad Solutions" />
+    <meta property="og:description" content="Ad3 delivers the highest converting advertising solutions with the highest CPM's the market has to offer." />
+    <meta property="og:url" content="http://ad3media.com" />
+    <meta property="og:site_name" content="Ad3 Media" />
+    <meta property="og:image" content="" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- END FACEBOOK OG -->
+
 </head>
 
 <body>
-<div class="mainnav-overlay">
-    <ul class="navoverlay-list">
-        <li>FEATURES</li>
-        <li>WP PLUGIN</li>
-        <li>DEVELOPER API</li>
-        <li>ABOUT US</li>
-        <li>CONTACT SUPPORT</li>
-    </ul>
-</div>
+    <div class="mainnav-overlay">
+        <ul class="navoverlay-list">
+            <li>WP PLUGIN</li>
+            <li>DEVELOPER API</li>
+            <li>ABOUT US</li>
+            <li>GET STARTED WITH AD3</li>
+        </ul>
+    </div>
 
-<div class="homepage-headerarea">
-    <div class="headermap"></div>
-    <div class="header-mainwrapper">
+    <div class="mainlogowrapper">
         <div class="navwrap">
-            <div class="logo"></div>
+            <a href="/">
+                <div class="logo"></div>
+            </a>
             <ul class="headernav">
-                <a href="#betasignup">
-                    <li>ADVERTISERS</li>
-                </a>
-                <a href="#betasignup">
+                <a href="/features">
                     <li>PUBLISHERS</li>
                 </a>
-                <a href="/login" id="login">
-                    <li>LOGIN</li>
+                <a href="/features">
+                    <li>FEATURES</li>
+                </a>
+                <a href="/contact">
+                    <li>CONTACT</li>
                 </a>
                 <li>
                     <div class="navmore"></div>
                     <div class="closenavmore"></div>
                 </li>
             </ul>
-
-            <div class="header-tagline">
-                <div class="headertag-high"></div>
-                <div class="headertag-text">conversion
-                    <br><span>ads made <b>easier</b></span></div>
-            </div>
-            <ul class="under-headertagline">
-                <li>Industry Leading RPMs</li>
-                <li>High Impact Responsive Ad Types</li>
-                <li>Premium Video Monetization</li>
-            </ul>
-            <div class="getstarted-wrap">
-                <a href="#betasignup">
-                    <div class="getstarted-learnmore">Learn More</div>
-                </a>
-                <a href="#betasignup">
-                    <div class="getstarted-startnow">Get Started Now</div>
-                </a>
-                <div class="getstarted-lineunder"></div>
-            </div>
-        </div>
-        <div class="header-graphwrap">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
         </div>
     </div>
-</div>
-<div class="homepage-featuresarea">
-    <ul class="homepage-slickcarousel">
-        <li>
-            <div class="homepage-slickimage">
-                <img src="/home/images/highmoney.png" style="width:93px;">
+
+    <div class="homepage-headerarea">
+        <div class="headermap"></div>
+        <div class="header-mainwrapper">
+            <div class="navwrap">
+
+                <div class="header-tagline">
+                    <div class="headertag-high"></div>
+                    <div class="headertag-text">conversion
+                        <br><span>ads made <b>easier</b></span></div>
+                </div>
+                <ul class="under-headertagline">
+                    <li>Industry Leading RPMs</li>
+                    <li>High Impact Responsive Ad Types</li>
+                    <li>Premium Video Monetization</li>
+                </ul>
+                <div class="getstarted-wrap">
+                    <a href="/features">
+                        <div class="getstarted-learnmore">Find out what makes us better..</div>
+                    </a>
+                    <a href="#betasignup" id="headergetstart">
+                        <div class="getstarted-startnow">Get Started Now <span></span></div>
+                    </a>
+                </div>
             </div>
-            <div class="homepage-slicktitle">Higher Monetization</div>
-            <div class="homepage-slickcontent">Mind-blowing conversion rates + industry leading CPM's provides you with more revenue in less time.</div>
-        </li>
-        <li>
-            <div class="homepage-slickimage">
-                <img src="/home/images/highanalytics.png" style="width:93px;">
+            <div class="header-graphwrap">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
             </div>
-            <div class="homepage-slicktitle">Powerful Analytics</div>
-            <div class="homepage-slickcontent">We track everything so that you are never in the dark about how your ad's are performing.</div>
-        </li>
-        <li>
-            <div class="homepage-slickimage">
-                <img src="/home/images/highresponsive.png" style="width:97px;">
+        </div>
+    </div>
+
+    <div class="nowmerge-wrapper">
+        <div class="nowmerge-wrapbg"></div>
+        <div class="nowmerge-titlewrap">
+            <center>
+                <div class="nowmerge-blueunder">
+                    <div class="nowmerge-blueunder1"></div>
+                    <div class="nowmerge-blueunder2"></div>
+                </div>
+            </center>
+            <div class="nowmerge-title">Video & Display Now Merge</div>
+            <div class="nowmerge-descwrap">
+                <div class="nowmerge-desc">Utilizing proprietary technology, we merge both video and display advertising into one
+                    <br>in order to create high impact ad’s with the greatest CPM’s possible.
+                    <br><span>Bottom line, we help keep your visitor’s happy while you earn more revenue.</span></div>
             </div>
-            <div class="homepage-slicktitle">100% Responsive Video Ads</div>
-            <div class="homepage-slickcontent">All of our ad type's are 100% responsive and mobile friendly to provide you with the highest conversion rates possible</div>
-        </li>
-        <li>
-            <div class="homepage-slickimage">
-                <img src="/home/images/higheasysetup.png" style="width:100px;">
-            </div>
-            <div class="homepage-slicktitle">Super Easy Setup</div>
-            <div class="homepage-slickcontent">Setup any ad type in less than 30-seconds with no technical knowledge required.</div>
-        </li>
-        <li>
-            <div class="homepage-slickimage">
-                <img src="/home/images/highwordpressplugin.png" style="width:64px;">
-            </div>
-            <div class="homepage-slicktitle">WordPress Plugin</div>
-            <div class="homepage-slickcontent">Simple plugin & play to setup your video ad's in less than 10 seconds. Absolutely no technical knowledge required.</div>
-        </li>
-        <li>
-            <div class="homepage-slickimage">
-                <img src="/home/images/highnocharge.png" style="width:90px;">
-            </div>
-            <div class="homepage-slicktitle">$0 Cost</div>
-            <div class="homepage-slickcontent">Upload and Play your video's for free! There is absolutely no cost.</div>
-        </li>
-</div>
-</div>
-<div class="homepage-highimpactwrapper">
-    <div class="homepage-underadlist"></div>
-    <div class="homepage-highimpactmiddle">
-        <div class="homepage-highimpacttitle">High Impact Ad Solutions</div>
-        <div class="homepage-highimpactdesc">Ad3 provides you with ad types that meet any situation.
-            <br>Whether you are looking for simple or complex, we deliver the highest converting ad types the market has to offer. An entire system built on simplicity with you in mind.</div>
-        <ul class="highimpact-adlist">
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-sidebarrow.jpg">
-                </div>
-                <div class="adlist-title">Sidebar Row</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-actionoverlay.jpg">
-                </div>
-                <div class="adlist-title">Action Overlay</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-standard.jpg">
-                </div>
-                <div class="adlist-title">Standard</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-fullwidthgallery.jpg">
-                </div>
-                <div class="adlist-title">Full-Width Gallery</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-horizrow.jpg">
-                </div>
-                <div class="adlist-title">Horizontal Row</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-onscrolldisplay.jpg">
-                </div>
-                <div class="adlist-title">On-Scroll Display</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-halfgallery.jpg">
-                </div>
-                <div class="adlist-title">Half-page Gallery</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
-                <div class="adlist-image">
-                    <img src="/home/images/adlist-incontentgallery.jpg">
-                </div>
-                <div class="adlist-title">In-Content Gallery</div>
-                <div class="adlist-viewdemo">view demo</div>
-            </li>
-            <li>
+
+            <div class="nowmerge-moreinfowrapper">
+                <ul class="nowmerge-moreinfo">
+                    <li>
+                        <div class="nowmerge-moreimage"></div>
+                        <div class="nowmerge-moretitle">100% Responsive Ads</div>
+                        <div class="nowmerge-moredesc">Ad Solutions that monetize across any device and screen size by automatically changing the ad width and height.</div>
+                    </li>
+                    <li>
+                        <div class="nowmerge-moreimage"></div>
+                        <div class="nowmerge-moretitle">Powerful Reporting</div>
+                        <div class="nowmerge-moredesc">Real-time micro-level reporting allows you to dive deep into your traffic inventory and revenue</div>
+                    </li>
+                    <li>
+                        <div class="nowmerge-moreimage"></div>
+                        <div class="nowmerge-moretitle">Complete Monetization</div>
+                        <div class="nowmerge-moredesc">Delivering a minimum of 100% fill, 100% of the time. With Ad3, every single page load is fully monetized.</div>
+                    </li>
+                    <li>
+                        <div class="nowmerge-moreimage"></div>
+                        <div class="nowmerge-moretitle">Blazing Fast Ad Loading</div>
+                        <div class="nowmerge-moredesc">Our fully custom built ad server provides nearly-instant data transfers and delivery of ad’s on to your website.</div>
+                    </li>
+                </ul>
+
                 <a href="#betasignup">
-                    <div class="adlist-image">
-                        <img src="/home/images/adlist-roadmap.jpg">
-                    </div>
-                    <div class="adlist-title">Our Roadmap</div>
-                    <div class="adlist-viewdemo" style="display:block;">see what's coming..</div>
+                    <div class="nowmerge-signupbutton">Sign Up and Get Started Today <span></span></div>
                 </a>
-            </li>
+            </div>
+            <!-- end nowmerge-moreinfowrapper -->
+
+        </div>
+    </div>
+
+    <div class="homepage-highimpactwrapper">
+        <div class="homeadlist-chartbehind"></div>
+        <div class="homepage-highimpactmiddle">
+            <div class="homepage-highimpacttitle">High Impact Ad Solutions</div>
+            <div class="homepage-highimpactdesc">As publisher's ourselves, we understand the impact that an ad can have on
+                <br>both site speed and your bottom-line. Our state-of-the-art ad server provides you with blazing fast load times, 100% fill, and macro-level reporting unlike anything you have ever seen.
+            </div>
+            <!--<div class="homepage-highimpactdesc">Ad3 provides you with ad types that meet any situation.<br>Whether you are looking for simple or complex, we deliver the highest converting ad types the market has to offer. An entire system built on simplicity with you in mind.</div>-->
+            <ul class="highimpact-adlist">
+                <li>
+                    <div class="adlist-image">
+                        <img src="home/images/adlist-onscrolldisplay.jpg">
+                    </div>
+                    <div class="adlist-title">Video</div>
+                </li>
+                <li>
+                    <div class="homevdplus"></div>
+                </li>
+                <li>
+                    <div class="adlist-image">
+                        <img src="home/images/adlist-infooter.jpg">
+                    </div>
+                    <div class="adlist-title">High Impact</div>
+                    <a href="#####">
+                        <div class="adlist-viewdemo">view demo</div>
+                    </a>
+                </li>
+                <li>
+                    <div class="homevdplus"></div>
+                </li>
+                <li>
+                    <div class="adlist-image">
+                        <img src="home/images/adlist-insidebar.jpg">
+                    </div>
+                    <div class="adlist-title">Display</div>
+                </li>
+            </ul>
+
+            <div class="adlist-placeanywhere">
+                <div class="adlist-placeanytitle">*Place anywhere ad solutions combining Video & Display <span></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="underadlist-buttons">
+        <a href="#betasignup">
+            <div class="left-leftusshow">Check Out All of Our Features <span></span></div>
+        </a>
+        <a href="/demo/inarticle-video">
+            <div class="right-leftusshow">Test Drive Our Ad Types Online <span></span></div>
+        </a>
+    </div>
+    <!-- end underadlist-buttons -->
+
+    <div class="homepage-advertiserswrap">
+        <div class="homeadvertisers-title">Access to 1,000’s of Premium Advertisers</div>
+        <ul class="homeadvertisers-list">
+            <li>Coca-Cola</li>
+            <li>Sony</li>
+            <li>Microsoft</li>
+            <li>Disney</li>
+            <li>Verizon</li>
+            <li>Apple</li>
         </ul>
     </div>
-</div>
 
-<a href="#betasignup">
-    <div class="left-leftusshow">Let us show you why we're different</div>
-</a>
-<a href="#betasignup">
-    <div class="right-leftusshow">Test Drive Our Ad Types Online <span></span></div>
-</a>
-
-<div id="betasignup" class="homepage-startearning">
-    <div class="homepage-earningwrap">
-        <!--<div class="homepage-earningtitle">Start Earning More Today</div>-->
-        <div class="homepage-earningtitle">Sign Up For Our Beta Release</div>
-        <div class="homepage-earningdesc">Proven conversion rates, industry leading revenue returns, and a 30-second signup.
-            <br> It doesn’t get any better than this!
-        </div>
-
-        @if (session('status'))
-            <div style="color:#4596CB;font-size:18px;line-height:31px;text-align:center;margin-bottom:50px;">
-                Thank you signing up for Ad3 Beta.<br>
-                A member of our support team will be in contact with you shortly.
+    <div id="betasignup" class="homepage-startearning">
+        <div class="homepage-earningwrap">
+            <!--<div class="homepage-earningtitle">Start Earning More Today</div>-->
+            <div class="homepage-earningtitle">Start Earning More Today</div>
+            <div class="homepage-earningdesc">Proven conversion rates, industry leading revenue returns, and powerful reporting.
+                <br> Talk with our Support Team Today to Get Started!
             </div>
-        @else
+
+            @if (session('status'))
+            <div style="color:#4596CB;font-size:18px;line-height:31px;text-align:center;margin-bottom:50px;">
+                Thank you signing up for Ad3 Beta.
+                <br> A member of our support team will be in contact with you shortly.
+            </div>
+            @else
             <form action="/signup" id="signup-form" class="startearningmore validate" method="POST">
                 <input name="name" id="mce-FNAME" placeholder="full name">
                 <input name="email" id="mce-EMAIL" placeholder="email address">
                 <input name="website" id="mce-WEBSITE" placeholder="website">
-                <input name="phone-input" id="phone-input" placeholder="phone number">
-                <input type="hidden" name="phone" id="phone">
+                <input name="phone" id="mce-PHONE" placeholder="phone number">
 
-                <!--<submit type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">Sign Up for Beta</submit>-->
+                <div id="mce-responses" class="clear">
+                    <div class="response" id="mce-error-response" style="display:none"></div>
+                    <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>
+
                 {{ csrf_field() }}
-                <input type="submit" value="Sign Up for Beta" value="register" name="subscribe" id="mc-embedded-subscribe" class="button">
+                <input type="submit" value="Get Started" name="subscribe" id="mc-embedded-subscribe" class="button">
             </form>
-        @endif
+            @endif
+        </div>
     </div>
-</div>
 
-@include('home.footer')
+    @include('home.footer')
