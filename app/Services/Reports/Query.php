@@ -25,6 +25,7 @@ class Query
     }
 
     /**
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function campaignEvents()
@@ -33,7 +34,8 @@ class Query
             ->with('tag', 'website', 'campaign', 'campaign.type', 'backfill')
             ->select('name', 'tag_id', 'backfill_id', 'campaign_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
             ->groupBy('name', 'tag_id', 'backfill_id', 'campaign_id', 'website_id', 'status')
-            ->where('name', '!=', 'campaignRequests');
+            ->where('name', '!=', 'campaignRequests')
+            ->userStats();
 
         $stats = $this->filter($stats);
 

@@ -91,7 +91,11 @@ class CampaignEvent extends Model
     {
         $user = auth()->user();
 
-        return $this->whereHas('campaign', function ($query) use ($user) {
+        if($user->admin) {
+            return $query;
+        }
+
+        return $query->whereHas('campaign', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->orWhereHas('website', function ($query) use ($user) {
             $query->where('user_id', $user->id);
