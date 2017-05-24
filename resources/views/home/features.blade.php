@@ -80,11 +80,11 @@
     <div class="moreinfo-howfastwrap">
         <div class="moreinfo-howfastbg"></div>
         <div class="moreinfo-howfastinner">
-            <div class="moreinfo-howfastwe">Multi-Platform <span>AsyncBid</span> Ad Network</div>
+            <div class="moreinfo-howfastwe">Multi-Platform <span>AsyncBid</span> Platform</div>
             <div class="moreinfo-howfastwesub">
                 <div class="moreinfo-howfastwesubinner">
                     <div class="moreinfo-firstasyncbid">The world’s first asynchronous multi-fill ad solution</div> with 100% fill.
-                    <br>Ad3 provides you with the most technologically advanced ad network in the world. Combining our multi-platform system with highly viewable, dynamic, and relevant ad placement’s, we provide you with some of the <span>highest publisher CPM’s in the industry.</span>
+                    <br>Ad3 provides you with the most technologically advanced platform in the world. Combining our multi-platform system with highly viewable, dynamic, and relevant ad placement’s, we provide you with some of the <span>highest publisher CPM’s in the industry.</span>
                 </div>
                 <!-- end moreinfo-howfastwesubinner -->
                 <div class="moreinfo-responsivebgwrap">
