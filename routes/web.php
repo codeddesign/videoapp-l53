@@ -4,6 +4,10 @@
 Route::get('/', ['uses' => 'HomeController@index']);
 Route::post('signup', 'HomeController@signup');
 
+// Contact
+Route::get('contact', 'HomeController@getContact');
+Route::post('contact', 'HomeController@postContact');
+
 // Login.
 Route::get('login', 'Authentication\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Authentication\LoginController@login');
