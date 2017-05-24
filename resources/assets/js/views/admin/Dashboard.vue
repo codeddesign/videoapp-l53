@@ -559,7 +559,7 @@ ul.admindashboard-dailystatstitles {
 }
 
 ul.admindashboard-dailystatstitles li {
-  width: 12.5%;
+  width: 9.5%;
   background: #F5F5F4;
   border-right: 1px solid #E3E1E0;
   font-size: 10px;
