@@ -65,4 +65,30 @@ class HomeController extends Controller
     {
         return view('home.features');
     }
+
+    public function demo($mode = 'in-article')
+    {
+        $details = [
+            'in-article' => [
+                'title' => 'In-Article',
+                'campaign' => 1,
+            ],
+            'sidebar' => [
+                'title' => 'Sidebar',
+                'campaign' => 2
+            ],
+            'display-plus' => [
+                'title' => 'Display Plus',
+                'campaign' => 3
+            ]
+        ];
+
+        if(!isset($details[$mode])) {
+            $mode  = 'in-article';
+        }
+
+        $info = $details[$mode];
+
+        return view('home.demo', compact('info'));
+    }
 }

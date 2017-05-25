@@ -11,6 +11,9 @@ Route::post('contact', 'HomeController@postContact');
 // Features
 Route::get('features', 'HomeController@getFeatures');
 
+// Demo
+Route::get('demo/{mode?}', 'HomeController@demo');
+
 // Login.
 Route::get('login', 'Authentication\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Authentication\LoginController@login');
