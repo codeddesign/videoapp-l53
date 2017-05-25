@@ -87,11 +87,13 @@ class CampaignEvent extends Model
         return $this->belongsTo(Website::class, 'website_id');
     }
 
-    public function scopeUserStats($query)
+    public function scopeUserStats($query, $user = null)
     {
-        $user = auth()->user();
+        if ($user === null) {
+            $user = auth()->user();
+        }
 
-        if($user->admin) {
+        if ($user->admin) {
             return $query;
         }
 

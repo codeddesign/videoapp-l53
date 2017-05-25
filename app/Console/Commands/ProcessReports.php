@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Report;
-use App\Services\Reports\Reports;
+use App\Services\Reports\Spreadsheet;
 
 class ProcessReports extends Command
 {
@@ -44,7 +44,7 @@ class ProcessReports extends Command
 
         $bar = $this->output->createProgressBar($pendingReports->count());
 
-        $reportsService = new Reports;
+        $reportsService = new Spreadsheet;
 
         $pendingReports->each(function ($report) use ($reportsService, $bar) {
             $reportsService->process($report);

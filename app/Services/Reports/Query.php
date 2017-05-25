@@ -35,7 +35,7 @@ class Query
             ->select('name', 'tag_id', 'backfill_id', 'campaign_id', 'website_id', 'status', DB::raw('SUM(count) as count'))
             ->groupBy('name', 'tag_id', 'backfill_id', 'campaign_id', 'website_id', 'status')
             ->where('name', '!=', 'campaignRequests')
-            ->userStats();
+            ->userStats($this->report->user);
 
         $stats = $this->filter($stats);
 
