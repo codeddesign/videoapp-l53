@@ -192,19 +192,13 @@
         this.chart.series[1].setData(this.impressions)
       },
       currentUser() {
-        /* if (!events.isImpression(e) || this.timeRange !== 'realtime') {
-          return
+        if (this.currentUser) {
+          Highcharts.setOptions({
+            global: {
+              timezone: this.currentUser.timezone
+            }
+          })
         }
-
-        let eventTimestamp = this.roundToNearestSecond(e.timestamp)
-
-        if (_.has(this.chartData, eventTimestamp)) {
-          this.chartData[eventTimestamp] += 1
-          this.revenueData[eventTimestamp] += (e.tag.ecpm) / 1000
-        } else {
-          this.chartData[eventTimestamp] = 1
-          this.revenueData[eventTimestamp] = ((e.tag.ecpm) / 1000)
-        }*/
       }
     }
   }
