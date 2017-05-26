@@ -1733,7 +1733,8 @@ ul.navoverlay-list li:nth-child(4) {
 }
 
 .nowmerge-desc {
-	width: 736px;
+	/*width: 736px;*/
+	width: 800px;
 	margin: 0 auto;
 	text-align: center;
 	font-size: 20px;

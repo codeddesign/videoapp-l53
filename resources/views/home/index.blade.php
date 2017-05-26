@@ -4,12 +4,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta name="viewport" content="width=auto, initial-scale=0">
+    <meta name="viewport" content="width=auto, initial-scale=1">
     <title>Ad&sup3; Media | High Impact Ad Solutions</title>
     <meta name="description" content="Ad3 Media delivers the highest converting advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">
     <link rel='shortcut icon' href='/home/images/ad3favicon.png'>
     <link href="home/style.css?v=2" rel="stylesheet" type="text/css">
-    <!-- <link href="home/responsive.css" rel="stylesheet" type="text/css"> -->
+    <link href="home/responsive.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
