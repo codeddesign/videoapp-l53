@@ -101,15 +101,15 @@
                 <div class="sendmessage-rightbg">
                     <div class="sendmessage-calluswrap">
                         <div class="sendmessage-callustitle">Give us a call</div>
-                        <div class="sendmessage-callussub">(800) 555-5555</div>
+                        <div class="sendmessage-callussub">(470) 419-7743</div>
                     </div>
                     <div class="sendmessage-emailuswrap">
                         <div class="sendmessage-callustitle">Publisher Support</div>
-                        <div class="sendmessage-emailussub">support@ad3media.com</div>
+                        <div class="sendmessage-emailussub">publisher@ad3media.com</div>
                     </div>
                     <div class="sendmessage-emailuswrap">
                         <div class="sendmessage-callustitle">Sales Department</div>
-                        <div class="sendmessage-emailussub">support@ad3media.com</div>
+                        <div class="sendmessage-emailussub">sales@ad3media.com</div>
                     </div>
                 </div>
             </div>
