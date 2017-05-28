@@ -4,9 +4,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta name="viewport" content="width=auto, initial-scale=1">
-    <title>Ad&sup3; Media | High Impact Ad Solutions</title>
-    <meta name="description" content="Ad3 Media delivers the highest converting advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">
+    <meta name="viewport" content="width=550, user-scalable=no">
+    <title>Ad&sup3; Media | High Impact Video & Display Ad Platform</title>
+    <meta name="description" content="The Fastest High Converting Premium Video and Display Advertising Platform with 100% fill with Next-Generation Ad-Tech Technology.  Outstream, Instream, and Display Advertising Solutions for Publishers">
+    <!--<meta name="description" content="Delivering high converting outstream, instream, and display advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">-->
     <link rel='shortcut icon' href='/home/images/ad3favicon.png'>
     <link href="home/style.css?v=2" rel="stylesheet" type="text/css">
     <link href="home/responsive.css" rel="stylesheet" type="text/css">
@@ -44,10 +45,13 @@
 <body>
     <div class="mainnav-overlay">
         <ul class="navoverlay-list">
-            <li>WP PLUGIN</li>
-            <li>DEVELOPER API</li>
-            <li>ABOUT US</li>
-            <li>GET STARTED WITH AD3</li>
+            <!--<a href=""><li>WP PLUGIN</li></a>-->
+            <!--<a href=""><li>DEVELOPER API</li>-->
+            <a href="/features"><li>FEATURES</li></a>
+            <a href="/demo/inarticle-video"><li>TEST OUR AD'S</li></a>
+            <a href="/contact"><li>ABOUT US</li></a>
+            <a href="/contact"><li>CONTACT</li></a>
+            <a href="/contact"><li>GET STARTED WITH AD3</li></a>
         </ul>
     </div>
 
@@ -215,7 +219,7 @@
             <ul class="highimpact-adlist">
                 <li>
                     <div class="adlist-image">
-                        <img src="home/images/adlist-onscrolldisplay.jpg">
+                        <img src="home/images/adlist-onscrolldisplay.jpg" alt="Outstream Video Ads">
                     </div>
                     <div class="adlist-title">Video</div>
                 </li>
@@ -224,7 +228,7 @@
                 </li>
                 <li>
                     <div class="adlist-image">
-                        <img src="home/images/adlist-infooter.jpg">
+                        <img src="home/images/adlist-infooter.jpg" alt="High CPM Ads">
                     </div>
                     <div class="adlist-title">High Impact</div>
                     <a href="#####">
@@ -236,7 +240,7 @@
                 </li>
                 <li>
                     <div class="adlist-image">
-                        <img src="home/images/adlist-insidebar.jpg">
+                        <img src="home/images/adlist-insidebar.jpg" alt="Display Ads">
                     </div>
                     <div class="adlist-title">Display</div>
                 </li>
@@ -261,12 +265,12 @@
     <div class="homepage-advertiserswrap">
         <div class="homeadvertisers-title">Access to 1,000’s of Premium Advertisers</div>
         <ul class="homeadvertisers-list">
-            <li>Coca-Cola</li>
-            <li>Sony</li>
-            <li>Microsoft</li>
-            <li>Disney</li>
-            <li>Verizon</li>
-            <li>Apple</li>
+            <li>Coca-Cola Advertising</li>
+            <li>Sony Advertising</li>
+            <li>Microsoft Advertising</li>
+            <li>Disney Advertising</li>
+            <li>Verizon Advertising</li>
+            <li>Apple Advertising</li>
         </ul>
     </div>
 

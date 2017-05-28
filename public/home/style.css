@@ -1511,7 +1511,7 @@ ul.navoverlay-list li:nth-child(4) {
 
 .moreinfo-mostadvancedbg {
 	position: absolute;
-	background: url('images/moreinfo-advancedbg.jpg');
+	/*background: url('images/moreinfo-advancedbg.jpg');*/
 	width: 474px;
 	height: 631px;
 }
