@@ -184,10 +184,13 @@
       },
 
       websiteOptions() {
-        return _.concat([{
+        return _.filter(_.concat([{
           'domain': 'All',
-          'id': 0
-        }], this.$store.state.admin.websites)
+          'id': 0,
+          'approved': true
+        }], this.$store.state.admin.websites), (website) => {
+          return website.approved
+        })
       }
     },
 
