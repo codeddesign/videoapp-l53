@@ -1376,6 +1376,7 @@ ul.navoverlay-list li:nth-child(4) {
 
 .lightningfast-served span {
 	color: #4E9FD1;
+	font-family: sans-serif !important;
 }
 
 .headermoreinfo-titlewrap {
