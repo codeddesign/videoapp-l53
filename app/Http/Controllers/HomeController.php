@@ -8,6 +8,7 @@ use App\Mail\BetaSignup;
 use App\Mail\Contact;
 use App\Models\Signup;
 use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Redis\RedisManager;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
@@ -63,7 +64,31 @@ class HomeController extends Controller
 
     public function getFeatures()
     {
-        return view('home.features');
+        $current = $this->getFeaturesLive();
+
+        return view('home.features', compact('current'));
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeaturesLive()
+    {
+        $redis = app(RedisManager::class);
+        $current = 0;
+        foreach ($redis->hgetall('daily_tag_requests') as $no) {
+            $current += (int) $no ?? 0;
+        }
+
+        // remove 25%
+        $aproximated = round($current - .25 * $current);
+
+        // minimum: 100.000
+        if ($aproximated < 1e5) {
+            return 1e5;
+        }
+
+        return $aproximated;
     }
 
     public function demo($mode = 'in-article')
@@ -83,8 +108,13 @@ class HomeController extends Controller
             ],
         ];
 
+<<<<<<< HEAD
         if (! isset($details[$mode])) {
             $mode  = 'in-article';
+=======
+        if (!isset($details[$mode])) {
+            $mode = 'in-article';
+>>>>>>> origin/develop
         }
 
         $info = $details[$mode];
