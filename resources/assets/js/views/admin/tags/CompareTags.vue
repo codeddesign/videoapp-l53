@@ -22,9 +22,9 @@
           <div class="display-dashboardtimewrap">
             <div class="dashmaintime-title">Website</div>
             <div class="dashboard-mainselect">
-              <select v-model="websiteFilter">
-                <option v-for="timeRange in timeRangeOptions" v-bind:value="timeRange.value">
-                  {{ timeRange.text }}
+              <select v-model="website">
+                <option v-for="website in websiteOptions" v-bind:value="website.id">
+                  {{ website.domain }}
                 </option>
               </select>
             <div class="dashmain-selectarrow"></div>
@@ -110,6 +110,8 @@
           { text: 'Last Month', value: 'lastMonth' }
         ],
 
+        website: '0',
+
         requests: 0,
         impressions: 0,
         revenue: 0,
@@ -137,7 +139,7 @@
       },
 
       fetchStats() {
-        http.get('/admin/stats/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
+        http.get('/admin/stats/all?time=' + this.timeRange + '&tags=' + this.selectedTags + '&website=' + this.website)
             .then((response) => {
               this.requests = parseInt(response.data.tagRequests)
               this.impressions = parseInt(response.data.impressions)
@@ -149,7 +151,7 @@
               console.error('Error fetching the stats count.')
             })
 
-        http.get('/admin/charts/all?time=' + this.timeRange + '&tags=' + this.selectedTags)
+        http.get('/admin/charts/all?time=' + this.timeRange + '&tags=' + this.selectedTags + '&website=' + this.website)
             .then((response) => {
               this.chartData = response.data
             })
@@ -179,6 +181,13 @@
 
       useRate() {
         return this.calculateUseRate(this.impressions, this.fills)
+      },
+
+      websiteOptions() {
+        return _.concat([{
+          'domain': 'All',
+          'id': 0
+        }], this.$store.state.admin.websites)
       }
     },
 
@@ -191,6 +200,9 @@
 
     watch: {
       timeRange(newTimeRange) {
+        this.fetchStats()
+      },
+      website(newWebsite) {
         this.fetchStats()
       },
       compareTagsRange(newTimeRange) {

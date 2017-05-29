@@ -27,6 +27,7 @@ class ChartsController extends ApiController
         $report         = $request->get('report');
         $adType         = $request->get('type');
         $tags           = $request->get('tags') ? explode(',', $request->get('tags')) : null;
+        $website        = ($request->get('website') != 0) ? $request->get('website') : null;
         $backfillFilter = $request->get('backfill') ? explode(',', $request->get('backfill')) : null;
 
         if ($report) {
@@ -47,7 +48,7 @@ class ChartsController extends ApiController
         $stats = CampaignEvent::query()
             ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(count) as count'))
             ->with('tag', 'website', 'backfill')
-            ->where('name', '!=', 'viewership') //viewership data isn't charted
+            ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat));
 
         if ($tags) {
@@ -64,6 +65,10 @@ class ChartsController extends ApiController
             })->get()->pluck('id')->toArray();
 
             $stats = $stats->whereIn('campaign_id', $campaignIds);
+        }
+
+        if($website) {
+            $stats = $stats->where('website_id', $website);
         }
 
         if ($report) {

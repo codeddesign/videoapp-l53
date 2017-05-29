@@ -42,7 +42,8 @@ const state = {
   websitesStats: [],
   campaignStats: [],
   showLocations: 'countries',
-  globalOptions: []
+  globalOptions: [],
+  websites: []
 }
 
 const actions = {
