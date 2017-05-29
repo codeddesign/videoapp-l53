@@ -75,15 +75,15 @@ class HomeController extends Controller
             ],
             'sidebar' => [
                 'title' => 'Sidebar',
-                'campaign' => 2
+                'campaign' => 2,
             ],
             'display-plus' => [
                 'title' => 'Display Plus',
-                'campaign' => 3
-            ]
+                'campaign' => 3,
+            ],
         ];
 
-        if(!isset($details[$mode])) {
+        if (! isset($details[$mode])) {
             $mode  = 'in-article';
         }
 

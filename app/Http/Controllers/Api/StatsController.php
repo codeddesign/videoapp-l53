@@ -62,7 +62,7 @@ class StatsController extends ApiController
                 return $item->created_at->format('F d, Y');
             });
 
-        return (new StatsTransformer)->transform($statsByCampaign, $timespan);;
+        return (new StatsTransformer)->transform($statsByCampaign, $timespan);
     }
 
     protected function campaignEvents($timespan)

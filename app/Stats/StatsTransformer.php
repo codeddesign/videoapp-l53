@@ -18,7 +18,7 @@ class StatsTransformer
         'desktopPrerollFill', 'mobilePrerollFill', 'desktopPrerollErrors', 'mobilePrerollErrors',
         'desktopOutstreamFill', 'mobileOutstreamFill', 'desktopOutstreamErrors', 'mobileOutstreamErrors',
         'desktopFill', 'mobileFill', 'desktopUserate', 'mobileUserate', 'desktopPageviewsFill', 'mobilePageviewsFill',
-        'desktopImpressions', 'mobileImpressions'
+        'desktopImpressions', 'mobileImpressions',
     ];
 
     public function transformRealtime($stats)
@@ -145,11 +145,11 @@ class StatsTransformer
                 switch ($stat->backfill->platform_type) {
                     case 'mobile':
                         $data['mobileBackfillImpressions'] += $stat->count;
-                        $data['mobileBackfillRevenue']     += $this->calculateRevenue($stat->count, $stat->backfill);
+                        $data['mobileBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                     case 'desktop':
                         $data['desktopBackfillImpressions'] += $stat->count;
-                        $data['desktopBackfillRevenue']     += $this->calculateRevenue($stat->count, $stat->backfill);
+                        $data['desktopBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                 }
             }
@@ -202,7 +202,6 @@ class StatsTransformer
 
         //Loop through all date periods
         foreach ($dateRange->arrayByStep() as $period) {
-
             $key       = $period->format($format);
             $timestamp = $period->timestamp * 1000;
 

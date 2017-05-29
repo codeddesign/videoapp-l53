@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Cache\Repository;
 
 /**
  * Database Columns
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string     $domain
  * @property bool       $approved
  * @property bool       $waiting
+ * @property bool       $owned
  * @property Carbon     $created_at
  * @property Carbon     $updated_at
  *
@@ -80,7 +82,7 @@ class Website extends Model
      */
     public static function linkDomain($link)
     {
-        $link   = (strpos($link, "://") === false) ? "http://{$link}" : $link;
+        $link = (strpos($link, '://') === false) ? "http://{$link}" : $link;
 
         $parsed = parse_url($link);
         if (! isset($parsed['host'])) {
@@ -127,5 +129,21 @@ class Website extends Model
         }
 
         return (int) $websiteId;
+    }
+
+    public static function websiteByLink($link)
+    {
+        /** @var Repository $cache */
+        $cache = app(Repository::class);
+
+        $domain = self::linkDomain($link);
+
+        if (! $domain) {
+            return;
+        }
+
+        return $cache->tags(['website'])->remember("website.domain.{$domain}", 60, function () use ($domain) {
+            return self::whereDomain($domain)->first();
+        });
     }
 }

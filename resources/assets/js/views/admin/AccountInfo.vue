@@ -181,6 +181,7 @@
               <ul class="userinfo-itemlistheader userinfo-websitelistheader">
                 <li>URL</li>
                 <li>APPROVAL</li>
+                <li>O&O</li>
                 <li>STATE</li>
               </ul>
               <!-- START ACCOUNT WEBSITES LIST -->
@@ -190,6 +191,12 @@
                     <div class="dashboard-statslist1">{{ website.domain }}</div>
                     <div class="dashboard-statslist2" v-bind:class="websiteApprovedClass(website)">
                       {{ websiteApprovedStatus(website) }}
+                    </div>
+                    <div class="dashboard-statslist2">
+                      <div class="dashboard-switch">
+                        <input v-bind:id="'owned' + website.id" type="checkbox" v-on:change="ownedWebsite(website.id, $event)" class="cmn-toggle cmn-toggle-round-flat cmn-togglechange" v-bind:checked="website.owned">
+                        <label v-bind:for="'owned' + website.id" class="cmn-labelchange"></label>
+                      </div>
                     </div>
                   </div>
                   <div class="dashboard-statslist3">
@@ -474,6 +481,10 @@
         Admin.activateWebsite(id, event.target.checked)
       },
 
+      ownedWebsite(id, event) {
+        Admin.ownedWebsite(id, event.target.checked)
+      },
+
       activateCampaign(id, event) {
         Admin.activateCampaign(id, event.target.checked)
       },
@@ -627,7 +638,9 @@
       },
 
       websites() {
-        return this.$store.state.admin.websitesStats
+        return _.sortBy(this.$store.state.admin.websitesStats, w => {
+          return w.created_at
+        })
       },
 
       campaigns() {
@@ -642,6 +655,10 @@
 </script>
 
 <style lang="scss">
+  ul.userinfo-websitelistheader li:first-child, ul.userinfo-websitelist li .dashboard-statslist1 {
+    width: calc(100% - 400px);
+  }
+
   .account_address {
     white-space: pre-wrap;
   }

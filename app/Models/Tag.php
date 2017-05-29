@@ -35,6 +35,7 @@ use Illuminate\Redis\RedisManager;
  * @property int    $infinity_wrapper_limit
  * @property int    $infinity_delay_time
  * @property bool   $active
+ * @property bool   $for_owned
  * @property array  $included_locations
  * @property array  $excluded_locations
  * @property array  $included_websites
@@ -53,7 +54,7 @@ class Tag extends Model
         'delay_time', 'ecpm', 'guarantee_limit', 'guarantee_order', 'guarantee_enabled',
         'priority_count', 'timeout_limit', 'wrapper_limit', 'active', 'included_locations',
         'excluded_locations', 'included_websites', 'excluded_websites', 'infinity_timeout_limit',
-        'infinity_wrapper_limit', 'infinity_delay_time', 'demo_data',
+        'infinity_wrapper_limit', 'infinity_delay_time', 'demo_data', 'for_owned',
     ];
 
     protected $dates = [
@@ -71,14 +72,17 @@ class Tag extends Model
         'demo_data'          => 'array',
     ];
 
-    public static function forRequest(array $location, $websiteId)
+    public static function forRequest(array $location, $website)
     {
         /** @var Repository $cache */
         $cache = app(Repository::class);
 
+        $websiteId = $website->id;
+
         // Cache the tags
-        $tags = $cache->tags(['tags'])->remember('tags.all', 5, function () {
+        $tags = $cache->tags(['tags'])->remember('tags.all', 5, function () use ($website) {
             return Tag::where('active', true)
+                ->where('for_owned', $website->owned)
                 ->where(function ($query) {
                     $date = Carbon::now();
 

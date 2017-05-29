@@ -52,7 +52,7 @@ export default {
     })
   },
 
-  default() {
+  default(forOwned = false) {
     return {
       id: 0,
       url: '',
@@ -61,6 +61,7 @@ export default {
       platform_type: 'all',
       type: 'outstream',
       date_range: false,
+      for_owned: forOwned,
       start_date: '',
       end_date: '',
       ad_types: [],

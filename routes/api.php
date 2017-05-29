@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::get('websites', 'WebsitesController@index');
     Route::get('websites/stats', 'WebsitesController@stats');
     Route::post('websites/{id}/activate', 'WebsitesController@activate');
+    Route::post('websites/{id}/owned', 'WebsitesController@owned');
     Route::get('websites/pending', 'WebsitesController@pending');
 
     Route::get('backfill', 'BackfillController@index');

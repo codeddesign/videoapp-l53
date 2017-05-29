@@ -18,6 +18,7 @@ class TagTransformer extends Transformer
             'ad_types'               => $tag->ad_types,
             'type'                   => $tag->type,
             'date_range'             => (boolean) $tag->date_range,
+            'for_owned'                  => (boolean) $tag->for_owned,
             'start_date'             => $this->date($tag->start_date),
             'end_date'               => $this->date($tag->end_date),
             'daily_request_limit'    => (int) $tag->daily_request_limit,
