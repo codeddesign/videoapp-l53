@@ -44,6 +44,10 @@ class CampaignsController extends Controller
 
         $location = Location::byIp($ip);
 
+        if (! request()->get('xml') && ! $website && ! request()->get('test')) {
+            return response('Unauthorized.', 401);
+        }
+
         if ($request->get('test')) {
             $tags = [Tag::findOrFail($request->get('test'))];
         } else {
@@ -57,12 +61,8 @@ class CampaignsController extends Controller
             $redis->hsetnx('sm_domains', $domain, $date);
         }
 
-        if (! request()->get('xml') && ! $website->id) {
-            return response('Unauthorized.', 401);
-        }
-
         $platform = $request->get('platform');
-        $backfill = Backfill::forRequest($website->id, $campaign['ad_type'], $platform);
+        $backfill = Backfill::forRequest($website, $campaign['ad_type'], $platform);
 
         Datadogstatsd::increment('video-app.campaign_request', 1);
 
@@ -72,7 +72,7 @@ class CampaignsController extends Controller
             'backfill'   => $backfill,
             'ip'         => $ip,
             'location'   => $location,
-            'website_id' => $website->id,
+            'website_id' => $website->id ?? null,
         ], 200);
     }
 
