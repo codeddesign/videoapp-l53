@@ -28,7 +28,7 @@ class StatsController extends ApiController
         $backfillFilter = $request->get('backfill') ? explode(',', $request->get('backfill')) : null;
 
         if (! $timespan || $timespan === 'realtime') {
-            $stats = $this->fetchRealTimeData($adType, $website);
+            $stats = $this->fetchRealTimeData($adType);
         } else {
             $stats = $this->fetchHistoricalData($timespan, $tags, $backfillFilter, $website);
         }
@@ -36,24 +36,15 @@ class StatsController extends ApiController
         return $this->jsonResponse($stats);
     }
 
-    protected function fetchRealTimeData($type, $website)
+    protected function fetchRealTimeData($type)
     {
         $campaignIds = null;
 
-        if ($type !== null || $website !== null) {
-            $campaignIds = Campaign::with('type', 'website');
-
-            if($type !== null) {
-                $campaignIds = $campaignIds->whereHas('type', function ($query) use ($type) {
+        if ($type !== null) {
+            $campaignIds = Campaign::with('type', 'website')
+                ->whereHas('type', function ($query) use ($type) {
                     $query->where('ad_type_id', $type);
-                });
-            }
-
-            if($website !== null) {
-                $campaignIds = $campaignIds->where('website_id', $website);
-            }
-
-            $campaignIds->get()->pluck('id')->toArray();
+                })->get()->pluck('id')->toArray();
 
             $campaignEvents  = (new CampaignEvents)->fetchMultipleCampaigns($campaignIds);
             $analyticsEvents = (new AnalyticsEvents)->fetchAllAnalytics();
