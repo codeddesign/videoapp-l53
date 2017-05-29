@@ -72,7 +72,9 @@
         <div class="headermoreinfo-titlewrap">
             <div class="lightningfast-title"></div>
             <div class="lightningfast-sub">ADS DELIVERED TO MILLIONS AROUND THE WORLD EVERY DAY</div>
-            <div class="lightningfast-served"><span>498,014,982</span> Ads Served</div>
+            <div class="lightningfast-served">
+                <span class="live" style="min-width: 230px;display: inline-block;">{{ number_format(round($current / 2), 0, '.', ',') }}</span> Ads Served Today
+            </div>
         </div>
     </div>
 
@@ -165,17 +167,52 @@
             <div class="moreinfo-userdash"></div>
         </div>
 
-        <!--
-            <div class="moreinfo-earntitle">Start Earning More Today</div>
-            <div class="moreinfo-earnsub">Proven conversion rates, industry leading revenue returns, and a 30-second signup. <br>It doesn’t get any better than this!</div>
-            <div class="moreinfo-earnssignupwrap">
-                <div class="moreinfo-earnsignup">Sign Up</div>
-            </div>
-            -->
-
-        <!-- SIGNUP FORM -->
         @include('home.partial.betasignup', ['source' => 'featurespage'])
 
     </div>
+
+    <script>
+        (function() {
+            var $el = $('.live'),
+                interval_delay = 500,
+                ajax_delay = 5000,
+                end = {{ $current }},
+                current = parseInt(Math.round(end / 2)),
+                interval = false;
+
+            var runInterval = function () {
+                interval = setInterval(() => {
+                    if (end > current) {
+                        current += Math.ceil((end - current) / interval_delay);
+
+                        $el.html(current.toLocaleString());
+
+                        return false;
+                    }
+                }, interval_delay / (end - current));
+            }
+
+            var fetch = function () {
+                if(interval) {
+                    clearInterval(interval);
+                }
+
+                runInterval();
+
+                setTimeout(function() {
+                    $.get('/features/live', function(response) {
+                        interval_delay = ajax_delay * 2;
+
+                        end = parseInt(response);
+
+                        fetch();
+                    });
+                }, ajax_delay);
+            };
+
+            // start
+            fetch();
+        })();
+    </script>
 
     @include('home.footer')

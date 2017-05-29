@@ -10,6 +10,7 @@ Route::post('contact', 'HomeController@postContact');
 
 // Features
 Route::get('features', 'HomeController@getFeatures');
+Route::get('features/live', 'HomeController@getFeaturesLive');
 
 // Demo
 Route::get('demo/{mode?}', 'HomeController@demo');
