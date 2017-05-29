@@ -108,13 +108,8 @@ class HomeController extends Controller
             ],
         ];
 
-<<<<<<< HEAD
         if (! isset($details[$mode])) {
             $mode  = 'in-article';
-=======
-        if (!isset($details[$mode])) {
-            $mode = 'in-article';
->>>>>>> origin/develop
         }
 
         $info = $details[$mode];
