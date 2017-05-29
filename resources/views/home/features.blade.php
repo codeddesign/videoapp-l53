@@ -137,8 +137,8 @@
         <div class="moreinfo-mostadvancedbg"></div>
         <div class="moreinfo-advancedwrapper">
             <div class="moreinfo-advancedleft">
-                <div class="moreinfo-advancedtitle">The <span>Most Advanced</span>
-                    <br> Video Ads Platform</div>
+                <div class="moreinfo-advancedtitle">The World's <span>Most Advanced</span>
+                    <br> Advertising Platform</div>
 
                 <div class="moreinfo-advancedcontent">
                     Utilizing proprietary technology, our cross-device responsive video ads platform delivers high conversion video ads in at lightning speed.
