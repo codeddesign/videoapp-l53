@@ -41,7 +41,7 @@ class StatsController extends ApiController
         $campaignIds = null;
 
         if ($type !== null) {
-            $campaignIds = Campaign::with('type', 'website')
+            $campaignIds = Campaign::with('type')
                 ->whereHas('type', function ($query) use ($type) {
                     $query->where('ad_type_id', $type);
                 })->get()->pluck('id')->toArray();
