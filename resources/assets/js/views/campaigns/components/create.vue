@@ -101,7 +101,7 @@
     data() {
       return {
         campaign_types: [{
-          id: 7,
+          id: null,
           title: 'On-Scroll Display',
           has_name: true
         }],
@@ -132,7 +132,7 @@
           }
         ],
         campaign: {
-          campaign_type_id: 7,
+          campaign_type_id: null,
           name: '',
           video: ''
         },
@@ -145,6 +145,9 @@
         http.get('/campaign-types')
             .then((response) => {
               this.campaign_types = response.data.data
+              this.campaign.campaign_type_id = _.find(this.campaign_types, (type) => {
+                return type.title === 'On-Scroll Display'
+              }).id
             })
 
         // hold a clean copy of campaign
