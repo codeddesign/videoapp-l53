@@ -19,7 +19,7 @@ export default {
     return jwt
   },
 
-  logout(redirect = '/login') {
+  logout(redirect = '/logout') {
     ls.remove('jwt')
     Cookies.remove('jwt_token')
     window.location.href = redirect

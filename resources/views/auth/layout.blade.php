@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
         <meta charset="utf-8" id="token" value="{{ csrf_token() }}">
-        <title>Video App</title>
+        <title>Ad³ Ad Server</title>
         <link href="{{asset('css/auth.css')}}" rel="stylesheet" type="text/css">
     </head>
 </head>

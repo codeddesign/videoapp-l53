@@ -18,6 +18,7 @@ Route::get('charts/all', 'ChartsController@stats');
 
 Route::get('user', 'UsersController@user');
 Route::get('user/token', 'UsersController@token'); // temporary token
+Route::get('logout', 'UsersController@logout');
 
 Route::get('reports', 'ReportsController@index');
 Route::post('reports', 'ReportsController@store');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Transformers\UserTransformer;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends ApiController
 {
@@ -19,5 +20,14 @@ class UsersController extends ApiController
         $token = $jwtAuth->fromUser($this->user, 5);
 
         return $token;
+    }
+
+    public function logout()
+    {
+        $auth = app(AuthManager::class)->guard('web');
+
+        $auth->logout();
+
+        return redirect('login');
     }
 }
