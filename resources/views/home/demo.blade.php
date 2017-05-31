@@ -90,9 +90,11 @@
                     <div class="demopage-smallarea"></div>
                     <div class="demopage-smallarea"></div>
                     <div class="demopage-smallarea"></div>
+                    <center>
                     @if ($info['campaign'] == 1 || $info['campaign'] == 3)
                     <script src="{{ $app->environment('APP_URL') }}/demod/i{{ $info['campaign'] }}.js"></script>
                     @endif
+                    </center>
                     <div class="demopage-smallarea"></div>
                     <div class="demopage-smallarea"></div>
                     <div class="demopage-smallarea"></div>
@@ -105,9 +107,11 @@
                     <div class="demopage-smallarea"></div>
                 </div>
                 <div class="demopage-scrollright">
+	                <center>
                     @if ($info['campaign'] == 2)
                         <script src="{{ $app->environment('APP_URL') }}/demod/i2.js"></script>
                     @endif
+	                </center>
                     <div class="demopage-largemidarea"></div>
                     <div class="demopage-smallarea"></div>
                     <div class="demopage-smallarea"></div>
