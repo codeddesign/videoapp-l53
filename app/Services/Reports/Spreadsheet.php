@@ -84,6 +84,7 @@ class Spreadsheet
             'impressions'      => 'Impressions',
             'fills'            => 'Fills',
             'fill_rate'        => 'Fill Rate',
+            'pv_fill_rate'     => 'PV Fill Rate',
             'revenue'          => 'Revenue',
             'cpm'              => 'eCPM',
             'click'            => 'Clicks',

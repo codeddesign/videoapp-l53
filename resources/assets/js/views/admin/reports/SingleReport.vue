@@ -255,7 +255,7 @@
           return accounting.formatMoney(stat)
         }
 
-        if (['fill_rate', 'error_rate', 'ctr', 'completion_rate'].indexOf(key) !== -1) {
+        if (['fill_rate', 'error_rate', 'ctr', 'completion_rate', 'pv_fill_rate'].indexOf(key) !== -1) {
           return stat + '%'
         }
 
