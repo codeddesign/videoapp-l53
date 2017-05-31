@@ -16,7 +16,7 @@ class DateRange
     public function __construct($from, $to, $timezone = 'UTC')
     {
         $this->from     = new Carbon($from, $timezone);
-        $this->to       = new Carbon($to, $timezone);
+        $this->to       = (new Carbon($to, $timezone))->endOfDay();
         $this->timezone = $timezone;
     }
 
