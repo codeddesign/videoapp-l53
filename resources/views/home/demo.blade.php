@@ -4,13 +4,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta name="viewport" content="width=auto, initial-scale=0">
+    <meta name="viewport" content="width=550, user-scalable=no">
     <title>Ad&sup3; Media | {{ $info['title'] }} Video Demo</title>
     <meta name="description" content="Ad3 Media delivers the highest converting advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">
     <link rel='shortcut icon' href='/home/images/ad3favicon.png'>
     <link href="../home/style.css?v=2" rel="stylesheet" type="text/css">
-
-    <!-- <link href="../home/responsive.css" rel="stylesheet" type="text/css"> -->
+	<link href="../home/responsive.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -79,9 +78,11 @@
 
     <div class="demopage-mainwrapper">
         <div class="demopage-maintitlewrap">
-            <div class="demopage-titleblueback"></div>
-            <div class="demopage-maintitle">{{ $info['title'] }} Video Demo</div>
-
+            <div class="demopage-maintitlewrapper">
+            	<div class="demopage-titleblueback"></div>
+				<div class="demopage-maintitle">{{ $info['title'] }} Video Demo</div>
+            </div>
+            	
             <div class="demopage-scrollareawrap">
                 <div class="demopage-scrollleft" style="margin-top: -9px;">
                     <div class="demopage-scrolldowntext"><span></span> Scroll down to view ad <span></span></div>

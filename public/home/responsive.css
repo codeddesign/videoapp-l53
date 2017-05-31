@@ -141,6 +141,50 @@
 	.sendmessage-rightbox {
 		width: 35%;
 	}
+	.demopage-mainwrapper {
+	    width: 100%;
+	}
+	.demopage-scrollareawrap {
+	    width: calc(100% - 60px);
+	    padding: 0 30px;
+	}
+	.demopage-scrollleft {
+		width: 100%;
+	}
+	.demopage-scrollright {
+		width: 100%;
+		margin-top: 8px;
+	}
+	.demopage-maintitlewrapper {
+		width: 450px;
+		margin: 0 auto;
+	}
+	.demopage-titleblueback {
+		position: static;
+		margin-top: 40px;
+		width: 450px;
+	}
+	.demopage-maintitle {
+		margin-top: -40px;
+		font-size: 41px;
+	}
+	.demopage-placewrap {
+		width: 100%;
+		float: left;
+	}
+	ul.demopage-placers {
+		float: none;
+		width: 223px;
+		margin: 0 auto;
+		margin-bottom: 100px;
+		margin-top: 42px;
+	}
+	ul.demopage-placers li {
+		margin-bottom: 25px;
+	}
+	.demopage-placeoptions {
+		height: 1090px;
+	}
 }
 @media screen and (max-width: 850px) {
 	.headermoreinfo-titlewrap {
