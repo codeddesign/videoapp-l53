@@ -2274,7 +2274,7 @@ div.asyncbidring {
 .demopage-largemidarea {
 	float: left;
 	width: 100%;
-	min-height: 179px;
+	min-height: 159px;
 	background: #EEEEEE;
 	margin-bottom: 7px;
 }
@@ -2442,4 +2442,8 @@ ul.demopage-placers li .demopage-placesub a {
 
 ul.demopage-placers li .demopage-placesub a:hover {
 	text-decoration: underline;
+}
+
+a3m-backfill iframe {
+	max-width: 100%;
 }
