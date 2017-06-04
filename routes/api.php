@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('backfill/{id}/activate', 'BackfillController@activate');
 
     Route::get('accounts', 'AccountsController@index');
+    Route::post('accounts', 'AccountsController@store');
     Route::post('accounts/{id}/note', 'AccountsController@addNote');
     Route::post('accounts/{id}/activate', 'AccountsController@activate');
 

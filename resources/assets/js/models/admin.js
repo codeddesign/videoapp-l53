@@ -73,6 +73,13 @@ export default {
     }
   },
 
+  saveAccount(account) {
+    return axios.post('/admin/accounts', account)
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   createReport(report) {
     return axios.post('/admin/reports', report)
     .then((response) => {

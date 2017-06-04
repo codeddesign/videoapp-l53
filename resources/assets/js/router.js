@@ -22,6 +22,7 @@ import AdminDashboard from './views/admin/Dashboard.vue'
 import AdminAccounts from './views/admin/Accounts.vue'
 import AdminAnalytics from './views/admin/Analytics.vue'
 import AccountInfo from './views/admin/AccountInfo.vue'
+import AdminAccountForm from './views/admin/AccountForm.vue'
 import TagManagement from './views/admin/tags/TagManagement.vue'
 import Reports from './views/admin/reports/Reports.vue'
 import ReportForm from './views/admin/reports/ReportForm.vue'
@@ -137,6 +138,14 @@ export default new Router({
           component: AdminAccounts,
           meta: {
             title: 'Manage Accounts'
+          }
+        },
+        {
+          path: 'accounts/new',
+          name: 'admin.accounts.new',
+          component: AdminAccountForm,
+          meta: {
+            title: 'New Account'
           }
         },
         {

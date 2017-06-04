@@ -97,7 +97,7 @@ class CampaignEvent extends Model
             return $query;
         }
 
-        return $query->where(function($query) use ($user) {
+        return $query->where(function ($query) use ($user) {
             return $query->whereHas('campaign', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })->whereHas('website', function ($query) use ($user) {

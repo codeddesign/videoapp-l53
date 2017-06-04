@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\Api\Admin\StoreAccountRequest;
+use App\Mail\AccountCreated;
 use App\Models\CampaignEvent;
 use App\Models\Note;
+use App\Models\Website;
 use App\Stats\Calculator;
 use App\Transformers\NoteTransformer;
 use App\Transformers\UserTransformer;
 use App\Models\User;
 use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\DB;
 
 class AccountsController extends ApiController
@@ -72,12 +76,50 @@ class AccountsController extends ApiController
     {
         $user = User::findOrFail($id);
 
-        $note = new Note;
-        $note->user_id = $user->id;
+        $note             = new Note;
+        $note->user_id    = $user->id;
         $note->creator_id = $this->user->id;
-        $note->content = $request->get('content');
+        $note->content    = $request->get('content');
         $note->save();
 
         return $this->itemResponse($note, new NoteTransformer);
+    }
+
+    public function store(StoreAccountRequest $request, Mailer $mailer)
+    {
+        $password = str_random(12);
+
+        $user                 = new User();
+        $user->first_name     = $request->get('first_name');
+        $user->last_name      = $request->get('last_name');
+        $user->company        = $request->get('company');
+        $user->email          = $request->get('email');
+        $user->password       = $password;
+        $user->phone_number   = $request->get('phone_number');
+        $user->street_line_1  = $request->get('street_line_1');
+        $user->street_line_2  = $request->get('street_line_2');
+        $user->city           = $request->get('city');
+        $user->state          = $request->get('state');
+        $user->country        = $request->get('country');
+        $user->zip_code       = $request->get('zip_code');
+        $user->verified_email = true;
+        $user->verified_phone = true;
+        $user->active         = true;
+
+        $user->save();
+
+        foreach ($request->get('websites') as $data) {
+            $website          = new Website();
+            $website->user_id = $user->id;
+            $website->setDomainAttribute($data['url']);
+            $website->owned    = $data['owned'];
+            $website->approved = true;
+            $website->waiting  = false;
+            $website->save();
+        }
+
+        $mailer->to($user)->send(new AccountCreated($user, $password));
+
+        return $this->itemResponse($user, new UserTransformer());
     }
 }

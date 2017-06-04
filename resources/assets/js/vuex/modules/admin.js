@@ -33,6 +33,7 @@ const state = {
   tagsToCompare: [],
   reports: [],
   showTagForm: false,
+  showTagFormOwned: false,
   currentTag: Tag.default(),
   locations: {
     countries: [],
@@ -77,8 +78,8 @@ const actions = {
     })
   },
 
-  setShowTagForm({ commit }, status) {
-    commit(SET_SHOW_TAG_FORM, status)
+  setShowTagForm({ commit }, { status, owned }) {
+    commit(SET_SHOW_TAG_FORM, { status: status, owned: owned })
   },
 
   setCurrentTag({ commit }, tag) {
@@ -181,8 +182,12 @@ const mutations = {
     state.accounts = _.sortBy(state.accounts, ['id'])
   },
 
-  [SET_SHOW_TAG_FORM](state, status) {
-    state.showTagForm = status
+  [SET_SHOW_TAG_FORM](state, { status, owned }) {
+    if (owned) {
+      state.showTagFormOwned = status
+    } else {
+      state.showTagForm = status
+    }
   },
 
   [SET_CURRENT_TAG](state, tag) {

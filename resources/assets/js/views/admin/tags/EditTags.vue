@@ -108,7 +108,11 @@
 
     computed: {
       formShowStatus() {
-        return this.$store.state.admin.showTagForm
+        if (this.owned) {
+          return this.$store.state.admin.showTagFormOwned
+        } else {
+          return this.$store.state.admin.showTagForm
+        }
       },
 
       tags() {
@@ -158,7 +162,7 @@
         }
 
         this.$store.dispatch('admin/setCurrentTag', tag)
-        this.$store.dispatch('admin/setShowTagForm', true)
+        this.$store.dispatch('admin/setShowTagForm', { status: true, owned: this.owned })
       },
 
       activateTag(id, event) {

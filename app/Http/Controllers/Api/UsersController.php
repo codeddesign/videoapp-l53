@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Transformers\UserTransformer;
 use Illuminate\Auth\AuthManager;
-use Illuminate\Support\Facades\Auth;
 
 class UsersController extends ApiController
 {

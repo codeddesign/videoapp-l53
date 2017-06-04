@@ -17,7 +17,6 @@ class Reports
         $combineBy = $reportQuery->mapTypeToModel($report->combine_by);
         $sortBy    = $reportQuery->mapTypeToModel($report->sort_by);
 
-
         $relations = [$combineBy['relation'], $sortBy['relation']];
 
         $pageviews = ($combineBy['relation'] === 'website' && $sortBy['property'] === 'platform_type' ||

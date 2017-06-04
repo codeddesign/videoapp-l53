@@ -594,7 +594,7 @@
       },
 
       hideForm() {
-        this.$store.dispatch('admin/setShowTagForm', false)
+        this.$store.dispatch('admin/setShowTagForm', { status: false, owned: this.owned })
       },
 
       deleteTag() {

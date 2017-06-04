@@ -81,6 +81,9 @@
       </li>
     </ul>
     <div class="understatlist-wrapper">
+      <div class="create-account-button" @click="newAccount()">
+        Create New Account
+      </div>
       <div class="dashpagination-wrapper">
         <div @click="pagination.previousPage()" class="dashpag-left"></div>
         <div class="dashpag-numbers">{{ pagination.currentPage() }} of {{ pagination.totalPages() }}</div>
@@ -227,6 +230,10 @@
 
       showAccount(account) {
         this.$router.push({ name: 'admin.accounts.info', params: { accountId: account.id }})
+      },
+
+      newAccount(account) {
+        this.$router.push({ name: 'admin.accounts.new' })
       }
     },
 
@@ -235,3 +242,17 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .create-account-button {
+    float: left;
+    margin-top: 10px;
+    cursor: pointer;
+    cursor: hand;
+    color: #373F52;
+    font-size: 14px;
+    margin-left: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+  }
+</style>
