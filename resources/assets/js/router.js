@@ -12,6 +12,7 @@ import ListCampaign from './views/campaigns/components/listing.vue'
 import UserReports from './views/reports/Reports.vue'
 import UserSingleReport from './views/reports/SingleReport.vue'
 import UserReportForm from './views/reports/ReportForm.vue'
+import UserForm from './views/user/UserForm.vue'
 import WebConfig from './views/webconfig/WebConfig.vue'
 import Support from './views/support/Support.vue'
 import Logout from './views/components/Logout.vue'
@@ -100,6 +101,14 @@ export default new Router({
       component: UserReportForm,
       meta: {
         title: 'Edit Report'
+      }
+    },
+    {
+      path: '/user/settings',
+      name: 'user.settings',
+      component: UserForm,
+      meta: {
+        title: 'Your Account'
       }
     },
     {
