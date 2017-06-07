@@ -6,6 +6,7 @@
         :body="modal.body"
         :confirm="modal.confirm"
         :callback="modal.callback"
+        :message="modal.message"
         v-on:close="closeModal"
     ></app-modal>
     <div class="page-index" v-cloak>
@@ -143,6 +144,7 @@
           title: '',
           body: '',
           confirm: false,
+          message: false,
           callback: () => {}
         }
       }
@@ -171,9 +173,9 @@
           visible: true,
           title: 'Confirm',
           body: 'Are you sure you want to remove "' + campaign.name + '"?',
-          confirm: true,
+          confirm: 'Remove',
           callback: () => {
-            http.delete('/campaigns/' + campaign.id)
+            return http.delete('/campaigns/' + campaign.id)
                 .then((response) => {
                   var index = this.response.campaigns.indexOf(campaign)
                   this.response.campaigns.splice(index, 1)
@@ -188,7 +190,23 @@
         this.modal = {
           visible: true,
           title: 'Copy the code below into your website',
-          body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;">' + campaign.embed + '<\/textarea>'
+          body: '<textarea style="width: 100%;height: 100%;resize: none;min-width: 450px;" id="tt">' + campaign.embed + '<\/textarea>',
+          confirm: 'Copy embed',
+          message: '',
+          callback: () => {
+            return new Promise((resolve, reject) => {
+              document.querySelector('#tt').select()
+              document.execCommand('copy')
+
+              this.modal.message = 'Embed code has been copied to your clipboard..'
+
+              setTimeout(() => {
+                this.modal.message = ''
+              }, 2500)
+
+              resolve()
+            })
+          }
         }
       },
 
