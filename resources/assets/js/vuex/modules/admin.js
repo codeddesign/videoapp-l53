@@ -34,7 +34,10 @@ const state = {
   reports: [],
   showTagForm: false,
   showTagFormOwned: false,
-  currentTag: Tag.default(),
+  currentTag: {
+    owned: Tag.default(true),
+    not_owned: Tag.default()
+  },
   locations: {
     countries: [],
     states: [],
@@ -45,6 +48,10 @@ const state = {
   showLocations: 'countries',
   globalOptions: [],
   websites: []
+}
+
+const tagKey = (tag) => {
+  return tag.for_owned ? 'owned' : 'not_owned'
 }
 
 const actions = {
@@ -88,15 +95,15 @@ const actions = {
     commit(SET_CURRENT_TAG, _.cloneDeep(tag))
   },
 
-  saveCurrentTag({ commit }) {
-    Tag.save(state.currentTag).then((tags) => {
-      commit(SAVE_CURRENT_TAG, tags.data)
+  saveCurrentTag({ commit }, saved) {
+    Tag.save(state.currentTag[tagKey(saved)]).then((tags) => {
+      commit(SAVE_CURRENT_TAG, { tags: tags.data, saved: saved })
     })
   },
 
-  deleteCurrentTag({ commit }) {
-    Tag.delete(state.currentTag).then((tags) => {
-      commit(DELETE_CURRENT_TAG, tags.data)
+  deleteCurrentTag({ commit }, deleted) {
+    Tag.delete(state.currentTag[tagKey(deleted)]).then((tags) => {
+      commit(DELETE_CURRENT_TAG, { tags: tags.data, deleted: deleted })
     })
   },
 
@@ -200,19 +207,29 @@ const mutations = {
       }
     })
 
-    state.currentTag = tag
+    state.currentTag[tagKey(tag)] = tag
   },
 
-  [SAVE_CURRENT_TAG](state, tags) {
+  [SAVE_CURRENT_TAG](state, { tags, saved }) {
     state.tags = tags
-    state.currentTag = Tag.default()
-    state.showTagForm = false
+    state.currentTag[tagKey(saved)] = Tag.default()
+
+    if (saved.for_owned) {
+      state.showTagFormOwned = false
+    } else {
+      state.showTagForm = false
+    }
   },
 
-  [DELETE_CURRENT_TAG](state, tags) {
+  [DELETE_CURRENT_TAG](state, { tags, deleted }) {
     state.tags = tags
-    state.currentTag = Tag.default()
-    state.showTagForm = false
+    state.currentTag[tagKey(deleted)] = Tag.default()
+
+    if (deleted.for_owned) {
+      state.showTagFormOwned = false
+    } else {
+      state.showTagForm = false
+    }
   },
 
   [LOAD_TAGS](state, tags) {

@@ -426,7 +426,7 @@
 
     data() {
       return {
-        tag: _.cloneDeep(this.$store.state.admin.currentTag),
+        tag: _.cloneDeep(this.$store.state.admin.currentTag[this.owned ? 'owned' : 'not_owned']),
         macros: [
           'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
           'DATE', 'MEDIA_ID', 'USER_AGENT', 'CAMPAIGN_ID', 'TIMESTAMP'
@@ -462,7 +462,7 @@
 
           window.alert(errorMsg)
         } else {
-          this.$store.dispatch('admin/saveCurrentTag')
+          this.$store.dispatch('admin/saveCurrentTag', this.tag)
         }
       },
 
@@ -601,7 +601,7 @@
         let confirmed = window.confirm('Are you sure you want to delete this tag?')
 
         if (confirmed) {
-          this.$store.dispatch('admin/deleteCurrentTag')
+          this.$store.dispatch('admin/deleteCurrentTag', this.tag)
         }
       },
 
