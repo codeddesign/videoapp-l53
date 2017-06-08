@@ -100,21 +100,17 @@
   export default {
     data() {
       return {
-        campaign_types: [{
-          id: null,
-          title: 'On-Scroll Display',
-          has_name: true
-        }],
-        step: 'name',
+        campaign_types: [],
+        step: 'type',
         tabNo: 0,
         loading: false,
         error: false,
         tabs: [
-          /* {
+          {
             name: 'type',
             title: 'Select Ad Type',
             disabled: false
-          },*/
+          },
           {
             name: 'name',
             title: 'Create Campaign Name',
@@ -136,37 +132,25 @@
           name: '',
           video: ''
         },
-        backup: {},
-        savedCampaign: {}
+        savedCampaign: false,
+        selectedCampaign: {}
       }
     },
     mounted() {
       this.$nextTick(function() {
         http.get('/campaign-types')
             .then((response) => {
-              this.campaign_types = response.data.data
-              this.campaign.campaign_type_id = _.find(this.campaign_types, (type) => {
-                return type.title === 'On-Scroll Display'
-              }).id
+              this.campaign_types = response.data.data.sort((a, b) => {
+                return b.available > a.available
+              })
             })
-
-        // hold a clean copy of campaign
-        this.backup = JSON.parse(JSON.stringify(this.campaign))
       })
-    },
-
-    computed: {
-      selectedCampaign: function() {
-        return _.find(this.campaign_types, (type) => {
-          return type.id === this.campaign.campaign_type_id
-        })
-      }
     },
 
     methods: {
       resetCampaign: function() {
         Object.keys(this.campaign).forEach(function(key) {
-          this.campaign[key] = this.backup[key]
+          this.campaign[key] = ''
         }.bind(this))
       },
 
@@ -199,6 +183,10 @@
       },
       pickAdType: function(type) {
         this.campaign.campaign_type_id = type.id
+
+        this.selectedCampaign = _.find(this.campaign_types, (_type) => {
+          return _type.id === type.id
+        })
 
         this.nextStep(2)
       },
@@ -246,8 +234,6 @@
             })
       },
       save: function() {
-        this.nextStep(2)
-
         this.loading = true
 
         http.post('/campaigns', this.campaign)
@@ -266,6 +252,8 @@
 
               this.$nextTick(function() {
                 this.$refs.embedJsCode.value = response.data.embed
+
+                this.nextStep(3)
               })
             })
       },
@@ -289,6 +277,10 @@
     .selectadtype-overlay li.disabled {
         pointer-events: none;
         color: #4A5263 !important;
+    }
+
+    .selectadtype-overlay li.disabled img {
+        filter: grayscale(1);
     }
 
     .selectadtype-overlay li.current {
