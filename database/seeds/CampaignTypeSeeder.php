@@ -5,67 +5,74 @@ use Illuminate\Database\Seeder;
 
 class CampaignTypeSeeder extends Seeder
 {
+    /**
+     * List of campaign types.
+     * NOTE: You can add more, but keep the order!
+     *
+     * @var array
+     */
     protected $types = [
         [
             'title' => 'Sidebar Row',
-            'ad_type' => 1,
+            'ad_type_id' => 0,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => true,
         ],
         [
             'title' => 'Action Overlay',
-            'ad_type' => 1,
+            'ad_type_id' => 0,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => true,
         ],
         [
             'title' => 'Standard',
-            'ad_type' => 1,
-            'available' => true,
-            'single' => true,
+            'ad_type_id' => 3,
+            'available' => false,
+            // 'single' => true,
             'has_name' => false,
         ],
         [
             'title' => 'Half-Page Gallery',
-            'ad_type' => 1,
+            'ad_type_id' => 0,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => false,
         ],
         [
             'title' => 'Full-Width Gallery',
-            'ad_type' => 1,
+            'ad_type_id' => 0,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => true,
         ],
         [
             'title' => 'Horizontal Row',
-            'ad_type' => 1,
+            'ad_type_id' => 0,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => true,
         ],
         [
             'title' => 'On-Scroll Display',
-            'available' => true,
-            'single' => true,
+            'ad_type_id' => 1,
+            'available' => false,
+            // 'single' => true,
             'has_name' => true,
         ],
         [
             'title' => 'In Content Gallery',
-            'ad_type' => 1,
+            'ad_type_id' => 0,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => true,
         ],
         [
             'title' => 'Sidebar Infinity',
-            'ad_type' => 2,
+            'ad_type_id' => 2,
             'available' => false,
-            'single' => false,
+            // 'single' => false,
             'has_name' => true,
         ],
     ];
@@ -75,7 +82,18 @@ class CampaignTypeSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->types as $type) {
+        foreach ($this->types as $index => $type) {
+            // NOTE: reason why the order matters
+            $type['id'] = $index + 1;
+
+            if ($current = CampaignType::find($type['id'])) {
+                unset($type['available']);
+
+                $current->update($type);
+
+                continue;
+            }
+
             CampaignType::create($type);
         }
     }

@@ -37,7 +37,7 @@ class CampaignType extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'alias', 'available', 'single', 'has_name', 'ad_type'];
+    protected $fillable = ['id', 'title', 'alias', 'available', 'single', 'has_name', 'ad_type'];
 
     /**
      * The attributes that should be cast to native types.
