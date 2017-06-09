@@ -55,7 +55,7 @@ class CampaignTypeSeeder extends Seeder
             'has_name' => true,
         ],
         [
-            'title' => 'On-Scroll Display',
+            'title' => 'In-article',
             'ad_type_id' => 1,
             'available' => false,
             // 'single' => true,
@@ -69,7 +69,7 @@ class CampaignTypeSeeder extends Seeder
             'has_name' => true,
         ],
         [
-            'title' => 'Sidebar Infinity',
+            'title' => 'Sidebar',
             'ad_type_id' => 2,
             'available' => false,
             // 'single' => false,
