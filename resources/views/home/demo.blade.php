@@ -73,6 +73,9 @@
                 <a href="/contact">
                     <li>CONTACT</li>
                 </a>
+                <a href="/app">
+                    <li>LOGIN</li>
+                </a>
                 <li>
                     <div class="navmore"></div>
                     <div class="closenavmore"></div>
