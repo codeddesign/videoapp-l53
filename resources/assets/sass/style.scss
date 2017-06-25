@@ -1264,15 +1264,15 @@ button.sitevalidation-removesite:hover {
 }
 
 ul.selectadtype-adtypes {
-    float: left;
-    margin: 0;
-    width: 100%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
 }
 
 ul.selectadtype-adtypes li {
     width: 220px;
     height: 230px;
-    float: left;
+    display: inline-block;
     border: 2px solid #303749;
     list-style-type: none;
     margin-right: 20px;

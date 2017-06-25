@@ -140,8 +140,9 @@
       this.$nextTick(function() {
         http.get('/campaign-types')
             .then((response) => {
-              this.campaign_types = response.data.data.sort((a, b) => {
-                return b.available > a.available
+              this.campaign_types = response.data.data.filter((type) => {
+
+                return type.available ? type : false
               })
             })
       })
