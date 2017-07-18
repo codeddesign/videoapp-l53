@@ -15,6 +15,7 @@ use App\Models\User;
 use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class AccountsController extends ApiController
@@ -23,20 +24,22 @@ class AccountsController extends ApiController
     {
         $accounts = User::with('campaigns', 'websites', 'notes')->get();
 
-        $events = CampaignEvent::with('tag', 'website.user')
-            ->select('website_id', 'tag_id', DB::raw('SUM(count) as count'))
-            ->where('name', 'impressions')
-            ->where('tag_id', '!=', null)
-            ->where('website_id', '!=', null)
-            ->timeRange('thirtyDays', $this->user->timezone)
-            ->groupBy('website_id', 'tag_id')
-            ->get()
-            ->groupBy('website_id');
+        $websitesRevenue = Cache::remember('revenueperuser', 60, function () {
+            $events = CampaignEvent::with('tag', 'website.user')
+                ->select('website_id', 'tag_id', DB::raw('SUM(count) as count'))
+                ->where('name', 'impressions')
+                ->where('tag_id', '!=', null)
+                ->where('website_id', '!=', null)
+                ->timeRange('thirtyDays', $this->user->timezone)
+                ->groupBy('website_id', 'tag_id')
+                ->get()
+                ->groupBy('website_id');
 
-        //Calculate revenue per website
-        $websitesRevenue = $events->map(function ($campaignEvents) {
-            return $campaignEvents->sum(function ($event) {
-                return Calculator::revenue($event->count, $event->tag);
+            //Calculate revenue per website
+            return $events->map(function ($campaignEvents) {
+                return $campaignEvents->sum(function ($event) {
+                    return Calculator::revenue($event->count, $event->tag);
+                });
             });
         });
 
