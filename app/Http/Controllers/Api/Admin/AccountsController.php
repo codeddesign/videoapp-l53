@@ -22,9 +22,14 @@ class AccountsController extends ApiController
 {
     public function index()
     {
-        $accounts = User::with('campaigns', 'websites', 'notes')->get();
+        $eagerLoads = array_merge(
+            $this->eagerLoads(),
+            ['campaigns.type', 'campaigns.type.adType', 'websites.user']
+        );
 
-        $websitesRevenue = Cache::remember('revenueperuser', 60, function () {
+        $accounts = User::with($eagerLoads)->get();
+
+        $websitesRevenue = Cache::remember('admin.revperuser', 60, function () {
             $events = CampaignEvent::with('tag', 'website.user')
                 ->select('website_id', 'tag_id', DB::raw('SUM(count) as count'))
                 ->where('name', 'impressions')

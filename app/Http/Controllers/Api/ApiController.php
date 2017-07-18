@@ -25,6 +25,20 @@ class ApiController extends Controller
         });
     }
 
+    public function eagerLoads()
+    {
+        $request  = request();
+        $includes = $request->get('include');
+
+        if ($includes === null) {
+            return null;
+        }
+
+        $fractal = new Manager;
+
+        return $fractal->parseIncludes($includes)->getRequestedIncludes();
+    }
+
     /**
      * Create a JSON response from a collection.
      *
