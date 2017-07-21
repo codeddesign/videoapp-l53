@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Geolite\Location;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
+use Illuminate\Cache\Repository as Cache;
 
 class LocationsController extends ApiController
 {
-    public function index()
+    public function index(Cache $cache)
     {
-        $countries = Location::query()
-            ->distinct()
-            ->orderBy('country')
-            ->where('country', '!=', '')
-            ->get(['country'])
-            ->pluck('country');
+        $countries = $cache->remember('users', 60 * 24, function () {
+            return Location::query()
+                ->distinct()
+                ->orderBy('country')
+                ->where('country', '!=', '')
+                ->get(['country'])
+                ->pluck('country');
+        });
 
         $countries = $countries->map(function ($value) {
             return [
