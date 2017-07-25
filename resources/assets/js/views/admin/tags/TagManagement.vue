@@ -27,6 +27,9 @@
 
     mounted() {
       this.$store.dispatch('admin/loadGlobalOptions')
+      this.$store.dispatch('admin/loadTags')
+      this.$store.dispatch('admin/loadWebsites')
+      this.$store.dispatch('admin/loadCountries')
     }
   }
 </script>

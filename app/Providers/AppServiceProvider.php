@@ -16,13 +16,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('emails', function ($attribute, $value, $parameters) {
-            $rules = [
+            $rules  = [
                 'email' => 'required|email',
             ];
             $emails = explode(',', $value);
             foreach ($emails as $email) {
-                $email = trim($email);
-                $data = [
+                $email     = trim($email);
+                $data      = [
                     'email' => $email,
                 ];
                 $validator = Validator::make($data, $rules);
@@ -33,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        $this->logQueries();
     }
 
     /**
@@ -45,5 +47,28 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
+    }
+
+    protected function logQueries()
+    {
+        $formatSql = function ($sql, $bindings) {
+            $needle = '?';
+            foreach ($bindings as $replace) {
+                $pos = strpos($sql, $needle);
+                if ($pos !== false) {
+                    if (gettype($replace) === "string" || true) {
+                        $replace = ' \''.$replace.'\' ';
+                    }
+                    $sql = substr_replace($sql, $replace, $pos, strlen($needle));
+                }
+            }
+
+            return $sql;
+        };
+
+        \DB::listen(function ($query) use ($formatSql) {
+            \Log::info($formatSql($query->sql, $query->bindings));
+            \Log::info($query->time);
+        });
     }
 }

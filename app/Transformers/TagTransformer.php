@@ -7,6 +7,13 @@ use App\Models\Website;
 
 class TagTransformer extends Transformer
 {
+    protected $websites;
+
+    public function __construct()
+    {
+        $this->websites = Website::all();
+    }
+
     public function transform(Tag $tag)
     {
         $transformedTag = [
@@ -18,7 +25,7 @@ class TagTransformer extends Transformer
             'ad_types'               => $tag->ad_types,
             'type'                   => $tag->type,
             'date_range'             => (boolean) $tag->date_range,
-            'for_owned'                  => (boolean) $tag->for_owned,
+            'for_owned'              => (boolean) $tag->for_owned,
             'start_date'             => $this->date($tag->start_date),
             'end_date'               => $this->date($tag->end_date),
             'daily_request_limit'    => (int) $tag->daily_request_limit,
@@ -52,7 +59,7 @@ class TagTransformer extends Transformer
 
     protected function parseWebsites($websites)
     {
-        $websites = Website::whereIn('id', $websites)->get();
+        $websites = $this->websites->whereIn('id', $websites);
 
         $transformedWebsites = [];
         $websiteTransformer  = new WebsiteTransformer;
