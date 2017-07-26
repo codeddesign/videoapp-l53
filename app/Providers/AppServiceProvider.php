@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
-        $this->logQueries();
+        //$this->logQueries();
     }
 
     /**
@@ -51,6 +51,10 @@ class AppServiceProvider extends ServiceProvider
 
     protected function logQueries()
     {
+        if (! $this->app->environment('local', 'testing')) {
+            return;
+        }
+
         $formatSql = function ($sql, $bindings) {
             $needle = '?';
             foreach ($bindings as $replace) {
