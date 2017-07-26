@@ -1,12 +1,12 @@
 <template>
   <div>
-    <input name="tagmanage-tabbed" id="tagmanage-tabbed1" type="radio">
+    <input name="tagmanage-tabbed" :id="owned + 'tagmanage-tabbed1'" type="radio">
     <section>
       <h1>
-        <label for="tagmanage-tabbed1">MANAGE TAGS</label>
+        <label :for="owned + 'tagmanage-tabbed1'">{{ tabTitle }}</label>
       </h1>
       <div>
-        <tag-form v-if="formShowStatus"></tag-form>
+        <tag-form :owned="owned" v-if="formShowStatus"></tag-form>
 
         <!-- START TAGS AREA -->
         <div class="tagmanage-addnewtag" @click="showForm()">ADD NEW TAG</div>
@@ -93,6 +93,8 @@
   export default {
     name: 'EditTags',
 
+    props: ['owned'],
+
     data() {
       return {
         filters: {
@@ -106,11 +108,25 @@
 
     computed: {
       formShowStatus() {
-        return this.$store.state.admin.showTagForm
+        if (this.owned) {
+          return this.$store.state.admin.showTagFormOwned
+        } else {
+          return this.$store.state.admin.showTagForm
+        }
       },
 
       tags() {
         let tags = this.$store.state.admin.tags
+
+        if (this.owned) {
+          tags = tags.filter((tag) => {
+            return tag.for_owned
+          })
+        } else {
+          tags = tags.filter((tag) => {
+            return !tag.for_owned
+          })
+        }
 
         if (this.filters.platform !== 'all') {
           tags = tags.filter((tag) => {
@@ -126,23 +142,24 @@
 
         this.pagination.data = tags
         return this.pagination.getData()
+      },
+
+      tabTitle() {
+        return 'MANAGE ' + (this.owned ? 'O&O ' : '') + 'TAGS'
       }
     },
 
     mounted() {
-      this.$store.dispatch('admin/loadTags')
-      this.$store.dispatch('admin/loadWebsites')
-      this.$store.dispatch('admin/loadCountries')
     },
 
     methods: {
       showForm(tag = null) {
         if (tag === null) {
-          tag = Tag.default()
+          tag = Tag.default(this.owned)
         }
 
         this.$store.dispatch('admin/setCurrentTag', tag)
-        this.$store.dispatch('admin/setShowTagForm', true)
+        this.$store.dispatch('admin/setShowTagForm', { status: true, owned: this.owned })
       },
 
       activateTag(id, event) {

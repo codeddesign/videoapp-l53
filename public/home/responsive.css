@@ -24,6 +24,9 @@
 	.moreinfo-mostadvancedwrap {
 		height: 960px;
 	}
+	.headercontact-titlewrap {
+		width: 900px;
+	}
 }
 @media screen and (max-width: 1200px) {
 	.moreinfo-analarea {
@@ -122,6 +125,65 @@
 	.moreinfo-analsubwrap {
 		width: calc(100% - 60px);
 		margin: 0 30px;
+	}
+	.headercontact-titlewrap {
+		width: 700px;
+	}
+	.headercontact-maintitle {
+		font-size: 100px;
+	}
+	.sendmessage-wrapbox {
+		width: 100%;
+	}
+	.sendmessage-leftbox {
+		width: 65%;
+	}
+	.sendmessage-rightbox {
+		width: 35%;
+	}
+	.demopage-mainwrapper {
+	    width: 100%;
+	}
+	.demopage-scrollareawrap {
+	    width: calc(100% - 60px);
+	    padding: 0 30px;
+	}
+	.demopage-scrollleft {
+		width: 100%;
+	}
+	.demopage-scrollright {
+		width: 100%;
+		margin-top: 8px;
+	}
+	.demopage-maintitlewrapper {
+		width: 450px;
+		margin: 0 auto;
+	}
+	.demopage-titleblueback {
+		position: static;
+		margin-top: 40px;
+		width: 450px;
+	}
+	.demopage-maintitle {
+		margin-top: -40px;
+		font-size: 41px;
+	}
+	.demopage-placewrap {
+		width: 100%;
+		float: left;
+	}
+	ul.demopage-placers {
+		float: none;
+		width: 223px;
+		margin: 0 auto;
+		margin-bottom: 100px;
+		margin-top: 42px;
+	}
+	ul.demopage-placers li {
+		margin-bottom: 25px;
+	}
+	.demopage-placeoptions {
+		height: 1090px;
 	}
 }
 @media screen and (max-width: 850px) {
@@ -289,6 +351,12 @@
 	.moreinfo-advancedcontent {
 		margin-bottom: -13px;
 	}
+	.headercontact-titlewrap {
+		width: 550px;
+	}
+	.headercontact-maintitle {
+		font-size: 79px;
+	}
 }
 @media screen and (max-width: 690px) {
 	.nowmerge-title {
@@ -304,6 +372,39 @@
 	}
 	.nowmerge-blueunder {
 		top: 52px;
+	}
+	.sendmessage-leftbox {
+		width: 100%;
+		height: auto;
+	}
+	.sendmessage-rightbox {
+		width: 100%;
+	}
+	.sendmessage-leftbg {
+		margin-bottom: 50px;
+	}
+	.sendmessage-rightbg {
+		height: 340px;
+	}
+	.sendmessage-contactform {
+		width: calc(100% - 60px);
+		padding: 0 30px;
+		margin-left: auto;
+	}
+	.sendmessage-contactform input {
+		width: calc(100% - 20px);
+	}
+	.sendmessage-wrapper {
+		margin-bottom: 0;
+	}
+	.sendmessage-callussub {
+		font-size: 40px;
+	}
+	.sendmessage-emailussub {
+		font-size: 22px;
+	}
+	.sendmessage-callustitle {
+		font-size: 21px;
 	}
 }
 @media screen and (max-width: 600px) {
@@ -594,5 +695,11 @@
 	}
 	.moreinfo-analarea .homepage-earningtitle {
 		margin-top: 0;
+	}
+	.headercontact-titlewrap {
+		width: 500px;
+	}
+	.headercontact-maintitle {
+		font-size: 70px;
 	}
 }

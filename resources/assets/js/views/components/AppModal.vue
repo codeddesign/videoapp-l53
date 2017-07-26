@@ -9,7 +9,8 @@
         </div>
 
         <div class="app_modal-footer" v-show="confirm">
-          <button class="proceed" @click="proceed" :disabled="loading">Proceed</button>
+          <div class="app_modal-message"> {{ message }} </div>
+          <button class="proceed" @click="proceed" :disabled="loading">{{ confirm }}</button>
         </div>
       </div>
     </div>
@@ -38,6 +39,9 @@
       callback: {
         required: false
       },
+      message: {
+        required: false
+      },
       html: {
         required: false
       }
@@ -53,6 +57,12 @@
           this.loading = true
 
           this.callback()
+            .then(() => {
+              this.loading = false
+            })
+            .catch(() => {
+              this.loading = false
+            })
 
           return false
         }

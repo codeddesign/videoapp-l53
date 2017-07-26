@@ -17,6 +17,13 @@ export default {
       })
   },
 
+  update(account) {
+    return axios.patch('/user', account)
+      .then((response) => {
+        return response.data.data
+      })
+  },
+
   loadReports() {
     return axios.get('/reports')
     .then((response) => {

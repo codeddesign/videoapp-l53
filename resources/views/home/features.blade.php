@@ -59,6 +59,9 @@
                 <a href="/contact">
                     <li>CONTACT</li>
                 </a>
+                <a href="/app">
+                    <li>LOGIN</li>
+                </a>
                 <li>
                     <div class="navmore"></div>
                     <div class="closenavmore"></div>
@@ -205,7 +208,15 @@
 
                         end = parseInt(response);
 
+<<<<<<< HEAD
                         // fetch();
+=======
+                        if (end <= current) {
+                            current = 0;
+                        }
+
+                        fetch();
+>>>>>>> develop
                     });
                 }, ajax_delay);
             };

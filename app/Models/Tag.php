@@ -35,6 +35,7 @@ use Illuminate\Redis\RedisManager;
  * @property int    $infinity_wrapper_limit
  * @property int    $infinity_delay_time
  * @property bool   $active
+ * @property bool   $for_owned
  * @property array  $included_locations
  * @property array  $excluded_locations
  * @property array  $included_websites
@@ -53,7 +54,7 @@ class Tag extends Model
         'delay_time', 'ecpm', 'guarantee_limit', 'guarantee_order', 'guarantee_enabled',
         'priority_count', 'timeout_limit', 'wrapper_limit', 'active', 'included_locations',
         'excluded_locations', 'included_websites', 'excluded_websites', 'infinity_timeout_limit',
-        'infinity_wrapper_limit', 'infinity_delay_time', 'demo_data',
+        'infinity_wrapper_limit', 'infinity_delay_time', 'demo_data', 'for_owned',
     ];
 
     protected $dates = [
@@ -71,13 +72,13 @@ class Tag extends Model
         'demo_data'          => 'array',
     ];
 
-    public static function forRequest(array $location, $websiteId)
+    public static function forRequest(array $location, $website)
     {
         /** @var Repository $cache */
         $cache = app(Repository::class);
 
         // Cache the tags
-        $tags = $cache->tags(['tags'])->remember('tags.all', 5, function () {
+        $tags = $cache->tags(['tags'])->remember('tags.all', 5, function () use ($website) {
             return Tag::where('active', true)
                 ->where(function ($query) {
                     $date = Carbon::now();
@@ -88,21 +89,25 @@ class Tag extends Model
                 })->get();
         });
 
-        $tags = $cache->tags(['tags'])->remember("tags.website.{$websiteId}", 60, function () use ($tags, $websiteId) {
-            return $tags->filter(function ($tag) use ($websiteId) {
+        $tags = $cache->tags(['tags'])->remember("tags.website.{$website->id}", 60, function () use ($tags, $website) {
+            return $tags->filter(function ($tag) use ($website) {
+                if ($website->owned !== $tag->for_owned) {
+                    return false;
+                }
+
                 // If there's no targeting, all websites are allowed
                 if (count($tag->included_websites) === 0 && count($tag->excluded_websites) === 0) {
                     return true;
                 }
 
                 if (count($tag->excluded_websites) > 0) {
-                    if (in_array($websiteId, $tag->excluded_websites)) {
+                    if (in_array($website->id, $tag->excluded_websites)) {
                         return false;
                     }
                 }
 
                 if (count($tag->included_websites) > 0) {
-                    return in_array($websiteId, $tag->included_websites);
+                    return in_array($website->id, $tag->included_websites);
                 }
 
                 return true;

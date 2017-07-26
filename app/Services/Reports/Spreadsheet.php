@@ -54,7 +54,7 @@ class Spreadsheet
         $mailer = app(Mailer::class);
 
         $recipients = collect(explode(',', $report->recipient));
-        $recipients->map(function($email) {
+        $recipients->map(function ($email) {
             return trim($email);
         });
 
@@ -84,6 +84,7 @@ class Spreadsheet
             'impressions'      => 'Impressions',
             'fills'            => 'Fills',
             'fill_rate'        => 'Fill Rate',
+            'pv_fill_rate'     => 'PV Fill Rate',
             'revenue'          => 'Revenue',
             'cpm'              => 'eCPM',
             'click'            => 'Clicks',

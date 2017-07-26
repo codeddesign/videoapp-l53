@@ -210,7 +210,8 @@
             'Revenue': 'revenue',
             'CPM': 'cpm',
             'Fills': 'fills',
-            'Fill %': 'fill_rate'
+            'Fill %': 'fill_rate',
+            'PV Fill %': 'pv_fill_rate'
           },
           viewership: {
             'Start': 'start',

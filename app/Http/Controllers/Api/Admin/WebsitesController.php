@@ -11,6 +11,7 @@ use App\Stats\StatsTransformer;
 use App\Transformers\WebsiteTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Cache\Repository;
 use Illuminate\Support\Facades\DB;
 
 class WebsitesController extends ApiController
@@ -33,13 +34,27 @@ class WebsitesController extends ApiController
     {
         $website = Website::findOrFail($id);
 
-        if($website->waiting && $request->get('status') === true) {
+        if ($website->waiting && $request->get('status') === true) {
             event(new WebsiteApproved($website));
         }
 
         $website->approved = $request->get('status');
         $website->waiting  = false;
         $website->save();
+
+        $this->clearCache();
+
+        return $this->itemResponse($website, new WebsiteTransformer);
+    }
+
+    public function owned($id, Request $request)
+    {
+        $website = Website::findOrFail($id);
+
+        $website->owned = $request->get('status');
+        $website->save();
+
+        $this->clearCache();
 
         return $this->itemResponse($website, new WebsiteTransformer);
     }
@@ -67,5 +82,12 @@ class WebsitesController extends ApiController
         }
 
         return $this->collectionResponse($sites, new WebsiteTransformer);
+    }
+
+    protected function clearCache()
+    {
+        $cache = app(Repository::class);
+
+        $cache->tags(['tags', 'website'])->flush();
     }
 }

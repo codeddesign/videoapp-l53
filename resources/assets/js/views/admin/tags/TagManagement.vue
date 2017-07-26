@@ -3,7 +3,8 @@
     <div class="tagmanage-tabbed">
       <compare-tags></compare-tags>
       <compare-backfill></compare-backfill>
-      <edit-tags></edit-tags>
+      <edit-tags :owned='false'></edit-tags>
+      <edit-tags :owned='true'></edit-tags>
       <global-options></global-options>
     </div>
   </div>
@@ -26,6 +27,9 @@
 
     mounted() {
       this.$store.dispatch('admin/loadGlobalOptions')
+      this.$store.dispatch('admin/loadTags')
+      this.$store.dispatch('admin/loadWebsites')
+      this.$store.dispatch('admin/loadCountries')
     }
   }
 </script>

@@ -257,6 +257,7 @@
             'CPM': 'cpm',
             'Fills': 'fills',
             'Fill %': 'fill_rate',
+            'PV Fill %': 'pv_fill_rate',
             'Errors': 'errors',
             'Error %': 'error_rate'
           },

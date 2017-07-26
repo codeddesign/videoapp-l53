@@ -67,7 +67,7 @@ class ChartsController extends ApiController
             $stats = $stats->whereIn('campaign_id', $campaignIds);
         }
 
-        if($website) {
+        if ($website) {
             $stats = $stats->where('website_id', $website);
         }
 

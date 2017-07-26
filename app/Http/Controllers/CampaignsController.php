@@ -40,14 +40,18 @@ class CampaignsController extends Controller
         $referer = $request->get('referrer') ?? $request->server('HTTP_REFERER');
         $ip      = $request->get('ip') ?? ipUtil();
 
-        $websiteId = Website::idByLink($referer);
+        $website = Website::websiteByLink($referer);
 
         $location = Location::byIp($ip);
+
+        if (! request()->get('xml') && ! $website && ! request()->get('test')) {
+            return response('Unauthorized.', 401);
+        }
 
         if ($request->get('test')) {
             $tags = [Tag::findOrFail($request->get('test'))];
         } else {
-            $tags = Tag::forRequest($location, $websiteId);
+            $tags = Tag::forRequest($location, $website);
         }
 
         if (request()->get('xml') && $referer !== null) {
@@ -57,12 +61,8 @@ class CampaignsController extends Controller
             $redis->hsetnx('sm_domains', $domain, $date);
         }
 
-        if (! request()->get('xml') && ! $websiteId) {
-            return response('Unauthorized.', 401);
-        }
-
         $platform = $request->get('platform');
-        $backfill = Backfill::forRequest($websiteId, $campaign['ad_type'], $platform);
+        $backfill = Backfill::forRequest($website, $campaign['ad_type'], $platform);
 
         Datadogstatsd::increment('video-app.campaign_request', 1);
 
@@ -72,7 +72,7 @@ class CampaignsController extends Controller
             'backfill'   => $backfill,
             'ip'         => $ip,
             'location'   => $location,
-            'website_id' => $websiteId,
+            'website_id' => $website->id ?? null,
         ], 200);
     }
 

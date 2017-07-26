@@ -6,9 +6,9 @@
     <!-- ACCOUNT DETAILS -->
     <div id="accountdetails" class="rightside-navdropdown">ACCOUNT DETAILS <span></span></div>
     <ul id="accountdetails-navdroparea" class="rightside-navdroparea" style="display:none;">
-        <a href="#">
-          <li>EDIT ACCOUNT</li>
-        </a>
+        <router-link :to="{ name: 'user.settings'}" tag="li">
+          EDIT ACCOUNT
+        </router-link>
         <router-link :to="{ name: 'logout'}" tag="li">
           LOGOUT
         </router-link>

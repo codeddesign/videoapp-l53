@@ -40,13 +40,13 @@ class Backfill extends Model
         return $this->belongsTo(AdType::class, 'ad_type_id');
     }
 
-    public static function forRequest($websiteId, $type, $platform)
+    public static function forRequest($website, $type, $platform)
     {
         /** @var Repository $cache */
         $cache = app(Repository::class);
 
         return self::where('active', true)
-            ->where('website_id', $websiteId)
+            ->where('website_id', $website->id ?? null)
             ->where('ad_type_id', $type)
             ->where('platform_type', $platform)
             ->first();

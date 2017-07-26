@@ -23,7 +23,12 @@ use App\Services\Youtube;
  * @property string     $email
  * @property string     $password
  * @property string     $phone_number
- * @property string     $address
+ * @property string     $street_line_1
+ * @property string     $street_line_2
+ * @property string     $city
+ * @property string     $state
+ * @property string     $country
+ * @property string     $zip_code
  * @property array      $bank_details
  * @property string     $email_verification_token
  * @property bool       $verified_phone

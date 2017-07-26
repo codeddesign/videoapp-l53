@@ -7,7 +7,6 @@ use App\Models\DateRange;
 use App\Models\Report;
 use App\Services\Reports\Query;
 use App\Stats\StatsTransformer;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

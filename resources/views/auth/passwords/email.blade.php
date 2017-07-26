@@ -21,7 +21,6 @@
     </form>
 
     <div class="loginadditional">
-        <div class="login-registerbutton"><a href="/login">LOGIN</a></div>
-        <div class="login-registerbutton"><a href="/register">REGISTER</a></div>
+        <div class="login-lostpassbutton"><a href="/login">LOGIN</a></div>
     </div>
 @endsection

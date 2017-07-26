@@ -18,6 +18,8 @@ Route::get('charts/all', 'ChartsController@stats');
 
 Route::get('user', 'UsersController@user');
 Route::get('user/token', 'UsersController@token'); // temporary token
+Route::patch('user', 'UsersController@update');
+Route::get('logout', 'UsersController@logout');
 
 Route::get('reports', 'ReportsController@index');
 Route::post('reports', 'ReportsController@store');
@@ -39,6 +41,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::get('websites', 'WebsitesController@index');
     Route::get('websites/stats', 'WebsitesController@stats');
     Route::post('websites/{id}/activate', 'WebsitesController@activate');
+    Route::post('websites/{id}/owned', 'WebsitesController@owned');
     Route::get('websites/pending', 'WebsitesController@pending');
 
     Route::get('backfill', 'BackfillController@index');
@@ -48,6 +51,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('backfill/{id}/activate', 'BackfillController@activate');
 
     Route::get('accounts', 'AccountsController@index');
+    Route::post('accounts', 'AccountsController@store');
     Route::post('accounts/{id}/note', 'AccountsController@addNote');
     Route::post('accounts/{id}/activate', 'AccountsController@activate');
 

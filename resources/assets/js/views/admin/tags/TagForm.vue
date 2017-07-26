@@ -64,16 +64,16 @@
         <div class="tagcreate-quarterinnerwrap" style="margin-left:0;">
           <div class="tagcreate-fullinnertitle">AD TYPES</div>
           <div class="tagcreate-checkwrap">
-            <input v-bind:disabled="disabled.preroll" v-model="tag['ad_types']" value="3" type="checkbox" id="check-preroll" />
-            <label v-bind:class="{ disabled:disabled.preroll }" for="check-preroll">Pre-roll</label>
+            <input v-bind:disabled="disabled.preroll" v-model="tag['ad_types']" value="3" type="checkbox" :id="owned + 'check-preroll'" />
+            <label v-bind:class="{ disabled:disabled.preroll }" :for="owned + 'check-preroll'">Pre-roll</label>
           </div>
           <div class="tagcreate-checkwrap">
-            <input v-bind:disabled="disabled.onscroll" v-model="tag['ad_types']" value="1" type="checkbox" id="check-on-scroll" />
-            <label v-bind:class="{ disabled:disabled.onscroll }" for="check-on-scroll">On-scroll</label>
+            <input v-bind:disabled="disabled.onscroll" v-model="tag['ad_types']" value="1" type="checkbox" :id="owned + 'check-on-scroll'" />
+            <label v-bind:class="{ disabled:disabled.onscroll }" :for="owned + 'check-on-scroll'">On-scroll</label>
           </div>
           <div class="tagcreate-checkwrap">
-            <input v-bind:disabled="disabled.infinity" v-model="tag['ad_types']" value="2" type="checkbox" id="check-infinity" />
-            <label v-bind:class="{ disabled:disabled.infinity }" for="check-infinity">Infinity</label>
+            <input v-bind:disabled="disabled.infinity" v-model="tag['ad_types']" value="2" type="checkbox" :id="owned + 'check-infinity'" />
+            <label v-bind:class="{ disabled:disabled.infinity }" :for="owned + 'check-infinity'">Infinity</label>
           </div>
         </div>
       </div>
@@ -82,8 +82,8 @@
         <div class="tagcreate-fullinnertitle">AD START-END</div>
         <div class="tagcreate-checkwrap">
           <div class="tagcreate-startendcheckwrap">
-            <input type="checkbox" v-model="tag['date_range']" id="check-adstart" />
-            <label for="check-adstart">ACTIVATE START-END TIME</label>
+            <input type="checkbox" v-model="tag['date_range']" :id="owned + 'check-adstart'" />
+            <label :for="owned + 'check-adstart'">ACTIVATE START-END TIME</label>
           </div>
         </div>
         <div class="tagcreate-sepline"></div>
@@ -165,8 +165,8 @@
           <div class="tagcreate-fullinnertitle">CONFIRM?</div>
           <div class="tagcreate-checkwrap">
             <div class="tagcreate-startendcheckwrap" style="margin-top:8px;">
-              <input v-model="tag['guarantee_enabled']" type="checkbox" id="check-dailyguarantee" />
-              <label for="check-dailyguarantee">CONFIRM GUARANTEE</label>
+              <input v-model="tag['guarantee_enabled']" type="checkbox" :id="owned + 'check-dailyguarantee'" />
+              <label :for="owned + 'check-dailyguarantee'">CONFIRM GUARANTEE</label>
             </div>
           </div>
         </div>
@@ -422,9 +422,11 @@
   export default {
     name: 'TagForm',
 
+    props: ['owned'],
+
     data() {
       return {
-        tag: _.cloneDeep(this.$store.state.admin.currentTag),
+        tag: _.cloneDeep(this.$store.state.admin.currentTag[this.owned ? 'owned' : 'not_owned']),
         macros: [
           'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
           'DATE', 'MEDIA_ID', 'USER_AGENT', 'CAMPAIGN_ID', 'TIMESTAMP'
@@ -460,7 +462,7 @@
 
           window.alert(errorMsg)
         } else {
-          this.$store.dispatch('admin/saveCurrentTag')
+          this.$store.dispatch('admin/saveCurrentTag', this.tag)
         }
       },
 
@@ -592,14 +594,14 @@
       },
 
       hideForm() {
-        this.$store.dispatch('admin/setShowTagForm', false)
+        this.$store.dispatch('admin/setShowTagForm', { status: false, owned: this.owned })
       },
 
       deleteTag() {
         let confirmed = window.confirm('Are you sure you want to delete this tag?')
 
         if (confirmed) {
-          this.$store.dispatch('admin/deleteCurrentTag')
+          this.$store.dispatch('admin/deleteCurrentTag', this.tag)
         }
       },
 

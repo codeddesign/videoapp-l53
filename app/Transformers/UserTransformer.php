@@ -22,8 +22,13 @@ class UserTransformer extends Transformer
             'company'           => $user->company,
             'email'             => $user->email,
             'phone_number'      => $user->phone_number,
-            'address'           => $user->address,
-            'bank_details'      => $user->bank_details ?? new stdClass(),
+            'street_line_1'     => $user->street_line_1,
+            'street_line_2'     => $user->street_line_2,
+            'city'              => $user->city,
+            'state'             => $user->state,
+            'country'           => $user->country,
+            'zip_code'          => $user->zip_code,
+            'bank_details'      => $user->bank_details ?? $this->defaultBankDetails(),
             'isAdmin'           => (bool) $user->admin,
             'active'            => (bool) $user->active,
             'timezone'          => $user->timezone,
@@ -59,5 +64,17 @@ class UserTransformer extends Transformer
         $notes = $user->notes->sortByDesc('created_at');
 
         return $this->collection($notes, new NoteTransformer);
+    }
+
+    protected function defaultBankDetails()
+    {
+        $details                 = new stdClass();
+        $details->account_name   = '';
+        $details->bank_name      = '';
+        $details->bank_address   = '';
+        $details->account_number = '';
+        $details->routing_number = '';
+
+        return $details;
     }
 }

@@ -40,6 +40,15 @@ export default {
     })
   },
 
+  ownedWebsite(id, status) {
+    return axios.post('/admin/websites/' + id + '/owned', {
+      status: status
+    })
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   activateCampaign(id, status) {
     return axios.post('/admin/campaigns/' + id + '/activate', {
       active: status
@@ -62,6 +71,13 @@ export default {
     } else {
       return this.updateReport(report)
     }
+  },
+
+  saveAccount(account) {
+    return axios.post('/admin/accounts', account)
+    .then((response) => {
+      return response.data.data
+    })
   },
 
   createReport(report) {

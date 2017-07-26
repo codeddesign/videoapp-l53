@@ -17,16 +17,18 @@ class Reports
         $combineBy = $reportQuery->mapTypeToModel($report->combine_by);
         $sortBy    = $reportQuery->mapTypeToModel($report->sort_by);
 
+        $relations = [$combineBy['relation'], $sortBy['relation']];
+
         $pageviews = ($combineBy['relation'] === 'website' && $sortBy['property'] === 'platform_type' ||
             $combineBy['property'] === 'platform_type' && $sortBy['relation'] === 'website');
 
         $reportEvents = $reportQuery->campaignEvents($report)
-            ->filter(function ($event) use ($report, $combineBy, $sortBy, $pageviews) {
+            ->filter(function ($event) use ($report, $combineBy, $sortBy, $pageviews, $relations) {
                 if ($pageviews) {
                     return true;
                 }
 
-                if (in_array($event->name, ['mobilePageviews', 'desktopPageviews'])) {
+                if (in_array($event->name, ['mobilePageviews', 'desktopPageviews']) && ! in_array('website', $relations)) {
                     return false;
                 }
 
@@ -64,8 +66,6 @@ class Reports
                 ]);
             }
 
-            $relations = [$combineBy['relation'], $sortBy['relation']];
-
             if ($tag && in_array('tag', $relations)) {
                 foreach ([$combineBy, $sortBy] as $item) {
                     if ($item['relation'] === 'tag') {
@@ -89,6 +89,10 @@ class Reports
                 'impressions' => $parsedStats['impressions'],
                 'fills'       => $parsedStats['fills'],
                 'fill_rate'   => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
+                'pv_fill_rate'   => $this->calculatePercentage(
+                    $parsedStats['fills'],
+                    $parsedStats['desktopPageviews'] + $parsedStats['mobilePageviews']
+                ),
                 'revenue'     => Calculator::decimals($parsedStats['revenue']),
                 'cpm'         => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
                 'errors'      => $parsedStats['errors'],
@@ -100,7 +104,7 @@ class Reports
 
             if ($filterMetrics && $report->included_metrics) {
                 $pageviewsFilter = $pageviews ? ['desktopPageviews', 'mobilePageviews'] : [];
-                $stats = $stats->filter(function ($value, $key) use ($report, $pageviewsFilter) {
+                $stats           = $stats->filter(function ($value, $key) use ($report, $pageviewsFilter) {
                     return in_array($key, array_merge(
                         $report->included_metrics,
                         [$report->sort_by, $report->combine_by],
@@ -115,7 +119,9 @@ class Reports
         if ($combineBy['relation'] === 'website' && $sortBy['property'] === 'platform_type' ||
             $combineBy['property'] === 'platform_type' && $sortBy['relation'] === 'website'
         ) {
-            $reportStats = $statsTransformer->combineWebsites($reportStats);
+            $reportStats = $statsTransformer->combineWebsites(
+                $reportStats
+            );
         }
 
         $reportStats = $reportStats->sortByDesc($report->sort_by);

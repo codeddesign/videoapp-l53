@@ -62,7 +62,7 @@ class StatsController extends ApiController
                 return $item->created_at->format('F d, Y');
             });
 
-        return (new StatsTransformer)->transform($statsByCampaign, $timespan);;
+        return (new StatsTransformer)->transform($statsByCampaign, $timespan);
     }
 
     protected function campaignEvents($timespan)
@@ -74,7 +74,7 @@ class StatsController extends ApiController
             ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtTimezone.' as created_at'), DB::raw('SUM(count) as count'))
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtTimezone))
-            ->timeRange($timespan)
+            ->timeRange($timespan, $this->user->timezone)
             ->get();
 
         return $statsByCampaign;

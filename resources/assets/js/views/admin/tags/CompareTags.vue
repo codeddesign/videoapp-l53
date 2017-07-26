@@ -197,7 +197,6 @@
     mounted() {
       this.$nextTick(function() {
         this.fetchStats()
-        this.$store.dispatch('admin/loadTags')
       })
     },
 

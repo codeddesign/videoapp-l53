@@ -19,7 +19,7 @@
     </script>
     <!--<script src="//{{ $socketIoIp }}:3000/socket.io/socket.io.js"></script>-->
     @if($webpack)
-        <script src="http://192.168.10.10:8080/js/app.js"></script>
+        <script src="http://{{ $webpack }}:8080/js/app.js"></script>
     @else
         <script src="{{ asset($jsBundle) }}"></script>
     @endif
@@ -34,7 +34,7 @@
         } catch (e) {}
     </script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
 </body>
 
 </html>
