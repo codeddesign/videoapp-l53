@@ -35,7 +35,7 @@ class HomeController extends Controller
 
         $mailer = app(Mailer::class);
 
-        $mailer->to(['john@ad3media.com', 'daniel@ad3media.com', 'bryant@ad3media.com'])->send(new BetaSignup($signup));
+        $mailer->to(['ian@ad3media.com', 'daniel@ad3media.com', 'bryant@ad3media.com'])->send(new BetaSignup($signup));
 
         return redirect(URL::previous().'#betasignup')->with('status', 'Signed Up');
     }
@@ -56,7 +56,7 @@ class HomeController extends Controller
         ]);
 
         app(Mailer::class)
-            ->to(['john@ad3media.com', 'daniel@ad3media.com', 'bryant@ad3media.com'])
+            ->to(['ian@ad3media.com', 'daniel@ad3media.com', 'bryant@ad3media.com'])
             ->send(new Contact($details));
 
         return redirect('/contact')->with('status', 'Done');
