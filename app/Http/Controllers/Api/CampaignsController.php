@@ -26,7 +26,7 @@ class CampaignsController extends ApiController
      */
     public function index()
     {
-        $campaigns = $this->user->campaigns;
+        $campaigns = $this->user->campaigns->load('type.adType');
 
         $range = 'thirtyDays';
 
