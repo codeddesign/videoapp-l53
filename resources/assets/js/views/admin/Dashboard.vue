@@ -245,7 +245,9 @@
 
         autoUpdateInterval: null,
 
-        realtimeRetries: 0
+        realtimeRetries: 0,
+
+        destroyed: false
       }
     },
 
@@ -332,6 +334,7 @@
     },
 
     destroyed() {
+      this.destroyed = true
       window.clearInterval(this.autoUpdateInterval)
     },
 
@@ -364,15 +367,19 @@
 
             this.realtimeRetries = 0
 
-            setTimeout(this.fetchStats, 2000)
-
+            if (!this.destroyed) {
+              setTimeout(this.fetchStats, 2000)
+            }
           })
           .catch((error) => {
             let backoff = Math.pow(2, this.realtimeRetries) * 1000
 
             console.error('Error fetching the stats count, retrying in ' + backoff + 'ms...')
 
-            setTimeout(this.fetchStats, backoff)
+            if (!this.destroyed) {
+              setTimeout(this.fetchStats, backoff)
+            }
+
             this.realtimeRetries++
           })
       },

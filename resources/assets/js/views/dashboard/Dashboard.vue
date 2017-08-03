@@ -152,7 +152,10 @@
         impressionsChartData: [],
         revenueChartData: [],
 
-        dailyStats: []
+        dailyStats: [],
+
+        realtimeRetries: 0,
+        destroyed: false
       }
     },
 
@@ -240,7 +243,6 @@
 
         let that = this
         this.autoUpdateInterval = setInterval(function() {
-          that.fetchStats()
           that.currentTime = moment()
         }, 2000)
       })
@@ -251,9 +253,23 @@
         http.get('/stats/all?time=realtime')
             .then((response) => {
               this.stats = response.data
+
+              this.realtimeRetries = 0
+
+              if (!this.destroyed) {
+                setTimeout(this.fetchStats, 2000)
+              }
             })
             .catch((error) => {
-              console.error('Error fetching the stats count.')
+              let backoff = Math.pow(2, this.realtimeRetries) * 1000
+
+              console.error('Error fetching the stats count, retrying in ' + backoff + 'ms...')
+
+              if (!this.destroyed) {
+                setTimeout(this.fetchStats, backoff)
+              }
+
+              this.realtimeRetries++
             })
       },
 
