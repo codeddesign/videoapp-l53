@@ -1697,7 +1697,7 @@ ul.campaigngrid-title li {
 }
 
 ul.campaigngrid-title li:nth-child(1), ul.campaigngrid-title li:nth-child(2) {
-    width: calc(100% - 840px);
+    width: calc(100% - 990px);
 }
 
 ul.campaigngrid-title li:nth-child(2) {
@@ -1712,7 +1712,7 @@ ul.campaigngrid-title li:nth-child(3), ul.campaigngrid-title li:nth-child(4), ul
     width: 90px;
 }
 
-ul.campaigngrid-title li:nth-child(9) {
+ul.campaigngrid-title li:nth-child(10) {
     border-right: none;
 }
 
@@ -1752,7 +1752,7 @@ ul.campaigngrid li:nth-child(2n) .camplist-data1 {
 
 .camplist-data2 {
     float: left;
-    width: calc(100% - 840px);
+    width: calc(100% - 990px);
     padding-left: 20px;
     font-size: 13px;
     color: #666666;
@@ -1772,7 +1772,7 @@ ul.campaigngrid li:nth-child(2n) .camplist-data1 {
 
 .camplist-data4 {
     float: left;
-    width: 90px;
+    width: 120px;
     padding-left: 20px;
     font-size: 13px;
     color: #666666;
@@ -1802,7 +1802,7 @@ ul.campaigngrid li:nth-child(2n) .camplist-data1 {
 
 .camplist-data7 {
     float: left;
-    width: 90px;
+    width: 120px;
     padding-left: 20px;
     font-size: 13px;
     color: #666666;
@@ -1812,7 +1812,7 @@ ul.campaigngrid li:nth-child(2n) .camplist-data1 {
 
 .camplist-data8 {
     float: left;
-    width: 90px;
+    width: 120px;
     padding-left: 20px;
     font-size: 13px;
     color: #666666;
@@ -1822,7 +1822,17 @@ ul.campaigngrid li:nth-child(2n) .camplist-data1 {
 
 .camplist-data9 {
     float: left;
-    width: 90px;
+    width: 75px;
+    padding-left: 20px;
+    font-size: 13px;
+    color: #666666;
+    height: 40px;
+    background: #FFFFFF;
+}
+
+.camplist-data10 {
+    float: left;
+    width: 75px;
     padding-left: 20px;
     font-size: 13px;
     color: #666666;

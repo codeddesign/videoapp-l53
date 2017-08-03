@@ -61,34 +61,36 @@
               <li>CAMPAIGN ID</li>
               <li>CAMPAIGN REFERENCE</li>
               <li style="width: 120px">CREATED</li>
+              <li style="width: 120px">AD TYPE</li>
               <li>eCPM</li>
-              <li>VIDEO IMPR</li>
+              <li style="width: 120px">VIDEO IMPR</li>
               <li style="width: 120px">DISPLAY IMPR</li>
-              <li>REVENUE</li>
-              <li>CODE</li>
-              <li>DELETE</li>
+              <li style="width: 120px">REVENUE</li>
+              <li style="width: 75px">CODE</li>
+              <li style="width: 75px">DELETE</li>
             </ul>
             <ul class="campaigngrid">
               <li v-for="campaign in filteredCampaigns">
                 <div class="camplist-data1">{{ campaign.id }}</div>
                 <div class="camplist-data2">{{ campaign.name }}</div>
                 <div class="camplist-data3">{{ campaign.created_at_humans }}</div>
-                <div class="camplist-data4">
+                <div class="camplist-data4">{{ campaign.ad_type_name }}</div>
+                <div class="camplist-data5">
                   {{ formatMoney(calculateEcpm(campaign.stats.impressions, campaign.stats.revenue, false)) }}
                 </div>
-                <div class="camplist-data5">{{ formatNumber(campaign.stats.impressions) }}</div>
-                <div class="camplist-data6">
+                <div class="camplist-data6">{{ formatNumber(campaign.stats.impressions) }}</div>
+                <div class="camplist-data7">
                   {{ formatNumber(campaign.stats.desktopBackfillImpressions + campaign.stats.mobileBackfillImpressions) }}
                 </div>
-                <div class="camplist-data7">
+                <div class="camplist-data8">
                   {{ formatMoney(campaign.stats.revenue + campaign.stats.desktopBackfillRevenue + campaign.stats.mobileBackfillRevenue) }}
                 </div>
-                <div class="camplist-data8">
+                <div class="camplist-data9">
                   <a href="javascript:;" @click.prevent.default="embedCode(campaign)">
                     <div class="embedcode_icon"></div>
                   </a>
                 </div>
-                <div class="camplist-data9">
+                <div class="camplist-data10">
                   <a href="javascript:;" @click.prevent.default="deleteCampaign(campaign)">
                     <div class="remove_icon"></div>
                   </a>
