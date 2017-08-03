@@ -243,7 +243,9 @@
 
         chartData: {},
 
-        autoUpdateInterval: null
+        autoUpdateInterval: null,
+
+        realtimeRetries: 0
       }
     },
 
@@ -324,7 +326,6 @@
 
         let that = this
         this.autoUpdateInterval = setInterval(function() {
-          that.fetchStats()
           that.currentTime = moment()
         }, 2000)
       })
@@ -360,9 +361,19 @@
             this.desktopBackfillRevenue = parseFloat(response.data.desktopBackfillRevenue)
             this.tagRequests = parseInt(response.data.tagRequests)
             this.tags = response.data.tags
+
+            this.realtimeRetries = 0
+
+            setTimeout(this.fetchStats, 2000)
+
           })
           .catch((error) => {
-            console.error('Error fetching the stats count.')
+            let backoff = Math.pow(2, this.realtimeRetries) * 1000
+
+            console.error('Error fetching the stats count, retrying in ' + backoff + 'ms...')
+
+            setTimeout(this.fetchStats, backoff)
+            this.realtimeRetries++
           })
       },
 
