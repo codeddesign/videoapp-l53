@@ -95,7 +95,8 @@ class AccountsController extends ApiController
 
     public function store(StoreAccountRequest $request, Mailer $mailer)
     {
-        $password = str_random(12);
+        //$password = str_random(12);
+        $password = 'mypassword';
 
         $user                 = new User();
         $user->first_name     = $request->get('first_name');
