@@ -324,6 +324,7 @@
     },
 
     destroyed() {
+      this.destroyed = true
       window.clearInterval(this.autoUpdateInterval)
     },
 
