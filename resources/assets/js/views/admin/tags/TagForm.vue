@@ -638,7 +638,22 @@
       },
 
       websites() {
-        return this.$store.state.admin.websites
+        let websites = this.$store.state.admin.websites
+
+        if (this.geoFilter !== '') {
+          var options = {
+            threshold: 0.3,
+            keys: [
+              'domain'
+            ]
+          }
+
+          var fuse = new Fuse(websites, options)
+
+          websites = fuse.search(this.geoFilter)
+        }
+
+        return websites
       },
 
       showLocations() {
