@@ -14,7 +14,9 @@
     <div class="loginwrapper">
         <div class="loginlogo">
             <center>
-                <img src="/images/videologo.png" width="78" height="29">
+                <a href="{{ route('home') }}">
+                    <img src="/images/videologo.png" width="78" height="29">
+                </a>
             </center>
         </div>
 

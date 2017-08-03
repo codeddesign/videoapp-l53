@@ -1,6 +1,15 @@
 @extends('auth.layout')
 
 @section('content')
+
+    <style>
+        .alert {
+            text-align: center;
+            padding-bottom: 20px;
+            color: #FFF;
+        }
+    </style>
+
     @if (count($errors) > 0)
         <div class="error">
             <ul style="list-style: none; padding-left:20px">
@@ -10,6 +19,13 @@
             </ul>
         </div>
     @endif
+
+    @if (session('status'))
+        <div class="alert">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <form action="/password/email" method="post">
         {{ csrf_field() }}
         <div>

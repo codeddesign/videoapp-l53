@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html lang="en-US">
+@extends('auth.layout')
 
-<head>
-    <meta charset="utf-8">
-</head>
+@section('content')
+    <style>
+        .alert {
+            text-align: center;
+            padding-bottom: 20px;
+            color: #FFF;
+        }
+    </style>
 
-<body>
-<h2>Verify Your Email Address</h2>
+    @if (count($errors) > 0)
+        <div class="alert">
+            <ul style="list-style: none; padding-left:20px">
+                @foreach ($errors->all() as $error)
+                    <li style="float: left">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-<div>
+    @if (session('status'))
+        <div class="alert">
+            {{ session('status') }}
+        </div>
+    @endif
+
     <form method="POST" action="{{ url('/password/reset') }}">
         {{ csrf_field() }}
 
@@ -30,8 +46,5 @@
 
         <button type="submit">RESET</button>
     </form>
-</div>
 
-</body>
-
-</html>
+@endsection

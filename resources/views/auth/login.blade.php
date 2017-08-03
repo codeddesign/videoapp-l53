@@ -18,6 +18,12 @@
             </div>
         @endif
 
+        @if (session('status'))
+            <div class="success">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <div>
             <input type="email" name="email" placeholder="Email" value="{{ old('email')  }}" required>
             <span class="loginemailicon"></span>

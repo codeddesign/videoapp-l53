@@ -1,7 +1,7 @@
 <?php
 
 // Home Page.
-Route::get('/', ['uses' => 'HomeController@index']);
+Route::get('/', ['uses' => 'HomeController@index'])->name('home');
 Route::post('signup', 'HomeController@signup');
 
 // Contact
@@ -34,7 +34,7 @@ Route::post('register', 'Authentication\RegistrationController@register');
 // Password Reset Routes.
 Route::get('password/reset', 'Authentication\ForgotPasswordController@showLinkRequestForm');
 Route::post('password/email', 'Authentication\ForgotPasswordController@sendResetLinkEmail');
-Route::get('password/reset/{token}', 'Authentication\ResetPasswordController@showResetForm');
+Route::get('password/reset/{token}', 'Authentication\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Authentication\ResetPasswordController@reset');
 
 // Vue app.
