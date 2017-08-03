@@ -11,6 +11,8 @@
         <!-- START TAGS AREA -->
         <div class="tagmanage-addnewtag" @click="showForm()">ADD NEW TAG</div>
 
+        <input class="tag-search" v-model="search" placeholder="search for..">
+
         <!-- EDIT TAGS PLATFORM SELECT -->
         <div class="edittagsselect-wrapper" style="margin-top:11px;">
             <div class="edittagsselect-title">Type:</div>
@@ -89,6 +91,7 @@
   import TagForm from './TagForm.vue'
   import Pagination from '../../../services/pagination'
   import Tag from '../../../models/tag'
+  import Fuse from 'fuse.js'
 
   export default {
     name: 'EditTags',
@@ -97,6 +100,8 @@
 
     data() {
       return {
+        search: '',
+
         filters: {
           platform: 'all',
           type: 'all'
@@ -140,6 +145,22 @@
           })
         }
 
+        if (this.search !== '') {
+          var options = {
+            threshold: 0.3,
+            keys: [
+              'advertiser',
+              'description',
+              'platform_type',
+              'type'
+            ]
+          }
+
+          var fuse = new Fuse(tags, options)
+
+          tags = fuse.search(this.search)
+        }
+
         this.pagination.data = tags
         return this.pagination.getData()
       },
@@ -175,3 +196,19 @@
     }
   }
 </script>
+
+<style lang="scss">
+.tag-search {
+  float: left;
+  width: 200px;
+  padding-left: 6px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 11px;
+  letter-spacing: .5px;
+  margin-left: 15px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+</style>
