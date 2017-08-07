@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\SessionEvent;
 use App\Services\AnalyticsEvents;
 use App\Services\CampaignEvents;
 use Illuminate\Bus\Queueable;
@@ -28,16 +29,19 @@ class PersistEvents extends Job implements ShouldQueue
         $campaignEvents      = new CampaignEvents;
         $savedCampaignEvents = $campaignEvents->persistRedisData();
 
-        $analyticsEvents = new AnalyticsEvents;
+        $analyticsEvents      = new AnalyticsEvents;
         $savedAnalyticsEvents = $analyticsEvents->persistRedisData();
 
         $totalEvents = $savedCampaignEvents->sum('count') + $savedAnalyticsEvents->sum('count');
 
         $message = "{$totalEvents} events saved.";
+        $this->log($message);
+
+        $sessions = SessionEvent::persist();
+        $message  = $sessions->sum('sessions').' sessions saved.';
+        $this->log($message);
 
         $cache = app(Repository::class);
         $cache->tags(['events'])->flush();
-
-        $this->log($message);
     }
 }

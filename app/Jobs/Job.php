@@ -10,9 +10,9 @@ class Job
 {
     protected $id;
 
-    public function __construct()
+    public function __construct($id = null)
     {
-        $this->id = uniqid();
+        $this->id = $id ?? uniqid();
     }
 
     protected function log($message)
@@ -47,7 +47,7 @@ class Job
         $expiry = 60 * 10; //lock it for 10 minutes
 
         if (! $redis->get($key)) {
-            $redis->setex($this->id, $expiry, 'locked');
+            $redis->setex($key, $expiry, 'locked');
 
             return true;
         }
