@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\CampaignEvent;
 use App\Services\AnalyticsEvents;
 use App\Services\CampaignEvents;
+use App\Sessions\DatabaseSessions;
+use App\Sessions\RedisSessions;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Cache\Repository;
@@ -33,9 +35,9 @@ class StatsController extends ApiController
     protected function fetchRealTimeData()
     {
         $campaignIds = $this->user->campaigns->pluck('id')->toArray();
-        $websiteIds = $this->user->websites->pluck('id')->toArray();
+        $websiteIds  = $this->user->websites->pluck('id')->toArray();
 
-        $campaignEvents = (new CampaignEvents)->fetchMultipleCampaigns($campaignIds);
+        $campaignEvents  = (new CampaignEvents)->fetchMultipleCampaigns($campaignIds);
         $analyticsEvents = (new AnalyticsEvents)->fetchMultipleWebsites($websiteIds);
 
         $events = $campaignEvents->merge($analyticsEvents);
@@ -50,7 +52,14 @@ class StatsController extends ApiController
 
         $events = $events->merge($databaseEvents);
 
-        return (new StatsTransformer)->transformSumAll($events, true);
+        $sessions = (new RedisSessions)->fetch()->merge(
+            (new DatabaseSessions)->fetch('today', $this->user->timezone)
+        );
+
+        return array_merge((new StatsTransformer)->transformSumAll($events, true), [
+            'desktopRpm' => $sessions->rpm('desktop'),
+            'mobileRpm' => $sessions->rpm('mobile'),
+        ]);
     }
 
     protected function fetchHistoricalData($timespan)

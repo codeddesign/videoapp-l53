@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use App\Models\Traits\SaveMany;
-use App\Sessions\Parsers\BackfillSessionParser;
-use App\Sessions\Parsers\ImpressionSessionParser;
-use App\Sessions\Parsers\VisitSessionParser;
+use App\Models\Traits\TimeRange;
+use App\Sessions\RedisSessions;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Redis\RedisManager;
-use Illuminate\Support\Collection;
 
 /**
  * Database Columns
@@ -29,7 +25,7 @@ use Illuminate\Support\Collection;
  */
 class SessionEvent extends Model
 {
-    use SaveMany;
+    use SaveMany, TimeRange;
 
     public function campaign()
     {
@@ -43,52 +39,31 @@ class SessionEvent extends Model
 
     public static function persist()
     {
-        $redis = app(RedisManager::class)->connection();
-
-        $data = collect($redis->hgetall('sessions'));
-
-        $sessions = new Collection;
-
-        $parsers = [
-            'impression' => new ImpressionSessionParser,
-            'visit'      => new VisitSessionParser,
-            'backfill'   => new BackfillSessionParser,
-        ];
-
-        foreach ($data as $key => $value) {
-            $params = explode(':', $key);
-
-            $sessions->push($parsers[$params[0]]->parse($params, $value));
-        }
-
-        $collections = [
-            'impression' => Tag::whereIn('id', $sessions->pluck('tag_id')->filter()->unique())->get(),
-            'backfill'   => Backfill::whereIn('id', $sessions->pluck('backfill_id')->filter()->unique())->get(),
-            'visit'      => new EloquentCollection,
-        ];
-
-        $impressionsByCampaign = $sessions->map(function ($item) use ($parsers, $collections) {
-            $type = $item['type'];
-
-            return $parsers[$type]->addInfo($item, $collections[$type]);
-        })->groupBy(function ($item) {
-            return $item['website_id'].$item['campaign_id'].$item['platform'];
-        })->map(function ($item) {
-            return [
-                'website_id'    => $item[0]['website_id'],
-                'campaign_id'   => $item[0]['campaign_id'],
-                'platform_type' => $item[0]['platform'],
-                'rpm'           => $item->sum(function ($item) {
-                    return $item['ecpm'] * $item['count'];
-                }),
-                'sessions'      => $item->pluck('session_id')->unique()->count(),
-            ];
-        });
+        $redisSessions = new RedisSessions;
+        $impressionsByCampaign = $redisSessions->fetch();
+        $redisSessions->delete();
 
         $timestamp = Carbon::now()->second(0)->subSecond();
 
-        $redis->del(['sessions']);
-
         return static::saveMany($impressionsByCampaign, $timestamp);
+    }
+
+    public function scopeUserStats($query, $user = null)
+    {
+        if ($user === null) {
+            $user = auth()->user();
+        }
+
+        if ($user->admin) {
+            return $query;
+        }
+
+        return $query->where(function ($query) use ($user) {
+            return $query->whereHas('campaign', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->whereHas('website', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        });
     }
 }

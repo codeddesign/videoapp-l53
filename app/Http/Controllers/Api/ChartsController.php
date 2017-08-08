@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Models\CampaignEvent;
 use App\Models\DateRange;
 use App\Models\Report;
+use App\Models\SessionEvent;
 use App\Services\Reports\Query;
+use App\Sessions\SessionsCollection;
 use App\Stats\StatsTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +46,18 @@ class ChartsController extends ApiController
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtFormat));
 
+        $sessionEvents = SessionEvent::userStats()
+            ->select('platform_type', DB::raw($createdAtFormat.' as created_at'), DB::raw('SUM(rpm) as rpm'), DB::raw('SUM(sessions) as sessions'))
+            ->timeRange($dateRange)
+            ->groupBy('platform_type', DB::raw($createdAtFormat))
+            ->get()
+            ->groupBy(function ($item) use ($keyFormat) {
+                return $item->created_at->format($keyFormat);
+            })
+            ->map(function ($item) {
+                return new SessionsCollection($item);
+            });
+
         if ($report) {
             $userStats = (new Query($report))->filter($userStats);
         } else {
@@ -60,7 +74,7 @@ class ChartsController extends ApiController
             $calculateTagStats = true;
         }
 
-        $stats = (new StatsTransformer)->highcharts($userStats, $keyFormat, $dateRange, $calculateTagStats);
+        $stats = (new StatsTransformer)->highcharts($userStats, $keyFormat, $dateRange, $calculateTagStats, $sessionEvents);
 
         return $stats;
     }

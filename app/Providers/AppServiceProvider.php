@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
             foreach ($bindings as $replace) {
                 $pos = strpos($sql, $needle);
                 if ($pos !== false) {
-                    if (gettype($replace) === "string" || true) {
+                    if (gettype($replace) === 'string' || true) {
                         $replace = ' \''.$replace.'\' ';
                     }
                     $sql = substr_replace($sql, $replace, $pos, strlen($needle));

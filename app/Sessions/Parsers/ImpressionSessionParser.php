@@ -25,6 +25,10 @@ class ImpressionSessionParser implements SessionParser
     {
         $tag = $collection->find($session['tag_id']);
 
+        if ($tag === null) {
+            return;
+        }
+
         return array_merge($session, [
             'platform' => $tag->platform_type,
             'ecpm'     => $tag->ecpm,

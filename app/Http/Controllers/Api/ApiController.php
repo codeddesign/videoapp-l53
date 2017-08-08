@@ -31,7 +31,7 @@ class ApiController extends Controller
         $includes = $request->get('include');
 
         if ($includes === null) {
-            return null;
+            return;
         }
 
         $fractal = new Manager;

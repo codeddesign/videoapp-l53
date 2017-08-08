@@ -25,6 +25,10 @@ class BackfillSessionParser implements SessionParser
     {
         $backfill = $collection->find($session['backfill_id']);
 
+        if ($backfill === null) {
+            return;
+        }
+
         return array_merge($session, [
             'platform' => $backfill->platform_type,
             'ecpm'     => $backfill->ecpm,

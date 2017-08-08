@@ -40,8 +40,8 @@
           <spark-chart id="desktop-impressions-chart" :chartData="chartData.desktopImpressions" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="desktop ecpm" :value="desktopEcpm" color="#1aa74f" type="money"></stats>
-          <spark-chart id="desktop-ecpm-chart" :chartData="desktopEcpmSpark" color="#1aa74f"></spark-chart>
+          <stats title="desktop rpm" :value="stats.desktopRpm" color="#1aa74f" type="money"></stats>
+          <spark-chart id="desktop-ecpm-chart" :chartData="chartData.desktopRpm" color="#1aa74f"></spark-chart>
         </li>
         <li>
           <stats title="desktop revenue" :value="stats.desktopRevenue" color="#1aa74f" type="money" :animated="true"></stats>
@@ -59,8 +59,8 @@
           <spark-chart id="mobile-impressions-chart" :chartData="chartData.mobileImpressions" color="#7772a7"></spark-chart>
         </li>
         <li>
-          <stats title="mobile ecpm" :value="mobileEcpm" color="#1aa74f" type="money"></stats>
-          <spark-chart id="mobile-ecpm-chart" :chartData="mobileEcpmSpark" color="#1aa74f"></spark-chart>
+          <stats title="mobile rpm" :value="stats.mobileRpm" color="#1aa74f" type="money"></stats>
+          <spark-chart id="mobile-ecpm-chart" :chartData="chartData.mobileRpm" color="#1aa74f"></spark-chart>
         </li>
         <li>
           <stats title="mobile revenue" :value="stats.mobileRevenue" color="#1aa74f" type="money" :animated="true"></stats>

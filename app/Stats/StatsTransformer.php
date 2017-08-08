@@ -187,7 +187,7 @@ class StatsTransformer
         return $data;
     }
 
-    public function highcharts(Collection $stats, $format, $dateRange, $tagStats = false)
+    public function highcharts(Collection $stats, $format, $dateRange, $tagStats = false, $sessionEvents = null)
     {
         $data = [];
 
@@ -281,6 +281,18 @@ class StatsTransformer
                     foreach (self::$tagChartStats as $stat) {
                         $data[$stat][] = [$timestamp, 0];
                     }
+                }
+            }
+
+            if ($sessionEvents !== null) {
+                if ($sessionEvents->has($key)) {
+                    $events = $sessionEvents->get($key);
+
+                    $data['mobileRpm'][] = [$timestamp, $events->rpm('mobile')];
+                    $data['desktopRpm'][] = [$timestamp, $events->rpm('desktop')];
+                } else {
+                    $data['mobileRpm'][] = [$timestamp, 0];
+                    $data['desktopRpm'][] = [$timestamp, 0];
                 }
             }
         }
