@@ -31,7 +31,7 @@ class CreateSessionEventsTable extends Migration
         });
 
         Schema::table('session_events', function (Blueprint $table) {
-            $table->index('platform');
+            $table->index('platform_type');
         });
     }
 
