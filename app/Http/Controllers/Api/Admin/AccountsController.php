@@ -111,6 +111,7 @@ class AccountsController extends ApiController
         $user->state          = $request->get('state');
         $user->country        = $request->get('country');
         $user->zip_code       = $request->get('zip_code');
+        $user->timezone       = 'America/New_York';
         $user->verified_email = true;
         $user->verified_phone = true;
         $user->active         = true;
