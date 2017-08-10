@@ -7,6 +7,7 @@
 
       <router-view></router-view>
     </div>
+    <div class="back-to-admin" v-if="impersonating" @click="stopImpersonating()">RETURN TO ADMIN</div>
   </div>
 </template>
 
@@ -18,6 +19,18 @@
     components: {
       Sidebar,
       RightsideNav
+    },
+
+    methods: {
+      stopImpersonating() {
+        this.$store.dispatch('users/impersonate', null)
+      }
+    },
+
+    computed: {
+      impersonating() {
+        return this.$store.state.users.impersonating
+      }
     },
 
     mounted() {
@@ -36,4 +49,15 @@
     @import "~font-awesome/scss/font-awesome";
 
     @import "resources/assets/sass/style";
+
+    .back-to-admin {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin: 0 18px 6px 0;
+      padding: 10px;
+      color: #EEEEEE;
+      background: #303749;
+      cursor: pointer; cursor: hand;
+    }
 </style>

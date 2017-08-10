@@ -152,6 +152,9 @@
 
         <div class="userinfo-addtllinkswrap">
           <ul class="userinfo-addtllinks">
+            <a @click="impersonate()">
+              <li>VIEW ACCOUNT DASHBOARD</li>
+            </a>
             <router-link :to="{ name: 'admin.analytics'}">
               <li>VIEW ANALYTICS</li>
             </router-link>
@@ -477,6 +480,10 @@
     },
 
     methods: {
+      impersonate() {
+        this.$store.dispatch('users/impersonate', this.account.id)
+      },
+
       activateWebsite(id, event) {
         Admin.activateWebsite(id, event.target.checked)
       },
@@ -657,6 +664,12 @@
 <style lang="scss">
   ul.userinfo-websitelistheader li:first-child, ul.userinfo-websitelist li .dashboard-statslist1 {
     width: calc(100% - 400px);
+  }
+
+  ul.userinfo-addtllinks li {
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .account_address {

@@ -48,6 +48,16 @@ class JWTAuth implements Guard
         }
     }
 
+    public function impersonate($id)
+    {
+        if ($this->user()->admin !== true) {
+            return;
+        }
+
+        $this->user                = $this->provider->retrieveById($id);
+        $this->user->impersonating = true;
+    }
+
     public function fromUser(Authenticatable $user, $expireIn = null)
     {
         $payload = [

@@ -1,5 +1,6 @@
 // users.js
 export const LOAD_USER = 'LOAD_USER'
+export const IMPERSONATE = 'IMPERSONATE'
 
 // admin.js
 export const LOAD_PENDING_WEBSITES = 'LOAD_PENDING_WEBSITES'

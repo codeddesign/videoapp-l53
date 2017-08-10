@@ -36,6 +36,12 @@ class UserTransformer extends Transformer
             'created_at_humans' => $user->created_at->diffForHumans(),
         ];
 
+        if ($user->impersonating !== null) {
+            $transformedUser = array_merge($transformedUser, [
+                'impersonating' => $user->impersonating,
+            ]);
+        }
+
         if ($user->revenue !== null) {
             $transformedUser = array_merge($transformedUser, [
                 'revenue' => $user->revenue,
