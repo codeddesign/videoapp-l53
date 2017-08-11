@@ -33,7 +33,7 @@ const actions = {
 
   impersonate({ dispatch, commit }, value) {
     if (value != null) {
-      http.defaults.headers.common['Ad3-Impersonate'] = '36'
+      http.defaults.headers.common['Ad3-Impersonate'] = value
     } else {
       delete http.defaults.headers.common['Ad3-Impersonate']
     }
