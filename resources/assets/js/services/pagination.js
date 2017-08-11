@@ -4,7 +4,8 @@ export default class Pagination {
 
   constructor() {
     this.page = 1
-    this.perPage = 10
+    this.perPage = 50
+    this.perPageOptions = [10, 25, 50, 100]
     this.data = []
   }
 

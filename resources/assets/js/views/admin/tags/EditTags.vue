@@ -74,9 +74,7 @@
             <div class="dashpagerows-wrapper">
               <div class="dashpagerows-title">Display Rows:</div>
               <select v-model="pagination['perPage']">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option v-for="option in pagination['perPageOptions']" v-bind:value="option">{{ option }}</option>
               </select>
               <div class="dashpagerows-selectarrow"></div>
             </div>
