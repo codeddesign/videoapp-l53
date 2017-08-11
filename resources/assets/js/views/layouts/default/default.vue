@@ -57,7 +57,8 @@
       margin: 0 18px 6px 0;
       padding: 10px;
       color: #EEEEEE;
-      background: #303749;
+      background: red;
+      font-size: 12px;
       cursor: pointer; cursor: hand;
     }
 </style>
