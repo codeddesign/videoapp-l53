@@ -30,6 +30,11 @@ CREATE DATABASE "videoapp53-testing";
 
 9. Start the Webpack Dev Server using `npm run dev`.
 
+# Deployment
+
+The deployment of this application is done using Ansible. A playbook that deploys the app is available at the [codeddesign/video-tracker](https://github.com/codeddesign/video-tracker/tree/master/ansible) repository, along with instructions on how to setup Ansible.
+
+After properly setup, the Ansible deployment script can be executed using ```ansible-playbook deploy.yaml --ask-vault-pass``` and providing Ansible with the Vault's password.
 
 # Contributing
 
