@@ -52,7 +52,7 @@
         <li>REQUESTS</li>
         <li>IMPRESSIONS</li>
         <li>FILL-RATE</li>
-        <li>ERROR-RATE</li>
+        <li>COMPLETION-RATE</li>
         <li>TAG DISPLAY %</li>
     </ul>
     <ul class="admindashboard-dailystatslist dashboard-tagsedit dashboard-tagscompare">
@@ -79,8 +79,8 @@
             <span v-html="showComparePercent(tag, 'fillRate')"></span>
           </div>
           <div class="dashboard-statslist2">
-            {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
-            <span v-html="showComparePercent(tag, 'errorRate')"></span>
+            {{ calculateCompletionRate(tag.stats.impressions, tag.stats.viewership.complete) }}
+            <span v-html="showComparePercent(tag, 'completionRate')"></span>
           </div>
           <div class="dashboard-statslist2">
             {{ calculateTagDisplayPercent(tag.stats.impressions, totalTagImpressions(tags)) }}
@@ -166,9 +166,9 @@
             tagValue = this.calculateFillRate(tag.stats.fills, tag.stats.tagRequests)
             compareValue = this.calculateFillRate(compareTag.stats.fills, compareTag.stats.tagRequests)
             break
-          case 'errorRate':
-            tagValue = this.calculateErrorRate(tag.stats.tagRequests, tag.stats.errors)
-            compareValue = this.calculateErrorRate(tag.stats.tagRequests, compareTag.stats.errors)
+          case 'completionRate':
+            tagValue = this.calculateCompletionRate(tag.stats.impressions, tag.stats.viewership.complete)
+            compareValue = this.calculateCompletionRate(compareTag.stats.impressions, compareTag.stats.viewership.complete)
             break
           case 'tagDisplay':
             tagValue = this.calculateTagDisplayPercent(tag.stats.impressions, this.totalTagImpressions(this.tags))

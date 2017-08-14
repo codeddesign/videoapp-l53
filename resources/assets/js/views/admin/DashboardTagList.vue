@@ -60,7 +60,7 @@
       <li>IMPRESSIONS</li>
       <li>REQ FILL %</li>
       <li>PV FILL %</li>
-      <li>ERROR-RATE</li>
+      <li>COMPLETION-RATE</li>
       <li>ECPM</li>
       <li>REVENUE</li>
     </ul>
@@ -84,8 +84,8 @@
           <span v-html="showComparePercent(tag, 'pageviewFillRate')"></span>
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
-          {{ calculateErrorRate(tag.stats.tagRequests, tag.stats.errors) }}
-          <span v-html="showComparePercent(tag, 'errorRate')"></span>
+          {{ calculateCompletionRate(tag.stats.impressions, tag.stats.viewership.complete) }}
+          <span v-html="showComparePercent(tag, 'completionRate')"></span>
         </div>
         <div class="dashboard-statslist2 dashboardadmin-statslist2">
           {{ calculateEcpm(tag.stats.impressions, tag.stats.revenue) }}
@@ -178,9 +178,9 @@
             tagValue = this.calculateFillRate(tag.stats.fills, tag.stats.pageviews)
             compareValue = this.calculateFillRate(compareTag.stats.fills, compareTag.stats.pageviews)
             break
-          case 'errorRate':
-            tagValue = this.calculateErrorRate(tag.stats.tagRequests, tag.stats.errors)
-            compareValue = this.calculateErrorRate(tag.stats.tagRequests, compareTag.stats.errors)
+          case 'completionRate':
+            tagValue = this.calculateCompletionRate(tag.stats.impressions, tag.stats.viewership.complete)
+            compareValue = this.calculateCompletionRate(compareTag.stats.impressions, compareTag.stats.viewership.complete)
             break
           case 'tagDisplay':
             tagValue = this.calculateTagDisplayPercent(tag.stats.impressions, this.totalTagImpressions(this.tags))
@@ -249,7 +249,13 @@
 
           if (combinedTags[key]) {
             combinedTags[key].stats = _.mapValues(combinedTags[key].stats, (value, stat) => {
-              return value + tag.stats[stat]
+              if(typeof value === 'object') {
+                return _.mapValues(value, (value2, stat2) => {
+                  return value2 + tag.stats[stat][stat2]
+                })
+              } else {
+                return value + tag.stats[stat]
+              }
             })
           } else {
             combinedTags[key] = tag

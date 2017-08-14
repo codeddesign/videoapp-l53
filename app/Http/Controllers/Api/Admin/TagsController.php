@@ -25,10 +25,14 @@ class TagsController extends ApiController
         if ($compareRange) {
             $stats = CampaignEvent::query()
                 ->with('tag')
-                ->select('name', 'tag_id', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
+                ->select('name', 'tag_id','status', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
                 ->where('tag_id', '!=', null)
                 ->where('name', '!=', 'viewership')
-                ->groupBy('name', 'tag_id', DB::raw('created_at::date'))
+                ->orWhere(function ($query) {
+                    $query->where('name', '=', 'viewership')
+                        ->where('status', array_search('complete', CampaignEvent::$viewership));
+                })
+                ->groupBy('name', 'tag_id', 'status', DB::raw('created_at::date'))
                 ->timeRange($compareRange, $this->user->timezone)
                 ->get()
                 ->groupBy('tag_id');
@@ -45,7 +49,7 @@ class TagsController extends ApiController
             $statsTransformer = new StatsTransformer;
 
             foreach ($tags as $tag) {
-                $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days);
+                $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days, true);
                 $tag->stats->put('pageviews', $pageViews);
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App\Stats;
 
+use App\Models\CampaignEvent;
 use App\Models\DateRange;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
@@ -105,15 +106,23 @@ class StatsTransformer
      *
      * @param bool                           $tagStats
      *
+     * @param bool                           $viewershipMetrics
+     *
      * @return array
      */
-    public function transformSumAll(Collection $stats, $tagStats = false)
+    public function transformSumAll(Collection $stats, $tagStats = false, $viewershipMetrics = false)
     {
         $data = [];
 
         // Initialize all stats with 0
         foreach (self::$allStats as $stat) {
             $data[$stat] = 0;
+        }
+
+        if ($viewershipMetrics) {
+            foreach (CampaignEvent::$viewership as $key => $value) {
+                $data['viewership'][$value] = 0;
+            }
         }
 
         if ($tagStats) {
@@ -125,7 +134,14 @@ class StatsTransformer
                 continue;
             }
 
-            $data[$stat->name] += $stat->count;
+            if ($stat->name !== 'viewership') {
+                $data[$stat->name] += $stat->count;
+            } else {
+                if ($viewershipMetrics) {
+                    $this->parseViewershipStats($data['viewership'], $stat);
+                }
+            }
+
 
             if ($stat->name === 'impressions' && isset($stat->tag)) {
                 $revenue         = $this->calculateRevenue($stat->count, $stat->tag);
@@ -145,11 +161,11 @@ class StatsTransformer
                 switch ($stat->backfill->platform_type) {
                     case 'mobile':
                         $data['mobileBackfillImpressions'] += $stat->count;
-                        $data['mobileBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
+                        $data['mobileBackfillRevenue']     += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                     case 'desktop':
                         $data['desktopBackfillImpressions'] += $stat->count;
-                        $data['desktopBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
+                        $data['desktopBackfillRevenue']     += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                 }
             }
@@ -166,11 +182,13 @@ class StatsTransformer
      * @param \Illuminate\Support\Collection $stats
      * @param                                $count
      *
+     * @param bool                           $viewershipMetrics
+     *
      * @return \Illuminate\Support\Collection
      */
-    public function sumAllAndAverage(Collection $stats, $count)
+    public function sumAllAndAverage(Collection $stats, $count, $viewershipMetrics = false)
     {
-        $data = collect($this->transformSumAll($stats));
+        $data = collect($this->transformSumAll($stats, false, $viewershipMetrics));
 
         if ($count === 1) {
             return $data;
@@ -288,10 +306,10 @@ class StatsTransformer
                 if ($sessionEvents->has($key)) {
                     $events = $sessionEvents->get($key);
 
-                    $data['mobileRpm'][] = [$timestamp, $events->rpm('mobile')];
+                    $data['mobileRpm'][]  = [$timestamp, $events->rpm('mobile')];
                     $data['desktopRpm'][] = [$timestamp, $events->rpm('desktop')];
                 } else {
-                    $data['mobileRpm'][] = [$timestamp, 0];
+                    $data['mobileRpm'][]  = [$timestamp, 0];
                     $data['desktopRpm'][] = [$timestamp, 0];
                 }
             }
@@ -338,6 +356,16 @@ class StatsTransformer
         $data['mobileImpressions'][]      = [$timestamp, $tagStats['mobile']['impressions']];
         $data['desktopUserate'][]         = $this->calculateUseRate($tagStats['desktop']['outstream'], $timestamp);
         $data['mobileUserate'][]          = $this->calculateUseRate($tagStats['mobile']['outstream'], $timestamp);
+    }
+
+    protected function parseViewershipStats(&$data, $event)
+    {
+        if ($event->name !== 'viewership') {
+            return;
+        }
+
+        $viewershipEventName = CampaignEvent::$viewership[$event->status];
+        $data[$viewershipEventName] += $event->count;
     }
 
     protected function parseTagStats(&$data, $event)

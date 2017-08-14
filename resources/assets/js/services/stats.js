@@ -61,6 +61,26 @@ export default {
     }
   },
 
+  calculateCompletionRate(impressions, completions, format = true) {
+    // completions / impressions
+
+    let completionRate = 0
+
+    if (impressions !== 0) {
+      completionRate = ((completions / impressions) * 100)
+    }
+
+    /*console.log(impressions)
+    console.log(completions)
+    console.log(completionRate)*/
+
+    if (format) {
+      return displayPercentage(completionRate)
+    } else {
+      return completionRate
+    }
+  },
+
   calculateUseRate(impressions, fills, format = true) {
     let useRate = 0
 
