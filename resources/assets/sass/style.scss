@@ -2540,7 +2540,6 @@ ul.dashboard-tagscompare li .dashboard-statslist2:nth-child(7) {
   box-sizing  : border-box;
   margin      : 0;
   padding     : 0.5em 2px 0;
-  overflow    : hidden;
   font-size   : 11px;
 }
 
@@ -2553,6 +2552,7 @@ ul.dashboard-tagscompare li .dashboard-statslist2:nth-child(7) {
   /*padding: 0.25em 0.75em;*/
   text-align: center;
   line-height: 37px;
+  border: 1px solid #272D3B;
   border-bottom: none;
   background: #F5F5F4;
   cursor: pointer;
