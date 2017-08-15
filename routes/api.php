@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('campaigns/{id}/activate', 'CampaignsController@activate');
 
     Route::get('websites', 'WebsitesController@index');
+    Route::post('websites', 'WebsitesController@store');
     Route::get('websites/stats', 'WebsitesController@stats');
     Route::post('websites/{id}/activate', 'WebsitesController@activate');
     Route::post('websites/{id}/owned', 'WebsitesController@owned');

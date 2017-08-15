@@ -70,10 +70,6 @@ export default {
       completionRate = ((completions / impressions) * 100)
     }
 
-    /*console.log(impressions)
-    console.log(completions)
-    console.log(completionRate)*/
-
     if (format) {
       return displayPercentage(completionRate)
     } else {

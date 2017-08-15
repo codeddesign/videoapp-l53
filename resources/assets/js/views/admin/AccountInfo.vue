@@ -180,6 +180,7 @@
             <div>
               <div class="userinfo-websitesheader">
                 <div class="userinfo-websitestitle">ACCOUNT WEBSITES</div>
+                <div class="addnewwebsitebutton" v-on:click="addNewWebsite()">ADD NEW WEBSITE</div>
               </div>
               <ul class="userinfo-itemlistheader userinfo-websitelistheader">
                 <li>URL</li>
@@ -480,6 +481,12 @@
     },
 
     methods: {
+      addNewWebsite() {
+        let domain = window.prompt('Enter the website\'s domain below:', 'domain.com')
+
+        this.$store.dispatch('admin/addWebsiteToUser', { userId: this.account.id, domain: domain })
+      },
+
       impersonate() {
         this.$store.dispatch('users/impersonate', this.account.id)
       },
@@ -655,6 +662,12 @@
       }
     },
 
+    watch: {
+      websites: function(newWebsites) {
+        this.$store.dispatch('admin/loadWebsitesStats', { account: this.account, range: this.websiteDateFilter })
+      }
+    },
+
     components: {
       AccountChart
     }
@@ -662,6 +675,21 @@
 </script>
 
 <style lang="scss">
+  .addnewwebsitebutton {
+    float: right;
+    margin-right: 20px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 30px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: #3F485D;
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
   ul.userinfo-websitelistheader li:first-child, ul.userinfo-websitelist li .dashboard-statslist1 {
     width: calc(100% - 400px);
   }

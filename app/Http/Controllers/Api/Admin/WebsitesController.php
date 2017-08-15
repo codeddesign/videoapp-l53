@@ -23,6 +23,21 @@ class WebsitesController extends ApiController
         return $this->collectionResponse($websites, new WebsiteTransformer);
     }
 
+    public function store(Request $request)
+    {
+        $user = User::find($request->get('user_id'));
+
+        $website = $user->websites()->create([
+            'domain' => $request->get('domain'),
+        ]);
+
+        $website->approved = true;
+        $website->waiting  = false;
+        $website->save();
+
+        return $this->collectionResponse($user->websites, new WebsiteTransformer);
+    }
+
     public function pending()
     {
         $pendingWebsites = Website::where('waiting', true)->get();
@@ -63,7 +78,7 @@ class WebsitesController extends ApiController
     {
         $userId = $request->get('user_id');
         $user   = User::with('websites')->findOrFail($userId);
-        $range = $request->get('time');
+        $range  = $request->get('time');
 
         $sites = $user->websites;
 

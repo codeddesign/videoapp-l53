@@ -249,7 +249,7 @@
 
           if (combinedTags[key]) {
             combinedTags[key].stats = _.mapValues(combinedTags[key].stats, (value, stat) => {
-              if(typeof value === 'object') {
+              if (typeof value === 'object') {
                 return _.mapValues(value, (value2, stat2) => {
                   return value2 + tag.stats[stat][stat2]
                 })

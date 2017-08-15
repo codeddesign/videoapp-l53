@@ -17,7 +17,8 @@ import {
   UPDATE_GLOBAL_OPTIONS,
   LOAD_REPORTS,
   DELETE_REPORTS,
-  LOAD_WEBSITES
+  LOAD_WEBSITES,
+  ADD_WEBSITE_TO_USER
 } from '../mutation-types'
 
 import User from '../../models/user'
@@ -76,6 +77,12 @@ const actions = {
   activateUser({ commit }, data) {
     Admin.activateAccount(data.id, data.status).then((user) => {
       commit(ACTIVATE_USER, user)
+    })
+  },
+
+  addWebsiteToUser({ commit }, { userId, domain }) {
+    Admin.addWebsite(userId, domain).then((websites) => {
+      commit(ADD_WEBSITE_TO_USER, { userId: userId, websites: websites })
     })
   },
 
@@ -306,6 +313,11 @@ const mutations = {
 
   [LOAD_WEBSITES](state, websites) {
     state.websites = websites
+  },
+
+  [ADD_WEBSITE_TO_USER](state, { userId, websites }) {
+    let user = _.find(state.accounts, { id: userId })
+    user.websites = websites
   }
 }
 

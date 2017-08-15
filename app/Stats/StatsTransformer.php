@@ -142,7 +142,6 @@ class StatsTransformer
                 }
             }
 
-
             if ($stat->name === 'impressions' && isset($stat->tag)) {
                 $revenue         = $this->calculateRevenue($stat->count, $stat->tag);
                 $data['revenue'] += $revenue;
@@ -161,11 +160,11 @@ class StatsTransformer
                 switch ($stat->backfill->platform_type) {
                     case 'mobile':
                         $data['mobileBackfillImpressions'] += $stat->count;
-                        $data['mobileBackfillRevenue']     += $this->calculateRevenue($stat->count, $stat->backfill);
+                        $data['mobileBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                     case 'desktop':
                         $data['desktopBackfillImpressions'] += $stat->count;
-                        $data['desktopBackfillRevenue']     += $this->calculateRevenue($stat->count, $stat->backfill);
+                        $data['desktopBackfillRevenue'] += $this->calculateRevenue($stat->count, $stat->backfill);
                         break;
                 }
             }

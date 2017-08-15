@@ -31,6 +31,16 @@ export default {
     })
   },
 
+  addWebsite(userId, domain) {
+    return axios.post('/admin/websites?include=backfill,backfill.adType', {
+      user_id: userId,
+      domain: domain
+    })
+    .then((response) => {
+      return response.data
+    })
+  },
+
   activateWebsite(id, status) {
     return axios.post('/admin/websites/' + id + '/activate', {
       status: status
