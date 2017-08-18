@@ -208,15 +208,11 @@
 
                         end = parseInt(response);
 
-<<<<<<< HEAD
-                        // fetch();
-=======
                         if (end <= current) {
                             current = 0;
                         }
 
                         fetch();
->>>>>>> develop
                     });
                 }, ajax_delay);
             };
