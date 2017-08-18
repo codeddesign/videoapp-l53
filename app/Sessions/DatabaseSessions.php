@@ -8,12 +8,12 @@ class DatabaseSessions
 {
     protected $sessions;
 
-    public function fetch($timeRange, $timezone = null)
+    public function fetch($timeRange, $timezone = null, $eagerLoads = [])
     {
         $sessions = new SessionsCollection;
 
         return $sessions
-            ->merge(SessionEvent::timeRange($timeRange, $timezone)->get()->toArray())
+            ->merge(SessionEvent::timeRange($timeRange, $timezone)->with($eagerLoads)->get())
             ->values();
     }
 }

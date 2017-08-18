@@ -209,6 +209,7 @@
             'CTR': 'ctr',
             'Revenue': 'revenue',
             'CPM': 'cpm',
+            'RPM': 'rpm',
             'Fills': 'fills',
             'Fill %': 'fill_rate',
             'PV Fill %': 'pv_fill_rate'

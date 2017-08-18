@@ -55,6 +55,15 @@ class Calculator
         return self::decimals($revenue / ($impressions / 1000));
     }
 
+    public static function percentage($dividend, $divisor)
+    {
+        if ($divisor === 0) {
+            return '0.00';
+        }
+
+        return number_format(($dividend / $divisor * 100), 2);
+    }
+
     public static function decimals($number, $decimals = 2)
     {
         return floatval(number_format($number, $decimals, '.', ''));

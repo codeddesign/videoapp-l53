@@ -363,7 +363,7 @@ class StatsTransformer
             return;
         }
 
-        $viewershipEventName = CampaignEvent::$viewership[$event->status];
+        $viewershipEventName        = CampaignEvent::$viewership[$event->status];
         $data[$viewershipEventName] += $event->count;
     }
 
@@ -470,6 +470,11 @@ class StatsTransformer
                     $stat['mobilePageviews'] += $websitePageviews->sum('mobilePageviews');
                     break;
             }
+
+            $stat['pv_fill_rate'] = Calculator::percentage(
+                $stat['impressions'],
+                $stat['desktopPageviews'] + $stat['mobilePageviews']
+            );
 
             unset($stat['advertiser'], $stat['tag_type'], $stat['description'], $stat['ad_type']);
 

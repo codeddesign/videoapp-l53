@@ -4,6 +4,7 @@ namespace App\Services\Reports;
 
 use App\Models\CampaignEvent;
 use App\Models\Report;
+use App\Sessions\SessionsCollection;
 use App\Stats\Calculator;
 use App\Stats\StatsTransformer;
 use Illuminate\Support\Collection;
@@ -28,7 +29,8 @@ class Reports
                     return true;
                 }
 
-                if (in_array($event->name, ['mobilePageviews', 'desktopPageviews']) && ! in_array('website', $relations)) {
+                if (in_array($event->name, ['mobilePageviews', 'desktopPageviews']) &&
+                    ! in_array('website', $relations)) {
                     return false;
                 }
 
@@ -84,19 +86,22 @@ class Reports
                 ]);
             }
 
+            $sessions = new SessionsCollection($events->where('name', 'sessions'));
+
             $stats = $stats->merge([
-                'requests'    => $parsedStats['tagRequests'],
-                'impressions' => $parsedStats['impressions'],
-                'fills'       => $parsedStats['fills'],
-                'fill_rate'   => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
-                'pv_fill_rate'   => $this->calculatePercentage(
-                    $parsedStats['fills'],
+                'requests'     => $parsedStats['tagRequests'],
+                'impressions'  => $parsedStats['impressions'],
+                'fills'        => $parsedStats['fills'],
+                'rpm'          => $sessions->rpm(),
+                'fill_rate'    => $this->calculatePercentage($parsedStats['fills'], $parsedStats['tagRequests']),
+                'pv_fill_rate' => $this->calculatePercentage(
+                    $parsedStats['impressions'],
                     $parsedStats['desktopPageviews'] + $parsedStats['mobilePageviews']
                 ),
-                'revenue'     => Calculator::decimals($parsedStats['revenue']),
-                'cpm'         => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
-                'errors'      => $parsedStats['errors'],
-                'error_rate'  => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
+                'revenue'      => Calculator::decimals($parsedStats['revenue']),
+                'cpm'          => Calculator::ecpm($parsedStats['revenue'], $parsedStats['impressions']),
+                'errors'       => $parsedStats['errors'],
+                'error_rate'   => $this->calculatePercentage($parsedStats['errors'], $parsedStats['tagRequests']),
             ]);
 
             $stats = $stats->merge($this->parseViewership($events, $stats));
@@ -218,10 +223,6 @@ class Reports
 
     protected function calculatePercentage($dividend, $divisor)
     {
-        if ($divisor === 0) {
-            return '0.00';
-        }
-
-        return number_format(($dividend / $divisor * 100), 2);
+        return Calculator::percentage($dividend, $divisor);
     }
 }

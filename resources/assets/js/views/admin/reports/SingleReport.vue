@@ -249,7 +249,7 @@
 
     methods: {
       presentStat(stat, key) {
-        if (['cpm', 'revenue'].indexOf(key) !== -1) {
+        if (['cpm', 'revenue', 'rpm'].indexOf(key) !== -1) {
           return accounting.formatMoney(stat)
         }
 

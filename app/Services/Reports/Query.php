@@ -4,6 +4,7 @@ namespace App\Services\Reports;
 
 use App\Models\CampaignEvent;
 use App\Models\Report;
+use App\Sessions\DatabaseSessions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +39,21 @@ class Query
 
         $stats = $this->filter($stats);
 
-        return $stats->get();
+        $stats = $stats->get();
+
+        $eagerLoads = ['website', 'campaign', 'campaign.type', 'campaign.type.adType'];
+
+        $sessions = (new DatabaseSessions)
+            ->fetch($this->report->dateRange(), $this->report->user->timezone, $eagerLoads)
+            ->map(function ($item) {
+                $item->name = 'sessions';
+                $item->tag  = new \stdClass();
+                $item->tag->platform_type = $item->platform_type;
+
+                return $item;
+            });
+
+        return collect(array_merge($stats->all(), $sessions->all()));
     }
 
     /**
