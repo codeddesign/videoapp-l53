@@ -40,6 +40,7 @@ use Illuminate\Redis\RedisManager;
  * @property array  $excluded_locations
  * @property array  $included_websites
  * @property array  $excluded_websites
+ * @property int    $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -71,6 +72,11 @@ class Tag extends Model
         'excluded_websites'  => 'array',
         'demo_data'          => 'array',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public static function forRequest(array $location, $website)
     {
@@ -144,6 +150,15 @@ class Tag extends Model
             // The user location is not excluded and
             // there are not included locations
             return true;
+        });
+
+        //Filter user tags
+        $tags = $tags->filter(function (self $tag) use ($website) {
+            if ($tag->user_id === null) {
+                return true;
+            }
+
+            return $tag->user_id === $website->user_id;
         });
 
         foreach ($tags as $tag) {

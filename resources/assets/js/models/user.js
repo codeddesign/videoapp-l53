@@ -31,6 +31,13 @@ export default {
     })
   },
 
+  loadTags() {
+    return axios.get('/tags')
+    .then((response) => {
+      return response.data.data
+    })
+  },
+
   saveReport(report) {
     if (report.id === 0) {
       return this.createReport(report)
@@ -105,6 +112,13 @@ export default {
       .then((response) => {
         return response.data
       })
+  },
+
+  loadWebsites() {
+    return axios.get('/websites')
+    .then((response) => {
+      return response.data.data
+    })
   },
 
   loadWebsiteStats(id, range) {

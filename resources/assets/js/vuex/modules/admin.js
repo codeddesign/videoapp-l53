@@ -8,8 +8,6 @@ import {
   SAVE_CURRENT_TAG,
   DELETE_CURRENT_TAG,
   LOAD_TAGS,
-  LOAD_LOCATIONS,
-  LOCATION_BACK,
   ADD_NOTE,
   LOAD_WEBSITE_STATS,
   LOAD_CAMPAIGN_STATS,
@@ -23,7 +21,6 @@ import {
 
 import User from '../../models/user'
 import Admin from '../../models/admin'
-import Country from '../../models/country'
 import Tag from '../../models/tag'
 import _ from 'lodash'
 
@@ -39,14 +36,8 @@ const state = {
     owned: Tag.default(true),
     not_owned: Tag.default()
   },
-  locations: {
-    countries: [],
-    states: [],
-    cities: []
-  },
   websitesStats: [],
   campaignStats: [],
-  showLocations: 'countries',
   globalOptions: [],
   websites: []
 }
@@ -87,7 +78,7 @@ const actions = {
   },
 
   loadTags({ commit }, range = null) {
-    Tag.all(range).then((tags) => {
+    Tag.all(range, true).then((tags) => {
       commit(LOAD_TAGS, tags)
     })
   },
@@ -103,37 +94,21 @@ const actions = {
   },
 
   saveCurrentTag({ commit }, saved) {
-    Tag.save(state.currentTag[tagKey(saved)]).then((tags) => {
+    Tag.save(state.currentTag[tagKey(saved)], true).then((tags) => {
       commit(SAVE_CURRENT_TAG, { tags: tags.data, saved: saved })
     })
   },
 
   deleteCurrentTag({ commit }, deleted) {
-    Tag.delete(state.currentTag[tagKey(deleted)]).then((tags) => {
+    Tag.delete(state.currentTag[tagKey(deleted)], true).then((tags) => {
       commit(DELETE_CURRENT_TAG, { tags: tags.data, deleted: deleted })
     })
   },
 
   activateTag({ commit }, data) {
-    Tag.activate(data.id, data.status).then((tag) => {
+    Tag.activate(data.id, data.status, true).then((tag) => {
       commit(ACTIVATE_TAG, tag)
     })
-  },
-
-  loadCountries({ commit }) {
-    Country.all().then((countries) => {
-      commit(LOAD_LOCATIONS, countries)
-    })
-  },
-
-  expandLocation({ commit }, location) {
-    Country.expand(location).then(locations => {
-      commit(LOAD_LOCATIONS, locations)
-    })
-  },
-
-  locationBack({ commit }) {
-    commit(LOCATION_BACK)
   },
 
   addNote({ commit }, { account, note }) {
@@ -245,38 +220,6 @@ const mutations = {
 
   [ACTIVATE_TAG](state, tag) {
 
-  },
-
-  [LOAD_LOCATIONS](state, locations) {
-    if (locations.length === 0) {
-      return
-    }
-
-    switch (locations[0].type) {
-      case 'country':
-        state.showLocations = 'countries'
-        state.locations.countries = locations
-        break
-      case 'state':
-        state.showLocations = 'states'
-        state.locations.states = locations
-        break
-      case 'city':
-        state.showLocations = 'cities'
-        state.locations.cities = locations
-        break
-    }
-  },
-
-  [LOCATION_BACK](state) {
-    switch (state.showLocations) {
-      case 'cities':
-        state.showLocations = 'states'
-        break
-      case 'states':
-        state.showLocations = 'countries'
-        break
-    }
   },
 
   [ADD_NOTE](state, { account, note }) {

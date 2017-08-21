@@ -9,6 +9,7 @@ import Analytics from './views/analytics/Analytics.vue'
 import Campaigns from './views/campaigns/Campaigns.vue'
 import CreateCampaign from './views/campaigns/components/create.vue'
 import ListCampaign from './views/campaigns/components/listing.vue'
+import UserTagManagement from './views/tags/TagManagement.vue'
 import UserReports from './views/reports/Reports.vue'
 import UserSingleReport from './views/reports/SingleReport.vue'
 import UserReportForm from './views/reports/ReportForm.vue'
@@ -70,6 +71,14 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/tags',
+      name: 'tagmanagement',
+      component: UserTagManagement,
+      meta: {
+        title: 'Tag Management'
+      }
     },
     {
       path: '/reports',

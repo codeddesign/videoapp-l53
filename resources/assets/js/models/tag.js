@@ -1,8 +1,16 @@
 import axios from '../services/http'
 
+const makeUrl = (url, prependAdmin) => {
+  if (prependAdmin) {
+    return 'admin/' + url
+  }
+
+  return url
+}
+
 export default {
-  all(range = null) {
-    let url = 'admin/tags'
+  all(range = null, admin = false) {
+    let url = makeUrl('tags', admin)
 
     if (range !== null) {
       url = url + '?compareRange=' + range
@@ -14,37 +22,45 @@ export default {
       })
   },
 
-  create(tag) {
-    return axios.post('/admin/tags', tag)
+  create(tag, admin = false) {
+    let url = makeUrl('tags', admin)
+
+    return axios.post(url, tag)
       .then((response) => {
         return response.data
       })
   },
 
-  update(tag) {
-    return axios.patch('/admin/tags/' + tag.id, tag)
+  update(tag, admin = false) {
+    let url = makeUrl('tags/' + tag.id, admin)
+
+    return axios.patch(url, tag)
       .then((response) => {
         return response.data
       })
   },
 
-  delete(tag) {
-    return axios.delete('/admin/tags/' + tag.id)
+  delete(tag, admin = false) {
+    let url = makeUrl('tags/' + tag.id, admin)
+
+    return axios.delete(url)
       .then((response) => {
         return response.data
       })
   },
 
-  save(tag) {
+  save(tag, admin = false) {
     if (tag.id === 0) {
-      return this.create(tag)
+      return this.create(tag, admin)
     } else {
-      return this.update(tag)
+      return this.update(tag, admin)
     }
   },
 
-  activate(id, status) {
-    return axios.post('/admin/tags/' + id + '/activate', {
+  activate(id, status, admin = false) {
+    let url = makeUrl('tags/' + id + '/activate', admin)
+
+    return axios.post(url, {
       status: status
     })
     .then((response) => {

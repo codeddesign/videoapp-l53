@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\Api\Admin\StoreTagRequest;
+use App\Http\Requests\Api\StoreTagRequest;
 use App\Models\CampaignEvent;
 use App\Models\DateRange;
 use App\Models\Tag;
+use Illuminate\Cache\Repository;
 use App\Stats\StatsTransformer;
 use App\Transformers\TagTransformer;
-use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +17,7 @@ class TagsController extends ApiController
 {
     public function index(Request $request)
     {
-        $tags = Tag::where('user_id', null)
-            ->get()
-            ->sortBy('priority_count');
+        $tags = $this->user->tags;
 
         $compareRange = $request->get('compareRange');
 
@@ -28,7 +25,7 @@ class TagsController extends ApiController
             $stats = CampaignEvent::query()
                 ->with('tag')
                 ->select('name', 'tag_id', 'status', DB::raw('created_at::date'), DB::raw('SUM(count) as count'))
-                ->where('tag_id', '!=', null)
+                ->whereIn('tag_id', $tags->pluck('id'))
                 ->where('name', '!=', 'viewership')
                 ->orWhere(function ($query) {
                     $query->where('name', '=', 'viewership')
@@ -46,13 +43,13 @@ class TagsController extends ApiController
                     ->timeRange($compareRange, $this->user->timezone)
                     ->first()->count ?? 0;
 
-            $days = DateRange::byName($compareRange)->days() ?: 1;
+            $days  = DateRange::byName($compareRange)->days() ?: 1;
 
             $statsTransformer = new StatsTransformer;
 
             foreach ($tags as $tag) {
                 $tag->stats = $statsTransformer->sumAllAndAverage($stats->get($tag->id) ?? new Collection(), $days, true);
-                $tag->stats->put('pageviews', $pageViews);
+                //$tag->stats->put('pageviews', $pageViews);
             }
         }
 
@@ -61,9 +58,12 @@ class TagsController extends ApiController
 
     public function store(StoreTagRequest $request)
     {
-        Tag::create($request->transform());
+        $tag = Tag::create($request->transform());
 
-        $tags = Tag::all();
+        $tag->user()->associate($this->user);
+        $tag->save();
+
+        $tags = $this->user->tags;
 
         $this->clearTagsCache();
 
@@ -76,30 +76,9 @@ class TagsController extends ApiController
 
         $tag->update($request->transform());
 
-        $tags = Tag::all()->sortBy('id');
+        $tags = $this->user->tags->sortBy('id');
 
         $this->clearTagsCache();
-
-        return $this->collectionResponse($tags, new TagTransformer);
-    }
-
-    public function activate($id, Request $request)
-    {
-        $tag = Tag::findOrFail($id);
-
-        $tag->active = $request->get('status');
-        $tag->save();
-
-        $this->clearTagsCache();
-
-        return $this->itemResponse($tag, new TagTransformer);
-    }
-
-    public function destroy($id)
-    {
-        Tag::findOrFail($id)->delete();
-
-        $tags = Tag::all()->sortBy('id');
 
         return $this->collectionResponse($tags, new TagTransformer);
     }

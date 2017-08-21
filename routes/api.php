@@ -7,7 +7,7 @@ Route::resource('campaign-types', 'CampaignTypesController', ['except' => ['show
 Route::resource('campaigns', 'CampaignsController');
 Route::post('/campaigns/store/preview', ['uses' => 'CampaignsController@storePreviewLink', 'as' => 'campaigns.store.preview']);
 
-Route::resource('wordpress', 'WebsitesController', ['except' => ['show', 'create', 'edit', 'update']]);
+Route::resource('websites', 'WebsitesController', ['except' => ['show', 'create', 'edit', 'update']]);
 
 Route::get('stats/all', 'StatsController@all');
 
@@ -27,6 +27,15 @@ Route::patch('reports/{id}', 'ReportsController@update');
 Route::post('reports/delete', 'ReportsController@destroy');
 Route::get('reports/{id}/stats', 'ReportsController@stats');
 Route::get('reports/{id}/xls', 'ReportsController@xls');
+
+Route::get('tags', 'TagsController@index');
+Route::post('tags', 'TagsController@store');
+Route::patch('tags/{id}', 'TagsController@update');
+Route::delete('tags/{id}', 'TagsController@destroy');
+Route::post('tags/{id}/activate', 'TagsController@activate');
+
+Route::get('locations', 'LocationsController@index');
+Route::post('locations/expand', 'LocationsController@show');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
     Route::get('globalOptions', 'GlobalOptionsController@index');
@@ -68,7 +77,4 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::post('reports/delete', 'ReportsController@destroy');
     Route::get('reports/{id}/stats', 'ReportsController@stats');
     Route::get('reports/{id}/xls', 'ReportsController@xls');
-
-    Route::get('locations', 'LocationsController@index');
-    Route::post('locations/expand', 'LocationsController@show');
 });

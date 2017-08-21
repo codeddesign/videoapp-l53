@@ -58,7 +58,7 @@
 
     mounted() {
       this.$nextTick(function() {
-        http.get('/wordpress')
+        http.get('/websites')
             .then((response) => {
               this.sites = response.data.data
             })
@@ -67,7 +67,7 @@
 
     methods: {
       add() {
-        http.post('/wordpress', { domain: this.site.link })
+        http.post('/websites', { domain: this.site.link })
             .then((response) => {
               this.sites.push(response.data.site)
             })
@@ -78,7 +78,7 @@
       },
 
       remove(site) {
-        http.delete('/wordpress/' + site.id)
+        http.delete('/websites/' + site.id)
             .then((response) => {
               var index = this.sites.indexOf(site)
               this.sites.splice(index, 1)

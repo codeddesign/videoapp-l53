@@ -133,10 +133,6 @@
           <input class="tagcreate-longinput" v-model="tag['daily_request_limit']" placeholder="0">
         </div>
         <div class="tagcreate-quarterinnerwrap">
-          <div class="tagcreate-fullinnertitle">PRIORITY COUNT</div>
-          <input class="tagcreate-longinput" v-model="tag['priority_count']" placeholder="0">
-        </div>
-        <div class="tagcreate-quarterinnerwrap">
           <div class="tagcreate-fullinnertitle">eCPM</div>
           <input class="tagcreate-longinput" v-model="tag['ecpm']" placeholder="0" name="ecpm" v-validate data-vv-rules="required|not_in:0">
         </div>
@@ -221,7 +217,7 @@
                   <h1>
                     <label for="tagmanage-tabbed11">MANUAL ENTRY</label>
                   </h1>
-                  <div><p>coming soon..</p></div>
+                  <div><p style="padding: 8px;">Coming soon..</p></div>
                 </section>
               </div>
             </div>
@@ -426,7 +422,7 @@
 
     data() {
       return {
-        tag: _.cloneDeep(this.$store.state.admin.currentTag[this.owned ? 'owned' : 'not_owned']),
+        tag: _.cloneDeep(this.$store.state.users.currentTag),
         macros: [
           'CACHE_BREAKER', 'REFERRER_URL', 'REFERRER_ROOT', 'IP_ADDRESS', 'HEIGHT', 'WIDTH',
           'DATE', 'MEDIA_ID', 'USER_AGENT', 'CAMPAIGN_ID', 'TIMESTAMP'
@@ -440,7 +436,7 @@
 
     mounted() {
       this.$watch('tag', (value) => {
-        this.$store.dispatch('admin/setCurrentTag', value)
+        this.$store.dispatch('users/setCurrentTag', value)
       }, {
         deep: true
       })
@@ -456,13 +452,13 @@
 
         if (this.errors.any()) {
           e.preventDefault()
-          var errorMsg = this.errors.errors.map((error) => {
+          var errorMsg = this.errors.items.map((error) => {
             return error.msg + '\n'
           })
 
           window.alert(errorMsg)
         } else {
-          this.$store.dispatch('admin/saveCurrentTag', this.tag)
+          this.$store.dispatch('users/saveCurrentTag', this.tag)
         }
       },
 
@@ -594,14 +590,14 @@
       },
 
       hideForm() {
-        this.$store.dispatch('admin/setShowTagForm', { status: false, owned: this.owned })
+        this.$store.dispatch('users/setShowTagForm', { status: false, owned: this.owned })
       },
 
       deleteTag() {
         let confirmed = window.confirm('Are you sure you want to delete this tag?')
 
         if (confirmed) {
-          this.$store.dispatch('admin/deleteCurrentTag', this.tag)
+          this.$store.dispatch('users/deleteCurrentTag', this.tag)
         }
       },
 
@@ -638,7 +634,7 @@
       },
 
       websites() {
-        let websites = this.$store.state.admin.websites
+        let websites = this.$store.state.users.websites
 
         if (this.geoFilter !== '') {
           var options = {

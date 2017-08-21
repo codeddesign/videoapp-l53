@@ -33,6 +33,12 @@
             </li>
           </router-link>
 
+          <router-link :to="{ name: 'tagmanagement'}">
+            <li>
+              <span>TAG MANAGEMENT</span>
+            </li>
+          </router-link>
+
          <router-link :to="{ name: 'reports'}">
             <li>
               <span>REPORTS</span>

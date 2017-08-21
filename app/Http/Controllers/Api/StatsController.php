@@ -22,11 +22,13 @@ class StatsController extends ApiController
     public function all(Request $request)
     {
         $timespan = $request->get('time');
+        $tags     = $request->get('tags') ? explode(',', $request->get('tags')) : null;
+        $website  = ($request->get('website') != 0) ? $request->get('website') : null;
 
         if (! $timespan || $timespan === 'realtime') {
             $stats = $this->fetchRealTimeData();
         } else {
-            $stats = $this->fetchHistoricalData($timespan);
+            $stats = $this->fetchHistoricalData($timespan, $tags, $website);
         }
 
         return $this->jsonResponse($stats);
@@ -62,9 +64,9 @@ class StatsController extends ApiController
         ]);
     }
 
-    protected function fetchHistoricalData($timespan)
+    protected function fetchHistoricalData($timespan, $tags, $website)
     {
-        $statsByCampaign = $this->campaignEvents($timespan);
+        $statsByCampaign = $this->campaignEvents($timespan, $tags, $website);
 
         $statsByCampaign = $statsByCampaign
             ->groupBy(function ($item) {
@@ -74,7 +76,7 @@ class StatsController extends ApiController
         return (new StatsTransformer)->transform($statsByCampaign, $timespan);
     }
 
-    protected function campaignEvents($timespan)
+    protected function campaignEvents($timespan, $tags = null, $website = null)
     {
         $createdAtTimezone = "((created_at AT TIME ZONE 'UTC') AT TIME ZONE '".$this->user->timezone."')::date";
 
@@ -83,9 +85,16 @@ class StatsController extends ApiController
             ->select('name', 'tag_id', 'backfill_id', DB::raw($createdAtTimezone.' as created_at'), DB::raw('SUM(count) as count'))
             ->where('name', '!=', 'viewership')//viewership data isn't charted
             ->groupBy('name', 'tag_id', 'backfill_id', DB::raw($createdAtTimezone))
-            ->timeRange($timespan, $this->user->timezone)
-            ->get();
+            ->timeRange($timespan, $this->user->timezone);
 
-        return $statsByCampaign;
+        if ($tags) {
+            $statsByCampaign = $statsByCampaign->whereIn('tag_id', $tags);
+        }
+
+        if ($website) {
+            $statsByCampaign = $statsByCampaign->where('website_id', $website);
+        }
+
+        return $statsByCampaign->get();
     }
 }
