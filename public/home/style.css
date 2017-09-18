@@ -306,7 +306,7 @@ ul.headernavlist li:last-child:hover {
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    background: url(polina.jpg) no-repeat;
+    background: url('') no-repeat;
     background-size: cover;
     z-index: 0;
 }
@@ -2570,6 +2570,7 @@ ul.cacheq-seclistwrap li {
     float: left;
     width: 100%;
     text-align: center;
+    margin-top: 10px;
 }
 
 .company-exectitle {
@@ -2582,7 +2583,7 @@ ul.cacheq-seclistwrap li {
     border-bottom: 1px solid #235999;
     border-left: 1px solid #235999;
     border-right: 1px solid #235999;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 20px;
     padding-bottom: 7px;
 }

@@ -16,7 +16,7 @@
             <div class="contact-atltextaddress">Headquarters
                 <br>1011 Marble Mill Rd.
                 <br>Marietta, GA</div>
-            <div class="contact-atltextphone">(555) 555.5555</div>
+            <div class="contact-atltextphone">(470) 419.7743</div>
         </div>
         <div class="contact-atlbg"></div>
     </div>
