@@ -28,8 +28,11 @@ class ContactRequest extends FormRequest
             'email' => 'required|email',
             'phone' => 'required',
             'company' => '',
-            'message' => 'required',
         ];
+
+        if (!is_null($this->get('message'))) {
+            $validation = array_merge($validation, ['message' => 'required']);
+        }
 
         if (!is_null($this->get('website'))) {
             $validation = array_merge($validation, [

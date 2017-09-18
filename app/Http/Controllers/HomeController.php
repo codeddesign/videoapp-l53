@@ -54,12 +54,12 @@ class HomeController extends Controller
             'company',
             'message',
             'website',
-            'pageviews'
+            'pageviews',
         ]);
 
         app(Mailer::class)->send(new Contact($details));
 
-        return redirect('/contact')->with('status', 'Done');
+        return ['success' => true];
     }
 
     public function getCompany()
