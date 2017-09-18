@@ -1,282 +1,322 @@
-<!DOCTYPE html>
-<html>
+@extends('home.layout')
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta name="viewport" content="width=550, user-scalable=no">
-    <title>Ad&sup3; Media | High Impact Video & Display Ad Platform</title>
-    <meta name="description" content="The Fastest High Converting Premium Video and Display Advertising Platform with 100% fill with Next-Generation Ad-Tech Technology.  Outstream, Instream, and Display Advertising Solutions for Publishers">
-    <!--<meta name="description" content="Delivering high converting outstream, instream, and display advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">-->
-    <link rel='shortcut icon' href='/home/images/ad3favicon.png'>
-    <link href="home/style.css?v=2" rel="stylesheet" type="text/css">
-    <link href="home/responsive.css" rel="stylesheet" type="text/css">
+@section('title')
+    Ad&sup3; Video Ad Tech | High RPM Video Technology
+@endsection
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+@section('body')
+    <div class="home-top20darkline"></div>
+    <div class="home-top50darkline"></div>
+    <div class="home-top80darkline"></div>
+    <div class="home-sideleft1darkline"></div>
+    <div class="home-sideleft2darkline"></div>
+    <div class="home-sideleft3darkline"></div>
+    <div class="home-sideleft4darkline"></div>
+    <div class="home-sideright1darkline"></div>
+    <div class="home-sideright2darkline"></div>
+    <div class="home-sideright3darkline"></div>
+    <div class="home-sideright4darkline"></div>
+    <div class="home-topaboutwrap">
+        @include('home.partial.nav_desktop')
 
-    <!-- GOOGLE FONT TYPE -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-
-    <!-- TYPEKIT FONT TYPE -->
-    <script src="https://use.typekit.net/lwk5wec.js"></script>
-    <script>
-    try {
-        Typekit.load({
-            async: true
-        });
-    } catch (e) {}
-    </script>
-
-    <!-- FACEBOOK OG -->
-    <meta property="fb:app_id" content="344924649174257" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Ad&sup3; Media | High Impact Ad Solutions" />
-    <meta property="og:description" content="Ad3 delivers the highest converting advertising solutions with the highest CPM's the market has to offer." />
-    <meta property="og:url" content="http://ad3media.com" />
-    <meta property="og:site_name" content="Ad3 Media" />
-    <meta property="og:image" content="" />
-    <meta property="og:locale" content="en_US" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <!-- END FACEBOOK OG -->
-
-</head>
-
-<body>
-    <div class="mainnav-overlay">
-        <ul class="navoverlay-list">
-            <!--<a href=""><li>WP PLUGIN</li></a>-->
-            <!--<a href=""><li>DEVELOPER API</li>-->
-            <a href="/features"><li>FEATURES</li></a>
-            <a href="/demo/inarticle-video"><li>TEST OUR AD'S</li></a>
-            <a href="/contact"><li>ABOUT US</li></a>
-            <a href="/contact"><li>CONTACT</li></a>
-            <a href="/contact"><li>GET STARTED WITH AD3</li></a>
-        </ul>
-    </div>
-
-    <div class="mainlogowrapper">
-        <div class="navwrap">
-            <a href="/">
-                <div class="logo"></div>
+        <div class="home-topgraphics">
+            <div class="home-topmaintitle">FULLY MANAGED VIDEO AD TECH</div>
+            <div class="home-topsubtitle">INTELLIGENCE.SPEED.YIELD.</div>
+            <div class="home-topsubtitlebg"></div>
+            <div class="home-topvideoarea">
+                <video playsinline autoplay muted loop poster="" id="home-topautoplayvideo">
+                    <source src="/home/video/ad3-videoheader.mp4" type="video/mp4">
+                </video>
+                <div class="home-topplaybutton"></div>
+            </div>
+            <div class="home-toptitleslogan">The World’s Fastest Most Intelligent High Yield Video Ad Platform Ever Created.</div>
+            <a href="/cacheq">
+                <div class="home-toplearnmorebutton">LEARN MORE ABOUT OUR VIDEO TECH <span></span></div>
             </a>
-            <ul class="headernav">
-                <a href="/features">
-                    <li>PUBLISHERS</li>
-                </a>
-                <a href="/features">
-                    <li>FEATURES</li>
-                </a>
+            <div class="home-topsaastitle">Video AdOps as a Service</div>
+            <a href="###" class="home-topwhitepaper">Up to 400% Fill  <span></span>  View Whitepaper</a>
+            <div id="home-toprotatenumerals"><span></span>
+                <div id="hometoprotatethese">5462354</div>
+            </div>
+        </div>
+        <div class="home-leftsidecontainer"></div>
+        <div class="home-top20line"></div>
+        <div class="home-top50line"></div>
+        <div class="home-top80line"></div>
+        <div class="home-side1line"></div>
+        <div class="home-side2line"></div>
+        <div class="home-side3line"></div>
+        <div class="home-side4line"></div>
+        <div class="home-topcircle1"></div>
+        <div class="home-topcircle2"></div>
+        <div class="home-topcircle3"></div>
+        <div class="home-toplinex1"></div>
+        <div class="home-toplinex2"></div>
+        <div class="home-toplinex3"></div>
+        <div class="home-topaboutopacity"></div>
+        <div class="home-topcircles"></div>
+        <video playsinline autoplay muted loop poster="" id="home-topvideoplay">
+            <source src="/home/video/ad3-office.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="home-aboutblock">
+        <div class="home-aboutblocktitlewrap">
+            <div class="home-aboutpurpleback"></div>
+            <div class="home-aboutsubtitle">What We Do Better than Anyone Else</div>
+            <div class="home-aboutmaintitle">VIDEO AD TECHNOLOGY AS A SERVICE</div>
+            <div class="home-aboutsmallersub">The latest in video ad technology right at your fingertips. We manage as much or as little of your video ad stack as you wish.</div>
+            <div class="home-aboutprebuttonwrap">
+                <div class="home-aboutfirstprebutton">
+                    <p>Learn how we can provide you with maximum RPM’s and Yield today</p>
+                </div>
                 <a href="/contact">
-                    <li>CONTACT</li>
+                    <div class="home-aboutprebutton">Contact Us</div>
                 </a>
-                <a href="/app">
-                    <li>LOGIN</li>
-                </a>
+            </div>
+            <div class="home-abouttoplinesep"></div>
+            <div class="home-aboutsecleft">
+                <img src="/home/images/homecacheq.gif" class="home-cacheqgif">
+                <div class="home-aboutsecleft01wrap">
+                    <div class="home-aboutsec01">01</div>
+                    <div class="home-aboutseco1text">
+                        <div class="home-aboutsec01title">CacheQ
+                            <br>Video Player</div>
+                        <div class="home-aboutsec01desc">Running on our patented CacheQ system, it is truly the world’s fastest video ad player with up to 400% fill per pageview.</div>
+                        <a href="/cacheq">
+                            <div class="home-aboutsec01button">LEARN MORE</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="home-aboutseclinedown"></div>
+            <div class="home-aboutsecright">
+                <div id="home-adserverupnums">$<span>5000</span></div>
+                <img src="/home/images/homeadserver.gif" class="home-adservergif">
+                <div class="home-aboutsecright02wrap">
+                    <div class="home-aboutsec01">02</div>
+                    <div class="home-aboutseco1text">
+                        <div class="home-aboutsec01title">Real-time
+                            <br>Ad Serving</div>
+                        <div class="home-aboutsec01desc">State-of-the-Art Real-time dashboard updating in milliseconds with RTB and Server-side auctions at it’s core.</div>
+                        <a href="/ad-serving">
+                            <div class="home-aboutsec01button">LEARN MORE</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <ul class="home-aboutseclistwrap">
                 <li>
-                    <div class="navmore"></div>
-                    <div class="closenavmore"></div>
+                    <p>
+                        <div class="home-aboutseclist">
+                            <div class="home-aboutseclistnum">03</div>
+                            <div class="home-aboutseclisttitle">Full VAST/VPAID Support</div>
+                            <div class="home-aboutseclistdesc">All VAST/VPAID versions supported, including Flash.</div>
+                        </div>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <div class="home-aboutseclist">
+                            <div class="home-aboutseclistnum">04</div>
+                            <div class="home-aboutseclisttitle">Server-side Demand</div>
+                            <div class="home-aboutseclistdesc">Complete server-side ad request’s.</div>
+                        </div>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <div class="home-aboutseclist">
+                            <div class="home-aboutseclistnum">05</div>
+                            <div class="home-aboutseclisttitle">Fastest Video Ad Player Ever</div>
+                            <div class="home-aboutseclistdesc">19kb in size, and loading in less than 100ms.</div>
+                        </div>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <div class="home-aboutseclist">
+                            <div class="home-aboutseclistnum">06</div>
+                            <div class="home-aboutseclisttitle">Fastest Video Ad Player Ever</div>
+                            <div class="home-aboutseclistdesc">19kb in size, and loading in less than 100ms.</div>
+                        </div>
+                    </p>
                 </li>
             </ul>
         </div>
+        <!-- home-aboutblocktitlewrap -->
     </div>
-
-    <div class="homepage-headerarea">
-        <div class="headermap"></div>
-        <div class="header-mainwrapper">
-            <div class="navwrap">
-
-                <div class="header-tagline">
-                    <div class="headertag-high"></div>
-                    <div class="headertag-text">conversion
-                        <br><span>ads made <b>easier</b></span></div>
-                </div>
-                <ul class="under-headertagline">
-                    <li>Industry Leading RPMs</li>
-                    <li>High Impact Responsive Ad Types</li>
-                    <li>Premium Video Monetization</li>
-                </ul>
-                <div class="getstarted-wrap">
-                    <a href="/features">
-                        <div class="getstarted-learnmore">Find out what makes us better..</div>
-                    </a>
-                    <a href="#betasignup" id="headergetstart">
-                        <div class="getstarted-startnow">Get Started Now <span></span></div>
-                    </a>
-                </div>
-            </div>
-            <div class="header-graphwrap">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
+    <div class="home-cacheqblock">
+        <div class="home-cacheqloadtime">
+            <div class="home-cacheqloadtitle">Video Loaded Time</div>
+            <div class="home-cacheqloadline"></div>
+            <div class="home-cacheqloadmille">76ms</div>
         </div>
-    </div>
-
-    <div class="nowmerge-wrapper">
-        <div class="nowmerge-wrapbg"></div>
-        <div class="nowmerge-titlewrap">
-            <center>
-                <div class="nowmerge-blueunder">
-                    <div class="nowmerge-blueunder1"></div>
-                    <div class="nowmerge-blueunder2"></div>
-                </div>
-            </center>
-            <div class="nowmerge-title">Video & Display Now Merge</div>
-            <div class="nowmerge-descwrap">
-                <div class="nowmerge-desc">Utilizing proprietary technology, we merge both video and display advertising into one
-                    <br>in order to create high impact ad’s with the greatest CPM’s possible.
-                    <br><span>Bottom line, we help keep your visitor’s happy while you earn more revenue.</span></div>
+        <div class="home-cacheqlinex"></div>
+        <div class="home-cacheqreal">REAL ADTECH</div>
+        <div class="home-cacheqhorline"></div>
+        <div class="home-cacheqvertline"></div>
+        <div class="home-cacheqlogowrap">
+            <div class="home-cacheqlogo">CacheQ Video Ad Player</div>
+            <div class="home-cacheqlogodesc">INTRODUCING: THE ONLY VIDEO PLAYER TO PROVIDE YOU WITH UP TO 400% FILL.
+                <br>NO WATERFALL. NO HEADER-BIDDING. SIMPLY TECHNOLOGY.</div>
+            <div class="home-cacheqvideoarea">
+                <p></p>
             </div>
-
-            <div class="nowmerge-moreinfowrapper">
-                <ul class="nowmerge-moreinfo">
-                    <li>
-                        <div class="nowmerge-moreimage"></div>
-                        <div class="nowmerge-moretitle">100% Responsive Ads</div>
-                        <div class="nowmerge-moredesc">Ad Solutions that monetize across any device and screen size by automatically changing the ad width and height.</div>
-                    </li>
-                    <li>
-                        <div class="nowmerge-moreimage"></div>
-                        <div class="nowmerge-moretitle">Powerful Reporting</div>
-                        <div class="nowmerge-moredesc">Real-time micro-level reporting allows you to dive deep into your traffic inventory and revenue</div>
-                    </li>
-                    <li>
-                        <div class="nowmerge-moreimage"></div>
-                        <div class="nowmerge-moretitle">Complete Monetization</div>
-                        <div class="nowmerge-moredesc">Delivering a minimum of 100% fill, 100% of the time. With Ad3, every single page load is fully monetized.</div>
-                    </li>
-                    <li>
-                        <div class="nowmerge-moreimage"></div>
-                        <div class="nowmerge-moretitle">Blazing Fast Ad Loading</div>
-                        <div class="nowmerge-moredesc">Our fully custom built ad server provides nearly-instant data transfers and delivery of ad’s on to your website.</div>
-                    </li>
-                </ul>
-
-                <a href="#betasignup">
-                    <div class="nowmerge-signupbutton">Sign Up and Get Started Today <span></span></div>
-                </a>
-            </div>
-            <!-- end nowmerge-moreinfowrapper -->
-
+            <div class="home-cacheqvidlearnline"></div>
+            <a href="/cacheq">
+                <div class="home-cacheqvidlearnmore">LEARN MORE ABOUT CACHEQ</div>
+            </a>
+            <div class="home-cache1vidcaution">CAUTION: OUTWARD AMAZEMENT WILL PROCEED VIDEO</div>
         </div>
-    </div>
-
-    <div class="homepage-highimpactwrapper">
-        <div class="homeadlist-chartbehind"></div>
-        <div class="homepage-highimpactmiddle">
-            <div class="homepage-highimpacttitle">High Impact Ad Solutions</div>
-            <div class="homepage-highimpactdesc">As publisher's ourselves, we understand the impact that an ad can have on
-                <br>both site speed and your bottom-line. Our state-of-the-art ad server provides you with blazing fast load times, 100% fill, and macro-level reporting unlike anything you have ever seen.
-            </div>
-            <!--<div class="homepage-highimpactdesc">Ad3 provides you with ad types that meet any situation.<br>Whether you are looking for simple or complex, we deliver the highest converting ad types the market has to offer. An entire system built on simplicity with you in mind.</div>-->
-            <ul class="highimpact-adlist">
-                <li>
-                    <div class="adlist-image">
-                        <img src="home/images/adlist-onscrolldisplay.jpg" alt="Outstream Video Ads">
-                    </div>
-                    <div class="adlist-title">Video</div>
-                </li>
-                <li>
-                    <div class="homevdplus"></div>
-                </li>
-                <li>
-                    <div class="adlist-image">
-                        <img src="home/images/adlist-infooter.jpg" alt="High CPM Ads">
-                    </div>
-                    <div class="adlist-title">High Impact</div>
-                    <a href="#####">
-                        <div class="adlist-viewdemo">view demo</div>
-                    </a>
-                </li>
-                <li>
-                    <div class="homevdplus"></div>
-                </li>
-                <li>
-                    <div class="adlist-image">
-                        <img src="home/images/adlist-insidebar.jpg" alt="Display Ads">
-                    </div>
-                    <div class="adlist-title">Display</div>
-                </li>
-            </ul>
-
-            <div class="adlist-placeanywhere">
-                <div class="adlist-placeanytitle">*Place anywhere ad solutions combining Video & Display <span></span></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="underadlist-buttons">
-        <a href="#betasignup">
-            <div class="left-leftusshow">Check Out All of Our Features <span></span></div>
-        </a>
-        <a href="/demo/inarticle-video">
-            <div class="right-leftusshow">Test Drive Our Ad Types Online <span></span></div>
+        <a href="/contact">
+            <div class="home-cacheqcontactsales">CONTACT OUR SALES TO GET STARTED</div>
         </a>
     </div>
-    <!-- end underadlist-buttons -->
-
-    <div class="homepage-advertiserswrap">
-        <div class="homeadvertisers-title">Access to 1,000’s of Premium Advertisers</div>
-        <ul class="homeadvertisers-list">
-            <li>Coca-Cola Advertising</li>
-            <li>Sony Advertising</li>
-            <li>Microsoft Advertising</li>
-            <li>Disney Advertising</li>
-            <li>Verizon Advertising</li>
-            <li>Apple Advertising</li>
-        </ul>
+    <div class="home-advertiserblock">
+        <div class="home-adverttitlewrap">
+            <div class="home-advertpurpleback"></div>
+            <div class="home-advertsubtitle">Access to 1,000's of Premium Advertisers</div>
+            <div class="home-advertmaintitle">DEMAND ON-DEMAND</div>
+            <div class="home-advertsmallersub">Name brand premium advertisers from fortune 500 companies. Demand On-Demand allows your to utilize our high-quality demand sources while also bringing in your own.</div>
+        </div>
+        <!-- start advert slideshow -->
+        <div id="home-advertslider">
+            <!-- Each image is 350px by 233px -->
+            <div class="home-advertslidingimg">
+                <img class="advertslidefirst" src="/home/images/hewlettpackard-logo.png" alt="" />
+                <img src="/home/images/intel-logo.png" alt="" />
+                <img src="/home/images/nike-logo.png" alt="" />
+                <img src="/home/images/mcdonalds-logo.png" alt="" />
+                <img src="/home/images/starbucks-logo.png" alt="" />
+                <img src="/home/images/cocacola-logo.png" alt="" />
+                <img src="/home/images/sony-logo.png" alt="" />
+                <img src="/home/images/microsoft-logo.png" alt="" />
+                <img src="/home/images/disney-logo.png" alt="" />
+                <img src="/home/images/verizon-logo.png" alt="" />
+                <img src="/home/images/hewlettpackard-logo.png" alt="" />
+                <img src="/home/images/intel-logo.png" alt="" />
+                <img src="/home/images/nike-logo.png" alt="" />
+                <img src="/home/images/mcdonalds-logo.png" alt="" />
+                <img src="/home/images/starbucks-logo.png" alt="" />
+                <img src="/home/images/cocacola-logo.png" alt="" />
+                <img src="/home/images/sony-logo.png" alt="" />
+                <img src="/home/images/microsoft-logo.png" alt="" />
+                <img src="/home/images/disney-logo.png" alt="" />
+                <img src="/home/images/verizon-logo.png" alt="" />
+                <img src="/home/images/hewlettpackard-logo.png" alt="" />
+                <img src="/home/images/intel-logo.png" alt="" />
+                <img src="/home/images/nike-logo.png" alt="" />
+                <img src="/home/images/mcdonalds-logo.png" alt="" />
+                <img src="/home/images/starbucks-logo.png" alt="" />
+                <img src="/home/images/cocacola-logo.png" alt="" />
+                <img src="/home/images/sony-logo.png" alt="" />
+                <img src="/home/images/microsoft-logo.png" alt="" />
+                <img src="/home/images/disney-logo.png" alt="" />
+                <img src="/home/images/verizon-logo.png" alt="" />
+                <img src="/home/images/hewlettpackard-logo.png" alt="" />
+                <img src="/home/images/intel-logo.png" alt="" />
+                <img src="/home/images/nike-logo.png" alt="" />
+                <img src="/home/images/mcdonalds-logo.png" alt="" />
+                <img src="/home/images/starbucks-logo.png" alt="" />
+                <img src="/home/images/cocacola-logo.png" alt="" />
+                <img src="/home/images/sony-logo.png" alt="" />
+                <img src="/home/images/microsoft-logo.png" alt="" />
+                <img src="/home/images/disney-logo.png" alt="" />
+                <img src="/home/images/verizon-logo.png" alt="" />
+                <img src="/home/images/hewlettpackard-logo.png" alt="" />
+                <img src="/home/images/intel-logo.png" alt="" />
+                <img src="/home/images/nike-logo.png" alt="" />
+                <img src="/home/images/mcdonalds-logo.png" alt="" />
+                <img src="/home/images/starbucks-logo.png" alt="" />
+                <img src="/home/images/cocacola-logo.png" alt="" />
+                <img src="/home/images/sony-logo.png" alt="" />
+                <img src="/home/images/microsoft-logo.png" alt="" />
+                <img src="/home/images/disney-logo.png" alt="" />
+                <img src="/home/images/verizon-logo.png" alt="" />
+                <img src="/home/images/hewlettpackard-logo.png" alt="" />
+                <img src="/home/images/intel-logo.png" alt="" />
+                <img src="/home/images/nike-logo.png" alt="" />
+                <img src="/home/images/mcdonalds-logo.png" alt="" />
+                <img src="/home/images/starbucks-logo.png" alt="" />
+                <img src="/home/images/cocacola-logo.png" alt="" />
+                <img src="/home/images/sony-logo.png" alt="" />
+                <img src="/home/images/microsoft-logo.png" alt="" />
+                <img src="/home/images/disney-logo.png" alt="" />
+                <img src="/home/images/verizon-logo.png" alt="" />
+            </div>
+        </div>
+        <!-- end advert slideshow -->
+        <div class="home-advertvidwall">
+            <div class="home-advertvidwallpre">
+                <div class="home-advertviddark">
+                    <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                        <source src="/home/video/arbys.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="home-advertviddark">
+                    <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                        <source src="/home/video/mlbcom.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="home-advertvidwallcenter">
+                <p>
+                    <div class="home-advertvidlightleft">
+                        <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                            <source src="/home/video/porsche.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="home-advertvidlightright">
+                        <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                            <source src="/home/video/mcdonalds.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="home-advertvidlightleft">
+                        <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                            <source src="/home/video/cola.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="home-advertvidlightright">
+                        <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                            <source src="/home/video/usps.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </p>
+            </div>
+            <div class="home-advertvidwallpost">
+                <div class="home-advertviddark">
+                    <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                        <source src="/home/video/3mlaptop.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="home-advertviddark">
+                    <video playsinline autoplay muted loop poster="" class="home-advertvideoembed">
+                        <source src="/home/video/hostgator.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        <!-- end .home-advertvidwall -->
+        <div class="home-advertowndemand">DO YOU HAVE YOUR OWN DEMAND? PLUG IT INTO AD3 TO GENERATE EVEN HIGHER RPM</div>
+        <div class="home-advertlinex"></div>
+        <div class="home-advertvertline"></div>
+        <div class="home-adverthorline"></div>
     </div>
 
-    @include('home.partial.betasignup', ['source' => 'homepage'])
+    @include('home.partial.footerblock')
+@endsection
 
-    @include('home.footer')
+@section('body-scripts')
+    <script>
+    // ROTATE TOP NUMBERS
+    setInterval(function() {
+        $('#hometoprotatethese').text(Math.floor(Math.random() * (9999999 - 1111111)) + 1111111);
+    }, 200);
+
+    // INCREASE AD SERVING NUMBER
+    setInterval(function() {
+        var $adservenum = $('#home-adserverupnums span');
+        $adservenum.text(parseInt($adservenum.text()) + 1);
+    }, 200);
+    </script>
+@endsection

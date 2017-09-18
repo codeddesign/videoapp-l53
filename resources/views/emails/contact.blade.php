@@ -8,14 +8,24 @@
 <body>
 
 <div>
-    <p>Name: "{{ $contact['name'] }}".</p>
-    <p>Company: "{{ $contact['company'] }}".</p>
-    <p>Email: "{{ $contact['email'] }}".</p>
-    <p>Phone #: "{{ $contact['phone'] }}".</p>
+    <p>Name: "{{ $sender['name'] }}".</p>
+    <p>Company: "{{ $sender['company'] }}".</p>
+    <p>Email: "{{ $sender['email'] }}".</p>
+    <p>Phone #: "{{ $sender['phone'] }}".</p>
 
-    <p>
-        {{ $contact['message'] }}
-    </p>
+    @if (!is_null($sender['website']))
+        <p>Website #: "{{ $sender['website'] }}".</p>
+    @endif
+
+    @if (!is_null($sender['pageviews']))
+        <p>Page views #: "{{ $sender['pageviews'] }}".</p>
+    @endif
+
+    @if (!is_null($sender['message']))
+        <p>
+            {{ $sender['message'] }}
+        </p>
+    @endif
 </div>
 
 </body>

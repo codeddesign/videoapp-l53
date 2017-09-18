@@ -53,26 +53,36 @@ class HomeController extends Controller
             'phone',
             'company',
             'message',
+            'website',
+            'pageviews'
         ]);
 
-        app(Mailer::class)
-            ->to(['ian@ad3media.com', 'daniel@ad3media.com', 'bryant@ad3media.com'])
-            ->send(new Contact($details));
+        app(Mailer::class)->send(new Contact($details));
 
         return redirect('/contact')->with('status', 'Done');
     }
 
-    public function getFeatures()
+    public function getCompany()
     {
-        $current = $this->getFeaturesLive();
+        $current = 0; // $this->getCompanyLive();
 
-        return view('home.features', compact('current'));
+        return view('home.company', compact('current'));
+    }
+
+    public function getCacheq()
+    {
+        return view('home.cacheq');
+    }
+
+    public function getAdServing()
+    {
+        return view('home.adserving');
     }
 
     /**
      * @return int
      */
-    public function getFeaturesLive()
+    public function getCompanyLive()
     {
         $redis = app(RedisManager::class);
         $current = 0;
@@ -108,8 +118,8 @@ class HomeController extends Controller
             ],
         ];
 
-        if (! isset($details[$mode])) {
-            $mode  = 'in-article';
+        if (!isset($details[$mode])) {
+            $mode = 'in-article';
         }
 
         $info = $details[$mode];

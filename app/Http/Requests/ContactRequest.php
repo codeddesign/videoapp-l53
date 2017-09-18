@@ -23,12 +23,21 @@ class ContactRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $validation = [
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
             'company' => '',
             'message' => 'required',
         ];
+
+        if (!is_null($this->get('website'))) {
+            $validation = array_merge($validation, [
+                'website' => 'required|url',
+                'pageviews' => 'required',
+            ]);
+        }
+
+        return $validation;
     }
 }

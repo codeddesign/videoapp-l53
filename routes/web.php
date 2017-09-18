@@ -8,9 +8,15 @@ Route::post('signup', 'HomeController@signup');
 Route::get('contact', 'HomeController@getContact');
 Route::post('contact', 'HomeController@postContact');
 
-// Features
-Route::get('features', 'HomeController@getFeatures');
-Route::get('features/live', 'HomeController@getFeaturesLive');
+// Company
+Route::get('company', 'HomeController@getCompany');
+// Route::get('compoany/live', 'HomeController@getCompanyLive');
+
+// CacheQ
+Route::get('cacheq', 'HomeController@getCacheq');
+
+// CacheQ
+Route::get('ad-serving', 'HomeController@getAdServing');
 
 // Demo
 Route::get('demo/{mode?}', 'HomeController@demo');
