@@ -24,9 +24,11 @@
 Long boat sheet aft rope's end trysail shrouds broadside overhaul draught crack Jennys tea cup. Pillage lad grapple chantey Nelsons folly scourge of the seven seas belay matey brig square-rigged. Ahoy maroon main sheet scurvy poop deck splice the main brace weigh anchor mizzen square-rigged fire in the hole.
 				<p>
 Rigging Gold Road jack marooned coffer quarter ye yard execution dock poop deck. Grog blossom red ensign scuttle gibbet spanker Yellow Jack hearties chase guns Sink me list. Pressgang yawl crow's nest Jack Ketch nipper doubloon aye hands Cat o'nine tails Buccaneer.
-				@if ($info['campaign'] == 1 || $info['campaign'] == 3)
-                    <script src="{{ $app->environment('APP_URL') }}/demod/i{{ $info['campaign'] }}.js"></script>
-                    @endif
+				<!-- start video area -->
+				@if ($info['campaign'] == 3)
+                	<script src="{{ $app->environment('APP_URL') }}/demod/i2.js"></script>
+                @endif
+                <!-- end video area -->
 				<p>
 Bilged on her anchor careen Nelsons folly to go on account fire in the hole measured fer yer chains tackle bucko rigging hang the jib. Grog blossom barkadeer lad scuttle sheet Privateer scuppers keelhaul plunder cutlass. Lass Spanish Main interloper loaded to the gunwalls black jack pink ahoy Brethren of the Coast parley heave down.
 				<p>
@@ -37,6 +39,11 @@ Starboard bilge ho crack Jennys tea cup fore Pieces of Eight brig shrouds lad bu
 Long boat sheet aft rope's end trysail shrouds broadside overhaul draught crack Jennys tea cup. Pillage lad grapple chantey Nelsons folly scourge of the seven seas belay matey brig square-rigged. Ahoy maroon main sheet scurvy poop deck splice the main brace weigh anchor mizzen square-rigged fire in the hole.				
 	        </div><!-- end .demopage-maindesc -->
 	        <div class="demopage-sidebararea">
+		        <!-- start sidebar video -->
+		        @if ($info['campaign'] == 2)
+                    <script src="{{ $app->environment('APP_URL') }}/demod/i2.js"></script>
+                @endif
+		        <!-- end sidebar video -->
 		        <div class="demopage-sideblock110"></div>
 		        <div class="demopage-sideblock270"></div>
 		        <div class="demopage-sideblock160"></div>
