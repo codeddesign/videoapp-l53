@@ -26,7 +26,7 @@ Long boat sheet aft rope's end trysail shrouds broadside overhaul draught crack 
 Rigging Gold Road jack marooned coffer quarter ye yard execution dock poop deck. Grog blossom red ensign scuttle gibbet spanker Yellow Jack hearties chase guns Sink me list. Pressgang yawl crow's nest Jack Ketch nipper doubloon aye hands Cat o'nine tails Buccaneer.
 				<!-- start video area -->
 				@if ($info['campaign'] == 3)
-                	<script src="{{ $app->environment('APP_URL') }}/demod/i2.js"></script>
+                	<script src="{{ $app->environment('APP_URL') }}/demod/i3.js"></script>
                 @endif
                 <!-- end video area -->
 				<p>
