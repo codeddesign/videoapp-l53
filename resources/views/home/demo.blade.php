@@ -1,7 +1,78 @@
 @extends('home.layout')
 
+@section('title')
+    Ad&sup3; Video Ad Tech: Video Player Demo
+@endsection
+
 @section('body')
-    <!-- @TODO -->
+<div class="company-mainbg">
+    @include('home.partial.nav_desktop')
+
+    <div class="demopage-horline30"></div>
+    <div class="demopage-horline70"></div>
+    <div class="demopage-horline90"></div>
+    <div class="company-vertline170"></div>
+    <div class="company-vertline200"></div>
+    <div class="company-vertline640"></div>
+    <div class="company-vertline670"></div>
+    <div class="demopage-mainwrapper">
+        <div class="demopage-historytitle">VIDEO PLAYER DEMO</div>
+        <div class="demopage-contentareawrap">
+	        <div class="demopage-maindesc">
+	            Starboard bilge ho crack Jennys tea cup fore Pieces of Eight brig shrouds lad bucko. Shrouds chase schooner lass deadlights tender ballast hail-shot doubloon cog. Bounty mizzen broadside shrouds Plate Fleet schooner Sea Legs lee belay Chain Shot.
+	            <p>
+Long boat sheet aft rope's end trysail shrouds broadside overhaul draught crack Jennys tea cup. Pillage lad grapple chantey Nelsons folly scourge of the seven seas belay matey brig square-rigged. Ahoy maroon main sheet scurvy poop deck splice the main brace weigh anchor mizzen square-rigged fire in the hole.
+				<p>
+Rigging Gold Road jack marooned coffer quarter ye yard execution dock poop deck. Grog blossom red ensign scuttle gibbet spanker Yellow Jack hearties chase guns Sink me list. Pressgang yawl crow's nest Jack Ketch nipper doubloon aye hands Cat o'nine tails Buccaneer.
+				@if ($info['campaign'] == 1 || $info['campaign'] == 3)
+                    <script src="{{ $app->environment('APP_URL') }}/demod/i{{ $info['campaign'] }}.js"></script>
+                    @endif
+				<p>
+Bilged on her anchor careen Nelsons folly to go on account fire in the hole measured fer yer chains tackle bucko rigging hang the jib. Grog blossom barkadeer lad scuttle sheet Privateer scuppers keelhaul plunder cutlass. Lass Spanish Main interloper loaded to the gunwalls black jack pink ahoy Brethren of the Coast parley heave down.
+				<p>
+Doubloon fluke Admiral of the Black bilge coxswain rum crimp shrouds gangway hail-shot. Pillage dead men tell no tales man-of-war landlubber or just lubber ho broadside me bilged on her anchor to go on account crack Jennys tea cup. Long boat rope's end smartly piracy pirate pinnace bilge water spirits Pieces of Eight fluke.
+				</p>
+Starboard bilge ho crack Jennys tea cup fore Pieces of Eight brig shrouds lad bucko. Shrouds chase schooner lass deadlights tender ballast hail-shot doubloon cog. Bounty mizzen broadside shrouds Plate Fleet schooner Sea Legs lee belay Chain Shot.
+	            <p>
+Long boat sheet aft rope's end trysail shrouds broadside overhaul draught crack Jennys tea cup. Pillage lad grapple chantey Nelsons folly scourge of the seven seas belay matey brig square-rigged. Ahoy maroon main sheet scurvy poop deck splice the main brace weigh anchor mizzen square-rigged fire in the hole.				
+	        </div><!-- end .demopage-maindesc -->
+	        <div class="demopage-sidebararea">
+		        <div class="demopage-sideblock110"></div>
+		        <div class="demopage-sideblock270"></div>
+		        <div class="demopage-sideblock160"></div>
+		        <div class="demopage-sideblock270"></div>
+	        </div>
+	    </div><!-- end .demopage-contentareawrap -->    
+    </div>
+</div>
+<!-- end .company-mainbg -->
+
+@include('home.partial.footerblock')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
 
     <div class="demopage-headerdark"></div>
 
@@ -83,7 +154,4 @@
             </ul>
         </div>
     </div>
-
-    <!-- @TODO -->
-
-@endsection
+-->
