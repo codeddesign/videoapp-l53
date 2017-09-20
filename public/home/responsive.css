@@ -61,6 +61,20 @@
     }
 }
 
+@media screen and (max-width: 1100px) {
+	.demopage-maindesc {
+		width: calc(100% - 30px);
+	}
+	.demopage-sidebararea {
+		width: 100%;
+		float: left;
+		margin-bottom: 50px;
+	}
+	.demopage-maindesc {
+		margin-bottom: 0;
+	}
+}
+
 @media screen and (max-width: 1095px) {
     #home-topautoplayvideo {
         width: 400px;
@@ -1019,4 +1033,12 @@
         width: 251px;
         padding: 0 20px;
     }
+    .demopage-mainwrapper {
+	    float: left;
+	    width: calc(100% - 50px);
+	    margin: 115px 100px 0 22px;
+	}
+	.demopage-historytitle {
+		margin-left: 10px;
+	}
 }
