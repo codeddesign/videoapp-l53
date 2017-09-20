@@ -5,7 +5,7 @@
 @endsection
 
 @section('body')
-<div class="company-mainbg">
+<div class="company-mainbg" style="overflow: none !important;">
     @include('home.partial.nav_desktop')
 
     <div class="demopage-horline30"></div>
