@@ -2893,14 +2893,15 @@ ul.cacheq-seclistwrap li {
 
 .demopage-sidebararea {
 	float: right;
-	width: 284px;
+	width: 298px;
 	margin-top: 17px;
+	margin-right: -8px;
 }
 
 .demopage-sideblock110 {
 	float: left;
-	width: 100%;
-	height: 110px;
+	width: calc(100% - 2px);
+	height: 166px;
 	background: #091C2C;
 	border: 1px solid #235999;
 	margin-bottom: 15px;
@@ -2908,7 +2909,7 @@ ul.cacheq-seclistwrap li {
 
 .demopage-sideblock270 {
 	float: left;
-	width: 100%;
+	width: calc(100% - 2px);
 	height: 270px;
 	background: #091C2C;
 	border: 1px solid #235999;
@@ -2917,7 +2918,7 @@ ul.cacheq-seclistwrap li {
 
 .demopage-sideblock160 {
 	float: left;
-	width: 100%;
+	width: calc(100% - 2px);
 	height: 160px;
 	background: #091C2C;
 	border: 1px solid #235999;
