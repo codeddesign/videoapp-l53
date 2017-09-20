@@ -4,6 +4,7 @@ namespace App\Services\Reports;
 
 use App\Models\CampaignEvent;
 use App\Models\Report;
+use App\Models\Tag;
 use App\Sessions\SessionsCollection;
 use App\Stats\Calculator;
 use App\Stats\StatsTransformer;
@@ -50,8 +51,12 @@ class Reports
         foreach ($reportEvents as $events) {
             $parsedStats = $statsTransformer->transformSumAll($events);
 
+            $tag = $events->first()->tag;
+            if (!($tag instanceof Tag)) {
+                continue;
+            }
+
             $campaign = $events->first()->campaign;
-            $tag      = $events->first()->tag;
             $website  = $events->first()->website;
 
             $stats = new Collection;
