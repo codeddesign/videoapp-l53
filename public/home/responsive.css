@@ -132,7 +132,7 @@
         display: none;
     }
     .home-cacheqcontactsales {
-        display: none;
+        /*display: none;*/
     }
 }
 
@@ -1049,5 +1049,9 @@
 	}
 	.demopage-horline90 {
 		margin-right: 28px;
+	}
+	.home-cacheqcontactsales {
+		margin-left: 20px;
+		width: calc(100% - 40px);
 	}
 }

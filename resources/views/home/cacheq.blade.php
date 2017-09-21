@@ -71,7 +71,7 @@
                 <div class="cacheq-howblockimagearea">
                     <img src="/home/images/cacheqvideosequence.gif">
                 </div>
-                <div class="cacheq-howblocktitlearea">Demand Place in Queue</div>
+                <div class="cacheq-howblocktitlearea">Demand Placed in Queue</div>
                 <div class="cacheq-howtoblockdesc">CacheQ lines up all advertisements based on CPM, and plays each ad
                     <br>back-to-back.</div>
             </div>

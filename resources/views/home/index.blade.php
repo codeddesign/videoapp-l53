@@ -159,6 +159,7 @@
             <div class="home-cacheqlogo">CacheQ Video Ad Player</div>
             <div class="home-cacheqlogodesc">INTRODUCING: THE ONLY VIDEO PLAYER TO PROVIDE YOU WITH UP TO 400% FILL.
                 <br>NO WATERFALL. NO HEADER-BIDDING. SIMPLY TECHNOLOGY.</div>
+            <!--
             <div class="home-cacheqvideoarea">
                 <p></p>
             </div>
@@ -167,6 +168,45 @@
                 <div class="home-cacheqvidlearnmore">LEARN MORE ABOUT CACHEQ</div>
             </a>
             <div class="home-cache1vidcaution">CAUTION: OUTWARD AMAZEMENT WILL PROCEED VIDEO</div>
+            -->
+            
+            <!-- start .cacheq-howitworksblock -->
+            <div class="cacheq-howitworksblock" style="margin-bottom:0;margin-top:50px;">
+		        <div class="cacheq-howitworkswrapper">
+		            <div class="cacheq-howblockleft">
+		                <div class="cacheq-howblockimagearea">
+		                    <img src="/home/images/cacheqserverblock.gif">
+		                </div>
+		                <div class="cacheq-howblocktitlearea">Asynchronous Requests</div>
+		                <div class="cacheq-howtoblockdesc">Asynchronous Requests are made to all demand partners from the server-side
+		                    <br>(compared to in the browser).</div>
+		            </div>
+		            <div class="cacheq-howdirectional"></div>
+		            <div class="cacheq-howblockcenter">
+		                <div class="cacheq-howblockimagearea">
+		                    <img src="/home/images/cacheqxtransfer.gif">
+		                </div>
+		                <div class="cacheq-howblickareacenter">
+		                    <div class="cacheq-howblocktitlearea">Advertisers send Demand</div>
+		                    <div class="cacheq-howtoblockdesc">Demand partners receive request’s, and send back multiple video advertisements to be played.</div>
+		                </div>
+		            </div>
+		            <div class="cacheq-howdirectional"></div>
+		            <div class="cacheq-howblockright">
+		                <div class="cacheq-howblockimagearea">
+		                    <img src="/home/images/cacheqvideosequence.gif">
+		                </div>
+		                <div class="cacheq-howblocktitlearea">Demand Placed in Queue</div>
+		                <div class="cacheq-howtoblockdesc">CacheQ lines up all advertisements based on CPM, and plays each ad
+		                    <br>back-to-back.</div>
+		            </div>
+		        </div>
+		    </div>
+		    <!-- end .cacheq-howitworksblock -->
+            
+            
+            
+            
         </div>
         <a href="/contact">
             <div class="home-cacheqcontactsales">CONTACT OUR SALES TO GET STARTED</div>

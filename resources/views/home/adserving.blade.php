@@ -43,8 +43,8 @@
                 <p>
                     <div class="home-aboutseclist">
                         <div class="home-aboutseclistnum">03</div>
-                        <div class="home-aboutseclisttitle">Manage Demand</div>
-                        <div class="home-aboutseclistdesc">19kb in size, and loading in less than 100ms.</div>
+                        <div class="home-aboutseclisttitle">Demand Management</div>
+                        <div class="home-aboutseclistdesc">Utilize our pre-setup demand partners, or use your own.</div>
                     </div>
                 </p>
             </li>
@@ -52,8 +52,8 @@
                 <p>
                     <div class="home-aboutseclist">
                         <div class="home-aboutseclistnum">04</div>
-                        <div class="home-aboutseclisttitle">Free IVT Reporting</div>
-                        <div class="home-aboutseclistdesc">19kb in size, and loading in less than 100ms.</div>
+                        <div class="home-aboutseclisttitle">Free Fraud Prevention</div>
+                        <div class="home-aboutseclistdesc">Built-in bot & fraud management to keep fill high.</div>
                     </div>
                 </p>
             </li>
@@ -62,7 +62,7 @@
             <div class="home-aboutfirstprebutton">
                 <p>Curious? Check out our Demo to see it in action</p>
             </div>
-            <div class="home-aboutprebutton">View Demo</div>
+            <a href="/demo/display-plus"><div class="home-aboutprebutton">View Demo</div></a>
         </div>
     </div>
 </div>

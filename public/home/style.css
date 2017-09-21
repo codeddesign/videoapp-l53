@@ -1697,7 +1697,7 @@ ul.home-aboutseclistwrap li:hover:before, ul.home-aboutseclistwrap li:hover:afte
 }
 
 .footercontactnumb {
-    float: left;
+    /*float: left;*/
     font-size: 12px;
     color: #EBEBEB;
     margin-bottom: 10px;
@@ -1715,10 +1715,19 @@ ul.home-aboutseclistwrap li:hover:before, ul.home-aboutseclistwrap li:hover:afte
 }
 
 .footercontactemail {
-    float: left;
+    /*float: left;*/
     font-size: 12px;
     color: #EBEBEB;
     clear: both;
+    display: inline-block;
+}
+
+.footercontactemail a {
+    /*float: left;*/
+    font-size: 12px;
+    color: #EBEBEB;
+    clear: both;
+    display: inline-block;
 }
 
 .footercontactemail span {
@@ -1727,7 +1736,7 @@ ul.home-aboutseclistwrap li:hover:before, ul.home-aboutseclistwrap li:hover:afte
     height: 10px;
     margin-top: 2px;
     margin-right: 10px;
-    float: left;
+    /*float: left;*/
     display: inline-block;
 }
 
