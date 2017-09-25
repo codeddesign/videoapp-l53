@@ -34,7 +34,7 @@
                 <div class="home-toplearnmorebutton">LEARN MORE ABOUT OUR VIDEO TECH <span></span></div>
             </a>
             <div class="home-topsaastitle">Video AdOps as a Service</div>
-            <a href="###" class="home-topwhitepaper">Up to 400% Fill  <span></span>  View Whitepaper</a>
+            <a href="/home/pdf/cacheq-one-sheeter.pdf" taget="_blank" class="home-topwhitepaper">Up to 400% Fill  <span></span>  View Whitepaper</a>
             <div id="home-toprotatenumerals"><span></span>
                 <div id="hometoprotatethese">5462354</div>
             </div>
