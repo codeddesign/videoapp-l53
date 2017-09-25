@@ -46,6 +46,11 @@
                   <label for="campaign_name">CAMPAIGN</label>
                   <div class="campaignform-error hidden">This name is already in use.</div>
                   <input id="campaign_name" type="text" placeholder="Reference name.." required v-model="campaign.name">
+
+                  <div>
+                    <input id="video_closeable" type="checkbox" v-model="campaign.closeable" style="clear: both; width: auto;">
+                    <label for="video_closeable" style="clear: both; float: none; width: auto;margin-top: 18px; margin-left: 5px;">User can close video</label>
+                  </div>
                 </div>
 
                 <button>GENERATE EMBED CODE</button>
@@ -130,7 +135,8 @@
         campaign: {
           campaign_type_id: null,
           name: '',
-          video: ''
+          video: '',
+          closeable: false
         },
         savedCampaign: false,
         selectedCampaign: {}

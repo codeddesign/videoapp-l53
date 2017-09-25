@@ -50,7 +50,7 @@ class Campaign extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'user_id', 'campaign_type_id', 'rpm', 'size'];
+    protected $fillable = ['name', 'user_id', 'campaign_type_id', 'rpm', 'size', 'closeable'];
 
     /**
      * @var array
@@ -189,6 +189,7 @@ class Campaign extends Model
         return [
             'id'      => $campaign->id,
             'ad_type' => $campaign->type->adType->id,
+            'closeable' => $campaign->closeable,
         ];
     }
 
