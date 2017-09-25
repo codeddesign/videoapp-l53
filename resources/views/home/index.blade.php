@@ -136,8 +136,8 @@
                     <p>
                         <div class="home-aboutseclist">
                             <div class="home-aboutseclistnum">06</div>
-                            <div class="home-aboutseclisttitle">Fastest Video Ad Player Ever</div>
-                            <div class="home-aboutseclistdesc">19kb in size, and loading in less than 100ms.</div>
+                            <div class="home-aboutseclisttitle">CacheQ Increases Your RPM</div>
+                            <div class="home-aboutseclistdesc">The highest RPM on the market with up to 400% fill rates</div>
                         </div>
                     </p>
                 </li>
