@@ -159,19 +159,23 @@
             <div class="home-cacheqlogo">CacheQ Video Ad Player</div>
             <div class="home-cacheqlogodesc">INTRODUCING: THE ONLY VIDEO PLAYER TO PROVIDE YOU WITH UP TO 400% FILL.
                 <br>NO WATERFALL. NO HEADER-BIDDING. SIMPLY TECHNOLOGY.</div>
-            <!--
             <div class="home-cacheqvideoarea">
                 <p></p>
+                <!-- start ad3 howto promo video -->
+                <video width="521" height="293" poster="/home/images/ad3-video-banner.png" onclick="this.paused?this.play():this.pause();" style="cursor:pointer;">
+				  <source src="/home/video/outstream-video-technology.mp4" type="video/mp4">
+				  <source src="/home/video/outstream-video-technology.ogg" type="video/ogg">
+				Sorry, your browser doesn't support embedded videos, watch it on <a href="https://www.youtube.com/watch?v=eOzdtJarxkI" target="_blank">Youtube</a>
+				</video>
             </div>
             <div class="home-cacheqvidlearnline"></div>
             <a href="/cacheq">
                 <div class="home-cacheqvidlearnmore">LEARN MORE ABOUT CACHEQ</div>
             </a>
             <div class="home-cache1vidcaution">CAUTION: OUTWARD AMAZEMENT WILL PROCEED VIDEO</div>
-            -->
             
             <!-- start .cacheq-howitworksblock -->
-            <div class="cacheq-howitworksblock" style="margin-bottom:0;margin-top:50px;">
+            <div class="cacheq-howitworksblock" style="margin-bottom:0;margin-top:80px;">
 		        <div class="cacheq-howitworkswrapper">
 		            <div class="cacheq-howblockleft">
 		                <div class="cacheq-howblockimagearea">
@@ -348,15 +352,23 @@
 
 @section('body-scripts')
     <script>
+	// CLICK TO PLAY AD3 VIDEO
+	var video = document.getElementById('video');
+	video.addEventListener('click',function(){
+	    video.play();
+	},false);    
     // ROTATE TOP NUMBERS
-    setInterval(function() {
-        $('#hometoprotatethese').text(Math.floor(Math.random() * (9999999 - 1111111)) + 1111111);
-    }, 200);
-
-    // INCREASE AD SERVING NUMBER
-    setInterval(function() {
-        var $adservenum = $('#home-adserverupnums span');
-        $adservenum.text(parseInt($adservenum.text()) + 1);
-    }, 200);
+    $(document).ready(function(){
+		// RANDOM ROTATION OF HEADER NUMBERS
+		setInterval(function() {
+	        $('#hometoprotatethese').text(Math.floor(Math.random() * (9999999 - 1111111)) + 1111111);
+	    }, 200);
+	
+	    // INCREASE AD SERVING NUMBER
+	    setInterval(function() {
+	        var $adservenum = $('#home-adserverupnums span');
+	        $adservenum.text(parseInt($adservenum.text()) + 1);
+	    }, 200);   
+    });
     </script>
 @endsection
