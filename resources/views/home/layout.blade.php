@@ -6,7 +6,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-    <meta name="viewport" content="width=550, user-scalable=no">
+    <meta name="viewport" content="width=700, user-scalable=no">
     <meta name="description" content="Ad3 Media delivers the highest converting advertising solutions the market has to offer. An entire system built on simplicity with you in mind.">
 
     <!-- FACEBOOK OG -->
