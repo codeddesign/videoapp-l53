@@ -162,7 +162,7 @@
             <div class="home-cacheqvideoarea">
                 <p></p>
                 <!-- start ad3 howto promo video -->
-                <video width="521" height="293" poster="/home/images/ad3-video-banner.png" onclick="this.paused?this.play():this.pause();" style="cursor:pointer;">
+                <video width="521" height="293" poster="/home/images/ad3-video-banner.png" preload="auto" onclick="this.paused?this.play():this.pause();" style="cursor:pointer;">
 				  <source src="/home/video/outstream-video-technology.mp4" type="video/mp4">
 				  <source src="/home/video/outstream-video-technology.ogg" type="video/ogg">
 				Sorry, your browser doesn't support embedded videos, watch it on <a href="https://www.youtube.com/watch?v=eOzdtJarxkI" target="_blank">Youtube</a>
