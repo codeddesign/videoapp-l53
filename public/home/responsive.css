@@ -452,7 +452,8 @@
         margin-top: 35px;
     }
     .footermargin {
-        width: 350px;
+        /*width: 350px;*/
+        width: 620px;
     }
     .footercontacttitle {
         display: none;
@@ -481,19 +482,24 @@
 
 @media screen and (max-width: 700px) {
     .home-topmaintitle {
-        font-size: 60px;
-        line-height: 58px;
+        /*font-size: 60px;
+        line-height: 58px;*/
+        font-size: 71px;
+        line-height: 72px;
     }
     .home-topgraphics {
         margin-left: 33px;
     }
     .home-topsubtitle {
-        font-size: 24px;
+        /*font-size: 24px;*/
+        font-size: 36px;
         margin-top: 15px;
     }
     .home-topsubtitlebg {
-        margin-top: 260px;
-        width: 310px;
+        /*margin-top: 260px;*/
+        margin-top: 184px;
+        /*width: 310px;*/
+        width: 463px;
         height: 31px;
         margin-left: -4px;
     }
@@ -501,9 +507,16 @@
         margin-top: 51px;
     }
     #home-topautoplayvideo {
-        width: 313px;
-        height: 176px;
-        margin-left: -18px;
+        /*width: 313px;
+        height: 176px;*/
+        width: 550px;
+        height: 309px;
+        /*margin-left: -18px;*/
+        margin-left: 0;
+    }
+    .home-toplearnmorebutton {
+	    width: calc(100% - 24px);
+	    margin-top: 34px;
     }
     .home-topaboutwrap {
         margin: 10px;
@@ -681,7 +694,8 @@
         margin-bottom: 22px;
     }
     .home-advertiserblock {
-        height: 990px;
+        /*height: 990px;*/
+        height: 830px;
     }
     .home-advertsmallersub {
         font-size: 17px;
@@ -694,6 +708,11 @@
     .home-advertmaintitle {
         font-size: 31px;
     }
+    .home-advertvidwall {
+	    margin-left: -109px;
+	    margin-top: 315px;
+    }
+    /*
     .home-advertvidwallpre, .home-advertvidwallpost {
         display: none;
     }
@@ -716,29 +735,38 @@
     .home-advertvidwallcenter {
         width: 191px
     }
+    */
     .home-advertowndemand {
-        width: 207px;
-        margin-left: 11px;
-        margin-top: 864px;
-        padding-bottom: 22px;
+        width: 419px;
+        margin-left: 25px;
+        margin-top: 720px;
+        padding: 15px;
     }
+    /*
     .home-advertvidwall {
         height: 371px;
     }
     .home-advertvidwallcenter {
         height: 352px;
     }
+    */
     .home-getstartformwrap form {
-        width: 300px;
+        /*width: 300px;*/
+        width: 450px;
     }
     .home-getstartedblock {
-        height: 1021px;
+        /*height: 1021px;*/
+        height: 925px;
     }
     .footerlogo {
         margin-left: 16px;
     }
     .footercontactwrap {
-        margin-left: 118px;
+        /*margin-left: 118px;*/
+        margin-left: 0;
+        margin-right: 20px;
+        float: right;
+        margin-top: 6px;
     }
     .footertopline {
         margin-top: 90px;
