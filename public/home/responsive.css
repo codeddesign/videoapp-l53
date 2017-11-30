@@ -134,6 +134,9 @@
     .home-cacheqcontactsales {
         /*display: none;*/
     }
+    .cacheq-howitworksblock {
+	    display: none;
+    }
 }
 
 @media screen and (max-width: 980px) {
@@ -637,21 +640,22 @@
     .home-cacheqlinex {
         display: none;
     }
-    .home-cacheqvideoarea {
-        width: 320px;
-    }
+    /*
     .home-cacheqvideoarea {
         width: 320px;
         height: 180px;
     }
+    */
     .home-cacheqlogodesc {
-        width: 300px;
+        /*width: 300px;*/
+        width: calc(100% - 100px);
     }
     .home-cacheqvideoarea {
         margin-top: 32px;
     }
     .home-cache1vidcaution {
-        width: 300px;
+        /*width: 300px;*/
+        width: calc(100% - 56px);
         margin-left: 28px;
     }
     .home-cacheqvidlearnmore {
