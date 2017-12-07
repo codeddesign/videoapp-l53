@@ -1638,6 +1638,9 @@ ul.home-aboutseclistwrap li:hover:before, ul.home-aboutseclistwrap li:hover:afte
     border: 1px solid #235999;
     background: #091C2C;
     cursor: pointer;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 .home-getstartformwrap form button:hover {
@@ -2303,6 +2306,11 @@ ul.cacheq-seclistwrap li {
     color: #FFFFFF;
     font-size: 15px;
     font-weight: 300;
+    cursor: pointer;
+}
+
+.cacheq-notsurepostbutton:hover {
+	background: #235999;
 }
 
 .cacheq-notsureprebutton:before {
@@ -2932,4 +2940,9 @@ ul.cacheq-seclistwrap li {
 	background: #091C2C;
 	border: 1px solid #235999;
 	margin-bottom: 15px;
+}
+
+.cacheqpage-howtovid {
+	width: 521px;
+	height: 293px;
 }

@@ -167,6 +167,7 @@
 				  <source src="/home/video/outstream-video-technology.ogg" type="video/ogg">
 				Sorry, your browser doesn't support embedded videos, watch it on <a href="https://www.youtube.com/watch?v=eOzdtJarxkI" target="_blank">Youtube</a>
 				</video>
+				<!-- end Ad3 howto video -->
             </div>
             <div class="home-cacheqvidlearnline"></div>
             <a href="/cacheq">
@@ -221,7 +222,7 @@
             <div class="home-advertpurpleback"></div>
             <div class="home-advertsubtitle">Access to 1,000's of Premium Advertisers</div>
             <div class="home-advertmaintitle">DEMAND ON-DEMAND</div>
-            <div class="home-advertsmallersub">Name brand premium advertisers from fortune 500 companies. Demand On-Demand allows your to utilize our high-quality demand sources while also bringing in your own.</div>
+            <div class="home-advertsmallersub">Name brand premium advertisers from fortune 500 companies. Demand On-Demand allows you to utilize our high-quality demand sources while also bringing in your own.</div>
         </div>
         <!-- start advert slideshow -->
         <div id="home-advertslider">

@@ -88,10 +88,12 @@
         <div class="cacheq-largecentertext">CacheQ is a fully managed video ad technology, allowing you and your team more time to focus on what’s really important - growing your business.</div>
     </div>
     <div class="cacheq-watchvidwrap">
+        <a href="https://www.youtube.com/watch?v=eOzdtJarxkI" target="_blank">
         <div class="cacheq-watchvidborder">
             <div class="cacheq-watchvidplay"></div>
             <div class="cacheq-watchvidtext">Watch how our CacheQ video system works.</div>
         </div>
+        </a>
     </div>
     <div class="cacheq-seclist">
         <ul class="home-aboutseclistwrap cacheq-seclistwrap">
@@ -133,7 +135,7 @@
                 <div class="cacheq-notsureprebutton">
                     <p>Are you still not sure?</p>
                 </div>
-                <div class="cacheq-notsurepostbutton">Contact Us</div>
+                <a href="/contact"><div class="cacheq-notsurepostbutton">Contact Us</div></a>
             </div>
         </div>
         <!-- end .cacheq-seclistcenter -->
