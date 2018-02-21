@@ -56,6 +56,8 @@ class TagsController extends ApiController
             }
         }
 
+        $tags = $tags->sortBy('id');
+
         return $this->collectionResponse($tags, new TagTransformer);
     }
 

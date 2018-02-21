@@ -46,6 +46,7 @@ class TagTransformer extends Transformer
             'excluded_locations'     => $this->parseLocations($tag->excluded_locations),
             'active'                 => (boolean) $tag->active,
             'demo_data'              => $tag->demo_data,
+            'user_id'                => $tag->user_id,
         ];
 
         if ($tag->stats) {

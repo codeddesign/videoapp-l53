@@ -58,7 +58,7 @@ class TagsController extends ApiController
 
     public function store(StoreTagRequest $request)
     {
-        $tag = Tag::create($request->transform());
+        $tag = Tag::create($request->transform($this->user));
 
         $tag->user()->associate($this->user);
         $tag->save();

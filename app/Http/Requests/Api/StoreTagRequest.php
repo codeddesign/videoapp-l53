@@ -38,12 +38,12 @@ class StoreTagRequest extends Request
         ];
     }
 
-    public function transform()
+    public function transform($user)
     {
         return [
             'url'                    => $this->get('url'),
             'advertiser'             => $this->get('advertiser'),
-            'description'            => $this->get('description'),
+            'description'            => $user . '_' . $this->get('description'),
             'platform_type'          => $this->get('platform_type'),
             'ad_types'               => $this->get('ad_types'),
             'type'                   => $this->get('type'),
