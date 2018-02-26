@@ -10,6 +10,8 @@
     <!-- TOP ANALYTICS -->
     <div>
     <div v-show="loading" class="report-loading">
+      <p>Your reported is being created.</p>
+      <p>Please check back in 15 minutes.</p>
       <bounce-loader :loading="loading" color="#7772a7" size="100px"></bounce-loader>
     </div>
     <ul class="campaignstats-row">
@@ -464,6 +466,16 @@
     z-index: 1000;
     position: absolute;
     background-color: white;
+
+    p {
+      text-align: center;
+      font-size: 2.5rem;
+      padding: 0 1rem;
+    }
+
+    p:last-of-type {
+      margin-bottom: 4rem;
+    }
   }
 
   .v-bounce {
